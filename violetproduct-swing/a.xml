@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="gbk"?>
+
+<UppaalGraph  id="1">
+    <nodes id="2">
+        <CircularNode id="9">
+            <children id="10"/>
+            <location class="Point2D.Double" id="11" x="" y=""/>
+            <id id="12"/>
+            <backgroundColor id="3">
+                <red>255</red>
+                <green>255</green>
+                <blue>255</blue>
+                <alpha>255</alpha>
+            </backgroundColor>
+            <borderColor id="4">
+                <red>191</red>
+                <green>191</green>
+                <blue>191</blue>
+                <alpha>255</alpha>
+            </borderColor>
+            <textColor id="5">
+                <red>51</red>
+                <green>51</green>
+                <blue>51</blue>
+                <alpha>255</alpha>
+            </textColor>
+            <name id="13">loc_id_init</name>
+        </CircularNode>
+        <CircularNode id="14">
+            <children id="15"/>
+            <location class="Point2D.Double" id="16" x="" y=""/>
+            <id id="17"/>
+            <backgroundColor reference="3"/>
+            <borderColor reference="4"/>
+            <textColor reference="5"/>
+            <name id="18"> name:loc_id_BEA79EDD_C0BD_4ca2_AAC3_055B9157F9D5;DBM:[[Lcom.horstmann.violet.application.gui.util.wqq.AutoMataTransfrom2.DBM_element;@28a27f03;position:loc_id_BEA79EDD_C0BD_4ca2_AAC3_055B9157F9D5</name>
+        </CircularNode>
+        <CircularNode id="19">
+            <children id="20"/>
+            <location class="Point2D.Double" id="21" x="" y=""/>
+            <id id="22"/>
+            <backgroundColor reference="3"/>
+            <borderColor reference="4"/>
+            <textColor reference="5"/>
+            <name id="23"> name:loc_id_F59BAE0D_CDEF_4a30_B752_47B3ED9D927F;DBM:[[Lcom.horstmann.violet.application.gui.util.wqq.AutoMataTransfrom2.DBM_element;@5da12959;position:loc_id_F59BAE0D_CDEF_4a30_B752_47B3ED9D927F</name>
+        </CircularNode>
+        <CircularNode id="24">
+            <children id="25"/>
+            <location class="Point2D.Double" id="26" x="" y=""/>
+            <id id="27"/>
+            <backgroundColor reference="3"/>
+            <borderColor reference="4"/>
+            <textColor reference="5"/>
+            <name id="28"> name:loc_id_246EEC3C_7184_4a4b_9973_C90AB03E3D08;DBM:[[Lcom.horstmann.violet.application.gui.util.wqq.AutoMataTransfrom2.DBM_element;@56ac1bb2;position:loc_id_246EEC3C_7184_4a4b_9973_C90AB03E3D08</name>
+        </CircularNode>
+        <CircularNode id="29">
+            <children id="30"/>
+            <location class="Point2D.Double" id="31" x="" y=""/>
+            <id id="32"/>
+            <backgroundColor reference="3"/>
+            <borderColor reference="4"/>
+            <textColor reference="5"/>
+            <name id="33"> name:loc_id_1C4D3E8F_786B_4f08_9E77_FFADF82AFDF3;DBM:[[Lcom.horstmann.violet.application.gui.util.wqq.AutoMataTransfrom2.DBM_element;@400f11a3;position:loc_id_1C4D3E8F_786B_4f08_9E77_FFADF82AFDF3</name>
+        </CircularNode>
+        <CircularNode id="34">
+            <children id="35"/>
+            <location class="Point2D.Double" id="36" x="" y=""/>
+            <id id="37"/>
+            <backgroundColor reference="3"/>
+            <borderColor reference="4"/>
+            <textColor reference="5"/>
+            <name id="38"> name:loc_id_7DFB7A9B_DE1E_4117_97A8_CC5DF4371405;DBM:[[Lcom.horstmann.violet.application.gui.util.wqq.AutoMataTransfrom2.DBM_element;@7bee24c6;position:loc_id_7DFB7A9B_DE1E_4117_97A8_CC5DF4371405</name>
+        </CircularNode>
+        <CircularNode id="39">
+            <children id="40"/>
+            <location class="Point2D.Double" id="41" x="" y=""/>
+            <id id="42"/>
+            <backgroundColor reference="3"/>
+            <borderColor reference="4"/>
+            <textColor reference="5"/>
+            <name id="43"> name:loc_id_3A6C5434_4649_424c_BF5C_F9F069DEC237;DBM:[[Lcom.horstmann.violet.application.gui.util.wqq.AutoMataTransfrom2.DBM_element;@2f513103;position:loc_id_3A6C5434_4649_424c_BF5C_F9F069DEC237</name>
+        </CircularNode>
+        <CircularNode id="44">
+            <children id="45"/>
+            <location class="Point2D.Double" id="46" x="" y=""/>
+            <id id="47"/>
+            <backgroundColor reference="3"/>
+            <borderColor reference="4"/>
+            <textColor reference="5"/>
+            <name id="48"> name:loc_id_3DBE3C16_293A_4d80_8FE8_F5A9BA10F96F;DBM:[[Lcom.horstmann.violet.application.gui.util.wqq.AutoMataTransfrom2.DBM_element;@1996ded0;position:loc_id_3DBE3C16_293A_4d80_8FE8_F5A9BA10F96F</name>
+        </CircularNode>
+        <CircularNode id="49">
+            <children id="50"/>
+            <location class="Point2D.Double" id="51" x="" y=""/>
+            <id id="52"/>
+            <backgroundColor reference="3"/>
+            <borderColor reference="4"/>
+            <textColor reference="5"/>
+            <name id="53"> name:loc_id_9C0BF194_D96E_4c48_9151_A2D2DC4044ED;DBM:[[Lcom.horstmann.violet.application.gui.util.wqq.AutoMataTransfrom2.DBM_element;@212c5648;position:loc_id_9C0BF194_D96E_4c48_9151_A2D2DC4044ED</name>
+        </CircularNode>
+        <CircularNode id="54">
+            <children id="55"/>
+            <location class="Point2D.Double" id="56" x="" y=""/>
+            <id id="57"/>
+            <backgroundColor reference="3"/>
+            <borderColor reference="4"/>
+            <textColor reference="5"/>
+            <name id="58"> name:loc_id_26D2742B_5CC0_4ecc_AAF7_EA708D2385B0;DBM:[[Lcom.horstmann.violet.application.gui.util.wqq.AutoMataTransfrom2.DBM_element;@2b6e8ebf;position:loc_id_26D2742B_5CC0_4ecc_AAF7_EA708D2385B0</name>
+        </CircularNode>
+        <CircularNode id="59">
+            <children id="60"/>
+            <location class="Point2D.Double" id="61" x="" y=""/>
+            <id id="62"/>
+            <backgroundColor reference="3"/>
+            <borderColor reference="4"/>
+            <textColor reference="5"/>
+            <name id="63"> name:loc_id_8E153985_7668_48b9_9F74_E09F2181D7C4;DBM:[[Lcom.horstmann.violet.application.gui.util.wqq.AutoMataTransfrom2.DBM_element;@d916bf8;position:loc_id_8E153985_7668_48b9_9F74_E09F2181D7C4</name>
+        </CircularNode>
+        <CircularNode id="64">
+            <children id="65"/>
+            <location class="Point2D.Double" id="66" x="" y=""/>
+            <id id="67"/>
+            <backgroundColor reference="3"/>
+            <borderColor reference="4"/>
+            <textColor reference="5"/>
+            <name id="68"> name:loc_id_DE401595_DF1A_408f_B6AA_22C4FB1EDEB7;DBM:[[Lcom.horstmann.violet.application.gui.util.wqq.AutoMataTransfrom2.DBM_element;@225e44c4;position:loc_id_DE401595_DF1A_408f_B6AA_22C4FB1EDEB7</name>
+        </CircularNode>
+        <CircularNode id="69">
+            <children id="70"/>
+            <location class="Point2D.Double" id="71" x="" y=""/>
+            <id id="72"/>
+            <backgroundColor reference="3"/>
+            <borderColor reference="4"/>
+            <textColor reference="5"/>
+            <name id="73"> name:loc_id_6B2049F8_3D77_4c91_A19A_73CBF6A802B7;DBM:[[Lcom.horstmann.violet.application.gui.util.wqq.AutoMataTransfrom2.DBM_element;@6183c8d1;position:loc_id_6B2049F8_3D77_4c91_A19A_73CBF6A802B7</name>
+        </CircularNode>
+        <CircularNode id="74">
+            <children id="75"/>
+            <location class="Point2D.Double" id="76" x="" y=""/>
+            <id id="77"/>
+            <backgroundColor reference="3"/>
+            <borderColor reference="4"/>
+            <textColor reference="5"/>
+            <name id="78"> name:loc_id_9C65B24F_C550_4d73_85AE_15F8F8775A99;DBM:[[Lcom.horstmann.violet.application.gui.util.wqq.AutoMataTransfrom2.DBM_element;@3e47a928;position:loc_id_9C65B24F_C550_4d73_85AE_15F8F8775A99</name>
+        </CircularNode>
+        <CircularNode id="79">
+            <children id="80"/>
+            <location class="Point2D.Double" id="81" x="" y=""/>
+            <id id="82"/>
+            <backgroundColor reference="3"/>
+            <borderColor reference="4"/>
+            <textColor reference="5"/>
+            <name id="83"> name:loc_id_BA2D058C_7744_4a35_B86A_3E0FC8D0E295;DBM:[[Lcom.horstmann.violet.application.gui.util.wqq.AutoMataTransfrom2.DBM_element;@388fdbb3;position:loc_id_BA2D058C_7744_4a35_B86A_3E0FC8D0E295</name>
+        </CircularNode>
+        <CircularNode id="84">
+            <children id="85"/>
+            <location class="Point2D.Double" id="86" x="" y=""/>
+            <id id="87"/>
+            <backgroundColor reference="3"/>
+            <borderColor reference="4"/>
+            <textColor reference="5"/>
+            <name id="88"> name:loc_id_D02AD5B4_C6F3_4abe_88E5_9DAC1871EC9D;DBM:[[Lcom.horstmann.violet.application.gui.util.wqq.AutoMataTransfrom2.DBM_element;@6827d002;position:loc_id_D02AD5B4_C6F3_4abe_88E5_9DAC1871EC9D</name>
+        </CircularNode>
+        <CircularNode id="89">
+            <children id="90"/>
+            <location class="Point2D.Double" id="91" x="" y=""/>
+            <id id="92"/>
+            <backgroundColor reference="3"/>
+            <borderColor reference="4"/>
+            <textColor reference="5"/>
+            <name id="93"> name:loc_id_B2A9D60A_B534_479e_A6D5_5BB87512469D;DBM:[[Lcom.horstmann.violet.application.gui.util.wqq.AutoMataTransfrom2.DBM_element;@179d5897;position:loc_id_B2A9D60A_B534_479e_A6D5_5BB87512469D</name>
+        </CircularNode>
+        <CircularNode id="94">
+            <children id="95"/>
+            <location class="Point2D.Double" id="96" x="" y=""/>
+            <id id="97"/>
+            <backgroundColor reference="3"/>
+            <borderColor reference="4"/>
+            <textColor reference="5"/>
+            <name id="98"> name:loc_id_E3DB869A_ADCE_4217_9371_572729025EEE;DBM:[[Lcom.horstmann.violet.application.gui.util.wqq.AutoMataTransfrom2.DBM_element;@1410bda5;position:loc_id_E3DB869A_ADCE_4217_9371_572729025EEE</name>
+        </CircularNode>
+        <CircularNode id="99">
+            <children id="100"/>
+            <location class="Point2D.Double" id="101" x="" y=""/>
+            <id id="102"/>
+            <backgroundColor reference="3"/>
+            <borderColor reference="4"/>
+            <textColor reference="5"/>
+            <name id="103"> name:loc_id_FCFCEFE3_5770_4447_8160_927CC3201F52;DBM:[[Lcom.horstmann.violet.application.gui.util.wqq.AutoMataTransfrom2.DBM_element;@5284bed7;position:loc_id_FCFCEFE3_5770_4447_8160_927CC3201F52</name>
+        </CircularNode>
+        <CircularNode id="104">
+            <children id="105"/>
+            <location class="Point2D.Double" id="106" x="" y=""/>
+            <id id="107"/>
+            <backgroundColor reference="3"/>
+            <borderColor reference="4"/>
+            <textColor reference="5"/>
+            <name id="108"> name:loc_id_D4F6BD3C_EFF6_4227_B6A5_AFD941895F0A;DBM:[[Lcom.horstmann.violet.application.gui.util.wqq.AutoMataTransfrom2.DBM_element;@475d345;position:loc_id_D4F6BD3C_EFF6_4227_B6A5_AFD941895F0A</name>
+        </CircularNode>
+    </nodes>
+    <edges id="110">
+        <TransitionEdge id="111">
+            <start class="CircularNode" reference="9"/>
+            <end class="CircularNode" reference="14"/>
+            <startLocation class="Point2D.Double" id="112" x="30.0" y="30.0"/>
+            <endLocation class="Point2D.Double" id="113" x="30.0" y="30.0"/>
+            <id id="114"/>
+            <labelText>type:[] source：loc_id_init target：loc_id_BEA79EDD_C0BD_4ca2_AAC3_055B9157F9D5 ResetClockSet：t DBM：[[Lcom.horstmann.violet.application.gui.util.wqq.AutoMataTransfrom2.DBM_element;@59ec802b</labelText>
+        </TransitionEdge>
+        <TransitionEdge id="115">
+            <start class="CircularNode" reference="14"/>
+            <end class="CircularNode" reference="19"/>
+            <startLocation class="Point2D.Double" id="116" x="30.0" y="30.0"/>
+            <endLocation class="Point2D.Double" id="117" x="30.0" y="30.0"/>
+            <id id="118"/>
+            <labelText>type:[] source：loc_id_BEA79EDD_C0BD_4ca2_AAC3_055B9157F9D5 target：loc_id_F59BAE0D_CDEF_4a30_B752_47B3ED9D927F ResetClockSet： DBM：[[Lcom.horstmann.violet.application.gui.util.wqq.AutoMataTransfrom2.DBM_element;@465aec02</labelText>
+        </TransitionEdge>
+        <TransitionEdge id="119">
+            <start class="CircularNode" reference="19"/>
+            <end class="CircularNode" reference="24"/>
+            <startLocation class="Point2D.Double" id="120" x="30.0" y="30.0"/>
+            <endLocation class="Point2D.Double" id="121" x="30.0" y="30.0"/>
+            <id id="122"/>
+            <labelText>type:[alt] source：loc_id_F59BAE0D_CDEF_4a30_B752_47B3ED9D927F target：loc_id_246EEC3C_7184_4a4b_9973_C90AB03E3D08 ResetClockSet： DBM：[[Lcom.horstmann.violet.application.gui.util.wqq.AutoMataTransfrom2.DBM_element;@3a77743d</labelText>
+        </TransitionEdge>
+        <TransitionEdge id="123">
+            <start class="CircularNode" reference="19"/>
+            <end class="CircularNode" reference="104"/>
+            <startLocation class="Point2D.Double" id="124" x="30.0" y="30.0"/>
+            <endLocation class="Point2D.Double" id="125" x="30.0" y="30.0"/>
+            <id id="126"/>
+            <labelText>type:[alt] source：loc_id_F59BAE0D_CDEF_4a30_B752_47B3ED9D927F target：loc_id_D4F6BD3C_EFF6_4227_B6A5_AFD941895F0A ResetClockSet： DBM：[[Lcom.horstmann.violet.application.gui.util.wqq.AutoMataTransfrom2.DBM_element;@4a8bfaa2</labelText>
+        </TransitionEdge>
+        <TransitionEdge id="127">
+            <start class="CircularNode" reference="24"/>
+            <end class="CircularNode" reference="29"/>
+            <startLocation class="Point2D.Double" id="128" x="30.0" y="30.0"/>
+            <endLocation class="Point2D.Double" id="129" x="30.0" y="30.0"/>
+            <id id="130"/>
+            <labelText>type:[alt] source：loc_id_246EEC3C_7184_4a4b_9973_C90AB03E3D08 target：loc_id_1C4D3E8F_786B_4f08_9E77_FFADF82AFDF3 ResetClockSet： DBM：[[Lcom.horstmann.violet.application.gui.util.wqq.AutoMataTransfrom2.DBM_element;@77dbc600</labelText>
+        </TransitionEdge>
+        <TransitionEdge id="131">
+            <start class="CircularNode" reference="29"/>
+            <end class="CircularNode" reference="34"/>
+            <startLocation class="Point2D.Double" id="132" x="30.0" y="30.0"/>
+            <endLocation class="Point2D.Double" id="133" x="30.0" y="30.0"/>
+            <id id="134"/>
+            <labelText>type:[alt] source：loc_id_1C4D3E8F_786B_4f08_9E77_FFADF82AFDF3 target：loc_id_7DFB7A9B_DE1E_4117_97A8_CC5DF4371405 ResetClockSet： DBM：[[Lcom.horstmann.violet.application.gui.util.wqq.AutoMataTransfrom2.DBM_element;@66701e05</labelText>
+        </TransitionEdge>
+        <TransitionEdge id="135">
+            <start class="CircularNode" reference="34"/>
+            <end class="CircularNode" reference="39"/>
+            <startLocation class="Point2D.Double" id="136" x="30.0" y="30.0"/>
+            <endLocation class="Point2D.Double" id="137" x="30.0" y="30.0"/>
+            <id id="138"/>
+            <labelText>type:[alt] source：loc_id_7DFB7A9B_DE1E_4117_97A8_CC5DF4371405 target：loc_id_3A6C5434_4649_424c_BF5C_F9F069DEC237 ResetClockSet： DBM：[[Lcom.horstmann.violet.application.gui.util.wqq.AutoMataTransfrom2.DBM_element;@67a7586a</labelText>
+        </TransitionEdge>
+        <TransitionEdge id="139">
+            <start class="CircularNode" reference="39"/>
+            <end class="CircularNode" reference="44"/>
+            <startLocation class="Point2D.Double" id="140" x="30.0" y="30.0"/>
+            <endLocation class="Point2D.Double" id="141" x="30.0" y="30.0"/>
+            <id id="142"/>
+            <labelText>type:[alt, alt] source：loc_id_3A6C5434_4649_424c_BF5C_F9F069DEC237 target：loc_id_3DBE3C16_293A_4d80_8FE8_F5A9BA10F96F ResetClockSet： DBM：[[Lcom.horstmann.violet.application.gui.util.wqq.AutoMataTransfrom2.DBM_element;@72ece0d6</labelText>
+        </TransitionEdge>
+        <TransitionEdge id="143">
+            <start class="CircularNode" reference="39"/>
+            <end class="CircularNode" reference="89"/>
+            <startLocation class="Point2D.Double" id="144" x="30.0" y="30.0"/>
+            <endLocation class="Point2D.Double" id="145" x="30.0" y="30.0"/>
+            <id id="146"/>
+            <labelText>type:[alt, alt] source：loc_id_3A6C5434_4649_424c_BF5C_F9F069DEC237 target：loc_id_B2A9D60A_B534_479e_A6D5_5BB87512469D ResetClockSet： DBM：[[Lcom.horstmann.violet.application.gui.util.wqq.AutoMataTransfrom2.DBM_element;@5b2ec34d</labelText>
+        </TransitionEdge>
+        <TransitionEdge id="147">
+            <start class="CircularNode" reference="44"/>
+            <end class="CircularNode" reference="49"/>
+            <startLocation class="Point2D.Double" id="148" x="30.0" y="30.0"/>
+            <endLocation class="Point2D.Double" id="149" x="30.0" y="30.0"/>
+            <id id="150"/>
+            <labelText>type:[alt, alt] source：loc_id_3DBE3C16_293A_4d80_8FE8_F5A9BA10F96F target：loc_id_9C0BF194_D96E_4c48_9151_A2D2DC4044ED ResetClockSet： DBM：[[Lcom.horstmann.violet.application.gui.util.wqq.AutoMataTransfrom2.DBM_element;@3d487e1b</labelText>
+        </TransitionEdge>
+        <TransitionEdge id="151">
+            <start class="CircularNode" reference="49"/>
+            <end class="CircularNode" reference="54"/>
+            <startLocation class="Point2D.Double" id="152" x="30.0" y="30.0"/>
+            <endLocation class="Point2D.Double" id="153" x="30.0" y="30.0"/>
+            <id id="154"/>
+            <labelText>type:[alt, alt] source：loc_id_9C0BF194_D96E_4c48_9151_A2D2DC4044ED target：loc_id_26D2742B_5CC0_4ecc_AAF7_EA708D2385B0 ResetClockSet：t DBM：[[Lcom.horstmann.violet.application.gui.util.wqq.AutoMataTransfrom2.DBM_element;@607105d0</labelText>
+        </TransitionEdge>
+        <TransitionEdge id="155">
+            <start class="CircularNode" reference="54"/>
+            <end class="CircularNode" reference="59"/>
+            <startLocation class="Point2D.Double" id="156" x="30.0" y="30.0"/>
+            <endLocation class="Point2D.Double" id="157" x="30.0" y="30.0"/>
+            <id id="158"/>
+            <labelText>type:[alt, alt] source：loc_id_26D2742B_5CC0_4ecc_AAF7_EA708D2385B0 target：loc_id_8E153985_7668_48b9_9F74_E09F2181D7C4 ResetClockSet： DBM：[[Lcom.horstmann.violet.application.gui.util.wqq.AutoMataTransfrom2.DBM_element;@758ea358</labelText>
+        </TransitionEdge>
+        <TransitionEdge id="159">
+            <start class="CircularNode" reference="59"/>
+            <end class="CircularNode" reference="64"/>
+            <startLocation class="Point2D.Double" id="160" x="30.0" y="30.0"/>
+            <endLocation class="Point2D.Double" id="161" x="30.0" y="30.0"/>
+            <id id="162"/>
+            <labelText>type:[alt, alt, alt] source：loc_id_8E153985_7668_48b9_9F74_E09F2181D7C4 target：loc_id_DE401595_DF1A_408f_B6AA_22C4FB1EDEB7 ResetClockSet： DBM：[[Lcom.horstmann.violet.application.gui.util.wqq.AutoMataTransfrom2.DBM_element;@5897220f</labelText>
+        </TransitionEdge>
+        <TransitionEdge id="163">
+            <start class="CircularNode" reference="59"/>
+            <end class="CircularNode" reference="74"/>
+            <startLocation class="Point2D.Double" id="164" x="30.0" y="30.0"/>
+            <endLocation class="Point2D.Double" id="165" x="30.0" y="30.0"/>
+            <id id="166"/>
+            <labelText>type:[alt, alt, alt] source：loc_id_8E153985_7668_48b9_9F74_E09F2181D7C4 target：loc_id_9C65B24F_C550_4d73_85AE_15F8F8775A99 ResetClockSet： DBM：[[Lcom.horstmann.violet.application.gui.util.wqq.AutoMataTransfrom2.DBM_element;@26d127a0</labelText>
+        </TransitionEdge>
+        <TransitionEdge id="167">
+            <start class="CircularNode" reference="64"/>
+            <end class="CircularNode" reference="69"/>
+            <startLocation class="Point2D.Double" id="168" x="30.0" y="30.0"/>
+            <endLocation class="Point2D.Double" id="169" x="30.0" y="30.0"/>
+            <id id="170"/>
+            <labelText>type:[alt, alt, alt] source：loc_id_DE401595_DF1A_408f_B6AA_22C4FB1EDEB7 target：loc_id_6B2049F8_3D77_4c91_A19A_73CBF6A802B7 ResetClockSet： DBM：[[Lcom.horstmann.violet.application.gui.util.wqq.AutoMataTransfrom2.DBM_element;@4ee6f92f</labelText>
+        </TransitionEdge>
+        <TransitionEdge id="171">
+            <start class="CircularNode" reference="69"/>
+            <end class="CircularNode" reference="84"/>
+            <startLocation class="Point2D.Double" id="172" x="30.0" y="30.0"/>
+            <endLocation class="Point2D.Double" id="173" x="30.0" y="30.0"/>
+            <id id="174"/>
+            <labelText>type:[alt, alt] source：loc_id_6B2049F8_3D77_4c91_A19A_73CBF6A802B7 target：loc_id_D02AD5B4_C6F3_4abe_88E5_9DAC1871EC9D ResetClockSet： DBM：[[Lcom.horstmann.violet.application.gui.util.wqq.AutoMataTransfrom2.DBM_element;@4ef207c8</labelText>
+        </TransitionEdge>
+        <TransitionEdge id="175">
+            <start class="CircularNode" reference="74"/>
+            <end class="CircularNode" reference="79"/>
+            <startLocation class="Point2D.Double" id="176" x="30.0" y="30.0"/>
+            <endLocation class="Point2D.Double" id="177" x="30.0" y="30.0"/>
+            <id id="178"/>
+            <labelText>type:[alt, alt, alt] source：loc_id_9C65B24F_C550_4d73_85AE_15F8F8775A99 target：loc_id_BA2D058C_7744_4a35_B86A_3E0FC8D0E295 ResetClockSet： DBM：[[Lcom.horstmann.violet.application.gui.util.wqq.AutoMataTransfrom2.DBM_element;@2f14c343</labelText>
+        </TransitionEdge>
+        <TransitionEdge id="179">
+            <start class="CircularNode" reference="79"/>
+            <end class="CircularNode" reference="84"/>
+            <startLocation class="Point2D.Double" id="180" x="30.0" y="30.0"/>
+            <endLocation class="Point2D.Double" id="181" x="30.0" y="30.0"/>
+            <id id="182"/>
+            <labelText>type:[alt, alt] source：loc_id_BA2D058C_7744_4a35_B86A_3E0FC8D0E295 target：loc_id_D02AD5B4_C6F3_4abe_88E5_9DAC1871EC9D ResetClockSet： DBM：[[Lcom.horstmann.violet.application.gui.util.wqq.AutoMataTransfrom2.DBM_element;@571d26</labelText>
+        </TransitionEdge>
+        <TransitionEdge id="183">
+            <start class="CircularNode" reference="89"/>
+            <end class="CircularNode" reference="94"/>
+            <startLocation class="Point2D.Double" id="184" x="30.0" y="30.0"/>
+            <endLocation class="Point2D.Double" id="185" x="30.0" y="30.0"/>
+            <id id="186"/>
+            <labelText>type:[alt, alt] source：loc_id_B2A9D60A_B534_479e_A6D5_5BB87512469D target：loc_id_E3DB869A_ADCE_4217_9371_572729025EEE ResetClockSet： DBM：[[Lcom.horstmann.violet.application.gui.util.wqq.AutoMataTransfrom2.DBM_element;@7901b382</labelText>
+        </TransitionEdge>
+        <TransitionEdge id="187">
+            <start class="CircularNode" reference="94"/>
+            <end class="CircularNode" reference="99"/>
+            <startLocation class="Point2D.Double" id="188" x="30.0" y="30.0"/>
+            <endLocation class="Point2D.Double" id="189" x="30.0" y="30.0"/>
+            <id id="190"/>
+            <labelText>type:[alt, alt] source：loc_id_E3DB869A_ADCE_4217_9371_572729025EEE target：loc_id_FCFCEFE3_5770_4447_8160_927CC3201F52 ResetClockSet： DBM：[[Lcom.horstmann.violet.application.gui.util.wqq.AutoMataTransfrom2.DBM_element;@2793372d</labelText>
+        </TransitionEdge>
+    </edges>
+</UppaalGraph>
