@@ -62,13 +62,15 @@ public class TimingChangeStateBehavior extends AbstractEditorPartBehavior{
 	      
 		    List<INode> selectedNodes = this.selectionHandler.getSelectedNodes();
 	        List<IEdge> selectedEdges = selectionHandler.getSelectedEdges();  
+	      //只有一个节点被选取 true
 	        boolean isOnlyOneNodeSelected = (selectedNodes.size() == 1 && selectedEdges.size() == 0);
-	        //只有一个节点被选取
+	        
 	       if (!isOnlyOneNodeSelected) {
 	           return;//跳出函数
 	       }  
 	       selectedNode=selectedNodes.get(0);       		    
-	       String str1= "class com.horstmann.violet.product.diagram.timing.State_Lifeline";
+	       String str1= "class com.horstmann.violet.product.diagram.timing.StateLifeline";
+	       //如果选中的node的类不是上面的
 	       if (!selectedNode.getClass().toString().equals(str1)){
 	           return;
 	       } 
@@ -76,10 +78,10 @@ public class TimingChangeStateBehavior extends AbstractEditorPartBehavior{
 	   
 	     IHorizontalChild horizontalchild=null;
 	      //获取stateline对象
-	       mousePressPoint =e.getPoint();//获取鼠标按下时候的点	   	    		  
+	       mousePressPoint =e.getPoint();//获取鼠标按下时候的点	 
+	       //获得选的stateLine的孩子的长度
 			 int horizontalChildSize=s.gethorizontalChild().size();
 			
-			 
 			 for(int i=0;i<horizontalChildSize;i++)
 			 {  
 			 horizontalchild=s.gethorizontalChild().get(i);//获取水平子节点

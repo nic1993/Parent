@@ -46,8 +46,7 @@ public class OptionalToolsPanelUI extends PanelUI
 
         JButton bExportToClipboard = this.optionalToolsPanel.getExportToClipboardButton();
         addButton(bExportToClipboard);
-
-        this.optionalToolsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        this.optionalToolsPanel.setLayout(new GridLayout(1, 1));
         this.optionalToolsPanel.add(getPanel());
 
     }
@@ -73,7 +72,7 @@ public class OptionalToolsPanelUI extends PanelUI
             this.panel = new JPanel();
             this.panel.setOpaque(false);
             this.panel.setBorder(new EmptyBorder(0, 5, 0, 0));
-            GridLayout layout = new GridLayout(0, 5, 15, 10);
+            GridLayout layout = new GridLayout(0, 6, 15, 10);
             this.panel.setLayout(layout);
         }
         return this.panel;

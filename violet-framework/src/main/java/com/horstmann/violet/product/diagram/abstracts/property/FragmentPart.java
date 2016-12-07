@@ -74,7 +74,7 @@ public class FragmentPart implements Serializable{
 	private ArrayList<String> coveredMessagesID;//覆盖的消息
 	private Line2D borderline;//默认界定线
 	private ArrayList<String> nestingChildNodesID;//嵌套的孩子,默认没有	
-	private boolean borderlinehaschanged=false;
+	private boolean borderlinehaschanged = false;
 	@XStreamOmitField
 	private Rectangle2D bounds;
 	private double size;

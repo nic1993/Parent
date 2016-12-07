@@ -26,6 +26,7 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 import com.horstmann.violet.product.diagram.abstracts.edge.SegmentedLineEdge;
+import com.horstmann.violet.product.diagram.abstracts.edge.SegmentedLineEdgeByCai;
 import com.horstmann.violet.product.diagram.abstracts.node.INode;
 import com.horstmann.violet.product.diagram.abstracts.property.ArrowHead;
 import com.horstmann.violet.product.diagram.abstracts.property.LineStyle;
@@ -33,7 +34,7 @@ import com.horstmann.violet.product.diagram.abstracts.property.LineStyle;
 /**
  * An edge that joins two call nodes.
  */
-public class ReturnEdge extends SegmentedLineEdge
+public class ReturnEdge extends SegmentedLineEdgeByCai
 {
 
 	@Override

@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import com.horstmann.violet.product.diagram.abstracts.edge.SegmentedLineEdge;
+import com.horstmann.violet.product.diagram.abstracts.edge.SegmentedLineEdgeByCai;
 import com.horstmann.violet.product.diagram.abstracts.node.INode;
 import com.horstmann.violet.product.diagram.abstracts.property.ArrowHead;
 
@@ -34,7 +35,7 @@ import com.horstmann.violet.product.diagram.abstracts.property.ArrowHead;
  * An edge that joins two call nodes. Typically, call edges are used in sequence diagram to represent calls between entities (call
  * nodes).
  */
-public class CallEdge extends SegmentedLineEdge
+public class CallEdge extends SegmentedLineEdgeByCai
 {
 
 	@Override

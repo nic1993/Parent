@@ -71,7 +71,7 @@ public abstract class AbstractMessageEdge implements IEdge{
 	@Override
 	public Direction getDirection(INode node) {
 		// TODO Auto-generated method stub
-		 Rectangle2D startBounds = start.getBounds();
+		    Rectangle2D startBounds = start.getBounds();
 	        Rectangle2D endBounds = end.getBounds();
 	        Point2D startLocationOnGraph = start.getLocationOnGraph();
 	        Point2D endLocationOnGraph = end.getLocationOnGraph();

@@ -49,8 +49,8 @@ public class ColorToolsBarPanelUI extends PanelUI
             this.panel = new JPanel();
             this.panel.setOpaque(false);
             this.panel.setBorder(new EmptyBorder(0, 0, 0, 0));
-            this.panel.setPreferredSize(new Dimension(215, 100));
-            FlowLayout layout = new FlowLayout(FlowLayout.LEFT, 10, 10);
+            this.panel.setPreferredSize(new Dimension(185, 85));
+            FlowLayout layout = new FlowLayout(FlowLayout.LEFT, 5, 4);
             this.panel.setLayout(layout);
             for (ColorTool aColorButton : getColorToolList())
             {
@@ -115,7 +115,7 @@ public class ColorToolsBarPanelUI extends PanelUI
         public ColorTool(ColorChoice colorChoice)
         {
             this.colorChoice = colorChoice;
-            setPreferredSize(new Dimension(20, 20));
+            setPreferredSize(new Dimension(18, 18));
         }
 
         @Override

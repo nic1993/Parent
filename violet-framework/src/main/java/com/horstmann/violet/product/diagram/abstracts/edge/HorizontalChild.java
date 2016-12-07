@@ -16,6 +16,61 @@ public class HorizontalChild implements IHorizontalChild{
 	private String state;
 	private String condition;
 	private String continuetime;
+	//by tan 后期加的
+	private String name;
+	private String TimeConstraint;
+    private int startPointTime;
+    private int endPointTime;
+
+	
+
+	public int getStartPointTime() {
+		return startPointTime;
+	}
+
+	public void setStartPointTime(int startPointTime) {
+		this.startPointTime = startPointTime;
+	}
+
+	public int getEndPointTime() {
+		return endPointTime;
+	}
+
+	public void setEndPointTime(int endPointTime) {
+		this.endPointTime = endPointTime;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Point2D getStartPoint() {
+		return startPoint;
+	}
+
+	public void setStartPoint(Point2D startPoint) {
+		this.startPoint = startPoint;
+	}
+
+	public Point2D getEndPoint() {
+		return endPoint;
+	}
+
+	public void setEndPoint(Point2D endPoint) {
+		this.endPoint = endPoint;
+	}
+
+	public String getTimeConstraint() {
+		return TimeConstraint;
+	}
+
+	public void setTimeConstraint(String timeConstraint) {
+		TimeConstraint = timeConstraint;
+	}
 
 	public HorizontalChild() {
 		// TODO Auto-generated constructor stub
@@ -45,23 +100,22 @@ public class HorizontalChild implements IHorizontalChild{
 	public void setContinuetime(String continuetime) {
 		this.continuetime = continuetime;
 	}
-
-	@Override
+    @Override
 	public void setStart(Point2D startpoint) {
 		// TODO Auto-generated method stub
 		this.startPoint=startpoint;
 	}
-	@Override
+    @Override
 	public void setEnd(Point2D endpoint) {
 		// TODO Auto-generated method stub
 		this.endPoint=endpoint;
 	}
-	@Override
+    @Override
 	public Point2D getStart() {
 		// TODO Auto-generated method stub
 		return startPoint;
 	}
-	@Override
+    @Override
 	public Point2D getEnd() {
 		// TODO Auto-generated method stub
 		return endPoint;

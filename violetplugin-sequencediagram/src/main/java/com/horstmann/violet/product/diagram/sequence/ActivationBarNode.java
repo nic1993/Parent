@@ -179,7 +179,7 @@ public class ActivationBarNode extends RectangularNode
                         Point2D startingNodeLocation = getLocationOnGraph();
                         Point2D endingNodeLocation = e.getEnd().getLocation();
                         double x = startingNodeLocation.getX() + DEFAULT_WIDTH;
-                        double y = startingNodeLocation.getY() + endingNodeLocation.getY() - CALL_YGAP / 2;
+                        double y = startingNodeLocation.getY() + endingNodeLocation.getY() - CALL_YGAP / 2 ;
                         Point2D p = new Point2D.Double(x, y);
                       //  p = getGraph().getGridSticker().snap(p);
                       
@@ -662,6 +662,7 @@ public class ActivationBarNode extends RectangularNode
         Point2D endingNodePoint = edge.getEndLocation();//endingNodePoint置为边的最后一点
         Class<?> startingNodeClass = (startingNode != null ? startingNode.getClass() : NullType.class);
         Class<?> endingNodeClass = (endingNode != null ? endingNode.getClass() : NullType.class);
+        System.out.println(endingNodeClass);
         // Case 1 : check is call edge doesn't connect already connected nodes
         //情况1：检查消息传递的边是不是连上了已经连在一起的节点
         if (startingNode != null && endingNode != null) {//如果有相连的两个节点
@@ -674,6 +675,9 @@ public class ActivationBarNode extends RectangularNode
         		if (startingNode.equals(anEdgeStartingNode) && endingNode.equals(anEdgeEndingNode)) {
         			return false;
         		}//如果有了相连接的两个点，那么在这2个点之间画callEdge是不合适的
+        		if (startingNode.equals(anEdgeEndingNode) && endingNode.equals(anEdgeStartingNode)) {
+        			return false;
+        		}
         	}
         }
         // Case 2 : classic connection between activation bars
@@ -707,6 +711,7 @@ public class ActivationBarNode extends RectangularNode
             Rectangle2D topRectangle = endingLifeLineNode.getTopRectangle();
             if (startingLifeLineNode != endingLifeLineNode && !topRectangle.contains(endingNodePoint))
             {
+            	System.out.println(111111111);
                 ActivationBarNode newActivationBar = new ActivationBarNode();
                 Point2D edgeStartLocation = edge.getEndLocation();
                 double x = edgeStartLocation.getX();
@@ -730,7 +735,7 @@ public class ActivationBarNode extends RectangularNode
                 ActivationBarNode newActivationBar = new ActivationBarNode();
                 Point2D edgeStartLocation = edge.getStartLocation();
                 double x = edgeStartLocation.getX();
-                double y = edgeStartLocation.getY() + CALL_YGAP / 2;
+                double y = edgeStartLocation.getY() + CALL_YGAP / 2  - 80;
                 Point2D newActivationBarLocation = new Point2D.Double(x, y);
                 startingNode.addChild(newActivationBar, newActivationBarLocation);
                 edge.setEnd(newActivationBar);
@@ -741,19 +746,19 @@ public class ActivationBarNode extends RectangularNode
         // doesn"t exist and need to be created automatically
         if (startingNodeClass.isAssignableFrom(ActivationBarNode.class) && endingNodeClass.isAssignableFrom(NullType.class))
         {
-//        	 ActivationBarNode newActivationBar = new ActivationBarNode();
-//             Point2D edgeStartLocation = edge.getStartLocation();
-//             double x = edgeStartLocation.getX();
-//             double y = edgeStartLocation.getY() + CALL_YGAP / 2;
-//             Point2D newActivationBarLocation = new Point2D.Double(x, y);
-//             startingNode.addChild(newActivationBar, newActivationBarLocation);
-//             edge.setEnd(newActivationBar);
-//             return true;
-          ActivationBarNode newActivationBar = new ActivationBarNode();
-          edge.getStartLocation();
-          startingNode.addChild(newActivationBar, edge.getStartLocation());
-          edge.setEnd(newActivationBar);
-          return true;
+        	 ActivationBarNode newActivationBar = new ActivationBarNode();
+             Point2D edgeStartLocation = edge.getStartLocation();
+             double x = edgeStartLocation.getX();
+             double y = edgeStartLocation.getY() - 80;
+             Point2D newActivationBarLocation = new Point2D.Double(x, y);
+             System.out.println(x+"  "+y);
+             startingNode.addChild(newActivationBar, newActivationBarLocation);
+             edge.setEnd(newActivationBar);
+             return true;
+//          ActivationBarNode newActivationBar = new ActivationBarNode();
+//          edge.getStartLocation();
+//          startingNode.addChild(newActivationBar, edge.getStartLocation());
+//          edge.setEnd(newActivationBar);
         }
         return false;
     }

@@ -69,10 +69,7 @@ public class HomePanel extends JPanel
         	this.flowchartPanel=new JPanel(){
         	 protected void paintComponent(Graphics g) {
         		  super.paintComponent(g);
-        		    ImageIcon icon = new ImageIcon("C:\\Users\\Xiaole\\Desktop"
-        		    		+ "\\ÏîÄ¿´úÂë\\violetumleditor-master\\"
-        		    		+ "violetproduct-swing\\src\\site\\"
-        		    		+ "resources\\icons\\flowchart.PNG");
+        		    ImageIcon icon = new ImageIcon("src\\site\\resources\\icons\\flowchart.png");
         		    Image img = icon.getImage();
         	        setBackground(Color.WHITE);
         	        if (img != null) {

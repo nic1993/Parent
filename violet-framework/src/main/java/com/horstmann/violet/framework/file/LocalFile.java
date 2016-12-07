@@ -21,6 +21,7 @@ public class LocalFile implements IFile
      */
     public LocalFile(File file) throws IOException
     {
+    	
         init(file.getAbsolutePath());
     }
 

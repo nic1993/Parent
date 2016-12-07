@@ -75,7 +75,7 @@ public class TimingDiagramPlugin implements IDiagramPlugin, Violet016FileFilterE
     public Map<String, String> getMappingToKeepViolet016Compatibility()
     {
         Map<String, String> replaceMap = new HashMap<String, String>();
-        replaceMap.put("com.horstmann.violet.State_Lifeline", State_Lifeline.class.getName());
+        replaceMap.put("com.horstmann.violet.State_Lifeline", StateLifeline.class.getName());
         replaceMap.put("com.horstmann.violet.Stateline", StateLine.class.getName());
         replaceMap.put("com.horstmann.violet.TimingDiagramGraph", TimingDiagramGraph.class.getName());
         replaceMap.put("com.horstmann.violet.SendMessageEdge", SendMessageEdge.class.getName());

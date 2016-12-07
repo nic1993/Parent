@@ -27,13 +27,16 @@ public class FragmentType extends SerializableEnumeration{
 		 if (this==PAR) 
 			   g2.drawString("par",TypeLocationx,TypeLocationy);
 		 if (this==LOOP) 
-			   g2.drawString("loop",TypeLocationx,TypeLocationy);		 				
+			   g2.drawString("loop",TypeLocationx,TypeLocationy);
+		 if (this==REF) 
+			   g2.drawString("ref",TypeLocationx,TypeLocationy);
 	 }
 	 public static final FragmentType ALT = new FragmentType();
 	 public static final FragmentType OPT = new FragmentType();
 	 public static final FragmentType BREAK = new FragmentType();
 	 public static final FragmentType PAR = new FragmentType();
 	 public static final FragmentType LOOP = new FragmentType(); 
+	 public static final FragmentType REF = new FragmentType();
 	 public static int Distancex=10;
 	 public static int Distancey=15;
 	 

@@ -43,11 +43,11 @@ public class DragCombinedFragmentBorderLineBehavior extends AbstractEditorPartBe
         {
             return;
         }
-        GraphTool selectedTool = this.selectionHandler.getSelectedTool();
-        if (!INode.class.isInstance(selectedTool.getNodeOrEdge()))
-        {       	
-            return;
-        }
+//        GraphTool selectedTool = this.selectionHandler.getSelectedTool();
+//        if (!INode.class.isInstance(selectedTool.getNodeOrEdge()))
+//        {       	
+//            return;
+//        }
         List<INode> selectedNodes = this.selectionHandler.getSelectedNodes(); 
         if(selectedNodes.size()!=1)
         {

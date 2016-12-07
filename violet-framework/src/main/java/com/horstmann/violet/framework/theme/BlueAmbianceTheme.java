@@ -58,7 +58,7 @@ public class BlueAmbianceTheme extends AbstractTheme
 
             public ColorUIResource getSecondary3()
             {
-                return new ColorUIResource(new Color(224, 231, 242));
+                return new ColorUIResource(new Color(233,233,233));
             }
         };
         PgsLookAndFeel.setCurrentTheme(vistaTheme);
@@ -85,6 +85,11 @@ public class BlueAmbianceTheme extends AbstractTheme
     {
         return new Color(224, 231, 242);
     }
+    
+    public Color getBackgroudcolor1()
+    {
+    	return new Color(233,233,233);
+    }
 
     public Font getMenubarFont()
     {
@@ -93,12 +98,13 @@ public class BlueAmbianceTheme extends AbstractTheme
 
     public Color getMenubarBackgroundColor()
     {
-        return new Color(73, 103, 145);
+//        return new Color(73, 103, 145);
+    	return new Color(222,222,222);
     }
 
     public Color getMenubarForegroundColor()
     {
-        return Color.WHITE;
+        return Color.white;
     }
 
     public Color getRolloverButtonDefaultColor()
@@ -133,7 +139,7 @@ public class BlueAmbianceTheme extends AbstractTheme
 
     public Color getSidebarElementBackgroundColor()
     {
-        return getBackgroundColor();
+        return getBackgroudcolor1();
     }
 
     public Color getSidebarElementTitleBackgroundEndColor()

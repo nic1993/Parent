@@ -21,6 +21,8 @@
 
 package com.horstmann.violet.framework.theme;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Insets;
 import java.util.HashMap;
@@ -95,7 +97,11 @@ public abstract class AbstractTheme implements ITheme
      * Inits tabbed pane look and feel
      */
     private void updateTabbedPaneUI() {
-        UIManager.put("TabbedPane.contentBorderInsets", new Insets(1, 1, 1, 1));
+        UIManager.put("TabbedPane.contentBorderInsets", new Insets(0, 0, 0,0));
+        UIManager.put("TabbedPane.selected", Color.white);
+        UIManager.put("TabbedPane.background", new Color(246,246,246));
+        UIManager.put("TabbedPane.font", new Font("ËÎÌו", Font.PLAIN, 16));
+        UIManager.put("TabbedPane.tabAreaBackground", Color.red);
     }
 
     /**
@@ -122,7 +128,7 @@ public abstract class AbstractTheme implements ITheme
 
         defaults.putAll(m);
     }
-
+   
 
 
     /**

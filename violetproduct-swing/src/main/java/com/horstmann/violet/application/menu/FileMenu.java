@@ -23,7 +23,10 @@ package com.horstmann.violet.application.menu;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -41,19 +44,29 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.SortedMap;
 import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTree;
 import javax.swing.filechooser.FileSystemView;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
 
 import com.horstmann.violet.application.ApplicationStopper;
+import com.horstmann.violet.application.Stepone.SequenceTabPanel;
+import com.horstmann.violet.application.Stepone.UsecaseTabPanel;
+import com.horstmann.violet.application.gui.GBC;
 import com.horstmann.violet.application.gui.MainFrame;
 import com.horstmann.violet.application.menu.util.zhangjian.UMLTransfrom.CreateActivityDiagramEAXml;
 import com.horstmann.violet.application.menu.util.zhangjian.UMLTransfrom.CreateActivityDiagramVioletXML;
@@ -71,6 +84,7 @@ import com.horstmann.violet.application.menu.util.zhangjian.UMLTransfrom.readSta
 import com.horstmann.violet.application.menu.util.zhangjian.UMLTransfrom.readStateXMLFromEA;
 import com.horstmann.violet.application.menu.util.zhangjian.UMLTransfrom.readUcaseXMLFormViolet;
 import com.horstmann.violet.application.menu.util.zhangjian.UMLTransfrom.readUseCaseXMLFromEA;
+import com.horstmann.violet.application.menu.xiaole.SequenceTransfrom.MainTransEAToViolet;
 import com.horstmann.violet.framework.dialog.DialogFactory;
 import com.horstmann.violet.framework.file.GraphFile;
 import com.horstmann.violet.framework.file.IFile;
@@ -445,21 +459,22 @@ public class FileMenu extends JMenu
         });
     }
     /*
-     * 张建新加
+     * 张建新加  selectedFile(选中的文件)--->graphFile(转化成我们平台的格式) flag来表示我们打开的是ea，还是我们的平台xml
      */
     public IFile exchangeFile( IFile selectedFile,IGraphFile graphFile,boolean flag) throws Exception{
     	String url =selectedFile.getDirectory()+"\\"+selectedFile.getFilename();
 //    	String base="D:\\ModelDriverProjectFile";
     	 File ffff =FileSystemView.getFileSystemView().getHomeDirectory();
+    	 //获得目录
  		String s =ffff .getAbsolutePath();
 // 		 String baseUrl ="D://ModelDriverProjectFile";
  		String base=s+"\\ModelDriverProjectFile";
-    	String type=(selectedFile.getFilename().split("\\."))[1];
+    	String type=(selectedFile.getFilename().split("\\."))[1];//第一个表示我们文件的类型
     	String path = null;
-    	File ff=null;
-    	if(flag==true){
+    	File ff=null;//用于生成在d盘中文件
+    	if(flag==true){//选择的文件是平台保存的文件XML格式
     		 graphFile = new GraphFile(selectedFile);
-    		//选择的文件是平台保存的文件XML格式
+    		
         	if("class".equals(type)){
         		path=base+"/ClassDiagram/";
         	 	graphFile.AutoSave(selectedFile, path+"Violet/");
@@ -522,8 +537,7 @@ public class FileMenu extends JMenu
         		StringBuffer name = dealEAFileName(selectedFile);
         		cs.create(rs, path+"EA/"+name);
         	}
-    	}else if(flag==false){
-    		System.out.println("张建是弱智");
+    	}else if(flag==false){ 		
     		System.out.println(type);
     		String name="";
     		//选择的文件是EA格式的文件 
@@ -538,7 +552,7 @@ public class FileMenu extends JMenu
         			ff.mkdirs();
         		}
         	
-        		 name=selectedFile.getFilename().replaceAll("EA", "");	
+        		name=selectedFile.getFilename().replaceAll("EA", "");	
         		c.create(rc, path+"Violet/"+name);
         		
         		
@@ -556,6 +570,17 @@ public class FileMenu extends JMenu
         		
         	}else if("seq".equals(type)){
         		path=base+"/SequenceDiagram/";
+        		
+        		ff =new File(path+"Violet/");
+        		if(!ff.exists()){
+        			ff.mkdirs();
+        		}
+        		name=selectedFile.getFilename().replaceAll("EA","");
+        		directory=selectedFile.getDirectory();
+        		fileName=selectedFile.getFilename();
+        		System.out.println("@@"+directory);
+        		MainTransEAToViolet.TransEAToViolet(url,path+"Violet/"+name);
+        		
         	}else if("state".equals(type)){
         		path=base+"/StateDiagram/";
         		readStateXMLFromEA rs =new readStateXMLFromEA(url,selectedFile);
@@ -591,7 +616,7 @@ public class FileMenu extends JMenu
         		name=selectedFile.getFilename().replaceAll("EA", "");	
         		cs.create(rs, path+"Violet/"+name);
         	}
-    		File f =new File(path+"Violet/"+name);
+    		File f =new File(path+"Violet/"+name);		
     		deleteFileFirstLine(f);
     		selectedFile =new LocalFile(f);
 //    		System.out.println("改变的文件"+selectedFile.getDirectory()+"\\"+selectedFile.getFilename());
@@ -627,7 +652,7 @@ public class FileMenu extends JMenu
 		}
     }
     /*
-     * 张建
+     * 张建   处理ea文件 生成EASequence.seq.violet类似的文件名
      */
     private StringBuffer dealEAFileName(IFile selectedFile) {
 		String[] ss =selectedFile.getFilename().split("\\.");
@@ -698,10 +723,12 @@ public class FileMenu extends JMenu
                    }
                    selectedFile = fileOpener.getFileDefinition();//返回一个绝对路径的文件   
                    boolean flag=!(selectedFile.getFilename().contains("EA"));//是EA格式的文件
+                   //directory = selectedFile.getDirectory();
+                  // System.out.println(directory+"@@<>");
                 
                    //如果是平台保存的XML文件
                    IGraphFile graphFile = null;
-//                 //增加转换的方法
+//                 //增加转换的方法11
              
                    selectedFile= exchangeFile(selectedFile, graphFile , flag);
              
@@ -710,6 +737,119 @@ public class FileMenu extends JMenu
                    //显示文件图形
                    IWorkspace workspace = new Workspace(graphFile);
                    mainFrame.addTabbedPane(workspace);
+                   
+                   String name=(selectedFile.getFilename().split("\\."))[0]; //导入名字
+                   String type=(selectedFile.getFilename().split("\\."))[1]; //导入类型
+                   if("seq".equals(type)){
+                	   if(mainFrame.getListSequenceTabPanel().size() != 0){
+                   		for(SequenceTabPanel sequenceTabPanel:mainFrame.getListSequenceTabPanel())
+                   		{
+                   			sequenceTabPanel.getPanel().setBackground(new Color(246,246,246));
+                   			sequenceTabPanel.getDeletelabel().setIcon(null);
+                   		}
+                   		mainFrame.getListSequenceTabPanel().get(mainFrame.getListSequenceTabPanel().size()-1).getPanel().setBackground(Color.white);
+                   		mainFrame.getListSequenceTabPanel().get(mainFrame.getListSequenceTabPanel().size()-1).getDeletelabel().setIcon(new ImageIcon("resources\\icons\\22x22\\beforeClose.png"));
+                   		}
+                	   JTree sequencetree = mainFrame.getsequencetree().getSequencetree();
+                   	   DefaultTreeModel sequencetreemodel = mainFrame.getsequencetree().getSequencetreemodel();
+                   	   DefaultMutableTreeNode sequencetreerootnode = mainFrame.getsequencetree().getSequencetreerootnode();
+                   	
+						DefaultMutableTreeNode node=new DefaultMutableTreeNode(name);
+						sequencetreemodel.insertNodeInto(node, sequencetreerootnode, sequencetreerootnode.getChildCount());
+						TreePath path=new TreePath(sequencetreerootnode.getPath());
+						if(!sequencetree.isVisible(path)){
+							sequencetree.makeVisible(path);
+						}
+						sequencetree.getSelectionModel().setSelectionPath(new TreePath(node.getPath()));
+						Map<DefaultMutableTreeNode, JPanel> hashMap = mainFrame.getsequencetree().getHashMap();
+						int length = mainFrame.getStepOneCenterSequenceTabbedPane().getSequenceDiagramTabbedPane().size() - 1;
+						hashMap.put(node, mainFrame.getStepOneCenterSequenceTabbedPane().getSequenceDiagramTabbedPane().get(length));
+						int count = mainFrame.getStepOneCenterSequenceTabbedPane().getTabCount();
+						mainFrame.getListSequenceTabPanel().get(count - 1).getTitlelabel().setText(name+"  ");
+						mainFrame.getStepOneCenterSequenceTabbedPane().setSelectedComponent(hashMap.get(node));	
+						
+						//切换界面
+						JLabel sequenceLabel =  new JLabel("顺序图是将交互关系表示为一个二维图。纵向是时间轴，时间沿竖线向下延伸。横向轴代表了在协作中各独立对象的类元角色。");
+						sequenceLabel.setFont(new Font("宋体", Font.PLAIN, 16));
+						mainFrame.getOpreationPart().validate();
+						mainFrame.getpanel().setVisible(true);
+				   		mainFrame.getinformationPanel().setVisible(true);
+				   		mainFrame.getbotoomJSplitPane().setDividerLocation(0.7);
+				   		mainFrame.getbotoomJSplitPane().setDividerSize(4);
+				   		mainFrame.getReduceOrEnlargePanel().setVisible(true);
+						mainFrame.getCenterTabPanel().removeAll();
+						mainFrame.getCenterTabPanel().add(mainFrame.getStepOneCenterSequenceTabbedPane());
+						mainFrame.getCenterTabPanel().updateUI();
+						mainFrame.getpanel().removeAll();
+						mainFrame.getpanel().setLayout(new GridLayout(1, 1));
+						mainFrame.getpanel().add(mainFrame.getOperationButton());
+						mainFrame.getOperationButton().getOtherPanel().removeAll();
+						mainFrame.getOperationButton().getOtherPanel().setLayout(new GridBagLayout());
+						mainFrame.getOperationButton().getOtherPanel().add(sequenceLabel,new GBC(0, 0).setFill(GBC.BOTH).setWeight(1, 0).setInsets(10,10,10,10));
+						mainFrame.getpanel().updateUI();
+						mainFrame.getinformationPanel().removeAll();
+						mainFrame.getinformationPanel().setLayout(new GridLayout(1, 1));
+						mainFrame.getinformationPanel().add(mainFrame.getouOutputinformation());
+						mainFrame.getReduceOrEnlargePanel().setLayout(new GridLayout(1, 1));
+						mainFrame.getReduceOrEnlargePanel().add(mainFrame.getstepOneCenterRightPanel());
+						mainFrame.getOpreationPart().revalidate();
+                	   
+                   }
+                   if("ucase".equals(type)){
+                	   if(mainFrame.getListUsecaseTabPanel().size() != 0){
+                   		for(UsecaseTabPanel usecaseTabPanel:mainFrame.getListUsecaseTabPanel())
+                   		{
+                   			usecaseTabPanel.getPanel().setBackground(new Color(246,246,246));
+                   			usecaseTabPanel.getDeletelabel().setIcon(null);
+                   		}
+                   		mainFrame.getListUsecaseTabPanel().get(mainFrame.getListUsecaseTabPanel().size()-1).getPanel().setBackground(Color.white);
+                   		mainFrame.getListUsecaseTabPanel().get(mainFrame.getListUsecaseTabPanel().size()-1).getDeletelabel().setIcon(new ImageIcon("resources\\icons\\22x22\\beforeClose.png"));
+                   		}
+                	    JTree usecasetree = mainFrame.getUsecaseTree().getUsecasetree();
+                   	    DefaultTreeModel usecasetreemodel = mainFrame.getUsecaseTree().getUsecasetreemodel();
+                      	DefaultMutableTreeNode usecasetreerootnode = mainFrame.getUsecaseTree().getUsecasetreerootnode();                        
+						DefaultMutableTreeNode node=new DefaultMutableTreeNode(name);
+						usecasetreemodel.insertNodeInto(node, usecasetreerootnode, usecasetreerootnode.getChildCount());
+						TreePath path=new TreePath(usecasetreerootnode.getPath());
+						if(!usecasetree.isVisible(path)){
+							usecasetree.makeVisible(path);
+						}
+						usecasetree.getSelectionModel().setSelectionPath(new TreePath(node.getPath()));
+						Map<DefaultMutableTreeNode, JPanel> hashMap = mainFrame.getUsecaseTree().getHashMap();
+						int length = mainFrame.getStepOneCenterUseCaseTabbedPane().getUsecaseDiagramTabbedPane().size() - 1;
+						hashMap.put(node, mainFrame.getStepOneCenterUseCaseTabbedPane().getUsecaseDiagramTabbedPane().get(length));
+						int count = mainFrame.getStepOneCenterUseCaseTabbedPane().getTabCount();
+						mainFrame.getListUsecaseTabPanel().get(count - 1).getTitlelabel().setText(name+"  ");
+						mainFrame.getStepOneCenterUseCaseTabbedPane().setSelectedComponent(hashMap.get(node));
+						mainFrame.getStepOneCenterUseCaseTabbedPane().updateUI();
+						
+						//切换界面
+						JLabel usecasejJLabel = new JLabel("用例图是指由参与者（Actor）、用例（Use Case）以及它们之间的关系构成的用于描述系统功能的视图。");
+						usecasejJLabel.setFont(new Font("宋体", Font.PLAIN, 16));
+						mainFrame.getOpreationPart().validate();
+						mainFrame.getpanel().setVisible(true);
+				   		mainFrame.getinformationPanel().setVisible(true);
+				   		mainFrame.getbotoomJSplitPane().setDividerLocation(0.7);
+				   		mainFrame.getbotoomJSplitPane().setDividerSize(4);
+				   		mainFrame.getReduceOrEnlargePanel().setVisible(true);
+						mainFrame.getCenterTabPanel().removeAll();
+						mainFrame.getCenterTabPanel().add(mainFrame.getStepOneCenterUseCaseTabbedPane());
+						mainFrame.getCenterTabPanel().updateUI();	
+						mainFrame.getpanel().removeAll();
+						mainFrame.getpanel().setLayout(new GridLayout(1, 1));
+						mainFrame.getpanel().add(mainFrame.getOperationButton());
+						mainFrame.getOperationButton().getOtherPanel().removeAll();
+						mainFrame.getOperationButton().getOtherPanel().setLayout(new GridBagLayout());
+						mainFrame.getOperationButton().getOtherPanel().add(usecasejJLabel,new GBC(0, 0).setFill(GBC.BOTH).setWeight(1, 0).setInsets(10,10,10,10));
+						mainFrame.getpanel().updateUI();
+						mainFrame.getinformationPanel().removeAll();
+						mainFrame.getinformationPanel().setLayout(new GridLayout(1, 1));
+						mainFrame.getinformationPanel().add(mainFrame.getouOutputinformation());
+						mainFrame.getReduceOrEnlargePanel().setLayout(new GridLayout(1, 1));
+						mainFrame.getReduceOrEnlargePanel().add(mainFrame.getstepOneCenterRightPanel());
+						mainFrame.getOpreationPart().revalidate();
+						
+                   }
                    userPreferencesService.addOpenedFile(graphFile);
                    userPreferencesService.addRecentFile(graphFile);
                }
@@ -723,7 +863,8 @@ public class FileMenu extends JMenu
                }
            }
        });
-       if (this.fileChooserService == null) this.fileOpenItem.setEnabled(false);
+       if (this.fileChooserService == null) 
+    	   this.fileOpenItem.setEnabled(false);
 
     }
       
@@ -771,7 +912,7 @@ public class FileMenu extends JMenu
             {
                 String name = aDiagramPlugin.getName();
                 name = name.replaceFirst("[0-9]*\\.", "");
-                JMenuItem item = new JMenuItem(name);
+                final JMenuItem item = new JMenuItem(name);
                 ImageIcon sampleDiagramImage = getSampleDiagramImage(aDiagramPlugin);
                 if (sampleDiagramImage != null)
                 {
@@ -781,11 +922,81 @@ public class FileMenu extends JMenu
                 {
                     public void actionPerformed(ActionEvent event)
                     {
-                        Class<? extends IGraph> graphClass = aDiagramPlugin.getGraphClass();
-                        IGraphFile graphFile = new GraphFile(graphClass);
+                    	String itemname=item.getText().substring(0, 2);
+                    	if(itemname.equals("Us")){
+                    		if(mainFrame.getListUsecaseTabPanel().size() != 0){
+                    		for(UsecaseTabPanel usecaseTabPanel:mainFrame.getListUsecaseTabPanel())
+                    		{
+                    			usecaseTabPanel.getPanel().setBackground(new Color(246,246,246));
+                    			usecaseTabPanel.getDeletelabel().setIcon(null);
+                    		}
+                    		}
+                    	}
+                    	if(itemname.equals("Se")){
+                    		if(mainFrame.getListSequenceTabPanel().size() != 0){
+                    		for(SequenceTabPanel sequenceTabPanel:mainFrame.getListSequenceTabPanel())
+                    		{
+                    			sequenceTabPanel.getPanel().setBackground(new Color(246,246,246));
+                    			sequenceTabPanel.getDeletelabel().setIcon(null);
+                    		}
+                    		}
+                    	}
+                    	Class<? extends IGraph> graphClass = aDiagramPlugin.getGraphClass();
+                    	IGraphFile graphFile = new GraphFile(graphClass);
                         IWorkspace diagramPanel = new Workspace(graphFile);
                         mainFrame.addTabbedPane(diagramPanel);
+                    	if(itemname.equals("Se")){
+                        	Icon icon = new ImageIcon("resources/icons/22x22/open.png");
+							String str = (String) JOptionPane.showInputDialog(null,"请输入顺序图名称:\n","title",JOptionPane.PLAIN_MESSAGE,icon,null,"在这输入");
+                        	mainFrame.getouOutputinformation().geTextArea().append("新建顺序图: "+str+".seq.violet.xml\n");
+							
+                        	JTree sequencetree = mainFrame.getsequencetree().getSequencetree();
+                        	DefaultTreeModel sequencetreemodel = mainFrame.getsequencetree().getSequencetreemodel();
+                        	DefaultMutableTreeNode sequencetreerootnode = mainFrame.getsequencetree().getSequencetreerootnode();
+                        	
+							DefaultMutableTreeNode node=new DefaultMutableTreeNode(str);
+							sequencetreemodel.insertNodeInto(node, sequencetreerootnode, sequencetreerootnode.getChildCount());
+							TreePath path=new TreePath(sequencetreerootnode.getPath());
+							if(!sequencetree.isVisible(path)){
+								sequencetree.makeVisible(path);
+							}
+							sequencetree.getSelectionModel().setSelectionPath(new TreePath(node.getPath()));
+							Map<DefaultMutableTreeNode, JPanel> hashMap = mainFrame.getsequencetree().getHashMap();
+							int length = mainFrame.getStepOneCenterSequenceTabbedPane().getSequenceDiagramTabbedPane().size() - 1;
+							hashMap.put(node, mainFrame.getStepOneCenterSequenceTabbedPane().getSequenceDiagramTabbedPane().get(length));
+							int count = mainFrame.getStepOneCenterSequenceTabbedPane().getTabCount();
+							mainFrame.getListSequenceTabPanel().get(count - 1).getTitlelabel().setText(str+"  ");
+							mainFrame.getStepOneCenterSequenceTabbedPane().setSelectedComponent(hashMap.get(node));
+							mainFrame.getStepOneCenterSequenceTabbedPane().updateUI();	
+							mainFrame.getStepOneCenterSequenceTabbedPane().setVisible(true);
+                    	}    
+                    	if(itemname.equals("Us")){
+                        	Icon icon = new ImageIcon("resources/icons/22x22/open.png");
+							String str = (String) JOptionPane.showInputDialog(null,"请输入顺序图名称:\n","title",JOptionPane.PLAIN_MESSAGE,icon,null,"在这输入");
+							mainFrame.getouOutputinformation().geTextArea().append("新建用例图: "+str+".seq.violet.xml\n");
+							
+                        	JTree usecasetree = mainFrame.getUsecaseTree().getUsecasetree();
+                        	DefaultTreeModel usecasetreemodel = mainFrame.getUsecaseTree().getUsecasetreemodel();
+                        	DefaultMutableTreeNode usecasetreerootnode = mainFrame.getUsecaseTree().getUsecasetreerootnode();                        
+							DefaultMutableTreeNode node=new DefaultMutableTreeNode(str);
+							usecasetreemodel.insertNodeInto(node, usecasetreerootnode, usecasetreerootnode.getChildCount());
+							TreePath path=new TreePath(usecasetreerootnode.getPath());
+							if(!usecasetree.isVisible(path)){
+								usecasetree.makeVisible(path);
+							}
+							usecasetree.getSelectionModel().setSelectionPath(new TreePath(node.getPath()));
+							Map<DefaultMutableTreeNode, JPanel> hashMap = mainFrame.getUsecaseTree().getHashMap();
+							int length = mainFrame.getStepOneCenterUseCaseTabbedPane().getUsecaseDiagramTabbedPane().size() - 1;
+							hashMap.put(node, mainFrame.getStepOneCenterUseCaseTabbedPane().getUsecaseDiagramTabbedPane().get(length));
+							int count = mainFrame.getStepOneCenterUseCaseTabbedPane().getTabCount();
+							mainFrame.getListUsecaseTabPanel().get(count - 1).getTitlelabel().setText(str+"  ");
+							mainFrame.getStepOneCenterUseCaseTabbedPane().setSelectedComponent(hashMap.get(node));
+							mainFrame.getStepOneCenterUseCaseTabbedPane().updateUI();
+							mainFrame.getStepOneCenterUseCaseTabbedPane().setVisible(true);
+                    	}
+                    	
                     }
+                    
                 });
                 categorySubMenu.add(item);
             }
@@ -911,8 +1122,19 @@ public class FileMenu extends JMenu
                 this.fileDsaveItem.setEnabled(false);
             }
         }
+   
+    
+    public static String getDirectory() {
+		return directory;
+	}
+    public static String getFileName() {
+		return fileName;
+	}
 
-    /** The file chooser to use with with menu */
+	public static String fileName;
+	public static String directory;
+	 
+	/** The file chooser to use with with menu */
     @InjectedBean
     public IFileChooserService fileChooserService;
 

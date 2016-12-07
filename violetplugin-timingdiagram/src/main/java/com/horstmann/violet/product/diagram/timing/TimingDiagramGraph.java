@@ -61,7 +61,7 @@ public class TimingDiagramGraph extends AbstractGraph
     static
     {
         ResourceBundle rs = ResourceBundle.getBundle(TimingDiagramConstant.TIMING_DIAGRAM_STRINGS, Locale.getDefault());       
-        State_Lifeline lifelineNode = new State_Lifeline();//新创建一条生命线
+        StateLifeline lifelineNode = new StateLifeline();//新创建一条生命线
         lifelineNode.setToolTip(rs.getString("node0.tooltip"));//Object lifeline
         NODE_PROTOTYPES.add(lifelineNode);        
         SendMessageEdge sMessageEdge =new SendMessageEdge();

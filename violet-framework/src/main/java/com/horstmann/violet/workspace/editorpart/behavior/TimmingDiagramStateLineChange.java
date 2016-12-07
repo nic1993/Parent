@@ -65,7 +65,8 @@ public class TimmingDiagramStateLineChange extends AbstractEditorPartBehavior{
 	           return;//跳出函数
 	        }  		     
 	        selectedNode=selectedNodes.get(0);       	     
-	        String str1= "class com.horstmann.violet.product.diagram.timing.State_Lifeline";
+	        String str1= "class com.horstmann.violet.product.diagram.timing.StateLifeline";
+	        //如果选中的不是上面的类
 	        if (!selectedNode.getClass().toString().equals(str1)){
 	           return;
 	        } 

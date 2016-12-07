@@ -26,6 +26,16 @@ public interface IHorizontalChild {
     void setContinuetime(String continuetime);
     
     String getContinuetime();
+    
+    
+    //后面4个 by tan 后期添加的
+    int getStartPointTime();
+
+	void setStartPointTime(int startPointTime) ;
+
+	int getEndPointTime();
+
+	void setEndPointTime(int endPointTime);
 
     
   

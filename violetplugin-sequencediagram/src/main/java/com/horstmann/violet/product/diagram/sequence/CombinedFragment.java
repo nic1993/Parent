@@ -188,23 +188,23 @@ public void setFragmentParts(List<FragmentPart> fragmentParts) {
 public void SetFragmentPartBorderLine()
 {      
 	  for(FragmentPart fragmentpart : getFragmentParts())
-	  {  
+	  { 
 		  double locationX=getLocation().getX();
 		  double locationY=getLocation().getY();
 		  int fragmentpartIndex=fragmentParts.indexOf(fragmentpart);
-		  double distanceY=fragmentpartIndex*Default_Distance;//
+		  double distanceY=fragmentpartIndex*Default_Distance;
 		  Point2D lineStartPoint=new Point2D.Double(locationX,locationY+distanceY);
 		  Point2D lineEndPoint=new Point2D.Double(locationX+getWidth(),locationY+distanceY);
 		  Line2D borderline=new Line2D.Double(lineStartPoint,lineEndPoint);	
 		  if(!fragmentpart.isBorderlinehaschanged())
-		  {			
+		  {
 		  fragmentpart.setBorderline(borderline); 
 		  }
 	  } 		   		  			  
 	  if(fragmentParts.size()*Default_Distance>=getHeight())
 	  {
 	  if(fragmentParts.size()>2)
-	 setHeight(fragmentParts.size()*Default_Distance);
+	      setHeight(fragmentParts.size()*Default_Distance);
 	  }   
 }  
 @Override

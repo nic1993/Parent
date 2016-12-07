@@ -3,6 +3,7 @@ package com.horstmann.violet.application.gui;
 import java.awt.GridBagLayout;
 import java.io.SequenceInputStream;
 
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
@@ -26,7 +27,7 @@ public class StepOneCenterTabbedPane extends JTabbedPane{
 		timingDiagramTabbedPane.setLayout(new GridBagLayout());
 		stateDiagramTabbedPane.setLayout(new GridBagLayout());
 		usecaseDiagramTabbedPane.setLayout(new GridBagLayout());
-		this.add("Ë³ÐòÍ¼",sequenceDiagramTabbedPane);
+		this.addTab("Ë³ÐòÍ¼",sequenceDiagramTabbedPane);
 		this.add("Ê±ÐòÍ¼",timingDiagramTabbedPane);
 		this.add("×´Ì¬Í¼",stateDiagramTabbedPane);
 		this.add("ÓÃÀýÍ¼",usecaseDiagramTabbedPane);

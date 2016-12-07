@@ -104,10 +104,7 @@ public class ModelTransformationPanel extends JPanel{
 	    			 }
 	    		   }
 	    		}
-	    	});
-				       //
-			
-	    
+	    	});    
 		// TODO Auto-generated method stub
 	    		
 	}
@@ -141,18 +138,18 @@ public class ModelTransformationPanel extends JPanel{
 
 	public void initFileList() {
 		File[] sdFilelists = getAllFileByDiagramType("sequence");
-		File[] tdFilelists= getAllFileByDiagramType("timing");	
+	//	File[] tdFilelists= getAllFileByDiagramType("timing");	
 	   // File[] uppaalFilelists=getAllFileByDiagramType("UPPAAL2");
 	    for(File sdFile : sdFilelists)
 	    {
 	    	String fileName=sdFile.getName();
 	    	sdlists.add(fileName);
 	    }
-	    for(File tdFile : tdFilelists)
-	    {
-	    	String fileName=tdFile.getName();
-	    	tdlists.add(fileName);
-	    }
+//	    for(File tdFile : tdFilelists)
+//	    {
+//	    	String fileName=tdFile.getName();
+//	    	tdlists.add(fileName);
+//	    }
 //	    for(File uppaalFile:uppaalFilelists)
 //	    {
 //	    	String fileName=uppaalFile.getName();
@@ -166,7 +163,7 @@ public class ModelTransformationPanel extends JPanel{
 	  */
 	 public   File[] getAllFileByDiagramType(String type){
 		 File f =FileSystemView.getFileSystemView().getHomeDirectory();
-		String s =f .getAbsolutePath();
+		String s =f.getAbsolutePath();
 //		 String baseUrl ="D://ModelDriverProjectFile";
 		String baseUrl =s+"//ModelDriverProjectFile";
 //		File bFile = new File(baseUrl);

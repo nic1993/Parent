@@ -43,7 +43,7 @@ public class DecisionNode extends RectangularNode
      */
     public DecisionNode()
     {
-        condition = new MultiLineString();
+        condition1 = new MultiLineString();
     }
 
     @Override
@@ -89,7 +89,7 @@ public class DecisionNode extends RectangularNode
     @Override
     public Rectangle2D getBounds()
     {
-        Rectangle2D b = condition.getBounds();
+        Rectangle2D b = condition1.getBounds();
         Rectangle2D textRect = new Rectangle2D.Double(0, 0, Math.max(DEFAULT_WIDTH, b.getWidth()), Math.max(DEFAULT_HEIGHT,
                 b.getHeight()));
         double w1 = textRect.getWidth() / 2;
@@ -122,11 +122,11 @@ public class DecisionNode extends RectangularNode
         
         // Draw text
         Rectangle2D shapeRect = getBounds();
-        Rectangle2D textRect = condition.getBounds();
+        Rectangle2D textRect = condition1.getBounds();
         textRect.setRect(shapeRect.getCenterX() - textRect.getWidth() / 2, shapeRect.getCenterY() - textRect.getHeight() / 2,
                 textRect.getWidth(), textRect.getHeight());
         g2.setColor(getTextColor());
-        condition.draw(g2, textRect);
+        condition1.draw(g2, textRect);
 
         // Restore first color
         g2.setColor(oldColor);
@@ -154,23 +154,23 @@ public class DecisionNode extends RectangularNode
     }
 
     /**
-     * Sets the condition property value.
+     * Sets the condition1 property value.
      * 
-     * @param newValue the branch condition
+     * @param newValue the branch condition1
      */
-    public void setCondition(MultiLineString newValue)
+    public void setcondition1(MultiLineString newValue)
     {
-        condition = newValue;
+        condition1 = newValue;
     }
 
     /**
-     * Gets the condition property value.
+     * Gets the condition1 property value.
      * 
-     * @return the branch condition
+     * @return the branch condition1
      */
-    public MultiLineString getCondition()
+    public MultiLineString getcondition1()
     {
-        return condition;
+        return condition1;
     }
 
     /**
@@ -180,11 +180,11 @@ public class DecisionNode extends RectangularNode
     public DecisionNode clone()
     {
         DecisionNode cloned = (DecisionNode) super.clone();
-        cloned.condition = (MultiLineString) condition.clone();
+        cloned.condition1 = (MultiLineString) condition1.clone();
         return cloned;
     }
 
-    private MultiLineString condition;
+    private MultiLineString condition1;
 
     private static int DEFAULT_WIDTH = 30;
     private static int DEFAULT_HEIGHT = 20;

@@ -17,14 +17,16 @@ public class FragmentTypeEditor extends CustomPropertyEditorSupport{
 		    "opt",
 		    "break",
 		    "par",
-		    "loop"					
+		    "loop",
+		    "ref"
 		};
 	public static final Object[] VALUES={
 		FragmentType.ALT,
 		FragmentType.OPT,
 		FragmentType.BREAK,
 		FragmentType.PAR,
-		FragmentType.LOOP				
+		FragmentType.LOOP,
+		FragmentType.REF
 	};
 				
 }

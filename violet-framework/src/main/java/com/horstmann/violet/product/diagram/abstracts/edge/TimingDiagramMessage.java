@@ -22,13 +22,24 @@ public abstract class TimingDiagramMessage extends AbstractMessageEdge{
  private String EndState;
  private int belongtostartflag;
  private int belongtoendflag;
- public TimingDiagramMessage(){	 
+ //by tan后期添加的
+ private String StartState;
+ public String getStartState() {
+	return StartState;
+}
+
+public void setStartState(String startState) {
+	this.StartState = startState;
+}
+
+public TimingDiagramMessage(){	 
 		name="";	
 		TimeConstraint="";
 		Condition="";
 		StarttimePoint=0;
 		EndtimePoint=0;
 		EndState="";
+		StartState="";
 	}
  
    public int getStarttimePoint() {
@@ -139,7 +150,6 @@ public void draw(Graphics2D g2){
 	 this.setStarttimePoint(TransStartPointToTime(edgeStartXpoint));
 	 this.setEndtimePoint(TransEndPointToTime(edgeEndXpoint));
 	
-   	
 	  //绘制消息结束位置的箭头
 	  getEndArrowHead().draw(g2, getConnectionPoints().getP1(), getConnectionPoints().getP2());
 	  //drawString,绘制消息上的属性
@@ -155,15 +165,19 @@ public void draw(Graphics2D g2){
 		  g2.drawString(Condition,(int)((getConnectionPoints().getX1())-15),
 				  (int)(getConnectionPoints().getY1()-30));  
 	  }
+	  
+	  
 	  if(this.getTimeConstraint().length()!=0){			
 		if(this.getEnd().getChild()!=null){
-			//消息结束点的坐标		
+			//消息结束点的坐标		当前的消息的终点
 		  Point2D p=new Point2D.Double(this.getConnectionPoints().getX2(),this.getConnectionPoints().getY2());
-		  //获取到状态线的list集合
+		  //获取到状态线的list集合(终点的node里面的thorizontalChild的集合list)
 		  List<IHorizontalChild> list= this.getEnd().getChild().gethorizontalChild();
+		  //在集合中遍历
 		  	for(IHorizontalChild l:list){
 		  		 if(l.getStart().getX()==p.getX())
-		  		 {      
+		  		 {//如果找到了该点
+		  		  //在具体的位置上画出|->timeConstraint<-|的结构
 		  			double w=0;
 		  			w=l.getEnd().getX()-l.getStart().getX();	
 		  			g2.drawString("|->",(int)this.getConnectionPoints().getX2(), (int)this.getEnd().getBounds().getY()+10);
@@ -171,8 +185,11 @@ public void draw(Graphics2D g2){
 		  			g2.drawString("<-|", (int)(this.getConnectionPoints().getX2()+w-13), (int)this.getEnd().getBounds().getY()+10);
 				 }
 			}	
-		  	 int endflag=this.getBelongtoEndFlag();		 	
+		     //获得当前的消息的终点的所属于的IHorizontalChild的id
+		  	 int endflag=this.getBelongtoEndFlag();		
+		  	 //获得下一个IHorizontalChild
 		  	 IHorizontalChild nextTranstate=this.getEnd().getChild().gethorizontalChild().get(endflag+1);
+		  	 //获得消息终点的node里面的所有的states数组
 			 String[] states=getEnd().getStates().toString().split("\\|");//获取states
 			 int endstateindex=getIndexOfStates((int)nextTranstate.getEnd().getY());
 			 if(endstateindex>=0)

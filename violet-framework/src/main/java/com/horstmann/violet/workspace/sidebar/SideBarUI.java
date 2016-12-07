@@ -1,3 +1,4 @@
+
 package com.horstmann.violet.workspace.sidebar;
 
 import java.awt.BorderLayout;
@@ -40,10 +41,10 @@ public class SideBarUI extends PanelUI
         this.taskPane = new JTaskPane();//可以隐藏控件
         this.taskPane.setLayout(new GridBagLayout());
         this.taskPane.setBorder(new EmptyBorder(0, 0, 0, 0));
-        addElementToTaskPane(this.sideBar.getEditorToolsBar().getAWTComponent(), standardButtonsTitle, 1);
-        addElementToTaskPane(this.sideBar.getGraphToolsBar().getAWTComponent(), diagramToolsTitle, 2);
-        addElementToTaskPane(this.sideBar.getOptionalToolsBar().getAWTComponent(), extendedFunctionsTitle, 3);
-        addElementToTaskPane(this.sideBar.getColorChoiceBar().getAWTComponent(), colorToolsTitle, 4);
+        addElementToTaskPane(this.sideBar.getEditorToolsBar().getAWTComponent(), "图形编辑    ", 1);
+        addElementToTaskPane(this.sideBar.getGraphToolsBar().getAWTComponent(), "图形工具      ", 2);
+        addElementToTaskPane(this.sideBar.getOptionalToolsBar().getAWTComponent(), "其他功能      ", 3);
+        addElementToTaskPane(this.sideBar.getColorChoiceBar().getAWTComponent(), "选择颜色        ", 4);
         //addElementToTaskPane(new ProjectTree().getjTree(),"project", 0);
       //添加4个组件
         int i = 4;
@@ -74,6 +75,7 @@ public class SideBarUI extends PanelUI
         Font font = group.getFont().deriveFont(Font.PLAIN);
         group.setFont(font);
         group.setTitle(title);
+        group.setFont(new Font("微软黑体", Font.PLAIN, 14));
         group.setLayout(new BorderLayout());
         group.add(c, BorderLayout.CENTER);
         GridBagConstraints gbc = new GridBagConstraints();

@@ -143,23 +143,42 @@ public class ConditionEditor extends PropertyEditorSupport
     }
     protected void saveCondition(ActionEvent e) {
 		// TODO Auto-generated method stub
-		SetFragmentPartConditionText();
+//		SetFragmentPartConditionText();
+    	SaveFragmentPartConditionText();
 	}
 
 	public void SetFragmentPartConditionText()
     {	
-    	   List<String> ConditionTexts=((StringTableModel)conditiontable.getModel()).getEntries();//获取到所有监护条件	 
-    	   List<FragmentPart> fragmentParts=new ArrayList<FragmentPart>();
-    	   for(String conditiontext : ConditionTexts)
+    	   List<String> ConditionTexts=((StringTableModel)conditiontable.getModel()).getEntries();//获取到所有监护条件
+    	   int length = combinedFragmentNode.getFragmentParts().size();
+    	   if(length == 0)
     	   {
-    		 int conditionIndex=ConditionTexts.indexOf(conditiontext);
+    		   fragmentParts = new ArrayList<FragmentPart>();
+    	   }
+    	   else {
+    		   fragmentParts = combinedFragmentNode.getFragmentParts();
+		}
+    	   
+    	   String conditiontext = ConditionTexts.get(ConditionTexts.size() - 1);
     		    //根据监护条件的数量新建分块
+    		 if(length == 0){
     		fragmentParts.add(new FragmentPart());
-    		fragmentParts.get(conditionIndex).setConditionText(conditiontext);	   	   		 	   
-    	   }	
+    		 }
+    		 else if(ConditionTexts.size() >= length){
+    			 fragmentParts.add(new FragmentPart());
+			}
     	   combinedFragmentNode.setFragmentParts(fragmentParts);
     }
-   
+    public void SaveFragmentPartConditionText()
+    {
+    	List<String> ConditionTexts=((StringTableModel)conditiontable.getModel()).getEntries();
+    	if(ConditionTexts.size() != 0){
+    		fragmentParts = combinedFragmentNode.getFragmentParts();
+    		for(int i = 0;i < ConditionTexts.size();i++){
+    			fragmentParts.get(i).setConditionText(ConditionTexts.get(i));
+    		}
+    	}
+    }
     protected void deleteCondition(ActionEvent evt) {
 		// TODO Auto-generated method stub
     	 deleteSelectedTableEntry(conditiontable);
@@ -171,7 +190,10 @@ public class ConditionEditor extends PropertyEditorSupport
 		    int row = table.getSelectedRow();
 		    if (row >= 0 && row < tableModel.getRowCount()) {
 		      tableModel.removeEntryAt(row);
+		      fragmentParts = combinedFragmentNode.getFragmentParts();
+			    fragmentParts.remove(row);
 		    }
+		    
 	}
    
 	private void InitConditions() {
@@ -190,7 +212,7 @@ public class ConditionEditor extends PropertyEditorSupport
 	private void addCondition(ActionEvent evt)
     {
 	
-    	((StringTableModel)conditiontable.getModel()).addEntry("");    	 	
+    	((StringTableModel)conditiontable.getModel()).addEntry("");
     }	   
     private Condition condition=new Condition(); 
     private INode combinedFragmentNode;
@@ -200,4 +222,5 @@ public class ConditionEditor extends PropertyEditorSupport
     private JButton conditionSaveButton=new JButton();
     private JScrollPane jScrollPane=new JScrollPane(); 
     private StringTableModel conditionTableModel = new StringTableModel(); 
+    private List<FragmentPart> fragmentParts;
 }

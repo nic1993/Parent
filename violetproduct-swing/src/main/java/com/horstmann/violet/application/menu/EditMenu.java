@@ -247,8 +247,7 @@ public class EditMenu extends JMenu
     {
         return mainFrame.getUseCaseWorkspaceList().size() > 0
         		||mainFrame.getTimingWorkspaceList().size() > 0
-        		||mainFrame.getSequenceWorkspaceList().size() > 0
-        	    ||mainFrame.getStateWorkspaceList().size() > 0;
+        		||mainFrame.getSequenceWorkspaceList().size() > 0;
     }
     
     /** Application frame */

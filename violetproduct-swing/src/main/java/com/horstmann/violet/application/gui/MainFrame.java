@@ -21,6 +21,7 @@
 
 package com.horstmann.violet.application.gui;
 
+import java.awt.BasicStroke;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -35,26 +36,55 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Label;
 import java.awt.Paint;
+import java.awt.Shape;
+import java.awt.Stroke;
 import java.awt.Toolkit;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseWheelListener;
 import java.awt.geom.Point2D;
 import java.beans.BeanInfo;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.synth.SynthSeparatorUI;
+import javax.swing.tree.DefaultMutableTreeNode;
 
+import org.eclipse.draw2d.geometry.Rectangle;
+
+import com.horstmann.violet.application.Stepone.HeadTitle;
+import com.horstmann.violet.application.Stepone.OperationButton;
+import com.horstmann.violet.application.Stepone.Outputinformation;
+import com.horstmann.violet.application.Stepone.SequenceTabPanel;
+import com.horstmann.violet.application.Stepone.SequenceTreePanel;
+import com.horstmann.violet.application.Stepone.StepOneButton;
+import com.horstmann.violet.application.Stepone.StepOneCenterRightPanel;
+import com.horstmann.violet.application.Stepone.StepOneCenterSequenceTabbedPane;
+import com.horstmann.violet.application.Stepone.StepOneCenterUseCaseTabbedPane;
+import com.horstmann.violet.application.Stepone.SteponeBottomPanel;
+import com.horstmann.violet.application.Stepone.UsecaseTabPanel;
+import com.horstmann.violet.application.Stepone.UsecaseTreePanel;
 import com.horstmann.violet.application.consolepart.ConsolePart;
 import com.horstmann.violet.application.help.AboutDialog;
 import com.horstmann.violet.application.menu.MenuFactory;
@@ -100,7 +130,11 @@ public class MainFrame extends JFrame
         setInitialSize();
         createMenuBar();
         getContentPane().add(this.getMainPanel());
-      
+        this.addComponentListener(new ComponentAdapter(){
+        	public void componentResized(ComponentEvent e) {
+                botoomJSplitPane.setDividerLocation(0.7);
+        }
+    });
     }
 
     /**
@@ -121,7 +155,7 @@ public class MainFrame extends JFrame
     private void decorateFrame()
     {
         setTitle(this.applicationName);
-        setIconImage(this.applicationIcon);
+        setIconImage(this.applicationIcon);        
     }
 
     /**
@@ -136,7 +170,7 @@ public class MainFrame extends JFrame
         menuBar.add(menuFactory.getEditMenu(this));
         menuBar.add(menuFactory.getViewMenu(this));
         menuBar.add(menuFactory.getHelpMenu(this));
-        setJMenuBar(menuBar);
+        //setJMenuBar(menuBar);
       
     }
 
@@ -145,11 +179,10 @@ public class MainFrame extends JFrame
      * 
      * @param c the component to display in the internal frame
      */
-    public void  addTabbedPane(final IWorkspace workspace )
+    public void  addTabbedPane(final IWorkspace workspace)
     {
-//       replaceWelcomePanelByTabbedPane(); 
+        replaceWelcomePanelByTabbedPane(); 
     	//在添加图形元素的时候，首先判断下是哪种图形
-    	
         if(workspace.getTitle().toString().endsWith(".ucase.violet.xml")
         		||workspace.getTitle().toString().substring(2, 4).equals("Us"))//如果是用例图
      	{
@@ -158,34 +191,39 @@ public class MainFrame extends JFrame
      			
      			return;
      		}
-     		this.UseCaseworkspaceList.clear();//清空
      		this.UseCaseworkspaceList.add(workspace);
+     		int pos = this.UseCaseworkspaceList.indexOf(workspace);
+     		//this.getStepOneCenterTabbedPane().getSequenceDiagramTabbedPane().removeAll();
+     		JPanel panel = new JPanel();
+     		panel.setLayout(new GridBagLayout());
      		
-     		this.getStepOneCenterTabbedPane().getUsecaseDiagramTabbedPane().removeAll();//只保留一个Tab页
-     		this.getStepOneCenterTabbedPane().getUsecaseDiagramTabbedPane()
-     		.add(workspace.getAWTComponent(),new GBC(0,0).setWeight(1, 1).setFill(GBC.BOTH));
-     		
-     		 listenToDiagramPanelEvents(workspace,UseCaseworkspaceList);
-     		
-   		     repaint();    		    
+     		UsecaseTabPanel usecaseTabPanel =  new UsecaseTabPanel(this, "用例图", pos);
+     		this.getStepOneCenterUseCaseTabbedPane().getUsecaseDiagramTabbedPane().add(panel);
+     		this.getStepOneCenterUseCaseTabbedPane().getUsecaseDiagramTabbedPane().get(pos).add(workspace.getAWTComponent(),new GBC(0,0).setWeight(1, 1).setFill(GBC.BOTH));
+     		this.getStepOneCenterUseCaseTabbedPane().addTab("用例图",this.getStepOneCenterUseCaseTabbedPane().getUsecaseDiagramTabbedPane().get(pos));
+     		this.getStepOneCenterUseCaseTabbedPane().setTabComponentAt(pos,usecaseTabPanel);
+     		this.getListUsecaseTabPanel().add(usecaseTabPanel);
+//     		this.getStepOneCenterTabbedPane().getSequenceDiagramTabbedPane()
+//     		.add(workspace.getAWTComponent(),new GBC(0,0).setWeight(1, 1).setFill(GBC.BOTH));
+     		listenToDiagramPanelEvents(workspace,UseCaseworkspaceList);   		
+     	    repaint();    		              
      	}
-        if(workspace.getTitle().toString().endsWith(".timing.violet.xml")
-        		||workspace.getTitle().toString().substring(2, 4).equals("Ti"))//时序图
-     	{
-     		if(this.TimingDiagramspaceList.contains(workspace))
-     		{
-     			return;
-     		}
-     		this.TimingDiagramspaceList.clear();//保证每一次新建或导入只会有1个Type页
-     		this.TimingDiagramspaceList.add(workspace);
-     		this.getStepOneCenterTabbedPane().getTimingDiagramTabbedPane().removeAll();
-     		this.getStepOneCenterTabbedPane().getTimingDiagramTabbedPane()
-     		.add(workspace.getAWTComponent(),new GBC(0,0).setWeight(1, 1).setFill(GBC.BOTH));
-     		 listenToDiagramPanelEvents(workspace,TimingDiagramspaceList);
-     		
-     	   
-     	    repaint();    		    
-     	}
+//        if(workspace.getTitle().toString().endsWith(".timing.violet.xml")
+//        		||workspace.getTitle().toString().substring(2, 4).equals("Ti"))//时序图
+//     	{
+//     		if(this.TimingDiagramspaceList.contains(workspace))
+//     		{
+//     			return;
+//     		}
+//     		this.TimingDiagramspaceList.clear();//保证每一次新建或导入只会有1个Type页
+//     		this.TimingDiagramspaceList.add(workspace);
+//     		this.getStepOneCenterTabbedPane().getTimingDiagramTabbedPane().removeAll();
+//     		this.getStepOneCenterTabbedPane().getTimingDiagramTabbedPane()
+//     		.add(workspace.getAWTComponent(),new GBC(0,0).setWeight(1, 1).setFill(GBC.BOTH));
+//     		 listenToDiagramPanelEvents(workspace,TimingDiagramspaceList);
+//     		
+//     	    repaint();    		    
+//     	}
      	if(workspace.getTitle().toString().endsWith(".seq.violet.xml")
      			||workspace.getTitle().toString().substring(2, 4).equals("Se"))//如果是顺序图
      			
@@ -195,106 +233,41 @@ public class MainFrame extends JFrame
      		{
      			return;
      		}
-     		this.SequencespaceList.clear();
+     		//this.SequencespaceList.clear();
      		this.SequencespaceList.add(workspace);
-     		this.getStepOneCenterTabbedPane().getSequenceDiagramTabbedPane().removeAll();
-     		this.getStepOneCenterTabbedPane().getSequenceDiagramTabbedPane()
-     		.add(workspace.getAWTComponent(),new GBC(0,0).setWeight(1, 1).setFill(GBC.BOTH));
+     		int pos = this.SequencespaceList.indexOf(workspace);
+     		//this.getStepOneCenterTabbedPane().getSequenceDiagramTabbedPane().removeAll();
+     		JPanel panel = new JPanel();
+     		panel.setLayout(new GridBagLayout());
+     		SequenceTabPanel sequenceTabPanel = new SequenceTabPanel(this, "顺序图", pos);
+     		this.getStepOneCenterSequenceTabbedPane().getSequenceDiagramTabbedPane().add(panel);
+     		this.getStepOneCenterSequenceTabbedPane().getSequenceDiagramTabbedPane().get(pos).add(workspace.getAWTComponent(),new GBC(0,0).setWeight(1, 1).setFill(GBC.BOTH));
+     		this.getStepOneCenterSequenceTabbedPane().add("顺序图",this.getStepOneCenterSequenceTabbedPane().getSequenceDiagramTabbedPane().get(pos));
+     		this.getStepOneCenterSequenceTabbedPane().setTabComponentAt(pos,sequenceTabPanel);
+//     		this.getStepOneCenterTabbedPane().getSequenceDiagramTabbedPane()
+//     		.add(workspace.getAWTComponent(),new GBC(0,0).setWeight(1, 1).setFill(GBC.BOTH));
+     		this.getListSequenceTabPanel().add(sequenceTabPanel);
      		listenToDiagramPanelEvents(workspace,SequencespaceList);   		
      	    repaint();    		              
  		}    
-     	if(workspace.getTitle().toString().endsWith(".state.violet.xml")
-     			||workspace.getTitle().toString().substring(2, 4).equals("St"))//如果是状态图
- 		{
-     		if(this.StatespaceList.contains(workspace))
-     		{
-     			return;
-     		}
-     		this.StatespaceList.clear();
-     		this.StatespaceList.add(workspace);
-     		this.getStepOneCenterTabbedPane().getStateDiagramTabbedPane().removeAll();
-     		this.getStepOneCenterTabbedPane().getStateDiagramTabbedPane()
-     		.add(workspace.getAWTComponent(),new GBC(0,0).setWeight(1, 1).setFill(GBC.BOTH));
-     		
-     		 listenToDiagramPanelEvents(workspace,StatespaceList);
-     	  
-     	    repaint();     		    
- 		}
-     	 /*
-     	  * 展示uppaal
-     	  */
-     	if(workspace.getTitle().toString().endsWith(".uppaal.violet.xml")
-     			&&!workspace.getTitle().toString().substring(0, 3).equals(("abs")))
-     	{		
-     		if(this.UppaalspaceList.contains(workspace))
-     		{
-     			return;
-     		}
-     		this.UppaalspaceList.clear();
-     		this.UppaalspaceList.add(workspace);
-     		this.getStepTwoCenterTabbedPane().getUppaalDiagramTabbedPane().removeAll();
-     		this.getStepTwoCenterTabbedPane().getUppaalDiagramTabbedPane()
-     		.add(workspace.getAWTComponent(),new GBC(0,0).setWeight(1, 1).setFill(GBC.BOTH));    		
-     		listenToDiagramPanelEvents(workspace,UppaalspaceList);    	  
-     	    repaint();     		    
-     	}
-     	//展示MarKov链
-     	if(workspace.getTitle().toString().endsWith(".markov.violet.xml"))
-     	{	   		
-     		this.getStepTwoCenterTabbedPane().getMarkovDiagramTabbedPane().removeAll();
-     		this.getStepTwoCenterTabbedPane().getMarkovDiagramTabbedPane()
-     		.add(workspace.getAWTComponent(),new GBC(0,0).setWeight(1, 1).setFill(GBC.BOTH));    		    		   	  
-     	    repaint();     		    
-     	}
-     
-     	if(workspace.getTitle().toString().substring(0, 3).equals(("abs")))
-     	{
-     		
-     		this.getStepThreeCenterTabbedPane().getAbstractUppaalTabbedPane().removeAll();
-     		this.getStepThreeCenterTabbedPane().getAbstractUppaalTabbedPane()
-     		.add(workspace.getAWTComponent(),new GBC(0,0).setWeight(1, 1).setFill(GBC.BOTH));    		    		   	  
-     	    repaint();    
-     	 
-     	}
-    }
-    public void addTabbedPane(final IWorkspace workspace,int flag )
-    {
-//       replaceWelcomePanelByTabbedPane(); 
-    	//在添加图形元素的时候，首先判断下是哪种图形
-    if(flag==2){
-        if(workspace.getTitle().toString().endsWith(".timing.violet.xml")
-        		||workspace.getTitle().toString().substring(2, 4).equals("Ti"))//时序图
-     	{
-     		if(this.TimingDiagramspaceList.contains(workspace))
-     		{
-     			return;
-     		}
-     		this.TimingDiagramspaceList.clear();//保证每一次新建或导入只会有1个Type页
-     		this.TimingDiagramspaceList.add(workspace);
-     		this.getStepTwoCenterTabbedPane().getUMLDiagramTabbedPane().removeAll();
-     		this.getStepTwoCenterTabbedPane().getUMLDiagramTabbedPane()
-     		.add(workspace.getAWTComponent(),new GBC(0,0).setWeight(1, 1).setFill(GBC.BOTH));
-     		 listenToDiagramPanelEvents(workspace,TimingDiagramspaceList);    			  
-     	    repaint();    		    
-     	}
-     	if(workspace.getTitle().toString().endsWith(".seq.violet.xml")
-     			||workspace.getTitle().toString().substring(2, 4).equals("Se"))//如果是顺序图
-     			
- 		{
+//     	if(workspace.getTitle().toString().endsWith(".markov.violet.xml")
+//     			||workspace.getTitle().toString().substring(2, 4).equals("Ma"))//如果是状态图
+// 		{
+//     		if(this.MarkovpaceList.contains(workspace))
+//     		{
+//     			return;
+//     		}
      	
-     		if(this.SequencespaceList.contains(workspace))
-     		{
-     			return;
-     		}
-     		this.SequencespaceList.clear();
-     		this.SequencespaceList.add(workspace);
-     		this.getStepTwoCenterTabbedPane().getUMLDiagramTabbedPane().removeAll();
-     		this.getStepTwoCenterTabbedPane().getUMLDiagramTabbedPane()
-     		.add(workspace.getAWTComponent(),new GBC(0,0).setWeight(1, 1).setFill(GBC.BOTH));
-     		listenToDiagramPanelEvents(workspace,SequencespaceList);   		
-     	    repaint();    		              
- 		}    
-    
+//     		this.MarkovpaceList.clear();
+//     		this.MarkovpaceList.add(workspace);
+//     		this.getStepOneCenterTabbedPane().getMarkovDiagramTabbedPane().removeAll();
+//     		this.getStepOneCenterTabbedPane().getMarkovDiagramTabbedPane()
+//     		.add(workspace.getAWTComponent(),new GBC(0,0).setWeight(1, 1).setFill(GBC.BOTH));
+//     		
+//     		 listenToDiagramPanelEvents(workspace,MarkovpaceList);
+//     	  
+//     	    repaint();     		    
+// 		}
      	 /*
      	  * 展示uppaal
      	  */
@@ -313,44 +286,112 @@ public class MainFrame extends JFrame
      	    repaint();     		    
      	}
     }
-    if(flag==3)
+    public void  addTabbedPane(final IWorkspace workspace ,String title)
     {
-    	/*
-    	 * 含有时间迁移自动机
-    	 */
-    	if(workspace.getTitle().toString().startsWith("abs"))         		
-      	{
-      		if(this.UppaalspaceList.contains(workspace))
-      		{
-      			return;
-      		}
-      		this.UppaalspaceList.clear();//保证每一次新建或导入只会有1个Type页
-      		this.UppaalspaceList.add(workspace);
-      		this.getStepThreeCenterTabbedPane().getAbstractUppaalTabbedPane().removeAll();
-      		this.getStepThreeCenterTabbedPane().getAbstractUppaalTabbedPane()
-      		.add(workspace.getAWTComponent(),new GBC(0,0).setWeight(1, 1).setFill(GBC.BOTH));
-      		 listenToDiagramPanelEvents(workspace,UppaalspaceList);    			  
-      	    repaint();    		    
-      	}
-    	/*
-    	 * 去时间迁移自动机
-    	 */
-    	if(workspace.getTitle().toString().startsWith("no_time_abs"))         		
-      	{
-      		if(this.UppaalspaceList.contains(workspace))
-      		{
-      			return;
-      		}
-      		this.UppaalspaceList.clear();//保证每一次新建或导入只会有1个Type页
-      		this.UppaalspaceList.add(workspace);
-      		this.getStepThreeCenterTabbedPane().getUppaalTabbedPane().removeAll();
-      		this.getStepThreeCenterTabbedPane().getUppaalTabbedPane()
-      		.add(workspace.getAWTComponent(),new GBC(0,0).setWeight(1, 1).setFill(GBC.BOTH));
-      		 listenToDiagramPanelEvents(workspace,UppaalspaceList);    			  
-      	    repaint();    		    
-      	}
-    }
+        replaceWelcomePanelByTabbedPane(); 
+    	//在添加图形元素的时候，首先判断下是哪种图形
+        if(workspace.getTitle().toString().endsWith(".ucase.violet.xml")
+        		||workspace.getTitle().toString().substring(2, 4).equals("Us"))//如果是用例图
+     	{
+     		if(this.UseCaseworkspaceList.contains(workspace))
+     		{
+     			
+     			return;
+     		}
+     		this.UseCaseworkspaceList.add(workspace);
+     		int pos = this.UseCaseworkspaceList.indexOf(workspace);
+     		//this.getStepOneCenterTabbedPane().getSequenceDiagramTabbedPane().removeAll();
+     		JPanel panel = new JPanel();
+     		panel.setLayout(new GridBagLayout());
+     		
+     		UsecaseTabPanel usecaseTabPanel =  new UsecaseTabPanel(this, title, pos);
+     		this.getStepOneCenterUseCaseTabbedPane().getUsecaseDiagramTabbedPane().add(panel);
+     		this.getStepOneCenterUseCaseTabbedPane().getUsecaseDiagramTabbedPane().get(pos).add(workspace.getAWTComponent(),new GBC(0,0).setWeight(1, 1).setFill(GBC.BOTH));
+     		this.getStepOneCenterUseCaseTabbedPane().addTab("用例图",this.getStepOneCenterUseCaseTabbedPane().getUsecaseDiagramTabbedPane().get(pos));
+     		this.getStepOneCenterUseCaseTabbedPane().setTabComponentAt(pos,usecaseTabPanel);
+     		this.getListUsecaseTabPanel().add(usecaseTabPanel);
+//     		this.getStepOneCenterTabbedPane().getSequenceDiagramTabbedPane()
+//     		.add(workspace.getAWTComponent(),new GBC(0,0).setWeight(1, 1).setFill(GBC.BOTH));
+     		listenToDiagramPanelEvents(workspace,UseCaseworkspaceList);   		
+     	    repaint();    		              
+     	}
+//        if(workspace.getTitle().toString().endsWith(".timing.violet.xml")
+//        		||workspace.getTitle().toString().substring(2, 4).equals("Ti"))//时序图
+//     	{
+//     		if(this.TimingDiagramspaceList.contains(workspace))
+//     		{
+//     			return;
+//     		}
+//     		this.TimingDiagramspaceList.clear();//保证每一次新建或导入只会有1个Type页
+//     		this.TimingDiagramspaceList.add(workspace);
+//     		this.getStepOneCenterTabbedPane().getTimingDiagramTabbedPane().removeAll();
+//     		this.getStepOneCenterTabbedPane().getTimingDiagramTabbedPane()
+//     		.add(workspace.getAWTComponent(),new GBC(0,0).setWeight(1, 1).setFill(GBC.BOTH));
+//     		 listenToDiagramPanelEvents(workspace,TimingDiagramspaceList);
+//     		
+//     	    repaint();    		    
+//     	}
+     	if(workspace.getTitle().toString().endsWith(".seq.violet.xml")
+     			||workspace.getTitle().toString().substring(2, 4).equals("Se"))//如果是顺序图
+     			
+ 		{
      	
+     		if(this.SequencespaceList.contains(workspace))
+     		{
+     			return;
+     		}
+     		//this.SequencespaceList.clear();
+     		this.SequencespaceList.add(workspace);
+     		int pos = this.SequencespaceList.indexOf(workspace);
+     		//this.getStepOneCenterTabbedPane().getSequenceDiagramTabbedPane().removeAll();
+     		JPanel panel = new JPanel();
+     		panel.setLayout(new GridBagLayout());
+     		SequenceTabPanel sequenceTabPanel = new SequenceTabPanel(this, "顺序图", pos);
+     		this.getStepOneCenterSequenceTabbedPane().getSequenceDiagramTabbedPane().add(panel);
+     		this.getStepOneCenterSequenceTabbedPane().getSequenceDiagramTabbedPane().get(pos).add(workspace.getAWTComponent(),new GBC(0,0).setWeight(1, 1).setFill(GBC.BOTH));
+     		this.getStepOneCenterSequenceTabbedPane().add("顺序图",this.getStepOneCenterSequenceTabbedPane().getSequenceDiagramTabbedPane().get(pos));
+     		this.getStepOneCenterSequenceTabbedPane().setTabComponentAt(pos,sequenceTabPanel);
+//     		this.getStepOneCenterTabbedPane().getSequenceDiagramTabbedPane()
+//     		.add(workspace.getAWTComponent(),new GBC(0,0).setWeight(1, 1).setFill(GBC.BOTH));
+     		this.getListSequenceTabPanel().add(sequenceTabPanel);
+     		listenToDiagramPanelEvents(workspace,SequencespaceList);   		
+     	    repaint();    		              
+ 		}    
+//     	if(workspace.getTitle().toString().endsWith(".markov.violet.xml")
+//     			||workspace.getTitle().toString().substring(2, 4).equals("Ma"))//如果是状态图
+// 		{
+//     		if(this.MarkovpaceList.contains(workspace))
+//     		{
+//     			return;
+//     		}
+     	
+//     		this.MarkovpaceList.clear();
+//     		this.MarkovpaceList.add(workspace);
+//     		this.getStepOneCenterTabbedPane().getMarkovDiagramTabbedPane().removeAll();
+//     		this.getStepOneCenterTabbedPane().getMarkovDiagramTabbedPane()
+//     		.add(workspace.getAWTComponent(),new GBC(0,0).setWeight(1, 1).setFill(GBC.BOTH));
+//     		
+//     		 listenToDiagramPanelEvents(workspace,MarkovpaceList);
+//     	  
+//     	    repaint();     		    
+// 		}
+     	 /*
+     	  * 展示uppaal
+     	  */
+     	if(workspace.getTitle().toString().endsWith(".uppaal.violet.xml"))
+     	{		
+     		if(this.UppaalspaceList.contains(workspace))
+     		{
+     			return;
+     		}
+     		this.UppaalspaceList.clear();
+     		this.UppaalspaceList.add(workspace);
+     		this.getStepTwoCenterTabbedPane().getUppaalDiagramTabbedPane().removeAll();
+     		this.getStepTwoCenterTabbedPane().getUppaalDiagramTabbedPane()
+     		.add(workspace.getAWTComponent(),new GBC(0,0).setWeight(1, 1).setFill(GBC.BOTH));    		
+     		listenToDiagramPanelEvents(workspace,UppaalspaceList);    	  
+     	    repaint();     		    
+     	}
     }
     /**
      * Add a listener to perform action when something happens on this diagram
@@ -444,34 +485,95 @@ public class MainFrame extends JFrame
      * 
      * @param diagramPanel
      */
+    public static DefaultMutableTreeNode getKey(Map<DefaultMutableTreeNode, JPanel> map,JPanel panel)
+    {
+    	Iterator<DefaultMutableTreeNode> it = map.keySet().iterator();
+    	while (it.hasNext()) {
+			DefaultMutableTreeNode key = it.next();
+			if(map.get(key).equals(panel))
+				return key;
+		}
+    	return null;
+    }
     public void removeDiagramPanel(IWorkspace diagramPanel)
     {
+    	 if(getCenterTabPanel().getComponent(0).equals(getStepOneCenterUseCaseTabbedPane())){
         if (this.UseCaseworkspaceList.contains(diagramPanel))       		
         {   
         int pos = this.UseCaseworkspaceList.indexOf(diagramPanel);
-        getStepOneCenterTabbedPane().getUMLTabbedPane(diagramPanel).remove(pos);
+        for(UsecaseTabPanel usecaseTabPanel : this.getListUsecaseTabPanel())
+        {
+        	if(usecaseTabPanel.getPos() > pos){
+        		if(usecaseTabPanel.getPos() - 1 == pos)
+        		{
+        			usecaseTabPanel.getPanel().setBackground(Color.white);
+        			usecaseTabPanel.getDeletelabel().setIcon(new ImageIcon("resources\\icons\\22x22\\beforeClose.png"));
+        			usecaseTabPanel.setPos(usecaseTabPanel.getPos() - 1);
+        		}
+        		else {
+        			usecaseTabPanel.setPos(usecaseTabPanel.getPos() - 1);
+				}
+        		
+        	}
+        }
+        this.getListUsecaseTabPanel().remove(pos);
+        if(pos == UseCaseworkspaceList.size()-1 && pos != 0)
+        {
+        	this.getListUsecaseTabPanel().get(pos - 1).getPanel().setBackground(Color.white);
+        	this.getListUsecaseTabPanel().get(pos - 1).getDeletelabel().setIcon(new ImageIcon("resources\\icons\\22x22\\beforeClose.png"));
+        }
+
+        getStepOneCenterUseCaseTabbedPane().remove(pos);
         this.UseCaseworkspaceList.remove(diagramPanel);
+        
+        //删除树上节点
+        Map<DefaultMutableTreeNode, JPanel> map = getUsecaseTree().getHashMap();
+        JPanel panel = this.getStepOneCenterUseCaseTabbedPane().getUsecaseDiagramTabbedPane().get(pos);
+        DefaultMutableTreeNode removeNode = getKey(map, panel);
+        this.getUsecaseTree().getUsecasetreemodel().removeNodeFromParent(removeNode);
+        this.getStepOneCenterUseCaseTabbedPane().getUsecaseDiagramTabbedPane().remove(pos);
         repaint();
         }
-        if (this.TimingDiagramspaceList.contains(diagramPanel))       		
-        {   
-        int pos = this.TimingDiagramspaceList.indexOf(diagramPanel);
-        getStepOneCenterTabbedPane().getUMLTabbedPane(diagramPanel).remove(pos);
-        this.TimingDiagramspaceList.remove(diagramPanel);
-        repaint();
-        }
+    	}
+
+        if(getCenterTabPanel().getComponent(0).equals(getStepOneCenterSequenceTabbedPane())){
         if (this.SequencespaceList.contains(diagramPanel))       		
         {   
-        int pos = this.SequencespaceList.indexOf(diagramPanel);
-        getStepOneCenterTabbedPane().getUMLTabbedPane(diagramPanel).remove(pos);
+        int pos = getStepOneCenterSequenceTabbedPane().getSelectedIndex();
+            for(SequenceTabPanel sequenceTabPanel : this.getListSequenceTabPanel())
+            {
+            	if(sequenceTabPanel.getPos() > pos){
+            		if(sequenceTabPanel.getPos() - 1 == pos)
+            		{
+            			sequenceTabPanel.getPanel().setBackground(Color.white);
+            			sequenceTabPanel.getDeletelabel().setIcon(new ImageIcon("resources\\icons\\22x22\\beforeClose.png"));
+            		}
+            		sequenceTabPanel.setPos(sequenceTabPanel.getPos() - 1);
+            	}
+            }
+            this.getListSequenceTabPanel().remove(pos);
+            if(pos == SequencespaceList.size()-1 && pos != 0)
+            { 
+            	this.getListSequenceTabPanel().get(pos - 1).getPanel().setBackground(Color.white);
+            	this.getListSequenceTabPanel().get(pos - 1).getDeletelabel().setIcon(new ImageIcon("resources\\icons\\22x22\\beforeClose.png"));
+            }
+        getStepOneCenterSequenceTabbedPane().remove(pos);        
         this.SequencespaceList.remove(diagramPanel);
+        
+        Map<DefaultMutableTreeNode, JPanel> map = getsequencetree().getHashMap();
+        JPanel panel = this.getStepOneCenterSequenceTabbedPane().getSequenceDiagramTabbedPane().get(pos);
+        DefaultMutableTreeNode removeNode = getKey(map, panel);
+        this.getsequencetree().getSequencetreemodel().removeNodeFromParent(removeNode);
+        this.getStepOneCenterSequenceTabbedPane().getSequenceDiagramTabbedPane().remove(pos);
         repaint();
         }
-        if (this.StatespaceList.contains(diagramPanel))       		
+        }
+        
+        if (this.MarkovpaceList.contains(diagramPanel))       		
         {   
-        int pos = this.StatespaceList.indexOf(diagramPanel);
-        getStepOneCenterTabbedPane().getUMLTabbedPane(diagramPanel).remove(pos);
-        this.StatespaceList.remove(diagramPanel);
+        int pos = this.MarkovpaceList.indexOf(diagramPanel);
+        getStepOneCenterSequenceTabbedPane().getUMLTabbedPane(diagramPanel,pos).remove(pos);
+        this.MarkovpaceList.remove(diagramPanel);
         repaint();
         }
         if (this.UppaalspaceList.contains(diagramPanel))       		
@@ -481,6 +583,7 @@ public class MainFrame extends JFrame
         this.UppaalspaceList.remove(diagramPanel);
         repaint();
         }
+        
     }
     
     /**
@@ -527,13 +630,13 @@ public class MainFrame extends JFrame
                 return;
             }
         }
-        for (IWorkspace aDiagramPanel : this.StatespaceList)
+        for (IWorkspace aDiagramPanel : this.MarkovpaceList)
         {
             IFile toCompare = aDiagramPanel.getGraphFile();
             boolean isSameFilename = aGraphFile.getFilename().equals(toCompare.getFilename());
             if (isSameFilename)
             {
-                int pos = this.StatespaceList.indexOf(aDiagramPanel);
+                int pos = this.MarkovpaceList.indexOf(aDiagramPanel);
 //                JTabbedPane tp = getStepOneCenterTabbedPane().getStateDiagramTabbedPane();
 //                tp.setSelectedIndex(pos);
                 return;
@@ -548,7 +651,7 @@ public class MainFrame extends JFrame
     {
         return !this.UseCaseworkspaceList.isEmpty()
         		||!this.TimingDiagramspaceList.isEmpty()
-        		||!this.StatespaceList.isEmpty()
+        		||!this.MarkovpaceList.isEmpty()
         		||!this.SequencespaceList.isEmpty()
         		||!this.UppaalspaceList.isEmpty();
     }
@@ -565,44 +668,86 @@ public class MainFrame extends JFrame
     {
         return SequencespaceList;
     }
-    public List<IWorkspace> getStateWorkspaceList()
+    public List<IWorkspace> getMarkovWorkspaceList()
     {
-        return StatespaceList;
+        return MarkovpaceList;
     }
     /**
      * @return selected diagram file path (or null if not one is selected; that should never happen)
      */
     public IWorkspace getActiveWorkspace()
     {
-        JTabbedPane Onetp = getStepOneCenterTabbedPane();
+        JTabbedPane Onesequence = getStepOneCenterSequenceTabbedPane();
+        JTabbedPane Oneusecase = getStepOneCenterUseCaseTabbedPane();
         JTabbedPane Twotp=getStepTwoCenterTabbedPane();
-        int pos1=Onetp.getSelectedIndex(); 
+        int onepos1 = Onesequence.getSelectedIndex(); 
+        int onepos2 = Oneusecase.getSelectedIndex();
         int pos2=Twotp.getSelectedIndex();
-        if (pos1==0&&SequencespaceList.size()>0)
+        if(getCenterTabPanel().getComponentCount() != 0)
+        {       	
+        if(getCenterTabPanel().getComponent(0).equals(getStepOneCenterSequenceTabbedPane())){
+        if (SequencespaceList.size()>0)
         {
-            return this.SequencespaceList.get(0);
+            return this.SequencespaceList.get(onepos1);
         }
-        if (pos1==1&&TimingDiagramspaceList.size()>0)
-        {
-            return this.TimingDiagramspaceList.get(0);
         }
-        if (pos1==2&&StatespaceList.size()>0)
+//        if (pos1==1&&TimingDiagramspaceList.size()>0)
+//        {
+//            return this.TimingDiagramspaceList.get(0);
+//        }
+//        if (pos1==2&&MarkovpaceList.size()>0)
+//        {
+//            return this.MarkovpaceList.get(0);
+//        }
+        if(getCenterTabPanel().getComponent(0).equals(getStepOneCenterUseCaseTabbedPane()))
         {
-            return this.StatespaceList.get(0);
+        if (UseCaseworkspaceList.size()>0)
+        {
+            return this.UseCaseworkspaceList.get(onepos2);
         }
-        if (pos1==3&&UseCaseworkspaceList.size()>0)
-        {
-            return this.UseCaseworkspaceList.get(0);
         }
         if (pos2==1&&UppaalspaceList.size()>0)
         {
         	return this.UppaalspaceList.get(0);
+        }       
         }
+//        else{//说明没有workspace UML图形需要保存
+//           return null;
+//        }
+        return null;
+    }
+    
+    public IWorkspace getActiveListWorkspace()
+    {
+        JTabbedPane Onetp = getStepOneCenterSequenceTabbedPane();
+        JTabbedPane Twotp=getStepTwoCenterTabbedPane();
+        int pos1=Onetp.getSelectedIndex(); 
+        int pos2=Twotp.getSelectedIndex();
+        if (SequencespaceList.size()>0)
+        {
+            return this.SequencespaceList.get(pos1);
+        }
+//        if (pos1==1&&TimingDiagramspaceList.size()>0)
+//        {
+//            return this.TimingDiagramspaceList.get(0);
+//        }
+//        if (pos1==2&&MarkovpaceList.size()>0)
+//        {
+//            return this.MarkovpaceList.get(0);
+//        }
+//        if (pos1==3&&UseCaseworkspaceList.size()>0)
+//        {
+//            return this.UseCaseworkspaceList.get(0);
+//        }
+//        if (pos2==1&&UppaalspaceList.size()>0)
+//        {
+//        	return this.UppaalspaceList.get(0);
+//        }
         else{//说明没有workspace UML图形需要保存
            return null;
         }
     }
-   
+    
    public WelcomePanel getWelcomePanel()
     {
         if (this.welcomePanel == null)
@@ -619,30 +764,72 @@ public class MainFrame extends JFrame
    	}
    	return this.homepanel;
    }
-    private StepButtonPanel getStepButton()
+    public StepOneButton getsteponeButton()
     {
-    	if(this.stepButton==null)
+    	if(this.stepOneButton == null)
     	{
-    		this.stepButton=new StepButtonPanel(this);
+    		this.stepOneButton = new StepOneButton(this,this.getMenuFactory().getFileMenu(this));
     	}
-    	return this.stepButton;
+    	return stepOneButton;
     }
-    public ConsolePart getConsolePart()
+
+    public JPanel getstepleftbuttonJPanel()
     {
-    	if(this.consolePart==null)
+    	if(this.StepLeftButtonPanel == null)
     	{
-    		this.consolePart=new ConsolePart(this);
+    		this.StepLeftButtonPanel = new JPanel();
     	}
-    	return this.consolePart;
+    	return StepLeftButtonPanel;
     }
-    public ProjectTree getProjectTree()
+//    public ConsolePart getConsolePart()
+//    {
+//    	if(this.consolePart==null)
+//    	{
+//    		this.consolePart=new ConsolePart(this);
+//    	}
+//    	return this.consolePart;
+//    }
+    public HeadTitle getHeadTitle() {
+		if(this.headTitle == null)
+		{
+			this.headTitle = new HeadTitle(this);
+		}
+		return headTitle;
+	}
+    public OperationButton getOperationButton()
     {
-    	if(this.projectTree==null)
+    	if(this.operationButton == null)
     	{
-    		this.projectTree=new ProjectTree(this.getMenuFactory().getFileMenu(this),this);
+    		this.operationButton = new OperationButton(this, this.getMenuFactory().getFileMenu(this))
+    		{
+    			public void paint(Graphics g) {
+    	            super.paint(g);
+    	            java.awt.Rectangle rect = this.getBounds();
+    	            int width = (int) rect.getWidth() - 1;
+    	            int height = (int) rect.getHeight() - 1;
+    	            Graphics2D g2 = (Graphics2D)g;
+    	            g2.setStroke(new BasicStroke(3f));
+    	            g2.setColor(new Color(188,188,188));
+    	            g2.drawLine(width, 0, width, height);
+//    	            g2.drawLine(0, 0, 0, height);
+    	          }
+    		};
     	}
-    	return this.projectTree;
+    	return operationButton;
     }
+    public SequenceTreePanel getsequencetree()
+    {
+    	if(this.sequenceTree == null){
+    		this.sequenceTree = new SequenceTreePanel(this.getMenuFactory().getFileMenu(this), this);
+    	}       
+    	return sequenceTree;  	
+    }
+    public UsecaseTreePanel getUsecaseTree() {
+    	if(this.usecaseTree == null){
+    		this.usecaseTree = new UsecaseTreePanel(this.getMenuFactory().getFileMenu(this), this);
+    	}       
+    	return usecaseTree;  	
+	}
     public ModelTransformationPanel getModelTransformationPanel()
     {
     	if(this.modelTransformationPanel==null)
@@ -653,39 +840,66 @@ public class MainFrame extends JFrame
     	return this.modelTransformationPanel;
     }
     public JPanel getMainPanel() {//主面板布局
-        if (this.mainPanel == null) {
+    	setUI();
+        if (this.mainPanel == null) {	
+        	
+        	botoomJSplitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
+        	botoomJSplitPane.setLeftComponent(this.getCenterTabPanel());
+        	botoomJSplitPane.setRightComponent(this.getinformationPanel());
+        	this.getworkpanel().setLayout(new GridLayout(1, 1));
+        	this.getworkpanel().add(botoomJSplitPane);
+        	
         	GridBagLayout layout=new GridBagLayout();
             this.mainPanel = new JPanel(layout);
-            this.mainPanel.setBorder(new EmptyBorder(0, 0, 0, 0));                                                 
-            this.mainPanel.add(this.getStepButton());
+            this.mainPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
             this.mainPanel.add(this.getStepJLabel());
-            this.mainPanel.add(this.getConsolePart());
-            this.mainPanel.add(this.getOpreationPart());
-            this.mainPanel.add(this.getCenterTabPanel());
+            this.mainPanel.add(this.getconsolepartPanel());
+            this.mainPanel.add(this.getOpreationPart());  
+            this.mainPanel.add(this.getpanel());
+            this.mainPanel.add(this.getworkpanel());
+            this.mainPanel.add(this.getReduceOrEnlargePanel());
+            
+            this.getStepJLabel().setBackground(new Color(222,222,222));
             this.getCenterTabPanel().setLayout(new GridLayout(1, 1));
-            this.getCenterTabPanel().add(this.getHomePanel());//默认添加首页    
-            this.getStepJLabel().setBackground(new Color(67,87,113));
-            JLabel initlabel=new JLabel("项目演示区");
-            initlabel.setFont(new Font("宋体", Font.BOLD, 20));
-			initlabel.setForeground(Color.white);
-            this.getStepJLabel().add(initlabel,JLabel.CENTER);
-            layout.setConstraints(this.getStepButton(),new GBC(0, 0, 1, 3).setFill(GBC.BOTH).setWeight(0, 1));                                    
-            layout.setConstraints(this.getStepJLabel(), new GBC(1,0,2,1).setFill(GBC.BOTH).setWeight(1, 0));
-            layout.setConstraints(this.getConsolePart(), new GBC(1,2,2,1).setFill(GBC.BOTH).setWeight(1, 0));
-            layout.setConstraints(this.getOpreationPart(), new GBC(2,1,1,1).setFill(GBC.BOTH).setWeight(0, 1));
-            layout.setConstraints(this.getCenterTabPanel(), new GBC(1,1,1,1).setFill(GBC.BOTH).setWeight(1, 1));
-		    		                                     
+            this.getCenterTabPanel().add(this.getHeadTitle());
+
+            this.getStepJLabel().setVisible(false);
+            this.getOpreationPart().setVisible(false);
+            this.getconsolepartPanel().setVisible(false);
+            this.getpanel().setVisible(false);
+            this.getinformationPanel().setVisible(false);
+            this.getReduceOrEnlargePanel().setVisible(false);
+            
+            layout.setConstraints(this.getStepJLabel(), new GBC(0,0,3,1).setFill(GBC.BOTH).setWeight(1, 0));    //标题区域
+            layout.setConstraints(this.getOpreationPart(), new GBC(0,1,1,2).setFill(GBC.BOTH).setWeight(0, 1)); //编辑树区域
+            layout.setConstraints(this.getconsolepartPanel(), new GBC(0,3,3,1).setFill(GBC.BOTH).setWeight(1, 0.02));   
+            layout.setConstraints(this.getpanel(), new GBC(1, 1, 2, 1).setFill(GBC.BOTH).setWeight(1, 0));           //按钮区域
+            layout.setConstraints(this.getworkpanel(), new GBC(1,2,1,1).setFill(GBC.BOTH).setWeight(1, 0.98));//绘图区域
+            layout.setConstraints(this.getReduceOrEnlargePanel(), new GBC(2,2,1,1).setFill(GBC.BOTH).setWeight(0, 1));
+           
         }
         return this.mainPanel;
     }
+    public void setUI() {
+    	UIManager.put("SplitPane.background", new Color(188,188,188));
+	}
       	
-    public StepOneCenterTabbedPane getStepOneCenterTabbedPane()
+    public StepOneCenterSequenceTabbedPane getStepOneCenterSequenceTabbedPane()
     {
-    if (this.stepOneCenterTabbedPane== null)
+    if (this.stepOneCenterSequenceTabbedPane== null)
     {
-       stepOneCenterTabbedPane=new StepOneCenterTabbedPane();
+       stepOneCenterSequenceTabbedPane=new StepOneCenterSequenceTabbedPane();
     }
-    return this.stepOneCenterTabbedPane;
+    return this.stepOneCenterSequenceTabbedPane;
+    	
+    }
+    public StepOneCenterUseCaseTabbedPane getStepOneCenterUseCaseTabbedPane()
+    {
+    if (this.stepOneCenterUseCaseTabbedPane== null)
+    {
+    	stepOneCenterUseCaseTabbedPane=new StepOneCenterUseCaseTabbedPane();
+    }
+    return this.stepOneCenterUseCaseTabbedPane;
     	
     }
     public StepTwoCenterTabbedPane getStepTwoCenterTabbedPane()
@@ -697,15 +911,16 @@ public class MainFrame extends JFrame
     return this.stepTwoCenterTabbedPane;
     	
     }   
-    public StepThreeCenterTabbedPane getStepThreeCenterTabbedPane()
-    {
-    if (this.stepThreeCenterTabbedPane== null)
-    {
-       stepThreeCenterTabbedPane=new StepThreeCenterTabbedPane();
-    }
-    return this.stepThreeCenterTabbedPane;
-    	
-    }   
+    public List<UsecaseTabPanel> getListUsecaseTabPanel() {
+    	if(this.listUsecaseTabPanel == null)
+    		listUsecaseTabPanel = new ArrayList<UsecaseTabPanel>();
+		return listUsecaseTabPanel;
+	}
+	public List<SequenceTabPanel> getListSequenceTabPanel() {
+		if(this.listSequenceTabPanel == null)
+			listSequenceTabPanel = new ArrayList<SequenceTabPanel>();
+		return listSequenceTabPanel;
+	}
 	public JPanel getOpreationPart() {
 		// TODO Auto-generated method stub
 		return this.opreationpanel;
@@ -713,6 +928,11 @@ public class MainFrame extends JFrame
 	public JPanel getCenterTabPanel(){
 		// TODO Auto-generated method stub
 		return this.centerTabPanel;
+	}
+	public JPanel getconsolepartPanel()
+	{
+
+		return consolePartPanel;
 	}
 	/**
      * @return the menu factory instance
@@ -729,40 +949,204 @@ public class MainFrame extends JFrame
     public JPanel getStepJLabel() {   	
 		return stepJLabel;
 	}
-
-	public JPanel getCenterPanel() {
-		return centerPanel;
+	public JPanel getpanel()
+	{
+		return this.panel;
 	}
-
-	public void setCenterPanel(JPanel centerPanel) {
-		this.centerPanel = centerPanel;
+    
+	public SteponeBottomPanel getsteponebottmopanel()
+	{
+		if(this.steponeBottomPanel == null)
+		{
+			this.steponeBottomPanel = new SteponeBottomPanel(this);
+		}	
+		return this.steponeBottomPanel;
 	}
-
-	public void setStepJLabel(JPanel stepJLabel) {
-		this.stepJLabel = stepJLabel;
+	public JPanel getinformationPanel()
+	{
+		return informationPanel;
 	}
-
+	private JPanel getworkpanel()
+	{
+		return workPanel;
+	}
+	public Outputinformation getouOutputinformation()
+	{
+		if(this.outputinformation == null)
+		{
+			outputinformation = new Outputinformation(this)
+			{
+				public void paint(Graphics g) {
+		            super.paint(g);
+		            java.awt.Rectangle rect = this.getBounds();
+		            int width = (int) rect.getWidth() - 1;
+		            int height = (int) rect.getHeight() - 1;
+		            Graphics2D g2 = (Graphics2D)g;
+		            g2.setStroke(new BasicStroke(3f));
+		            g2.setColor(new Color(188,188,188));
+		            g2.drawLine(0, 0, width, 0);
+		          }
+			};
+		}
+		return outputinformation;
+	}
+	public JPanel getReduceOrEnlargePanel()
+	{
+		if(this.ReduceOrEnlargePanel == null)
+		{
+			ReduceOrEnlargePanel = new JPanel();
+		}
+		return ReduceOrEnlargePanel;
+	}
+	public JPanel getstepOneCenterRightPanel()
+	{
+		if(this.stepOneCenterRightPanel == null)
+		{
+			stepOneCenterRightPanel = new StepOneCenterRightPanel(this)
+			{
+				public void paint(Graphics g) {
+		            super.paint(g);
+		            java.awt.Rectangle rect = this.getBounds();
+		            int width = (int) rect.getWidth() - 1;
+		            int height = (int) rect.getHeight() - 1;
+		            Graphics2D g2 = (Graphics2D)g;
+		            g2.setStroke(new BasicStroke(3f));
+		            g2.setColor(new Color(188,188,188));
+		            g2.drawLine(0, 1, 0, height);
+		          }
+			};
+		}
+		return stepOneCenterRightPanel;
+	}
+	public JSplitPane getbotoomJSplitPane()
+	{
+		return this.botoomJSplitPane;
+	}
 	/**
      * Tabbed pane instance
      */
     private JTabbedPane tabbedPane;
-
+    
     /**
      * Panel added is not diagram is opened
      */
     private WelcomePanel welcomePanel;
     private HomePanel homepanel;
-    private JPanel stepJLabel=new JPanel();
+    private JPanel stepJLabel=new JPanel(){
+    	public void paint(Graphics g) {
+            super.paint(g);
+            java.awt.Rectangle rect = this.getBounds();
+            int width = (int) rect.getWidth() - 1;
+            int height = (int) rect.getHeight() - 1;
+            Graphics2D g2 = (Graphics2D)g;
+            g2.setStroke(new BasicStroke(3f));
+            g2.setColor(new Color(188,188,188));
+            g2.drawLine(this.getX(), this.getY()+height, this.getX()+width, this.getY()+height);
+          }
+    };
+    
     private ModelTransformationPanel modelTransformationPanel;
-    private StepOneCenterTabbedPane stepOneCenterTabbedPane;
+    private StepOneCenterSequenceTabbedPane stepOneCenterSequenceTabbedPane; //顺序图
+    private StepOneCenterUseCaseTabbedPane stepOneCenterUseCaseTabbedPane;  //用例图
     private StepTwoCenterTabbedPane stepTwoCenterTabbedPane;
-    private StepThreeCenterTabbedPane stepThreeCenterTabbedPane;
-    private ConsolePart consolePart;
-    private ProjectTree projectTree;
-    private StepButtonPanel stepButton;
-    private JPanel centerPanel;
-    private JPanel opreationpanel=new JPanel();
+	private List<UsecaseTabPanel> listUsecaseTabPanel;
+    private List<SequenceTabPanel> listSequenceTabPanel;
+
+	//private ConsolePart consolePart;
+    private JPanel consolePartPanel = new JPanel()
+    { 	
+    	public void paint(Graphics g){
+            super.paint(g);
+            java.awt.Rectangle rect = this.getBounds();
+            int width = (int) rect.getWidth() - 1;
+            int height = (int) rect.getHeight() - 1;
+            Graphics2D g2 = (Graphics2D)g;
+            g2.setStroke(new BasicStroke(3f));
+            g2.setColor(new Color(188,188,188));
+            g2.drawLine(0, 0, width, 0);
+          }
+    };
+    
+//    private ProjectTree projectTree;
+    private UsecaseTreePanel usecaseTree;
+    
+	private SequenceTreePanel sequenceTree;
+    
+    private JPanel opreationpanel=new JPanel()
+    {
+    	public void paint(Graphics g) {
+            super.paint(g);
+            java.awt.Rectangle rect = this.getBounds();
+            int width = (int) rect.getWidth() - 1;
+            int height = (int) rect.getHeight() - 1;
+            Graphics2D g2 = (Graphics2D)g;
+            g2.setStroke(new BasicStroke(3f));
+            g2.setColor(new Color(188,188,188));
+            g2.drawLine(width, 0, width, height);
+          }
+    };
     private JPanel centerTabPanel=new JPanel();
+    
+    private JPanel workPanel = new JPanel();  //绘图与消息区域
+//    {
+//    	public void paint(Graphics g) {
+//            super.paint(g);
+//            java.awt.Rectangle rect = this.getBounds();
+//            int width = (int) rect.getWidth() - 1;
+//            int height = (int) rect.getHeight() - 1;
+//            Graphics2D g2 = (Graphics2D)g;
+//            g2.setStroke(new BasicStroke(3f));
+//            g2.setColor(new Color(188,188,188));
+//            g2.drawLine(0, 0, 0, height);
+//          }
+//    }
+    private HeadTitle headTitle;
+    
+    private JPanel StepLeftButtonPanel; 
+    
+    private StepOneButton stepOneButton;
+    
+    private OperationButton operationButton;
+    
+    
+    private SteponeBottomPanel steponeBottomPanel; 
+    
+    private JSplitPane botoomJSplitPane = new JSplitPane();
+    
+    private JPanel panel = new JPanel()
+    {
+    	public void paint(Graphics g) {
+            super.paint(g);
+            java.awt.Rectangle rect = this.getBounds();
+            int width = (int) rect.getWidth() - 1;
+            int height = (int) rect.getHeight() - 1;
+            Graphics2D g2 = (Graphics2D)g;
+            g2.setStroke(new BasicStroke(3f));
+            g2.setColor(new Color(188,188,188));
+            g2.drawLine(0, height, width, height);
+//            g2.drawLine(0, 0, 0, height);
+          }
+    };
+    private JPanel informationPanel = new JPanel();
+//    {
+//    	public void paint(Graphics g) {
+//            super.paint(g);
+//            java.awt.Rectangle rect = this.getBounds();
+//            int width = (int) rect.getWidth() - 1;
+//            int height = (int) rect.getHeight() - 1;
+//            Graphics2D g2 = (Graphics2D)g;
+//            g2.setStroke(new BasicStroke(3f));
+//            g2.setColor(new Color(188,188,188));
+//            g2.drawLine(0, height, width, height);
+//            g2.drawLine(0, 0, 0, height);
+//          }
+//    };
+    private Outputinformation outputinformation;
+    
+    private JPanel ReduceOrEnlargePanel;
+    
+    private StepOneCenterRightPanel stepOneCenterRightPanel; //缩放组件
+    
     /**
      * Main panel
      */
@@ -803,7 +1187,7 @@ public class MainFrame extends JFrame
     private List<IWorkspace> UseCaseworkspaceList = new ArrayList<IWorkspace>(); //用例图    
     private List<IWorkspace> SequencespaceList=new ArrayList<IWorkspace>();//顺序图
     private List<IWorkspace> TimingDiagramspaceList=new ArrayList<IWorkspace>();//时序图
-    private List<IWorkspace> StatespaceList=new ArrayList<IWorkspace>();//状态图
+    private List<IWorkspace> MarkovpaceList=new ArrayList<IWorkspace>();//状态图
     private List<IWorkspace> UppaalspaceList=new ArrayList<IWorkspace>();//时间自动机
     // workaround for bug #4646747 in J2SE SDK 1.4.0
     private static java.util.HashMap<Class<?>, BeanInfo> beanInfos;
