@@ -67,7 +67,7 @@ public abstract class SegmentedLineEdgeByCai extends ShapeEdge
     {
         return true;
     }
-    
+     
     @Override
     public void setTransitionPoints(Point2D[] transitionPoints)
     {
