@@ -1,7 +1,6 @@
 package com.horstmann.violet.application.gui.util.wujun.SequenceTransfrom;
 
 import java.awt.Frame;
-import java.security.KeyStore.Entry.Attribute;
 import java.security.Policy.Parameters;
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -35,6 +35,8 @@ import com.horstmann.violet.product.diagram.abstracts.edge.IEdge;
 import com.horstmann.violet.product.diagram.abstracts.edge.ISequenceTimeEdge;
 import com.horstmann.violet.product.diagram.abstracts.edge.SEdge;
 import com.horstmann.violet.product.diagram.abstracts.property.Condition;
+import com.horstmann.violet.product.diagram.abstracts.property.SceneConstraint;
+import com.horstmann.violet.product.diagram.abstracts.property.UseConstraint;
 import com.horstmann.violet.product.diagram.abstracts.property.FragmentPart;
 import com.horstmann.violet.product.diagram.abstracts.property.MultiLineString;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
@@ -281,7 +283,15 @@ public abstract class AbstractNode implements INode
 		// TODO Auto-generated method stub
 		return null;
 	}
-  
+    public UseConstraint getConstraint()
+    {
+    	return null;
+    }
+    public SceneConstraint getSceneConstraint()
+    {
+    	return null;
+    }
+    
 	@Override
 	public List<FragmentPart> getFragmentParts() {
 		// TODO Auto-generated method stub

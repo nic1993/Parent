@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Model version="1.0" type="uml:Model" name="Markov_Model"
+	visibility="public" authorNmae="Terence">
+	<ModelType>Seq_Markov</ModelType>
+	<Owned>输入姿态控制信息</Owned>
+	<name>输入姿态控制信息</name>
+	<state>
+		<name>S20</name>
+		<arc label="prob">
+			<name>S20_S21_change_attitude_pwmvalue(int, int, int, int)</name>
+			<prob>1.0</prob>
+			<stimulate>
+				<parameter>
+					<paramName>throttle_pwm</paramName>
+					<paramType>int</paramType>
+				</parameter>
+				<parameter>
+					<paramName>yaw_pwm</paramName>
+					<paramType>int</paramType>
+				</parameter>
+				<parameter>
+					<paramName>pitch_pwm</paramName>
+					<paramType>int</paramType>
+				</parameter>
+				<parameter>
+					<paramName>roll_pwm</paramName>
+					<paramType>int</paramType>
+				</parameter>
+			</stimulate>
+			<to>S21</to>
+		</arc>
+	</state>
+	<state>
+		<name>S21</name>
+		<arc label="prob">
+			<name>S21_S22_read_radio()</name>
+			<prob>1.0</prob>
+			<to>S22</to>
+		</arc>
+	</state>
+	<state>
+		<name>S22</name>
+		<arc label="prob">
+			<name>S22_S23_has_new_input()</name>
+			<assignValue>new_radio_frame</assignValue>
+			<assignType>bool</assignType>
+			<prob>1.0</prob>
+			<to>S23</to>
+		</arc>
+	</state>
+	<state>
+		<name>S23</name>
+		<arc label="prob">
+			<name>S23_S24_get_current_time()</name>
+			<assignValue>tnow</assignValue>
+			<assignType>int</assignType>
+			<prob>1.0</prob>
+			<to>S24</to>
+		</arc>
+	</state>
+	<state>
+		<name>S24</name>
+		<arc label="prob">
+			<name>S24_S25_update_attitude_input_info()</name>
+			<prob>0.5</prob>
+			<to>S25</to>
+		</arc>
+		<arc label="prob">
+			<name>S24_S28_set_failsafe_radio()</name>
+			<prob>0.5</prob>
+			<to>S28</to>
+		</arc>
+	</state>
+	<state>
+		<name>S25</name>
+		<arc label="prob">
+			<name>S25_S26_set_pwm_all()</name>
+			<prob>1.0</prob>
+			<to>S26</to>
+		</arc>
+	</state>
+	<state>
+		<name>S26</name>
+		<arc label="prob">
+			<name>S26_S27</name>
+			<prob>1.0</prob>
+			<to>S27</to>
+		</arc>
+	</state>
+	<state>
+		<name>S27</name>
+		<arc label="prob">
+			<name>S27_S30</name>
+			<prob>1.0</prob>
+			<to>S30</to>
+		</arc>
+	</state>
+	<state>
+		<name>S28</name>
+		<arc label="prob">
+			<name>S28_S29</name>
+			<prob>1.0</prob>
+			<to>S29</to>
+		</arc>
+	</state>
+	<state>
+		<name>S29</name>
+		<arc label="prob">
+			<name>S29_S27</name>
+			<prob>1.0</prob>
+			<to>S27</to>
+		</arc>
+	</state>
+	<state>
+		<name>S30</name>
+		<arc label="prob">
+			<name>S30_S21</name>
+			<prob>1.0</prob>
+			<to>S21</to>
+		</arc>
+	</state>
+</Model>

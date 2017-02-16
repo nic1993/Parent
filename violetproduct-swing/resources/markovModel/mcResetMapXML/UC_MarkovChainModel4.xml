@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Model version="1.0" type="uml:Model" name="Markov_Model"
+	visibility="public" authorNmae="Terence">
+	<ModelType>UC_Markov</ModelType>
+	<Owned>Software</Owned>
+	<name>输入模式控制信息</name>
+	<state>
+		<name>S31</name>
+		<arc label="prob">
+			<name>S31_S32_change_switch_position(int)</name>
+			<prob>1.0</prob>
+			<stimulate>
+				<parameter>
+					<paramName>switch_position</paramName>
+					<paramType>int</paramType>
+				</parameter>
+			</stimulate>
+			<to>S32</to>
+		</arc>
+	</state>
+	<state>
+		<name>S32</name>
+		<arc label="prob">
+			<name>S32_S33_read_control_switch()</name>
+			<prob>1.0</prob>
+			<to>S33</to>
+		</arc>
+	</state>
+	<state>
+		<name>S33</name>
+		<arc label="prob">
+			<name>S33_S34_get_current_time()</name>
+			<assignValue>tnow</assignValue>
+			<assignType>int</assignType>
+			<prob>1.0</prob>
+			<to>S34</to>
+		</arc>
+	</state>
+	<state>
+		<name>S34</name>
+		<arc label="prob">
+			<name>S34_S35_get_switch_position()</name>
+			<assignValue>switch_position</assignValue>
+			<assignType>int</assignType>
+			<prob>1.0</prob>
+			<to>S35</to>
+		</arc>
+	</state>
+	<state>
+		<name>S35</name>
+		<arc label="prob">
+			<name>S35_S36_get_flight_mode(int)</name>
+			<assignValue>user_flight_mode</assignValue>
+			<assignType>int</assignType>
+			<prob>0.5</prob>
+			<stimulate>
+				<parameter>
+					<paramName>switch_position</paramName>
+					<paramType>int</paramType>
+				</parameter>
+			</stimulate>
+			<to>S36</to>
+		</arc>
+		<arc label="prob">
+			<name>S35_S46_land_run()</name>
+			<prob>0.5</prob>
+			<to>S46</to>
+		</arc>
+	</state>
+	<state>
+		<name>S36</name>
+		<arc label="prob">
+			<name>S36_S37_circle_init()</name>
+			<prob>0.2</prob>
+			<to>S37</to>
+		</arc>
+		<arc label="prob">
+			<name>S36_S39_stabilize_init()</name>
+			<prob>0.2</prob>
+			<to>S39</to>
+		</arc>
+		<arc label="prob">
+			<name>S36_S40_althold_init()</name>
+			<prob>0.2</prob>
+			<to>S40</to>
+		</arc>
+		<arc label="prob">
+			<name>S36_S41_loiter_init()</name>
+			<prob>0.2</prob>
+			<to>S41</to>
+		</arc>
+		<arc label="prob">
+			<name>S36_S42_rtl_init()</name>
+			<prob>0.2</prob>
+			<to>S42</to>
+		</arc>
+	</state>
+	<state>
+		<name>S37</name>
+		<arc label="prob">
+			<name>S37_S38</name>
+			<prob>1.0</prob>
+			<to>S38</to>
+		</arc>
+	</state>
+	<state>
+		<name>S38</name>
+		<arc label="prob">
+			<name>S38_S43_update_switch_input_info()</name>
+			<prob>1.0</prob>
+			<to>S43</to>
+		</arc>
+	</state>
+	<state>
+		<name>S39</name>
+		<arc label="prob">
+			<name>S39_S38</name>
+			<prob>1.0</prob>
+			<to>S38</to>
+		</arc>
+	</state>
+	<state>
+		<name>S40</name>
+		<arc label="prob">
+			<name>S40_S38</name>
+			<prob>1.0</prob>
+			<to>S38</to>
+		</arc>
+	</state>
+	<state>
+		<name>S41</name>
+		<arc label="prob">
+			<name>S41_S38</name>
+			<prob>1.0</prob>
+			<to>S38</to>
+		</arc>
+	</state>
+	<state>
+		<name>S42</name>
+		<arc label="prob">
+			<name>S42_S38</name>
+			<prob>1.0</prob>
+			<to>S38</to>
+		</arc>
+	</state>
+	<state>
+		<name>S43</name>
+		<arc label="prob">
+			<name>S43_S44</name>
+			<prob>1.0</prob>
+			<to>S44</to>
+		</arc>
+	</state>
+	<state>
+		<name>S44</name>
+		<arc label="prob">
+			<name>S44_S45</name>
+			<prob>1.0</prob>
+			<to>S45</to>
+		</arc>
+	</state>
+	<state>
+		<name>S45</name>
+		<arc label="prob">
+			<name>S45_S47</name>
+			<prob>1.0</prob>
+			<to>S47</to>
+		</arc>
+	</state>
+	<state>
+		<name>S46</name>
+		<arc label="prob">
+			<name>S46_S45</name>
+			<prob>1.0</prob>
+			<to>S45</to>
+		</arc>
+	</state>
+	<state>
+		<name>S47</name>
+		<arc label="prob">
+			<name>S47_S32</name>
+			<prob>1.0</prob>
+			<to>S32</to>
+		</arc>
+	</state>
+</Model>

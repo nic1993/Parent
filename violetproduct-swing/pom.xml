@@ -5,64 +5,65 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>violetproduct-swing</artifactId>
 	<name>Violet UML Editor Pure Java packaging</name>
-    <version>${applicationVersion}</version>
-    <packaging>jar</packaging>
-    <parent>
-        <groupId>com.horstmann.violet</groupId>
-        <artifactId>parent</artifactId>
-        <version>1.0.0</version>
-    </parent>
-    <dependencies>
-        <dependency>
-            <groupId>com.horstmann.violet</groupId>
-            <artifactId>violet-framework</artifactId>
-            <version>${applicationVersion}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.horstmann.violet</groupId>
-            <artifactId>violetplugin-classdiagram</artifactId>
-            <version>${applicationVersion}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.horstmann.violet</groupId>
-            <artifactId>violetplugin-sequencediagram</artifactId>
-            <version>${applicationVersion}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.horstmann.violet</groupId>
-            <artifactId>violetplugin-statediagram</artifactId>
-            <version>${applicationVersion}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.horstmann.violet</groupId>
-            <artifactId>violetplugin-usecasediagram</artifactId>
-            <version>${applicationVersion}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.horstmann.violet</groupId>
-            <artifactId>violetplugin-activitydiagram</artifactId>
-            <version>${applicationVersion}</version>
-        </dependency>
-         <dependency>
-            <groupId>com.horstmann.violet</groupId>
-            <artifactId>violetplugin-uppaal</artifactId>
-            <version>${applicationVersion}</version>
-        </dependency>
-         <dependency>
-            <groupId>com.horstmann.violet</groupId>
-            <artifactId>violetplugin-timingdiagram</artifactId>
-            <version>${applicationVersion}</version>
-        </dependency>
-          <dependency>
-            <groupId>com.horstmann.violet</groupId>
-            <artifactId>violetplugin-Markov</artifactId>
-            <version>${applicationVersion}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.horstmann.violet</groupId>
-            <artifactId>violetplugin-objectdiagram</artifactId>
-            <version>${applicationVersion}</version>
-        </dependency>	</dependencies>
+	<version>${applicationVersion}</version>
+	<packaging>jar</packaging>
+	<parent>
+		<groupId>com.horstmann.violet</groupId>
+		<artifactId>parent</artifactId>
+		<version>1.0.0</version>
+	</parent>
+	<dependencies>
+		<dependency>
+			<groupId>com.horstmann.violet</groupId>
+			<artifactId>violet-framework</artifactId>
+			<version>${applicationVersion}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.horstmann.violet</groupId>
+			<artifactId>violetplugin-classdiagram</artifactId>
+			<version>${applicationVersion}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.horstmann.violet</groupId>
+			<artifactId>violetplugin-sequencediagram</artifactId>
+			<version>${applicationVersion}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.horstmann.violet</groupId>
+			<artifactId>violetplugin-statediagram</artifactId>
+			<version>${applicationVersion}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.horstmann.violet</groupId>
+			<artifactId>violetplugin-usecasediagram</artifactId>
+			<version>${applicationVersion}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.horstmann.violet</groupId>
+			<artifactId>violetplugin-activitydiagram</artifactId>
+			<version>${applicationVersion}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.horstmann.violet</groupId>
+			<artifactId>violetplugin-uppaal</artifactId>
+			<version>${applicationVersion}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.horstmann.violet</groupId>
+			<artifactId>violetplugin-timingdiagram</artifactId>
+			<version>${applicationVersion}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.horstmann.violet</groupId>
+			<artifactId>violetplugin-Markov</artifactId>
+			<version>${applicationVersion}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.horstmann.violet</groupId>
+			<artifactId>violetplugin-objectdiagram</artifactId>
+			<version>${applicationVersion}</version>
+		</dependency>
+	</dependencies>
 	<build>
 		<finalName>violetumleditor-${project.version}</finalName>
 		<resources>
@@ -72,7 +73,7 @@
 					<include>**/*</include>
 				</includes>
 			</resource>
-		</resources>	
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

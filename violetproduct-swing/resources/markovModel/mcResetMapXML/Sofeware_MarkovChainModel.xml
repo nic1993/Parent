@@ -1,0 +1,820 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Model version="1.0" type="uml:Model" name="Markov_Model"
+	visibility="public" authorNmae="Terence">
+	<ModelType>Software_Markov</ModelType>
+	<Owned>Software_Itself</Owned>
+	<name>Software_MarkovChainModel</name>
+	<state label="initial">
+		<name>Q0</name>
+		<arc label="prob">
+			<name>Q0_S0</name>
+			<prob>1.0</prob>
+			<to>S0</to>
+		</arc>
+	</state>
+	<state>
+		<name>S0</name>
+		<arc label="prob">
+			<name>S0_S1_init_flight_mode(int, int)</name>
+			<assignValue>flightThrottle</assignValue>
+			<assignType>bool</assignType>
+			<prob>1.0</prob>
+			<stimulate>
+				<parameter>
+					<paramName>flight_mode</paramName>
+					<paramType>int</paramType>
+				</parameter>
+				<parameter>
+					<paramName>switch_position</paramName>
+					<paramType>int</paramType>
+				</parameter>
+			</stimulate>
+			<to>S1</to>
+		</arc>
+	</state>
+	<state>
+		<name>S1</name>
+		<arc label="prob">
+			<name>S1_S2_set_switch_position1(int)</name>
+			<prob>0.25</prob>
+			<stimulate>
+				<parameter>
+					<paramName>flight_mode</paramName>
+					<paramType>int</paramType>
+				</parameter>
+			</stimulate>
+			<to>S2</to>
+		</arc>
+		<arc label="prob">
+			<name>S1_S4_set_switch_position2(int)</name>
+			<prob>0.25</prob>
+			<stimulate>
+				<parameter>
+					<paramName>flight_mode</paramName>
+					<paramType>int</paramType>
+				</parameter>
+			</stimulate>
+			<to>S4</to>
+		</arc>
+		<arc label="prob">
+			<name>S1_S5_set_switch_position3(int)</name>
+			<prob>0.25</prob>
+			<stimulate>
+				<parameter>
+					<paramName>flight_mode</paramName>
+					<paramType>int</paramType>
+				</parameter>
+			</stimulate>
+			<to>S5</to>
+		</arc>
+		<arc label="prob">
+			<name>S1_S6_set_switch_position4(int)</name>
+			<prob>0.25</prob>
+			<stimulate>
+				<parameter>
+					<paramName>flight_mode</paramName>
+					<paramType>int</paramType>
+				</parameter>
+			</stimulate>
+			<to>S6</to>
+		</arc>
+	</state>
+	<state>
+		<name>S2</name>
+		<arc label="prob">
+			<name>S2_S3</name>
+			<prob>1.0</prob>
+			<to>S3</to>
+		</arc>
+	</state>
+	<state>
+		<name>S3</name>
+		<arc label="prob">
+			<name>S3_S7_set_angle_max(int)</name>
+			<prob>1.0</prob>
+			<stimulate>
+				<parameter>
+					<paramName>angle_max</paramName>
+					<paramType>int</paramType>
+				</parameter>
+			</stimulate>
+			<to>S7</to>
+		</arc>
+	</state>
+	<state>
+		<name>S4</name>
+		<arc label="prob">
+			<name>S4_S3</name>
+			<prob>1.0</prob>
+			<to>S3</to>
+		</arc>
+	</state>
+	<state>
+		<name>S5</name>
+		<arc label="prob">
+			<name>S5_S3</name>
+			<prob>1.0</prob>
+			<to>S3</to>
+		</arc>
+	</state>
+	<state>
+		<name>S6</name>
+		<arc label="prob">
+			<name>S6_S3</name>
+			<prob>1.0</prob>
+			<to>S3</to>
+		</arc>
+	</state>
+	<state>
+		<name>S7</name>
+		<arc label="prob">
+			<name>S7_S8</name>
+			<prob>1.0</prob>
+			<to>S8</to>
+		</arc>
+	</state>
+	<state>
+		<name>S8</name>
+		<arc label="prob">
+			<name>S8_S9_read_AHRS()</name>
+			<prob>1.0</prob>
+			<to>S9</to>
+		</arc>
+	</state>
+	<state>
+		<name>S9</name>
+		<arc label="prob">
+			<name>S9_S10_update()</name>
+			<prob>1.0</prob>
+			<to>S10</to>
+		</arc>
+	</state>
+	<state>
+		<name>S10</name>
+		<arc label="prob">
+			<name>S10_S11_grab()</name>
+			<prob>1.0</prob>
+			<to>S11</to>
+		</arc>
+	</state>
+	<state>
+		<name>S11</name>
+		<arc label="prob">
+			<name>S11_S12_get_data</name>
+			<prob>1.0</prob>
+			<to>S12</to>
+		</arc>
+	</state>
+	<state>
+		<name>S12</name>
+		<arc label="prob">
+			<name>S12_S13_get_delta_time()</name>
+			<assignValue>delta_t</assignValue>
+			<assignType>float</assignType>
+			<prob>1.0</prob>
+			<to>S13</to>
+		</arc>
+	</state>
+	<state>
+		<name>S13</name>
+		<arc label="prob">
+			<name>S13_S14_calculate_x()</name>
+			<assignValue>gyro_x</assignValue>
+			<assignType>int</assignType>
+			<prob>1.0</prob>
+			<to>S14</to>
+		</arc>
+	</state>
+	<state>
+		<name>S14</name>
+		<arc label="prob">
+			<name>S14_S15_calculate_y()</name>
+			<assignValue>gyro_y</assignValue>
+			<assignType>int</assignType>
+			<prob>1.0</prob>
+			<to>S15</to>
+		</arc>
+	</state>
+	<state>
+		<name>S15</name>
+		<arc label="prob">
+			<name>S15_S16_calculate_z()</name>
+			<assignValue>gyro_z</assignValue>
+			<assignType>int</assignType>
+			<prob>1.0</prob>
+			<to>S16</to>
+		</arc>
+	</state>
+	<state>
+		<name>S16</name>
+		<arc label="prob">
+			<name>S16_S17</name>
+			<prob>1.0</prob>
+			<to>S17</to>
+		</arc>
+	</state>
+	<state>
+		<name>S17</name>
+		<arc label="prob">
+			<name>S17_S18_matrix_update(int)</name>
+			<prob>1.0</prob>
+			<stimulate>
+				<parameter>
+					<paramName>delta_t</paramName>
+					<paramType>int</paramType>
+				</parameter>
+			</stimulate>
+			<to>S18</to>
+		</arc>
+	</state>
+	<state>
+		<name>S18</name>
+		<arc label="prob">
+			<name>S18_S19</name>
+			<prob>1.0</prob>
+			<to>S19</to>
+		</arc>
+	</state>
+	<state>
+		<name>S19</name>
+		<arc label="prob">
+			<name>S19_S8</name>
+			<prob>1.0</prob>
+			<to>S8</to>
+		</arc>
+		<arc label="prob">
+			<name>S19_S20</name>
+			<prob>1.0</prob>
+			<to>S20</to>
+		</arc>
+	</state>
+	<state>
+		<name>S20</name>
+		<arc label="prob">
+			<name>S20_S21_change_attitude_pwmvalue(int, int, int, int)</name>
+			<prob>1.0</prob>
+			<stimulate>
+				<parameter>
+					<paramName>throttle_pwm</paramName>
+					<paramType>int</paramType>
+				</parameter>
+				<parameter>
+					<paramName>yaw_pwm</paramName>
+					<paramType>int</paramType>
+				</parameter>
+				<parameter>
+					<paramName>pitch_pwm</paramName>
+					<paramType>int</paramType>
+				</parameter>
+				<parameter>
+					<paramName>roll_pwm</paramName>
+					<paramType>int</paramType>
+				</parameter>
+			</stimulate>
+			<to>S21</to>
+		</arc>
+	</state>
+	<state>
+		<name>S21</name>
+		<arc label="prob">
+			<name>S21_S22_read_radio()</name>
+			<prob>1.0</prob>
+			<to>S22</to>
+		</arc>
+	</state>
+	<state>
+		<name>S22</name>
+		<arc label="prob">
+			<name>S22_S23_has_new_input()</name>
+			<assignValue>new_radio_frame</assignValue>
+			<assignType>bool</assignType>
+			<prob>1.0</prob>
+			<to>S23</to>
+		</arc>
+	</state>
+	<state>
+		<name>S23</name>
+		<arc label="prob">
+			<name>S23_S24_get_current_time()</name>
+			<assignValue>tnow</assignValue>
+			<assignType>int</assignType>
+			<prob>1.0</prob>
+			<to>S24</to>
+		</arc>
+	</state>
+	<state>
+		<name>S24</name>
+		<arc label="prob">
+			<name>S24_S25_update_attitude_input_info()</name>
+			<prob>0.5</prob>
+			<to>S25</to>
+		</arc>
+		<arc label="prob">
+			<name>S24_S28_set_failsafe_radio()</name>
+			<prob>0.5</prob>
+			<to>S28</to>
+		</arc>
+	</state>
+	<state>
+		<name>S25</name>
+		<arc label="prob">
+			<name>S25_S26_set_pwm_all()</name>
+			<prob>1.0</prob>
+			<to>S26</to>
+		</arc>
+	</state>
+	<state>
+		<name>S26</name>
+		<arc label="prob">
+			<name>S26_S27</name>
+			<prob>1.0</prob>
+			<to>S27</to>
+		</arc>
+	</state>
+	<state>
+		<name>S27</name>
+		<arc label="prob">
+			<name>S27_S30</name>
+			<prob>1.0</prob>
+			<to>S30</to>
+		</arc>
+	</state>
+	<state>
+		<name>S28</name>
+		<arc label="prob">
+			<name>S28_S29</name>
+			<prob>1.0</prob>
+			<to>S29</to>
+		</arc>
+	</state>
+	<state>
+		<name>S29</name>
+		<arc label="prob">
+			<name>S29_S27</name>
+			<prob>1.0</prob>
+			<to>S27</to>
+		</arc>
+	</state>
+	<state>
+		<name>S30</name>
+		<arc label="prob">
+			<name>S30_S21</name>
+			<prob>1.0</prob>
+			<to>S21</to>
+		</arc>
+		<arc label="prob">
+			<name>S30_S31</name>
+			<prob>1.0</prob>
+			<to>S31</to>
+		</arc>
+	</state>
+	<state>
+		<name>S31</name>
+		<arc label="prob">
+			<name>S31_S32_change_switch_position(int)</name>
+			<prob>1.0</prob>
+			<stimulate>
+				<parameter>
+					<paramName>switch_position</paramName>
+					<paramType>int</paramType>
+				</parameter>
+			</stimulate>
+			<to>S32</to>
+		</arc>
+	</state>
+	<state>
+		<name>S32</name>
+		<arc label="prob">
+			<name>S32_S33_read_control_switch()</name>
+			<prob>1.0</prob>
+			<to>S33</to>
+		</arc>
+	</state>
+	<state>
+		<name>S33</name>
+		<arc label="prob">
+			<name>S33_S34_get_current_time()</name>
+			<assignValue>tnow</assignValue>
+			<assignType>int</assignType>
+			<prob>1.0</prob>
+			<to>S34</to>
+		</arc>
+	</state>
+	<state>
+		<name>S34</name>
+		<arc label="prob">
+			<name>S34_S35_get_switch_position()</name>
+			<assignValue>switch_position</assignValue>
+			<assignType>int</assignType>
+			<prob>1.0</prob>
+			<to>S35</to>
+		</arc>
+	</state>
+	<state>
+		<name>S35</name>
+		<arc label="prob">
+			<name>S35_S36_get_flight_mode(int)</name>
+			<assignValue>user_flight_mode</assignValue>
+			<assignType>int</assignType>
+			<prob>0.5</prob>
+			<stimulate>
+				<parameter>
+					<paramName>switch_position</paramName>
+					<paramType>int</paramType>
+				</parameter>
+			</stimulate>
+			<to>S36</to>
+		</arc>
+		<arc label="prob">
+			<name>S35_S46_land_run()</name>
+			<prob>0.5</prob>
+			<to>S46</to>
+		</arc>
+	</state>
+	<state>
+		<name>S36</name>
+		<arc label="prob">
+			<name>S36_S37_circle_init()</name>
+			<prob>0.2</prob>
+			<to>S37</to>
+		</arc>
+		<arc label="prob">
+			<name>S36_S39_stabilize_init()</name>
+			<prob>0.2</prob>
+			<to>S39</to>
+		</arc>
+		<arc label="prob">
+			<name>S36_S40_althold_init()</name>
+			<prob>0.2</prob>
+			<to>S40</to>
+		</arc>
+		<arc label="prob">
+			<name>S36_S41_loiter_init()</name>
+			<prob>0.2</prob>
+			<to>S41</to>
+		</arc>
+		<arc label="prob">
+			<name>S36_S42_rtl_init()</name>
+			<prob>0.2</prob>
+			<to>S42</to>
+		</arc>
+	</state>
+	<state>
+		<name>S37</name>
+		<arc label="prob">
+			<name>S37_S38</name>
+			<prob>1.0</prob>
+			<to>S38</to>
+		</arc>
+	</state>
+	<state>
+		<name>S38</name>
+		<arc label="prob">
+			<name>S38_S43_update_switch_input_info()</name>
+			<prob>1.0</prob>
+			<to>S43</to>
+		</arc>
+	</state>
+	<state>
+		<name>S39</name>
+		<arc label="prob">
+			<name>S39_S38</name>
+			<prob>1.0</prob>
+			<to>S38</to>
+		</arc>
+	</state>
+	<state>
+		<name>S40</name>
+		<arc label="prob">
+			<name>S40_S38</name>
+			<prob>1.0</prob>
+			<to>S38</to>
+		</arc>
+	</state>
+	<state>
+		<name>S41</name>
+		<arc label="prob">
+			<name>S41_S38</name>
+			<prob>1.0</prob>
+			<to>S38</to>
+		</arc>
+	</state>
+	<state>
+		<name>S42</name>
+		<arc label="prob">
+			<name>S42_S38</name>
+			<prob>1.0</prob>
+			<to>S38</to>
+		</arc>
+	</state>
+	<state>
+		<name>S43</name>
+		<arc label="prob">
+			<name>S43_S44</name>
+			<prob>1.0</prob>
+			<to>S44</to>
+		</arc>
+	</state>
+	<state>
+		<name>S44</name>
+		<arc label="prob">
+			<name>S44_S45</name>
+			<prob>1.0</prob>
+			<to>S45</to>
+		</arc>
+	</state>
+	<state>
+		<name>S45</name>
+		<arc label="prob">
+			<name>S45_S47</name>
+			<prob>1.0</prob>
+			<to>S47</to>
+		</arc>
+	</state>
+	<state>
+		<name>S46</name>
+		<arc label="prob">
+			<name>S46_S45</name>
+			<prob>1.0</prob>
+			<to>S45</to>
+		</arc>
+	</state>
+	<state>
+		<name>S47</name>
+		<arc label="prob">
+			<name>S47_S32</name>
+			<prob>1.0</prob>
+			<to>S32</to>
+		</arc>
+		<arc label="prob">
+			<name>S47_S48</name>
+			<prob>1.0</prob>
+			<to>S48</to>
+		</arc>
+	</state>
+	<state>
+		<name>S48</name>
+		<arc label="prob">
+			<name>S48_S49_check_mode()</name>
+			<prob>1.0</prob>
+			<to>S49</to>
+		</arc>
+	</state>
+	<state>
+		<name>S49</name>
+		<arc label="prob">
+			<name>S49_S50_stabilize_run()</name>
+			<prob>0.5</prob>
+			<to>S50</to>
+		</arc>
+		<arc label="prob">
+			<name>S49_S60_althold_run()</name>
+			<prob>0.5</prob>
+			<to>S60</to>
+		</arc>
+	</state>
+	<state>
+		<name>S50</name>
+		<arc label="prob">
+			<name>S50_S51_get_attitude_input()</name>
+			<prob>1.0</prob>
+			<to>S51</to>
+		</arc>
+	</state>
+	<state>
+		<name>S51</name>
+		<arc label="prob">
+			<name>S51_S52_get_angle_max()</name>
+			<assignValue>angle_max</assignValue>
+			<assignType>int</assignType>
+			<prob>1.0</prob>
+			<to>S52</to>
+		</arc>
+	</state>
+	<state>
+		<name>S52</name>
+		<arc label="prob">
+			<name>S52_S53_get_pilot_desired_lean_angles(int,float*,float*,int,int)</name>
+			<prob>1.0</prob>
+			<stimulate>
+				<parameter>
+					<paramName>angle_max</paramName>
+					<paramType>int</paramType>
+				</parameter>
+				<parameter>
+					<paramName>target_pitch</paramName>
+					<paramType>float*</paramType>
+				</parameter>
+				<parameter>
+					<paramName>target_roll</paramName>
+					<paramType>float*</paramType>
+				</parameter>
+				<parameter>
+					<paramName>pitch_control_in</paramName>
+					<paramType>int</paramType>
+				</parameter>
+				<parameter>
+					<paramName>roll_control_in</paramName>
+					<paramType>int</paramType>
+				</parameter>
+			</stimulate>
+			<to>S53</to>
+		</arc>
+	</state>
+	<state>
+		<name>S53</name>
+		<arc label="prob">
+			<name>S53_S54_get_pilot_desired_yaw_rate(int)</name>
+			<assignValue>target_yaw_rat</assignValue>
+			<prob>1.0</prob>
+			<stimulate>
+				<parameter>
+					<paramName>yaw_control_in</paramName>
+					<paramType>int</paramType>
+				</parameter>
+			</stimulate>
+			<to>S54</to>
+		</arc>
+	</state>
+	<state>
+		<name>S54</name>
+		<arc label="prob">
+			<name>S54_S55_get_poilot_desired_throttle(int)</name>
+			<assignValue>pilot_throttle_scaled</assignValue>
+			<prob>1.0</prob>
+			<stimulate>
+				<parameter>
+					<paramName>throttle_control_in</paramName>
+					<paramType>int</paramType>
+				</parameter>
+			</stimulate>
+			<to>S55</to>
+		</arc>
+	</state>
+	<state>
+		<name>S55</name>
+		<arc label="prob">
+			<name>S55_S56_set_throttle_out(int)</name>
+			<prob>1.0</prob>
+			<stimulate>
+				<parameter>
+					<paramName>pilot_throttle_scaled</paramName>
+					<paramType>int</paramType>
+				</parameter>
+			</stimulate>
+			<to>S56</to>
+		</arc>
+	</state>
+	<state>
+		<name>S56</name>
+		<arc label="prob">
+			<name>S56_S57_set_throttle(int)</name>
+			<prob>1.0</prob>
+			<stimulate>
+				<parameter>
+					<paramName>_throttle_in</paramName>
+					<paramType>int</paramType>
+				</parameter>
+			</stimulate>
+			<to>S57</to>
+		</arc>
+	</state>
+	<state>
+		<name>S57</name>
+		<arc label="prob">
+			<name>S57_S58_angle_ef_roll_pitch_rate_ef_yaw_smooth(float, float,
+				float)</name>
+			<prob>1.0</prob>
+			<stimulate>
+				<parameter>
+					<paramName>target_yaw_rate</paramName>
+					<paramType>float</paramType>
+				</parameter>
+				<parameter>
+					<paramName>target_pitch</paramName>
+					<paramType>float</paramType>
+				</parameter>
+				<parameter>
+					<paramName>target_roll</paramName>
+					<paramType>float</paramType>
+				</parameter>
+			</stimulate>
+			<to>S58</to>
+		</arc>
+	</state>
+	<state>
+		<name>S58</name>
+		<arc label="prob">
+			<name>S58_S59</name>
+			<prob>1.0</prob>
+			<to>S59</to>
+		</arc>
+	</state>
+	<state>
+		<name>S59</name>
+		<arc label="prob">
+			<name>S59_S61_rate_controller_run()</name>
+			<prob>1.0</prob>
+			<to>S61</to>
+		</arc>
+	</state>
+	<state>
+		<name>S60</name>
+		<arc label="prob">
+			<name>S60_S59</name>
+			<prob>1.0</prob>
+			<to>S59</to>
+		</arc>
+	</state>
+	<state>
+		<name>S61</name>
+		<arc label="prob">
+			<name>S61_S62_get_gyro()</name>
+			<prob>1.0</prob>
+			<to>S62</to>
+		</arc>
+	</state>
+	<state>
+		<name>S62</name>
+		<arc label="prob">
+			<name>S62_S63_set_roll(float)</name>
+			<prob>1.0</prob>
+			<stimulate>
+				<parameter>
+					<paramName>_roll_control_input</paramName>
+					<paramType>float</paramType>
+				</parameter>
+			</stimulate>
+			<to>S63</to>
+		</arc>
+	</state>
+	<state>
+		<name>S63</name>
+		<arc label="prob">
+			<name>S63_S64_set_pitch(float)</name>
+			<prob>1.0</prob>
+			<stimulate>
+				<parameter>
+					<paramName>_pitch_control_input</paramName>
+					<paramType>float</paramType>
+				</parameter>
+			</stimulate>
+			<to>S64</to>
+		</arc>
+	</state>
+	<state>
+		<name>S64</name>
+		<arc label="prob">
+			<name>S64_S65_set_yaw(float)</name>
+			<prob>1.0</prob>
+			<stimulate>
+				<parameter>
+					<paramName>_yaw_control_input</paramName>
+					<paramType>float</paramType>
+				</parameter>
+			</stimulate>
+			<to>S65</to>
+		</arc>
+	</state>
+	<state>
+		<name>S65</name>
+		<arc label="prob">
+			<name>S65_S66_motors_output()</name>
+			<prob>1.0</prob>
+			<to>S66</to>
+		</arc>
+	</state>
+	<state>
+		<name>S66</name>
+		<arc label="prob">
+			<name>S66_S67</name>
+			<prob>1.0</prob>
+			<to>S67</to>
+		</arc>
+	</state>
+	<state>
+		<name>S67</name>
+		<arc label="prob">
+			<name>S67_S48</name>
+			<prob>0.5</prob>
+			<to>S48</to>
+		</arc>
+		<arc label="prob">
+			<name>S67_S68_send_pwm</name>
+			<prob>0.5</prob>
+			<to>S68</to>
+		</arc>
+	</state>
+	<state>
+		<name>S68</name>
+		<arc label="prob">
+			<name>S68_S69</name>
+			<prob>1.0</prob>
+			<to>Exit</to>
+		</arc>
+	</state>
+	<state label="final">
+		<name>Exit</name>
+	</state>
+</Model>

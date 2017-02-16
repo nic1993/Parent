@@ -29,6 +29,9 @@ import java.awt.geom.Rectangle2D;
 
 import com.horstmann.violet.product.diagram.abstracts.edge.IEdge;
 import com.horstmann.violet.product.diagram.abstracts.node.EllipticalNode;
+import com.horstmann.violet.product.diagram.abstracts.property.Condition;
+import com.horstmann.violet.product.diagram.abstracts.property.SceneConstraint;
+import com.horstmann.violet.product.diagram.abstracts.property.UseConstraint;
 import com.horstmann.violet.product.diagram.abstracts.property.MultiLineString;
 
 /**
@@ -42,6 +45,8 @@ public class UseCaseNode extends EllipticalNode
     public UseCaseNode()
     {
         name = new MultiLineString();
+        useConstraint = new UseConstraint();
+        sceneConstraint = new SceneConstraint();
     }
 
     @Override
@@ -115,18 +120,42 @@ public class UseCaseNode extends EllipticalNode
     {
         return name;
     }
-
     @Override
+	public UseConstraint getConstraint() {
+		return useConstraint;
+	}
+     
+	public void setConstraint(UseConstraint useConstraint) {
+		this.useConstraint = useConstraint;
+	}
+      
+    @Override
+    public SceneConstraint getSceneConstraint() {
+    	// TODO Auto-generated method stub
+    	return sceneConstraint;
+    }
+
+	public void setSceneConstraint(SceneConstraint sceneConstraint) {
+		this.sceneConstraint = sceneConstraint;
+	}
+
+	@Override
     public UseCaseNode clone()
     {
         UseCaseNode cloned = (UseCaseNode) super.clone();
         cloned.name = name.clone();
+        cloned.useConstraint = useConstraint.clone();
+        cloned.sceneConstraint = sceneConstraint.clone();
         return cloned;
     }
 
     private MultiLineString name;
-
+    
     private static int DEFAULT_WIDTH = 110;
     private static int DEFAULT_HEIGHT = 40;
 	
+    private  UseConstraint useConstraint;
+    private  SceneConstraint sceneConstraint;
+
+
 }

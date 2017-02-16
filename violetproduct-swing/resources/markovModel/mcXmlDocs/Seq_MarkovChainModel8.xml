@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Model version="1.0" type="uml:Model" name="Markov_Model" visibility="public" authorNmae="Terence">
+  <ModelType>Seq_Markov</ModelType>
+  <Owned>Use Case4</Owned>
+  <name>UseCase4-Sequence1-Normal; UseCase4-Sequence2-Normal</name>
+  <state>
+    <name>S91</name>
+    <arc label="prob">
+      <name>S91_S92_m1</name>
+      <prob>1.0</prob>
+      <to>S92</to>
+    </arc>
+  </state>
+  <state>
+    <name>S92</name>
+    <arc label="prob">
+      <name>S92_S93_m2</name>
+      <prob>1.0</prob>
+      <to>S93</to>
+    </arc>
+  </state>
+  <state>
+    <name>S93</name>
+    <arc label="prob">
+      <name>S93_S94_m3</name>
+      <prob>0.7</prob>
+      <to>S94</to>
+    </arc>
+    <arc label="prob">
+      <name>S93_S101_m21</name>
+      <prob>0.3</prob>
+      <to>S101</to>
+    </arc>
+  </state>
+  <state>
+    <name>S94</name>
+    <arc label="prob">
+      <name>S94_S95_m4</name>
+      <prob>1.0</prob>
+      <to>S95</to>
+    </arc>
+  </state>
+  <state>
+    <name>S95</name>
+    <arc label="prob">
+      <name>S95_S96_m5</name>
+      <prob>1.0</prob>
+      <to>S96</to>
+    </arc>
+  </state>
+  <state>
+    <name>S96</name>
+    <arc label="prob">
+      <name>S96_S97_m6</name>
+      <prob>1.0</prob>
+      <to>S97</to>
+    </arc>
+  </state>
+  <state>
+    <name>S97</name>
+    <arc label="prob">
+      <name>S97_S98_m7</name>
+      <prob>1.0</prob>
+      <to>S98</to>
+    </arc>
+  </state>
+  <state>
+    <name>S98</name>
+    <arc label="prob">
+      <name>S98_S99_m8</name>
+      <prob>1.0</prob>
+      <to>S99</to>
+    </arc>
+  </state>
+  <state>
+    <name>S99</name>
+    <arc label="prob">
+      <name>S99_S100_m9</name>
+      <prob>1.0</prob>
+      <to>S100</to>
+    </arc>
+  </state>
+  <state>
+    <name>S100</name>
+  </state>
+  <state>
+    <name>S101</name>
+    <arc label="prob">
+      <name>S101_S102_m22</name>
+      <prob>1.0</prob>
+      <to>S102</to>
+    </arc>
+  </state>
+  <state>
+    <name>S102</name>
+  </state>
+</Model>

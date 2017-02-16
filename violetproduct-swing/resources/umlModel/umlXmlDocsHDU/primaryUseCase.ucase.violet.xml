@@ -1,0 +1,156 @@
+<UseCaseDiagramGraph id="1">
+  <nodes id="2">
+    <ActorNode id="3">
+      <children id="4"/>
+      <location class="Point2D.Double" id="5" x="298.0" y="184.0"/>
+      <ID>EAID_cc163952-8c1c-4d5a-96a5-1c017d039b97</ID>
+      <id id="6"/>
+      <backgroundColor id="7">
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+        <alpha>255</alpha>
+      </backgroundColor>
+      <borderColor id="8">
+        <red>191</red>
+        <green>191</green>
+        <blue>191</blue>
+        <alpha>255</alpha>
+      </borderColor>
+      <textColor id="9">
+        <red>51</red>
+        <green>51</green>
+        <blue>51</blue>
+        <alpha>255</alpha>
+      </textColor>
+      <name id="10">
+        <text>IBM</text>
+      </name>
+    </ActorNode>
+    <ActorNode id="11">
+      <children id="12"/>
+      <location class="Point2D.Double" id="13" x="741.0" y="286.0"/>
+      <ID>EAID_b5f098b6-569b-4297-85a0-c0a23e3fa990</ID>
+      <id id="14"/>
+      <backgroundColor reference="7"/>
+      <borderColor reference="8"/>
+      <textColor reference="9"/>
+      <name id="15">
+        <text>operator</text>
+      </name>
+    </ActorNode>
+    <UseCaseNode id="16">
+      <children id="17"/>
+      <location class="Point2D.Double" id="18" x="496.0" y="147.0"/>
+      <ID>EAID_9d2b2bf6-02d0-41ef-9479-c6fdfbfd9e4f</ID>
+      <id id="19"/>
+      <backgroundColor reference="7"/>
+      <borderColor reference="8"/>
+      <textColor reference="9"/>
+      <name id="20">
+        <text>usecase1</text>
+      </name>
+    </UseCaseNode>
+    <UseCaseNode id="21">
+      <children id="22"/>
+      <location class="Point2D.Double" id="23" x="501.0" y="269.0"/>
+      <ID>EAID_a25efdf4-7d6c-4774-908f-c9fee39579aa</ID>
+      <id id="24"/>
+      <backgroundColor reference="7"/>
+      <borderColor reference="8"/>
+      <textColor reference="9"/>
+      <name id="25">
+        <text>usecase2</text>
+      </name>
+    </UseCaseNode>
+    <UseCaseNode id="26">
+      <children id="27"/>
+      <location class="Point2D.Double" id="28" x="502.0" y="371.0"/>
+      <ID>EAID_12575858-4aab-44a1-8521-e396a91e8c62</ID>
+      <id id="29"/>
+      <backgroundColor reference="7"/>
+      <borderColor reference="8"/>
+      <textColor reference="9"/>
+      <name id="30">
+        <text>usecase3</text>
+      </name>
+    </UseCaseNode>
+    <NoteNode id="31">
+      <children id="32"/>
+      <location class="Point2D.Double" id="33" x="827.0" y="144.0"/>
+      <ID>EAID_41e5ccfc-6721-4a6f-b5a6-0fb66b9f0ea3</ID>
+      <id id="34"/>
+      <backgroundColor reference="7"/>
+      <borderColor reference="8"/>
+      <textColor reference="9"/>
+      <text id="35">
+        <text>name:usecase1;
+preCondition:correctivess;
+probability:1.0;
+#
+name:usecase2;
+preCondition:fls;
+probability:0.8;
+#
+name:usecase3;
+preCondition:sls;
+probability:0.2;
+#
+</text>
+      </text>
+      <color id="36">
+        <red>255</red>
+        <green>228</green>
+        <blue>181</blue>
+        <alpha>255</alpha>
+      </color>
+    </NoteNode>
+  </nodes>
+  <edges id="37">
+    <UseCaseRelationshipEdge id="38">
+      <start class="ActorNode" reference="3"/>
+      <end class="UseCaseNode" reference="16"/>
+      <startLocation class="Point2D.Double" id="39" x="293.0" y="262.0"/>
+      <endLocation class="Point2D.Double" id="40" x="527.0" y="171.0"/>
+      <id id="41"/>
+      <ID>EAID_cfacf4f7-0cd2-440a-9663-c059aa6d899b</ID>
+      <middleLabel></middleLabel>
+    </UseCaseRelationshipEdge>
+    <UseCaseRelationshipEdge id="42">
+      <start class="ActorNode" reference="3"/>
+      <end class="UseCaseNode" reference="21"/>
+      <startLocation class="Point2D.Double" id="43" x="301.0" y="279.0"/>
+      <endLocation class="Point2D.Double" id="44" x="520.0" y="289.0"/>
+      <id id="45"/>
+      <ID>EAID_ebd4eab9-d107-4017-ad6d-a9d8397e908a</ID>
+      <middleLabel></middleLabel>
+    </UseCaseRelationshipEdge>
+    <UseCaseRelationshipEdge id="46">
+      <start class="ActorNode" reference="11"/>
+      <end class="UseCaseNode" reference="21"/>
+      <startLocation class="Point2D.Double" id="47" x="781.0" y="283.0"/>
+      <endLocation class="Point2D.Double" id="48" x="603.0" y="302.0"/>
+      <id id="49"/>
+      <ID>EAID_438ad9d0-5291-4793-bd31-549b14212ae5</ID>
+      <middleLabel></middleLabel>
+    </UseCaseRelationshipEdge>
+    <UseCaseRelationshipEdge id="50">
+      <start class="ActorNode" reference="11"/>
+      <end class="UseCaseNode" reference="26"/>
+      <startLocation class="Point2D.Double" id="51" x="784.0" y="319.0"/>
+      <endLocation class="Point2D.Double" id="52" x="597.0" y="406.0"/>
+      <id id="53"/>
+      <ID>EAID_fa80a13d-b640-46b6-8fbd-af9b016df647</ID>
+      <middleLabel></middleLabel>
+    </UseCaseRelationshipEdge>
+    <UseCaseRelationshipEdge id="54">
+      <start class="UseCaseNode" reference="21"/>
+      <end class="UseCaseNode" reference="16"/>
+      <startLocation class="Point2D.Double" id="55" x="561.0" y="289.0"/>
+      <endLocation class="Point2D.Double" id="56" x="558.0" y="167.0"/>
+      <id id="57"/>
+      <ID>EAID_9af230d1-4f43-41b2-9c59-63fb1529148b</ID>
+      <middleLabel>?include?</middleLabel>
+    </UseCaseRelationshipEdge>
+  </edges>
+</UseCaseDiagramGraph>

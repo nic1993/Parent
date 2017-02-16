@@ -1,0 +1,736 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<xmi:XMI xmi:version="2.1" xmlns:uml="http://schema.omg.org/spec/UML/2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:SoaML="http://www.sparxsystems.com/profiles/SoaML/1.0">
+	<xmi:Documentation exporter="Enterprise Architect" exporterVersion="6.5"/>
+	<uml:Model xmi:type="uml:Model" name="EA_Model" visibility="public">
+		<packagedElement xmi:type="uml:Package" xmi:id="EAPK_104B6329_C1AC_4375_9DB5_E9AB9997BEC7" name="&#36755;&#20837;&#23039;&#24577;&#25511;&#21046;&#20449;&#24687;" visibility="public">
+			<packagedElement xmi:type="uml:Collaboration" xmi:id="EAID_CB000000_329_C1AC_4375_9DB5_E9AB9997BEC" name="EA_Collaboration1" visibility="public">
+				<ownedBehavior xmi:type="uml:Interaction" xmi:id="EAID_IN000000_329_C1AC_4375_9DB5_E9AB9997BEC" name="EA_Interaction1" visibility="public">
+					<fragment xmi:type="uml:CombinedFragment" xmi:id="EAID_A3D1FD75_1150_4d75_B118_DC9FCFBA6425" visibility="public" interactionOperator="alt">
+						<covered xmi:idref="EAID_LL000000_C86B_4bfd_8838_080335F840EB"/>
+						<covered xmi:idref="EAID_04CF78A3_E306_48ec_ACEE_CDBDE6D7C9B4"/>
+						<operand xmi:type="uml:InteractionOperand" xmi:id="EAID_OP000000_1150_4d75_B118_DC9FCFBA6425">
+							<guard xmi:type="uml:InteractionConstraint" xmi:id="EAID_IC000000_1150_4d75_B118_DC9FCFBA6425">
+								<specification xmi:type="uml:OpaqueExpression" xmi:id="EAID_OE000000_1150_4d75_B118_DC9FCFBA6425"/>
+							</guard>
+						</operand>
+					</fragment>
+					<fragment xmi:type="uml:CombinedFragment" xmi:id="EAID_FC1B7C40_08C3_40ad_B4F9_E494B5D870AF" visibility="public" interactionOperator="alt">
+						<covered xmi:idref="EAID_LL000000_C86B_4bfd_8838_080335F840EB"/>
+						<covered xmi:idref="EAID_04CF78A3_E306_48ec_ACEE_CDBDE6D7C9B4"/>
+						<operand xmi:type="uml:InteractionOperand" xmi:id="EAID_OP000000_08C3_40ad_B4F9_E494B5D870AF">
+							<guard xmi:type="uml:InteractionConstraint" xmi:id="EAID_IC000000_08C3_40ad_B4F9_E494B5D870AF">
+								<specification xmi:type="uml:OpaqueExpression" xmi:id="EAID_OE000000_08C3_40ad_B4F9_E494B5D870AF"/>
+							</guard>
+						</operand>
+					</fragment>
+					<lifeline xmi:type="uml:Lifeline" xmi:id="EAID_44F61A04_903E_45c2_A131_4F248908F758" name="Copter" visibility="public" represents="EAID_AT000000_903E_45c2_A131_4F248908F758"/>
+					<lifeline xmi:type="uml:Lifeline" xmi:id="EAID_35708323_B2DA_4c29_A5F8_4ADBA68B79D2" name="Object1" visibility="public" represents="EAID_AT000000_B2DA_4c29_A5F8_4ADBA68B79D2"/>
+					<lifeline xmi:type="uml:Lifeline" xmi:id="EAID_584E8D62_5F13_4f19_9814_9B7E92F45813" name="RCInput" visibility="public" represents="EAID_AT000000_5F13_4f19_9814_9B7E92F45813"/>
+					<lifeline xmi:type="uml:Lifeline" xmi:id="EAID_04CF78A3_E306_48ec_ACEE_CDBDE6D7C9B4" name="schedule" visibility="public" represents="EAID_AT000000_E306_48ec_ACEE_CDBDE6D7C9B4"/>
+					<lifeline xmi:type="uml:Lifeline" xmi:id="EAID_LL000000_C86B_4bfd_8838_080335F840EB" name="operator" visibility="public" represents="EAID_AT000000_000_C86B_4bfd_8838_080335F840E"/>
+					<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000000_C86B_4bfd_8838_080335F840EB" covered="EAID_LL000000_C86B_4bfd_8838_080335F840EB"/>
+					<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000000_5F13_4f19_9814_9B7E92F45813" covered="EAID_584E8D62_5F13_4f19_9814_9B7E92F45813"/>
+					<fragment xmi:type="uml:CombinedFragment" xmi:id="EAID_E964D87C_1BBF_44b2_B144_E8BA92A020ED" name="read_info" visibility="public" interactionOperator="loop">
+						<covered xmi:idref="EAID_04CF78A3_E306_48ec_ACEE_CDBDE6D7C9B4"/>
+						<covered xmi:idref="EAID_584E8D62_5F13_4f19_9814_9B7E92F45813"/>
+						<covered xmi:idref="EAID_44F61A04_903E_45c2_A131_4F248908F758"/>
+						<operand xmi:type="uml:InteractionOperand" xmi:id="EAID_OP000000_1BBF_44b2_B144_E8BA92A020ED">
+							<guard xmi:type="uml:InteractionConstraint" xmi:id="EAID_IC000000_1BBF_44b2_B144_E8BA92A020ED">
+								<specification xmi:type="uml:OpaqueExpression" xmi:id="EAID_OE000000_1BBF_44b2_B144_E8BA92A020ED" body="cycle 10ms"/>
+							</guard>
+							<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000000_E306_48ec_ACEE_CDBDE6D7C9B4" covered="EAID_04CF78A3_E306_48ec_ACEE_CDBDE6D7C9B4"/>
+							<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000008_903E_45c2_A131_4F248908F758" covered="EAID_44F61A04_903E_45c2_A131_4F248908F758"/>
+							<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000004_903E_45c2_A131_4F248908F758" covered="EAID_44F61A04_903E_45c2_A131_4F248908F758"/>
+							<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000001_5F13_4f19_9814_9B7E92F45813" covered="EAID_584E8D62_5F13_4f19_9814_9B7E92F45813"/>
+							<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000000_903E_45c2_A131_4F248908F758" covered="EAID_44F61A04_903E_45c2_A131_4F248908F758"/>
+							<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000001_903E_45c2_A131_4F248908F758" covered="EAID_44F61A04_903E_45c2_A131_4F248908F758"/>
+							<fragment xmi:type="uml:CombinedFragment" xmi:id="EAID_D345CEF5_BE46_40ab_9E77_DE6327E47A9B" name="has_Input" visibility="public" interactionOperator="alt">
+								<covered xmi:idref="EAID_584E8D62_5F13_4f19_9814_9B7E92F45813"/>
+								<covered xmi:idref="EAID_44F61A04_903E_45c2_A131_4F248908F758"/>
+								<operand xmi:type="uml:InteractionOperand" xmi:id="EAID_OP000001_BE46_40ab_9E77_DE6327E47A9B">
+									<guard xmi:type="uml:InteractionConstraint" xmi:id="EAID_IC000001_BE46_40ab_9E77_DE6327E47A9B">
+										<specification xmi:type="uml:OpaqueExpression" xmi:id="EAID_OE000001_BE46_40ab_9E77_DE6327E47A9B" body="new_radio_frame==true"/>
+									</guard>
+									<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000002_903E_45c2_A131_4F248908F758" covered="EAID_44F61A04_903E_45c2_A131_4F248908F758"/>
+									<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000003_903E_45c2_A131_4F248908F758" covered="EAID_44F61A04_903E_45c2_A131_4F248908F758"/>
+									<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000007_903E_45c2_A131_4F248908F758" covered="EAID_44F61A04_903E_45c2_A131_4F248908F758"/>
+									<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000002_5F13_4f19_9814_9B7E92F45813" covered="EAID_584E8D62_5F13_4f19_9814_9B7E92F45813"/>
+								</operand>
+								<operand xmi:type="uml:InteractionOperand" xmi:id="EAID_OP000000_BE46_40ab_9E77_DE6327E47A9B">
+									<guard xmi:type="uml:InteractionConstraint" xmi:id="EAID_IC000000_BE46_40ab_9E77_DE6327E47A9B">
+										<specification xmi:type="uml:OpaqueExpression" xmi:id="EAID_OE000000_BE46_40ab_9E77_DE6327E47A9B" body="else"/>
+									</guard>
+									<fragment xmi:type="uml:CombinedFragment" xmi:id="EAID_A082AFB9_8CEF_4e73_93DA_09C100065F65" name="failsafe_radio" visibility="public" interactionOperator="alt">
+										<covered xmi:idref="EAID_44F61A04_903E_45c2_A131_4F248908F758"/>
+										<operand xmi:type="uml:InteractionOperand" xmi:id="EAID_OP000000_8CEF_4e73_93DA_09C100065F65">
+											<guard xmi:type="uml:InteractionConstraint" xmi:id="EAID_IC000000_8CEF_4e73_93DA_09C100065F65">
+												<specification xmi:type="uml:OpaqueExpression" xmi:id="EAID_OE000000_8CEF_4e73_93DA_09C100065F65" body="tnow-last_update_time&gt;=500ms"/>
+											</guard>
+											<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000005_903E_45c2_A131_4F248908F758" covered="EAID_44F61A04_903E_45c2_A131_4F248908F758"/>
+											<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000006_903E_45c2_A131_4F248908F758" covered="EAID_44F61A04_903E_45c2_A131_4F248908F758"/>
+										</operand>
+									</fragment>
+								</operand>
+							</fragment>
+						</operand>
+					</fragment>
+					<message xmi:type="uml:Message" xmi:id="EAID_654CE3F4_F9A6_4958_8CD8_547F44426A1D" name="change_attitude_pwmvalue(int, int, int, int)" messageKind="complete" messageSort="synchCall" sendEvent="EAID_FR000000_C86B_4bfd_8838_080335F840EB" receiveEvent="EAID_FR000000_5F13_4f19_9814_9B7E92F45813">
+						<argument xmi:type="uml:LiteralString" xmi:id="EAID_AR000000_F9A6_4958_8CD8_547F44426A1D" name="throttle_pwm"/>
+						<argument xmi:type="uml:LiteralString" xmi:id="EAID_AR000001_F9A6_4958_8CD8_547F44426A1D" name=" yaw_pwm"/>
+						<argument xmi:type="uml:LiteralString" xmi:id="EAID_AR000002_F9A6_4958_8CD8_547F44426A1D" name=" pitch_pwm"/>
+						<argument xmi:type="uml:LiteralString" xmi:id="EAID_AR000003_F9A6_4958_8CD8_547F44426A1D" name=" roll_pwm"/>
+					</message>
+					<message xmi:type="uml:Message" xmi:id="EAID_BC9FD139_1A2F_49f8_82AE_33BCE8354238" name="read_radio()" messageKind="complete" messageSort="synchCall" sendEvent="EAID_FR000000_E306_48ec_ACEE_CDBDE6D7C9B4" receiveEvent="EAID_FR000008_903E_45c2_A131_4F248908F758"/>
+					<message xmi:type="uml:Message" xmi:id="EAID_8B4D3231_9C4C_4829_A47A_0C88C92B5486" name="has_new_input()" messageKind="complete" messageSort="synchCall" sendEvent="EAID_FR000004_903E_45c2_A131_4F248908F758" receiveEvent="EAID_FR000001_5F13_4f19_9814_9B7E92F45813"/>
+					<message xmi:type="uml:Message" xmi:id="EAID_3F54A682_9D16_46c4_81F9_6537DCB69396" name="get_current_time()" messageKind="complete" messageSort="synchCall" sendEvent="EAID_FR000000_903E_45c2_A131_4F248908F758" receiveEvent="EAID_FR000001_903E_45c2_A131_4F248908F758"/>
+					<message xmi:type="uml:Message" xmi:id="EAID_634DF162_71E1_4a52_95D3_716F72318E0A" name="update_attitude_input_info()" messageKind="complete" messageSort="synchCall" sendEvent="EAID_FR000002_903E_45c2_A131_4F248908F758" receiveEvent="EAID_FR000003_903E_45c2_A131_4F248908F758"/>
+					<message xmi:type="uml:Message" xmi:id="EAID_E798879C_D9BA_42a9_992B_04C1812BB15B" name="set_pwm_all()" messageKind="complete" messageSort="synchCall" sendEvent="EAID_FR000007_903E_45c2_A131_4F248908F758" receiveEvent="EAID_FR000002_5F13_4f19_9814_9B7E92F45813"/>
+					<message xmi:type="uml:Message" xmi:id="EAID_BA3F18A4_1490_40a3_8A72_08E30B0B9AA7" name="set_failsafe_radio()" messageKind="complete" messageSort="synchCall" sendEvent="EAID_FR000005_903E_45c2_A131_4F248908F758" receiveEvent="EAID_FR000006_903E_45c2_A131_4F248908F758"/>
+				</ownedBehavior>
+				<ownedAttribute xmi:type="uml:Property" xmi:id="EAID_AT000000_903E_45c2_A131_4F248908F758"/>
+				<ownedAttribute xmi:type="uml:Property" xmi:id="EAID_AT000000_B2DA_4c29_A5F8_4ADBA68B79D2"/>
+				<ownedAttribute xmi:type="uml:Property" xmi:id="EAID_AT000000_5F13_4f19_9814_9B7E92F45813"/>
+				<ownedAttribute xmi:type="uml:Property" xmi:id="EAID_AT000000_E306_48ec_ACEE_CDBDE6D7C9B4"/>
+				<ownedAttribute xmi:type="uml:Property" xmi:id="EAID_AT000000_000_C86B_4bfd_8838_080335F840E">
+					<type xmi:idref="EAID_384555C8_C86B_4bfd_8838_080335F840EB"/>
+				</ownedAttribute>
+			</packagedElement>
+			<packagedElement xmi:type="uml:Actor" xmi:id="EAID_384555C8_C86B_4bfd_8838_080335F840EB" name="operator" visibility="public"/>
+		</packagedElement>
+		<SoaML:entity base_Sequence="EAID_35708323_B2DA_4c29_A5F8_4ADBA68B79D2"/>
+	</uml:Model>
+	<xmi:Extension extender="Enterprise Architect" extenderID="6.5">
+		<elements>
+			<element xmi:idref="EAPK_104B6329_C1AC_4375_9DB5_E9AB9997BEC7" xmi:type="uml:Package" name="&#36755;&#20837;&#23039;&#24577;&#25511;&#21046;&#20449;&#24687;" scope="public">
+				<model package2="EAID_104B6329_C1AC_4375_9DB5_E9AB9997BEC7" package="EAPK_C0F86D43_F2FC_49d1_AFD7_511C178132CE" tpos="6" ea_localid="13" ea_eleType="package"/>
+				<properties isSpecification="false" sType="Package" nType="0" scope="public"/>
+				<project author="Terence" version="1.0" phase="1.0" created="2016-09-18 16:24:04" modified="2016-09-18 21:29:03" complexity="1" status="Proposed"/>
+				<code gentype="Java"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="Sequences"/>
+				<packageproperties version="1.0" tpos="6"/>
+				<paths/>
+				<times created="2016-09-18 16:24:04" modified="2016-09-18 16:24:04"/>
+				<flags iscontrolled="FALSE" isprotected="FALSE" usedtd="FALSE" logxml="FALSE"/>
+			</element>
+			<element xmi:idref="EAID_384555C8_C86B_4bfd_8838_080335F840EB" xmi:type="uml:Actor" name="operator" scope="public">
+				<model package="EAPK_104B6329_C1AC_4375_9DB5_E9AB9997BEC7" tpos="0" ea_localid="83" ea_eleType="element"/>
+				<properties isSpecification="false" sType="Actor" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
+				<project author="Terence" version="1.0" phase="1.0" created="2016-09-19 09:27:14" modified="2016-09-19 09:27:28" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="&#36755;&#20837;&#23039;&#24577;&#25511;&#21046;&#20449;&#24687;"/>
+				<links>
+					<Sequence xmi:id="EAID_654CE3F4_F9A6_4958_8CD8_547F44426A1D" start="EAID_384555C8_C86B_4bfd_8838_080335F840EB" end="EAID_584E8D62_5F13_4f19_9814_9B7E92F45813"/>
+				</links>
+			</element>
+			<element xmi:idref="EAID_A3D1FD75_1150_4d75_B118_DC9FCFBA6425" xmi:type="uml:InteractionFragment" scope="public">
+				<model package="EAPK_104B6329_C1AC_4375_9DB5_E9AB9997BEC7" tpos="0" ea_localid="91" ea_eleType="element"/>
+				<properties isSpecification="false" sType="InteractionFragment" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
+				<project author="Terence" version="1.0" phase="1.0" created="2016-09-19 09:35:31" modified="2016-09-19 09:35:31" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=3;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="&#36755;&#20837;&#23039;&#24577;&#25511;&#21046;&#20449;&#24687;" diagram="EAID_115A460F_AB4C_4c86_A799_FF828D73E135"/>
+			</element>
+			<element xmi:idref="EAID_FC1B7C40_08C3_40ad_B4F9_E494B5D870AF" xmi:type="uml:InteractionFragment" scope="public">
+				<model package="EAPK_104B6329_C1AC_4375_9DB5_E9AB9997BEC7" tpos="0" ea_localid="88" ea_eleType="element"/>
+				<properties isSpecification="false" sType="InteractionFragment" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
+				<project author="Terence" version="1.0" phase="1.0" created="2016-09-19 09:32:56" modified="2016-09-19 09:32:56" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=3;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="&#36755;&#20837;&#23039;&#24577;&#25511;&#21046;&#20449;&#24687;" diagram="EAID_115A460F_AB4C_4c86_A799_FF828D73E135"/>
+			</element>
+			<element xmi:idref="EAID_44F61A04_903E_45c2_A131_4F248908F758" xmi:type="uml:Sequence" name="Copter" scope="public">
+				<model package="EAPK_104B6329_C1AC_4375_9DB5_E9AB9997BEC7" tpos="0" ea_localid="86" ea_eleType="element"/>
+				<properties isSpecification="false" sType="Sequence" nType="0" scope="public"/>
+				<project author="Terence" version="1.0" phase="1.0" created="2016-09-19 09:28:16" modified="2016-09-19 09:28:23" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="&#36755;&#20837;&#23039;&#24577;&#25511;&#21046;&#20449;&#24687;"/>
+				<links>
+					<Sequence xmi:id="EAID_3F54A682_9D16_46c4_81F9_6537DCB69396" start="EAID_44F61A04_903E_45c2_A131_4F248908F758" end="EAID_44F61A04_903E_45c2_A131_4F248908F758"/>
+					<Sequence xmi:id="EAID_634DF162_71E1_4a52_95D3_716F72318E0A" start="EAID_44F61A04_903E_45c2_A131_4F248908F758" end="EAID_44F61A04_903E_45c2_A131_4F248908F758"/>
+					<Sequence xmi:id="EAID_8B4D3231_9C4C_4829_A47A_0C88C92B5486" start="EAID_44F61A04_903E_45c2_A131_4F248908F758" end="EAID_584E8D62_5F13_4f19_9814_9B7E92F45813"/>
+					<Sequence xmi:id="EAID_BA3F18A4_1490_40a3_8A72_08E30B0B9AA7" start="EAID_44F61A04_903E_45c2_A131_4F248908F758" end="EAID_44F61A04_903E_45c2_A131_4F248908F758"/>
+					<Sequence xmi:id="EAID_E798879C_D9BA_42a9_992B_04C1812BB15B" start="EAID_44F61A04_903E_45c2_A131_4F248908F758" end="EAID_584E8D62_5F13_4f19_9814_9B7E92F45813"/>
+					<Sequence xmi:id="EAID_3F54A682_9D16_46c4_81F9_6537DCB69396" start="EAID_44F61A04_903E_45c2_A131_4F248908F758" end="EAID_44F61A04_903E_45c2_A131_4F248908F758"/>
+					<Sequence xmi:id="EAID_634DF162_71E1_4a52_95D3_716F72318E0A" start="EAID_44F61A04_903E_45c2_A131_4F248908F758" end="EAID_44F61A04_903E_45c2_A131_4F248908F758"/>
+					<Sequence xmi:id="EAID_BA3F18A4_1490_40a3_8A72_08E30B0B9AA7" start="EAID_44F61A04_903E_45c2_A131_4F248908F758" end="EAID_44F61A04_903E_45c2_A131_4F248908F758"/>
+					<Sequence xmi:id="EAID_BC9FD139_1A2F_49f8_82AE_33BCE8354238" start="EAID_04CF78A3_E306_48ec_ACEE_CDBDE6D7C9B4" end="EAID_44F61A04_903E_45c2_A131_4F248908F758"/>
+				</links>
+			</element>
+			<element xmi:idref="EAID_35708323_B2DA_4c29_A5F8_4ADBA68B79D2" xmi:type="uml:Sequence" name="Object1" scope="public">
+				<model package="EAPK_104B6329_C1AC_4375_9DB5_E9AB9997BEC7" tpos="0" ea_localid="89" ea_eleType="element"/>
+				<properties isSpecification="false" sType="Sequence" nType="0" scope="public" stereotype="entity"/>
+				<project author="Terence" version="1.0" phase="1.0" created="2016-09-19 09:33:09" modified="2016-09-19 09:33:09" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs value="$XREFPROP=$XID={443B4EC5-9C52-4a23-BC3E-B1AE6A342165}$XID;$NAM=Stereotypes$NAM;$TYP=element property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@STEREO;Name=entity;GUID={E314AFE6-D9AA-46f3-947F-650F7D01A5FA};@ENDSTEREO;$DES;$CLT={35708323-B2DA-4c29-A5F8-4ADBA68B79D2}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
+				<extendedProperties tagged="0" package_name="&#36755;&#20837;&#23039;&#24577;&#25511;&#21046;&#20449;&#24687;"/>
+			</element>
+			<element xmi:idref="EAID_584E8D62_5F13_4f19_9814_9B7E92F45813" xmi:type="uml:Sequence" name="RCInput" scope="public">
+				<model package="EAPK_104B6329_C1AC_4375_9DB5_E9AB9997BEC7" tpos="0" ea_localid="85" ea_eleType="element"/>
+				<properties isSpecification="false" sType="Sequence" nType="0" scope="public"/>
+				<project author="Terence" version="1.0" phase="1.0" created="2016-09-19 09:27:53" modified="2016-09-19 09:28:01" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="&#36755;&#20837;&#23039;&#24577;&#25511;&#21046;&#20449;&#24687;"/>
+				<links>
+					<Sequence xmi:id="EAID_654CE3F4_F9A6_4958_8CD8_547F44426A1D" start="EAID_384555C8_C86B_4bfd_8838_080335F840EB" end="EAID_584E8D62_5F13_4f19_9814_9B7E92F45813"/>
+					<Sequence xmi:id="EAID_8B4D3231_9C4C_4829_A47A_0C88C92B5486" start="EAID_44F61A04_903E_45c2_A131_4F248908F758" end="EAID_584E8D62_5F13_4f19_9814_9B7E92F45813"/>
+					<Sequence xmi:id="EAID_E798879C_D9BA_42a9_992B_04C1812BB15B" start="EAID_44F61A04_903E_45c2_A131_4F248908F758" end="EAID_584E8D62_5F13_4f19_9814_9B7E92F45813"/>
+				</links>
+			</element>
+			<element xmi:idref="EAID_A082AFB9_8CEF_4e73_93DA_09C100065F65" xmi:type="uml:InteractionFragment" name="failsafe_radio" scope="public">
+				<model package="EAPK_104B6329_C1AC_4375_9DB5_E9AB9997BEC7" tpos="0" ea_localid="92" ea_eleType="element"/>
+				<properties isSpecification="false" sType="InteractionFragment" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
+				<project author="Terence" version="1.0" phase="1.0" created="2016-09-19 09:35:40" modified="2016-09-19 09:35:56" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=3;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs value="$XREFPROP=$XID={FBFF7875-03E7-47af-82FD-22C19E59E9D2}$XID;$NAM=Partitions$NAM;$TYP=element property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@PAR;Name=tnow-last_update_time&gt;=500ms;Size=40;@ENDPAR;$DES;$CLT={A082AFB9-8CEF-4e73-93DA-09C100065F65}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
+				<extendedProperties tagged="0" package_name="&#36755;&#20837;&#23039;&#24577;&#25511;&#21046;&#20449;&#24687;" diagram="EAID_115A460F_AB4C_4c86_A799_FF828D73E135"/>
+			</element>
+			<element xmi:idref="EAID_D345CEF5_BE46_40ab_9E77_DE6327E47A9B" xmi:type="uml:InteractionFragment" name="has_Input" scope="public">
+				<model package="EAPK_104B6329_C1AC_4375_9DB5_E9AB9997BEC7" tpos="0" ea_localid="90" ea_eleType="element"/>
+				<properties isSpecification="false" sType="InteractionFragment" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
+				<project author="Terence" version="1.0" phase="1.0" created="2016-09-19 09:33:19" modified="2016-09-19 09:33:48" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=3;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs value="$XREFPROP=$XID={E1C4C666-16A5-4374-A0BC-B3AB9049D530}$XID;$NAM=Partitions$NAM;$TYP=element property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@PAR;Name=else;Size=219;@ENDPAR;@PAR;Name=new_radio_frame==true;Size=122;@ENDPAR;$DES;$CLT={D345CEF5-BE46-40ab-9E77-DE6327E47A9B}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
+				<extendedProperties tagged="0" package_name="&#36755;&#20837;&#23039;&#24577;&#25511;&#21046;&#20449;&#24687;" diagram="EAID_115A460F_AB4C_4c86_A799_FF828D73E135"/>
+			</element>
+			<element xmi:idref="EAID_E964D87C_1BBF_44b2_B144_E8BA92A020ED" xmi:type="uml:InteractionFragment" name="read_info" scope="public">
+				<model package="EAPK_104B6329_C1AC_4375_9DB5_E9AB9997BEC7" tpos="0" ea_localid="87" ea_eleType="element"/>
+				<properties isSpecification="false" sType="InteractionFragment" nType="4" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
+				<project author="Terence" version="1.0" phase="1.0" created="2016-09-19 09:29:11" modified="2016-09-19 09:29:35" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=3;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs value="$XREFPROP=$XID={284234F2-DFF8-4f9b-8743-18EF9726D956}$XID;$NAM=Partitions$NAM;$TYP=element property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@PAR;Name=cycle 10ms;Size=40;@ENDPAR;$DES;$CLT={E964D87C-1BBF-44b2-B144-E8BA92A020ED}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
+				<extendedProperties tagged="0" package_name="&#36755;&#20837;&#23039;&#24577;&#25511;&#21046;&#20449;&#24687;" diagram="EAID_115A460F_AB4C_4c86_A799_FF828D73E135"/>
+			</element>
+			<element xmi:idref="EAID_04CF78A3_E306_48ec_ACEE_CDBDE6D7C9B4" xmi:type="uml:Sequence" name="schedule" scope="public">
+				<model package="EAPK_104B6329_C1AC_4375_9DB5_E9AB9997BEC7" tpos="0" ea_localid="84" ea_eleType="element"/>
+				<properties isSpecification="false" sType="Sequence" nType="0" scope="public"/>
+				<project author="Terence" version="1.0" phase="1.0" created="2016-09-19 09:27:40" modified="2016-09-19 09:27:45" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="&#36755;&#20837;&#23039;&#24577;&#25511;&#21046;&#20449;&#24687;"/>
+				<links>
+					<Sequence xmi:id="EAID_BC9FD139_1A2F_49f8_82AE_33BCE8354238" start="EAID_04CF78A3_E306_48ec_ACEE_CDBDE6D7C9B4" end="EAID_44F61A04_903E_45c2_A131_4F248908F758"/>
+				</links>
+			</element>
+		</elements>
+		<connectors>
+			<connector xmi:idref="EAID_654CE3F4_F9A6_4958_8CD8_547F44426A1D">
+				<source xmi:idref="EAID_384555C8_C86B_4bfd_8838_080335F840EB">
+					<model ea_localid="83" type="Actor" name="operator"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Non-Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_584E8D62_5F13_4f19_9814_9B7E92F45813">
+					<model ea_localid="85" type="Sequence" name="RCInput"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="72"/>
+				<properties name="change_attitude_pwmvalue(int, int, int, int)" ea_type="Sequence" direction="Source -&gt; Destination"/>
+				<documentation/>
+				<appearance linemode="1" linecolor="-1" linewidth="0" seqno="1" headStyle="0" lineStyle="0"/>
+				<labels mt="change_attitude_pwmvalue(int, int, int, int)"/>
+				<extendedProperties stateflags="Activation=0;ExtendActivationUp=0;" virtualInheritance="0" diagram="EAID_115A460F_AB4C_4c86_A799_FF828D73E135" privatedata1="Synchronous" privatedata2="retval=void;params=;paramsDlg=throttle_pwm, yaw_pwm, pitch_pwm, roll_pwm;" privatedata3="Call" privatedata4="0" privatedata5="SX=0;SY=0;EX=0;EY=0;$LLB=;LLT=;LMT=CX=203:CY=13:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=0:DIR=0:ROT=0;LMB=;LRT=;LRB=;IRHS=;ILHS=;" sequence_points="PtStartX=92;PtStartY=-135;PtEndX=338;PtEndY=-135;"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_3F54A682_9D16_46c4_81F9_6537DCB69396">
+				<source xmi:idref="EAID_44F61A04_903E_45c2_A131_4F248908F758">
+					<model ea_localid="86" type="Sequence" name="Copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Non-Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_44F61A04_903E_45c2_A131_4F248908F758">
+					<model ea_localid="86" type="Sequence" name="Copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="75"/>
+				<properties name="get_current_time()" ea_type="Sequence" direction="Source -&gt; Destination"/>
+				<documentation/>
+				<appearance linemode="1" linecolor="-1" linewidth="0" seqno="4" headStyle="0" lineStyle="0"/>
+				<labels mt=" tnow= get_current_time() :int"/>
+				<extendedProperties virtualInheritance="0" diagram="EAID_115A460F_AB4C_4c86_A799_FF828D73E135" privatedata1="Synchronous" privatedata2="retval=int;retatt=tnow;" privatedata3="Call" privatedata4="0" privatedata5="SX=0;SY=8;EX=0;EY=0;$LLB=;LLT=;LMT=CX=135:CY=13:OX=0:OY=-7:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=0:DIR=0:ROT=0;LMB=;LRT=;LRB=;IRHS=;ILHS=;" sequence_points="PtStartX=464;PtStartY=-288;PtEndX=469;PtEndY=-303;"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_634DF162_71E1_4a52_95D3_716F72318E0A">
+				<source xmi:idref="EAID_44F61A04_903E_45c2_A131_4F248908F758">
+					<model ea_localid="86" type="Sequence" name="Copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Non-Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_44F61A04_903E_45c2_A131_4F248908F758">
+					<model ea_localid="86" type="Sequence" name="Copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="76"/>
+				<properties name="update_attitude_input_info()" ea_type="Sequence" direction="Source -&gt; Destination"/>
+				<documentation/>
+				<appearance linemode="1" linecolor="-1" linewidth="0" seqno="5" headStyle="0" lineStyle="0"/>
+				<labels mt="update_attitude_input_info()"/>
+				<extendedProperties virtualInheritance="0" diagram="EAID_115A460F_AB4C_4c86_A799_FF828D73E135" privatedata1="Synchronous" privatedata2="retval=void;" privatedata3="Call" privatedata4="0" privatedata5="SX=0;SY=-29;EX=0;EY=-29;$LLB=;LLT=;LMT=CX=135:CY=13:OX=-98:OY=-6:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=0:DIR=0:ROT=0;LMB=;LRT=;LRB=;IRHS=;ILHS=;" sequence_points="PtStartX=464;PtStartY=-352;PtEndX=469;PtEndY=-367;"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_8B4D3231_9C4C_4829_A47A_0C88C92B5486">
+				<source xmi:idref="EAID_44F61A04_903E_45c2_A131_4F248908F758">
+					<model ea_localid="86" type="Sequence" name="Copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Non-Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_584E8D62_5F13_4f19_9814_9B7E92F45813">
+					<model ea_localid="85" type="Sequence" name="RCInput"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="74"/>
+				<properties name="has_new_input()" ea_type="Sequence" direction="Source -&gt; Destination"/>
+				<documentation/>
+				<appearance linemode="1" linecolor="-1" linewidth="0" seqno="3" headStyle="0" lineStyle="0"/>
+				<labels mt=" new_radio_frame= has_new_input() :bool"/>
+				<extendedProperties stateflags="Activation=0;" virtualInheritance="0" diagram="EAID_115A460F_AB4C_4c86_A799_FF828D73E135" privatedata1="Synchronous" privatedata2="retval=bool;retatt=new_radio_frame;" privatedata3="Call" privatedata4="0" privatedata5="SX=0;SY=0;EX=0;EY=0;$LLB=;LLT=;LMT=CX=195:CY=13:OX=-27:OY=-6:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=0:DIR=0:ROT=0;LMB=;LRT=;LRB=;IRHS=;ILHS=;" sequence_points="PtStartX=454;PtStartY=-261;PtEndX=349;PtEndY=-261;"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_BA3F18A4_1490_40a3_8A72_08E30B0B9AA7">
+				<source xmi:idref="EAID_44F61A04_903E_45c2_A131_4F248908F758">
+					<model ea_localid="86" type="Sequence" name="Copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Non-Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_44F61A04_903E_45c2_A131_4F248908F758">
+					<model ea_localid="86" type="Sequence" name="Copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="78"/>
+				<properties name="set_failsafe_radio()" ea_type="Sequence" direction="Source -&gt; Destination"/>
+				<documentation/>
+				<appearance linemode="1" linecolor="-1" linewidth="0" seqno="7" headStyle="0" lineStyle="0"/>
+				<labels mt="set_failsafe_radio()"/>
+				<extendedProperties virtualInheritance="0" diagram="EAID_115A460F_AB4C_4c86_A799_FF828D73E135" privatedata1="Synchronous" privatedata2="retval=void;" privatedata3="Call" privatedata4="0" privatedata5="SX=0;SY=-107;EX=0;EY=0;$LLB=;LLT=;LMT=CX=89:CY=13:OX=-22:OY=56:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=0:DIR=0:ROT=0;LMB=;LRT=;LRB=;IRHS=;ILHS=;" sequence_points="PtStartX=464;PtStartY=-544;PtEndX=469;PtEndY=-559;"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_E798879C_D9BA_42a9_992B_04C1812BB15B">
+				<source xmi:idref="EAID_44F61A04_903E_45c2_A131_4F248908F758">
+					<model ea_localid="86" type="Sequence" name="Copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Non-Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_584E8D62_5F13_4f19_9814_9B7E92F45813">
+					<model ea_localid="85" type="Sequence" name="RCInput"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="77"/>
+				<properties name="set_pwm_all()" ea_type="Sequence" direction="Source -&gt; Destination"/>
+				<documentation/>
+				<appearance linemode="1" linecolor="-1" linewidth="0" seqno="6" headStyle="0" lineStyle="0"/>
+				<labels mt="set_pwm_all()"/>
+				<extendedProperties virtualInheritance="0" diagram="EAID_115A460F_AB4C_4c86_A799_FF828D73E135" privatedata1="Synchronous" privatedata2="retval=void;" privatedata3="Call" privatedata4="0" privatedata5="SX=0;SY=-15;EX=0;EY=0;$LLB=;LLT=;LMT=CX=65:CY=13:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=0:DIR=0:ROT=0;LMB=;LRT=;LRB=;IRHS=;ILHS=;" sequence_points="PtStartX=454;PtStartY=-402;PtEndX=349;PtEndY=-402;"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_BC9FD139_1A2F_49f8_82AE_33BCE8354238">
+				<source xmi:idref="EAID_04CF78A3_E306_48ec_ACEE_CDBDE6D7C9B4">
+					<model ea_localid="84" type="Sequence" name="schedule"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Non-Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_44F61A04_903E_45c2_A131_4F248908F758">
+					<model ea_localid="86" type="Sequence" name="Copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="73"/>
+				<properties name="read_radio()" ea_type="Sequence" direction="Source -&gt; Destination"/>
+				<documentation/>
+				<appearance linemode="1" linecolor="-1" linewidth="0" seqno="2" headStyle="0" lineStyle="0"/>
+				<labels mt="read_radio()"/>
+				<extendedProperties stateflags="Activation=0;" virtualInheritance="0" diagram="EAID_115A460F_AB4C_4c86_A799_FF828D73E135" privatedata1="Synchronous" privatedata2="retval=void;" privatedata3="Call" privatedata4="0" privatedata5="SX=0;SY=-56;EX=0;EY=0;$LLB=;LLT=;LMT=CX=57:CY=13:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=0:DIR=0:ROT=0;LMB=;LRT=;LRB=;IRHS=;ILHS=;" sequence_points="PtStartX=209;PtStartY=-226;PtEndX=453;PtEndY=-226;"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+		</connectors>
+		<primitivetypes>
+			<packagedElement xmi:type="uml:Package" xmi:id="EAPrimitiveTypesPackage" name="EA_PrimitiveTypes_Package" visibility="public"/>
+		</primitivetypes>
+		<profiles>
+			<uml:Profile xmi:version="2.1" xmlns:uml="http://schema.omg.org/spec/UML/2.1/" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmi:id="AED1B01D-9" nsPrefix="SoaML" name="SoaML" metamodelReference="mmref01">
+				<ownedComment xmi:type="uml:Comment" xmi:id="comment01" annotatedElement="AED1B01D-9">
+					<body>SoaML Version:1.0</body>
+				</ownedComment>
+				<packageImport xmi:id="mmref01">
+					<importedPackage href="http://schema.omg.org/spec/UML/2.1/"/>
+				</packageImport>
+				<packagedElement xmi:type="uml:Stereotype" xmi:id="messageType" name="messageType">
+					<ownedAttribute xmi:type="uml:Property" xmi:id="messageType-base_Class" name="base_Class" association="Class_messageType">
+						<type href="http://schema.omg.org/spec/UML/2.1/#Class"/>
+					</ownedAttribute>
+					<ownedAttribute xmi:type="uml:Property" xmi:id="messageType-encoding" name="encoding">
+						<type href="http://schema.omg.org/spec/UML/2.1/#String"/>
+					</ownedAttribute>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Extension" xmi:id="Class_messageType" name="A_Class_messageType" memberEnd="extension_messageType messageType-base_Class">
+					<ownedEnd xmi:id="extension_messageType" name="extension_messageType" type="messageType" isComposite="true" lower="0" upper="1" memberEnd="extension_messageType messageType-base_Class"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Stereotype" xmi:id="collaborationUse" name="collaborationUse">
+					<ownedAttribute xmi:type="uml:Property" xmi:id="collaborationUse-base_CollaborationOccurrence" name="base_CollaborationOccurrence" association="CollaborationOccurrence_collaborationUse">
+						<type href="http://schema.omg.org/spec/UML/2.1/#CollaborationOccurrence"/>
+					</ownedAttribute>
+					<ownedAttribute xmi:type="uml:Property" xmi:id="collaborationUse-isStrict" name="isStrict">
+						<type href="http://schema.omg.org/spec/UML/2.1/#String"/>
+					</ownedAttribute>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Extension" xmi:id="CollaborationOccurrence_collaborationUse" name="A_CollaborationOccurrence_collaborationUse" memberEnd="extension_collaborationUse collaborationUse-base_CollaborationOccurrence">
+					<ownedEnd xmi:id="extension_collaborationUse" name="extension_collaborationUse" type="collaborationUse" isComposite="true" lower="0" upper="1" memberEnd="extension_collaborationUse collaborationUse-base_CollaborationOccurrence"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Stereotype" xmi:id="serviceContract" name="serviceContract">
+					<generalization xmi:type="uml:Generalization" xmi:id="serviceContract_collaboration_generalization" general="collaboration"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Stereotype" xmi:id="expose" name="expose">
+					<ownedAttribute xmi:type="uml:Property" xmi:id="expose-base_Dependency" name="base_Dependency" association="Dependency_expose">
+						<type href="http://schema.omg.org/spec/UML/2.1/#Dependency"/>
+					</ownedAttribute>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Extension" xmi:id="Dependency_expose" name="A_Dependency_expose" memberEnd="extension_expose expose-base_Dependency">
+					<ownedEnd xmi:id="extension_expose" name="extension_expose" type="expose" isComposite="true" lower="0" upper="1" memberEnd="extension_expose expose-base_Dependency"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Stereotype" xmi:id="participant" name="participant">
+					<ownedAttribute xmi:type="uml:Property" xmi:id="participant-base_Class" name="base_Class" association="Class_participant">
+						<type href="http://schema.omg.org/spec/UML/2.1/#Class"/>
+					</ownedAttribute>
+					<ownedAttribute xmi:type="uml:Property" xmi:id="participant-base_Component" name="base_Component" association="Component_participant">
+						<type href="http://schema.omg.org/spec/UML/2.1/#Component"/>
+					</ownedAttribute>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Extension" xmi:id="Class_participant" name="A_Class_participant" memberEnd="extension_participant participant-base_Class">
+					<ownedEnd xmi:id="extension_participant" name="extension_participant" type="participant" isComposite="true" lower="0" upper="1" memberEnd="extension_participant participant-base_Class"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Extension" xmi:id="Component_participant" name="A_Component_participant" memberEnd="extension_participant participant-base_Component">
+					<ownedEnd xmi:id="extension_participant" name="extension_participant" type="participant" isComposite="true" lower="0" upper="1" memberEnd="extension_participant participant-base_Component"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Stereotype" xmi:id="serviceInterface" name="serviceInterface">
+					<ownedAttribute xmi:type="uml:Property" xmi:id="serviceInterface-base_Interface" name="base_Interface" association="Interface_serviceInterface">
+						<type href="http://schema.omg.org/spec/UML/2.1/#Interface"/>
+					</ownedAttribute>
+					<ownedAttribute xmi:type="uml:Property" xmi:id="serviceInterface-base_Class" name="base_Class" association="Class_serviceInterface">
+						<type href="http://schema.omg.org/spec/UML/2.1/#Class"/>
+					</ownedAttribute>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Extension" xmi:id="Interface_serviceInterface" name="A_Interface_serviceInterface" memberEnd="extension_serviceInterface serviceInterface-base_Interface">
+					<ownedEnd xmi:id="extension_serviceInterface" name="extension_serviceInterface" type="serviceInterface" isComposite="true" lower="0" upper="1" memberEnd="extension_serviceInterface serviceInterface-base_Interface"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Extension" xmi:id="Class_serviceInterface" name="A_Class_serviceInterface" memberEnd="extension_serviceInterface serviceInterface-base_Class">
+					<ownedEnd xmi:id="extension_serviceInterface" name="extension_serviceInterface" type="serviceInterface" isComposite="true" lower="0" upper="1" memberEnd="extension_serviceInterface serviceInterface-base_Class"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Stereotype" xmi:id="servicePoint" name="servicePoint">
+					<generalization xmi:type="uml:Generalization" xmi:id="servicePoint_port_generalization" general="port"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Stereotype" xmi:id="serviceChannel" name="serviceChannel">
+					<ownedAttribute xmi:type="uml:Property" xmi:id="serviceChannel-base_Connector" name="base_Connector" association="Connector_serviceChannel">
+						<type href="http://schema.omg.org/spec/UML/2.1/#Connector"/>
+					</ownedAttribute>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Extension" xmi:id="Connector_serviceChannel" name="A_Connector_serviceChannel" memberEnd="extension_serviceChannel serviceChannel-base_Connector">
+					<ownedEnd xmi:id="extension_serviceChannel" name="extension_serviceChannel" type="serviceChannel" isComposite="true" lower="0" upper="1" memberEnd="extension_serviceChannel serviceChannel-base_Connector"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Stereotype" xmi:id="id" name="id">
+					<ownedAttribute xmi:type="uml:Property" xmi:id="id-base_Attribute" name="base_Attribute" association="Attribute_id">
+						<type href="http://schema.omg.org/spec/UML/2.1/#Attribute"/>
+					</ownedAttribute>
+					<ownedAttribute xmi:type="uml:Property" xmi:id="id-base_Part" name="base_Part" association="Part_id">
+						<type href="http://schema.omg.org/spec/UML/2.1/#Part"/>
+					</ownedAttribute>
+					<ownedAttribute xmi:type="uml:Property" xmi:id="id-isID" name="isID">
+						<type href="http://schema.omg.org/spec/UML/2.1/#String"/>
+					</ownedAttribute>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Extension" xmi:id="Attribute_id" name="A_Attribute_id" memberEnd="extension_id id-base_Attribute">
+					<ownedEnd xmi:id="extension_id" name="extension_id" type="id" isComposite="true" lower="0" upper="1" memberEnd="extension_id id-base_Attribute"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Extension" xmi:id="Part_id" name="A_Part_id" memberEnd="extension_id id-base_Part">
+					<ownedEnd xmi:id="extension_id" name="extension_id" type="id" isComposite="true" lower="0" upper="1" memberEnd="extension_id id-base_Part"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Stereotype" xmi:id="requestPoint" name="requestPoint">
+					<generalization xmi:type="uml:Generalization" xmi:id="requestPoint_port_generalization" general="port"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Stereotype" xmi:id="agent" name="agent">
+					<generalization xmi:type="uml:Generalization" xmi:id="agent_participant_generalization" general="participant"/>
+					<ownedAttribute xmi:type="uml:Property" xmi:id="agent-base_Component" name="base_Component" association="Component_agent">
+						<type href="http://schema.omg.org/spec/UML/2.1/#Component"/>
+					</ownedAttribute>
+					<ownedAttribute xmi:type="uml:Property" xmi:id="agent-base_Actor" name="base_Actor" association="Actor_agent">
+						<type href="http://schema.omg.org/spec/UML/2.1/#Actor"/>
+					</ownedAttribute>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Extension" xmi:id="Component_agent" name="A_Component_agent" memberEnd="extension_agent agent-base_Component">
+					<ownedEnd xmi:id="extension_agent" name="extension_agent" type="agent" isComposite="true" lower="0" upper="1" memberEnd="extension_agent agent-base_Component"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Extension" xmi:id="Actor_agent" name="A_Actor_agent" memberEnd="extension_agent agent-base_Actor">
+					<ownedEnd xmi:id="extension_agent" name="extension_agent" type="agent" isComposite="true" lower="0" upper="1" memberEnd="extension_agent agent-base_Actor"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Stereotype" xmi:id="entity" name="entity">
+					<ownedAttribute xmi:type="uml:Property" xmi:id="entity-base_Class" name="base_Class" association="Class_entity">
+						<type href="http://schema.omg.org/spec/UML/2.1/#Class"/>
+					</ownedAttribute>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Extension" xmi:id="Class_entity" name="A_Class_entity" memberEnd="extension_entity entity-base_Class">
+					<ownedEnd xmi:id="extension_entity" name="extension_entity" type="entity" isComposite="true" lower="0" upper="1" memberEnd="extension_entity entity-base_Class"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Stereotype" xmi:id="milestone" name="milestone">
+					<ownedAttribute xmi:type="uml:Property" xmi:id="milestone-base_Note" name="base_Note" association="Note_milestone">
+						<type href="http://schema.omg.org/spec/UML/2.1/#Note"/>
+					</ownedAttribute>
+					<ownedAttribute xmi:type="uml:Property" xmi:id="milestone-progress" name="progress">
+						<type href="http://schema.omg.org/spec/UML/2.1/#String"/>
+					</ownedAttribute>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Extension" xmi:id="Note_milestone" name="A_Note_milestone" memberEnd="extension_milestone milestone-base_Note">
+					<ownedEnd xmi:id="extension_milestone" name="extension_milestone" type="milestone" isComposite="true" lower="0" upper="1" memberEnd="extension_milestone milestone-base_Note"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Stereotype" xmi:id="collaboration" name="collaboration">
+					<ownedAttribute xmi:type="uml:Property" xmi:id="collaboration-base_Collaboration" name="base_Collaboration" association="Collaboration_collaboration">
+						<type href="http://schema.omg.org/spec/UML/2.1/#Collaboration"/>
+					</ownedAttribute>
+					<ownedAttribute xmi:type="uml:Property" xmi:id="collaboration-isStrict" name="isStrict">
+						<type href="http://schema.omg.org/spec/UML/2.1/#String"/>
+					</ownedAttribute>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Extension" xmi:id="Collaboration_collaboration" name="A_Collaboration_collaboration" memberEnd="extension_collaboration collaboration-base_Collaboration">
+					<ownedEnd xmi:id="extension_collaboration" name="extension_collaboration" type="collaboration" isComposite="true" lower="0" upper="1" memberEnd="extension_collaboration collaboration-base_Collaboration"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Stereotype" xmi:id="participantArchitecture" name="participantArchitecture">
+					<ownedAttribute xmi:type="uml:Property" xmi:id="participantArchitecture-base_Class" name="base_Class" association="Class_participantArchitecture">
+						<type href="http://schema.omg.org/spec/UML/2.1/#Class"/>
+					</ownedAttribute>
+					<ownedAttribute xmi:type="uml:Property" xmi:id="participantArchitecture-base_Component" name="base_Component" association="Component_participantArchitecture">
+						<type href="http://schema.omg.org/spec/UML/2.1/#Component"/>
+					</ownedAttribute>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Extension" xmi:id="Class_participantArchitecture" name="A_Class_participantArchitecture" memberEnd="extension_participantArchitecture participantArchitecture-base_Class">
+					<ownedEnd xmi:id="extension_participantArchitecture" name="extension_participantArchitecture" type="participantArchitecture" isComposite="true" lower="0" upper="1" memberEnd="extension_participantArchitecture participantArchitecture-base_Class"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Extension" xmi:id="Component_participantArchitecture" name="A_Component_participantArchitecture" memberEnd="extension_participantArchitecture participantArchitecture-base_Component">
+					<ownedEnd xmi:id="extension_participantArchitecture" name="extension_participantArchitecture" type="participantArchitecture" isComposite="true" lower="0" upper="1" memberEnd="extension_participantArchitecture participantArchitecture-base_Component"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Stereotype" xmi:id="specification" name="specification">
+					<ownedAttribute xmi:type="uml:Property" xmi:id="specification-base_Component" name="base_Component" association="Component_specification">
+						<type href="http://schema.omg.org/spec/UML/2.1/#Component"/>
+					</ownedAttribute>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Extension" xmi:id="Component_specification" name="A_Component_specification" memberEnd="extension_specification specification-base_Component">
+					<ownedEnd xmi:id="extension_specification" name="extension_specification" type="specification" isComposite="true" lower="0" upper="1" memberEnd="extension_specification specification-base_Component"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Stereotype" xmi:id="capability" name="capability">
+					<ownedAttribute xmi:type="uml:Property" xmi:id="capability-base_Class" name="base_Class" association="Class_capability">
+						<type href="http://schema.omg.org/spec/UML/2.1/#Class"/>
+					</ownedAttribute>
+					<ownedAttribute xmi:type="uml:Property" xmi:id="capability-base_Component" name="base_Component" association="Component_capability">
+						<type href="http://schema.omg.org/spec/UML/2.1/#Component"/>
+					</ownedAttribute>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Extension" xmi:id="Class_capability" name="A_Class_capability" memberEnd="extension_capability capability-base_Class">
+					<ownedEnd xmi:id="extension_capability" name="extension_capability" type="capability" isComposite="true" lower="0" upper="1" memberEnd="extension_capability capability-base_Class"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Extension" xmi:id="Component_capability" name="A_Component_capability" memberEnd="extension_capability capability-base_Component">
+					<ownedEnd xmi:id="extension_capability" name="extension_capability" type="capability" isComposite="true" lower="0" upper="1" memberEnd="extension_capability capability-base_Component"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Stereotype" xmi:id="port" name="port">
+					<ownedAttribute xmi:type="uml:Property" xmi:id="port-base_Port" name="base_Port" association="Port_port">
+						<type href="http://schema.omg.org/spec/UML/2.1/#Port"/>
+					</ownedAttribute>
+					<ownedAttribute xmi:type="uml:Property" xmi:id="port-connectorRequired" name="connectorRequired">
+						<type href="http://schema.omg.org/spec/UML/2.1/#String"/>
+					</ownedAttribute>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Extension" xmi:id="Port_port" name="A_Port_port" memberEnd="extension_port port-base_Port">
+					<ownedEnd xmi:id="extension_port" name="extension_port" type="port" isComposite="true" lower="0" upper="1" memberEnd="extension_port port-base_Port"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Stereotype" xmi:id="servicesArchitecture" name="servicesArchitecture">
+					<ownedAttribute xmi:type="uml:Property" xmi:id="servicesArchitecture-base_Collaboration" name="base_Collaboration" association="Collaboration_servicesArchitecture">
+						<type href="http://schema.omg.org/spec/UML/2.1/#Collaboration"/>
+					</ownedAttribute>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Extension" xmi:id="Collaboration_servicesArchitecture" name="A_Collaboration_servicesArchitecture" memberEnd="extension_servicesArchitecture servicesArchitecture-base_Collaboration">
+					<ownedEnd xmi:id="extension_servicesArchitecture" name="extension_servicesArchitecture" type="servicesArchitecture" isComposite="true" lower="0" upper="1" memberEnd="extension_servicesArchitecture servicesArchitecture-base_Collaboration"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Stereotype" xmi:id="attachment" name="attachment">
+					<ownedAttribute xmi:type="uml:Property" xmi:id="attachment-base_Attribute" name="base_Attribute" association="Attribute_attachment">
+						<type href="http://schema.omg.org/spec/UML/2.1/#Attribute"/>
+					</ownedAttribute>
+					<ownedAttribute xmi:type="uml:Property" xmi:id="attachment-base_Part" name="base_Part" association="Part_attachment">
+						<type href="http://schema.omg.org/spec/UML/2.1/#Part"/>
+					</ownedAttribute>
+					<ownedAttribute xmi:type="uml:Property" xmi:id="attachment-encoding" name="encoding">
+						<type href="http://schema.omg.org/spec/UML/2.1/#String"/>
+					</ownedAttribute>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Extension" xmi:id="Attribute_attachment" name="A_Attribute_attachment" memberEnd="extension_attachment attachment-base_Attribute">
+					<ownedEnd xmi:id="extension_attachment" name="extension_attachment" type="attachment" isComposite="true" lower="0" upper="1" memberEnd="extension_attachment attachment-base_Attribute"/>
+				</packagedElement>
+				<packagedElement xmi:type="uml:Extension" xmi:id="Part_attachment" name="A_Part_attachment" memberEnd="extension_attachment attachment-base_Part">
+					<ownedEnd xmi:id="extension_attachment" name="extension_attachment" type="attachment" isComposite="true" lower="0" upper="1" memberEnd="extension_attachment attachment-base_Part"/>
+				</packagedElement>
+			</uml:Profile>
+		</profiles>
+		<diagrams>
+			<diagram xmi:id="EAID_115A460F_AB4C_4c86_A799_FF828D73E135">
+				<model package="EAPK_104B6329_C1AC_4375_9DB5_E9AB9997BEC7" localID="14" owner="EAPK_104B6329_C1AC_4375_9DB5_E9AB9997BEC7"/>
+				<properties name="&#36755;&#20837;&#23039;&#24577;&#25511;&#21046;&#20449;&#24687;" type="Sequence"/>
+				<project author="Terence" version="1.0" created="2016-09-18 16:24:06" modified="2016-09-19 09:37:01"/>
+				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=827;DocSize.cy=1169;ShowDetails=0;Orientation=P;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
+				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=0;INT_ARGS=;INT_RET=;INT_ATT=;SeqTopMargin=50;MatrixActive=0;SwimlanesActive=1;MatrixLineWidth=1;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
+				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=0;bold=false;fcol=0;;cls=0;"/>
+				<matrixitems value="locked=false;matrixactive=false;swimlanesactive=true;width=1;"/>
+				<extendedProperties/>
+				<elements>
+					<element geometry="Left=372;Top=478;Right=555;Bottom=628;" subject="EAID_A082AFB9_8CEF_4e73_93DA_09C100065F65" seqno="1" style="DUID=76A5E139;"/>
+					<element geometry="Left=264;Top=327;Right=564;Bottom=668;" subject="EAID_D345CEF5_BE46_40ab_9E77_DE6327E47A9B" seqno="2" style="DUID=A906DAD6;"/>
+					<element geometry="Left=155;Top=185;Right=575;Bottom=698;" subject="EAID_E964D87C_1BBF_44b2_B144_E8BA92A020ED" seqno="3" style="DUID=FD70E3E4;"/>
+					<element geometry="Left=426;Top=50;Right=493;Bottom=751;" subject="EAID_44F61A04_903E_45c2_A131_4F248908F758" seqno="4" style="DUID=4E68B07A;"/>
+					<element geometry="Left=312;Top=50;Right=377;Bottom=751;" subject="EAID_584E8D62_5F13_4f19_9814_9B7E92F45813" seqno="5" style="DUID=CCE710B4;"/>
+					<element geometry="Left=169;Top=50;Right=239;Bottom=751;" subject="EAID_04CF78A3_E306_48ec_ACEE_CDBDE6D7C9B4" seqno="6" style="DUID=F35A1FFA;"/>
+					<element geometry="Left=42;Top=50;Right=132;Bottom=751;" subject="EAID_384555C8_C86B_4bfd_8838_080335F840EB" seqno="7" style="DUID=B83AC8F4;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;Path=;" subject="EAID_654CE3F4_F9A6_4958_8CD8_547F44426A1D" style=";Hidden=0;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;Path=;" subject="EAID_BC9FD139_1A2F_49f8_82AE_33BCE8354238" style=";Hidden=0;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;Path=;" subject="EAID_8B4D3231_9C4C_4829_A47A_0C88C92B5486" style=";Hidden=0;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;Path=;" subject="EAID_3F54A682_9D16_46c4_81F9_6537DCB69396" style=";Hidden=0;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;Path=;" subject="EAID_634DF162_71E1_4a52_95D3_716F72318E0A" style=";Hidden=0;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;Path=;" subject="EAID_E798879C_D9BA_42a9_992B_04C1812BB15B" style=";Hidden=0;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;Path=;" subject="EAID_BA3F18A4_1490_40a3_8A72_08E30B0B9AA7" style=";Hidden=0;"/>
+				</elements>
+			</diagram>
+		</diagrams>
+	</xmi:Extension>
+</xmi:XMI>

@@ -28,6 +28,7 @@ public class CreateUseCaseDiagramEAXml {
 		nodeList=raf.getNodeList();
 		edgeList=raf.getEdgeList();
 		Document document=createDocument();
+	    
 //		StringWriter stringWriter=new StringWriter();
 		OutputFormat xmlFormat=new OutputFormat();
 		xmlFormat.setEncoding("UTF-8");

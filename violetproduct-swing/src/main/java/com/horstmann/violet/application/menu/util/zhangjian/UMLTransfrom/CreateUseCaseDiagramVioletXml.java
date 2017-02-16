@@ -27,15 +27,32 @@ public class CreateUseCaseDiagramVioletXml {
 	public  void create(readUseCaseXMLFromEA ra,String path) throws IOException {
 		nodeList=ra.getNodeList();
 		edgeList=ra.getEdgeList();
+		
+		
 		Document document=createDocument();
+		
+		FileWriter fw = new FileWriter(path);
 		OutputFormat xmlFormat=new OutputFormat();  
 		xmlFormat.setEncoding("UTF-8");
-		xmlFormat.setNewlines(true);
-		xmlFormat.setIndent(true);
-		xmlFormat.setIndent("    ");
-		XMLWriter xmlWriter=new XMLWriter(new FileWriter(path),xmlFormat);
+//		xmlFormat.setNewlines(true);
+//		xmlFormat.setIndent(true);
+//		xmlFormat.setIndent("    ");
+		XMLWriter xmlWriter=new XMLWriter(fw,xmlFormat);
 		xmlWriter.write(document); 	
 		xmlWriter.close();
+		
+//		FileWriter fw = new FileWriter(path);
+//		OutputFormat format 
+//        = OutputFormat.createPrettyPrint();
+//		format.setEncoding("UTF-8");
+//		format.setNewlines(true);
+//		format.setIndent(true);
+//		format.setIndent("    ");
+//	      //�����������xml�ļ���XMLWriter����
+//	      XMLWriter xmlWriter 
+//	        = new XMLWriter(fw, format);
+//	      xmlWriter.write(document); 
+//	      xmlWriter.close();
 	}
 
 	
@@ -46,13 +63,14 @@ public class CreateUseCaseDiagramVioletXml {
 		String borderid="4";
 		String textid="5";
 		int k =10;
-		Document document=DocumentHelper.createDocument();	
-			Element root=document.addElement("UseCaseDiagramGraph");
+		Document doc = DocumentHelper.createDocument();	
+			Element root=doc.addElement("UseCaseDiagramGraph");
 					root.addAttribute(" id","1");
-					root.addText("");		
+					root.addText("");	
+					
 			createNode(backgroundid, borderid, textid, k, root);
-			createEdge(root);					
-			return document;		
+			createEdge(root);
+			return doc;		
 		}
 
 	/**
@@ -60,7 +78,7 @@ public class CreateUseCaseDiagramVioletXml {
 	 * @param root
 	 */
 	private  void createEdge(Element root) {
-		int k;//定义k来计算转换成平台xml时的id�?
+		int k;//定义k来计算转换成平台xml时的id�?
 		Element edges =root.addElement("edges").addAttribute("id", l+1+"");
 		k=l+2;
 		for(int j =0;j<edgeList.size();j++){
@@ -80,13 +98,11 @@ public class CreateUseCaseDiagramVioletXml {
 														  .addAttribute("x", (XMLUtils.getEdgePontionList(edge, nodeList).get(1).getX()+""))
 														  .addAttribute("y", (XMLUtils.getEdgePontionList(edge, nodeList).get(1).getY()+""));
 					
-					UseCaseRelationshipEdge.addElement("id").addAttribute("id", k+3+"");
-					
+					UseCaseRelationshipEdge.addElement("idE").addAttribute("id", k+3+"");
 					if(edge.getType().equals("uml:Association")){
 						UseCaseRelationshipEdge.addElement("lineStyle").addAttribute("id", bentid+"").addAttribute("name", "SOLID");
 						UseCaseRelationshipEdge.addElement("startArrowHead").addAttribute("id", bentid+1+"").addAttribute("name", "NONE");
 						UseCaseRelationshipEdge.addElement("endArrowHead").addAttribute("id", bentid+3+"").addAttribute("name", "NONE");
-						UseCaseRelationshipEdge.addElement("bentStyle").addAttribute("id", bentid+2+"").addAttribute("name", "STRAIGHT");
 					  
 					}else if(edge.getType().equals("uml:Dependency")){
 						
@@ -98,12 +114,24 @@ public class CreateUseCaseDiagramVioletXml {
 					}else if(edge.getType().equals("Inheritance")){
 						UseCaseRelationshipEdge.addElement("lineStyle").addAttribute("id", bentid+"").addAttribute("name", "SOLID");
 						UseCaseRelationshipEdge.addElement("startArrowHead").addAttribute("id", bentid+1+"").addAttribute("name", "NONE");
-						UseCaseRelationshipEdge.addElement("endArrowHead").addAttribute("id", bentid+3+"").addAttribute("name", "TRIANGLE");
-						UseCaseRelationshipEdge.addElement("bentStyle").addAttribute("id", bentid+2+"").addAttribute("name", "STRAIGHT");
-					 
 					}
+					if(edge.getName().contains("extend"))
+					{
+						UseCaseRelationshipEdge.addElement("lineStyle").addAttribute("id", bentid+"").addAttribute("name", "DOTTED");
+						UseCaseRelationshipEdge.addElement("startArrowHead").addAttribute("id", bentid+1+"").addAttribute("name", "NONE");
+						UseCaseRelationshipEdge.addElement("endArrowHead").addAttribute("id", bentid+2+"").addAttribute("name", "V");
+						
+					}
+					if(edge.getName().contains("include"))
+					{
+						UseCaseRelationshipEdge.addElement("lineStyle").addAttribute("id", bentid+"").addAttribute("name", "DOTTED");
+						UseCaseRelationshipEdge.addElement("startArrowHead").addAttribute("id", bentid+1+"").addAttribute("name", "NONE");
+						UseCaseRelationshipEdge.addElement("endArrowHead").addAttribute("id", bentid+2+"").addAttribute("name", "V");
+					}
+					UseCaseRelationshipEdge.addElement("bentStyle").addAttribute("id", k+4+"").addAttribute("name", "STRAIGHT");
 					UseCaseRelationshipEdge.addElement("middleLabel").addText(edge.getName());
 					k=k+4;
+
 			}	
 		}
 
@@ -121,6 +149,8 @@ public class CreateUseCaseDiagramVioletXml {
 			
 			for(int i=0 ;i<nodeList.size();i++){
 				Node node=nodeList.get(i);
+				if(node.getLocation() != null){
+					System.out.println("type:"+node.getType());
 					Element ActorNode =nodes.addElement(node.getType()).addAttribute("id", k+"");
 					map.put(node.getId(),k+"");
 					
@@ -131,8 +161,9 @@ public class CreateUseCaseDiagramVioletXml {
 								.addAttribute("id", k+2+"")
 								.addAttribute("x", node.getLocation().getX()+"")
 								.addAttribute("y",node.getLocation().getY()+"");
-					ActorNode.addElement("id")
+					ActorNode.addElement("idN")
 								.addAttribute("id", k+3+"");
+					    
 						if(i==0){
 						Element backcolor=ActorNode.addElement("backgroundColor").addAttribute("id", backgroundid).addText("");
 							backcolor.addElement("red").addText("255");
@@ -155,14 +186,23 @@ public class CreateUseCaseDiagramVioletXml {
 							Element backcolor=ActorNode.addElement("backgroundColor").addAttribute("reference", backgroundid);
 							Element bordercolor=ActorNode.addElement("borderColor").addAttribute("reference", borderid);
 							Element textcolor=ActorNode.addElement("textColor").addAttribute("reference", textid);
-							
 						}		
-							
 						Element name =ActorNode.addElement("name").addAttribute("id", k+4+"");
-								name.addElement("text").addText(node.getName());//节点的name属�?	
+								name.addElement("text").addText(node.getName());//节点的name属�?	
 								k=k+5;
+					if(node.getType().equals("UseCaseNode")){
+						Element useConstraint =ActorNode.addElement("useConstraint").addAttribute("id", k+5+"");	
+						useConstraint.addElement("constraints").addAttribute("id", k+6+"");
+						Element sceneConstraint =ActorNode.addElement("sceneConstraint").addAttribute("id", k+7+"");	
+						sceneConstraint.addElement("constraints").addAttribute("id", k+8+"");
+					}
+
+						
+								
 				l=k;
+				}
 			}
+				
 	}
 	
 }

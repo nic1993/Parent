@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Model version="1.0" type="uml:Model" name="Markov_Model" visibility="public" authorNmae="Terence">
+  <ModelType>UC_Markov</ModelType>
+  <Owned>Software</Owned>
+  <name>Use Case1</name>
+  <state>
+    <name>S0</name>
+    <arc label="prob">
+      <name>S0_S1_m1</name>
+      <prob>1.0</prob>
+      <to>S1</to>
+    </arc>
+  </state>
+  <state>
+    <name>S1</name>
+    <arc label="prob">
+      <name>S1_S2_m2(int,int)</name>
+      <prob>0.2</prob>
+      <stimulate>
+        <parameter>
+          <paramName>flight_mode</paramName>
+          <paramType>int</paramType>
+        </parameter>
+        <parameter>
+          <paramName>switch_position</paramName>
+          <paramType>int</paramType>
+        </parameter>
+      </stimulate>
+      <to>S2</to>
+    </arc>
+    <arc label="prob">
+      <name>S1_S10_m2</name>
+      <prob>0.1</prob>
+      <to>S10</to>
+    </arc>
+    <arc label="prob">
+      <name>S1_S13_m2</name>
+      <prob>0.7</prob>
+      <to>S13</to>
+    </arc>
+  </state>
+  <state>
+    <name>S2</name>
+    <arc label="prob">
+      <name>S2_S3_m3</name>
+      <prob>1.0</prob>
+      <to>S3</to>
+    </arc>
+  </state>
+  <state>
+    <name>S3</name>
+    <arc label="prob">
+      <name>S3_S4_m4(int)</name>
+      <prob>1.0</prob>
+      <stimulate>
+        <parameter>
+          <paramName>flight_mode</paramName>
+          <paramType>int</paramType>
+        </parameter>
+      </stimulate>
+      <to>S4</to>
+    </arc>
+  </state>
+  <state>
+    <name>S4</name>
+    <arc label="prob">
+      <name>S4_S5_m5(float,float,float)</name>
+      <assignValue>[0.2<target_yaw_rate<</assignValue>
+      <assignType>m5(float,</assignType>
+      <prob>1.0</prob>
+      <stimulate>
+        <parameter>
+          <paramName>target_yaw_rate</paramName>
+          <paramType>float</paramType>
+          <domain type="serial">0.2<target_yaw_rate<=1</domain>
+        </parameter>
+        <parameter>
+          <paramName>target_pitch</paramName>
+          <paramType>float</paramType>
+        </parameter>
+        <parameter>
+          <paramName>target_roll</paramName>
+          <paramType>float</paramType>
+        </parameter>
+      </stimulate>
+      <to>S5</to>
+    </arc>
+  </state>
+  <state>
+    <name>S5</name>
+    <arc label="prob">
+      <name>S5_S6_m6</name>
+      <prob>1.0</prob>
+      <to>S6</to>
+    </arc>
+  </state>
+  <state>
+    <name>S6</name>
+    <arc label="prob">
+      <name>S6_S7_m7</name>
+      <prob>1.0</prob>
+      <to>S7</to>
+    </arc>
+  </state>
+  <state>
+    <name>S7</name>
+    <arc label="prob">
+      <name>S7_S8_m8(int,int,float)</name>
+      <assignValue>[1<</assignValue>
+      <assignType>m8(int,int,float)</assignType>
+      <prob>1.0</prob>
+      <stimulate>
+        <parameter>
+          <paramName>angle_max</paramName>
+          <paramType>int</paramType>
+          <domain type="serial">1<=angle_max<9</domain>
+        </parameter>
+        <parameter>
+          <paramName>target_pitch</paramName>
+          <paramType>int</paramType>
+        </parameter>
+        <parameter>
+          <paramName>target_roll</paramName>
+          <paramType>float</paramType>
+        </parameter>
+        <constraint>angle_max+target_roll<2.1</constraint>
+        <constraint>target_pitch*target_roll>=12.6</constraint>
+      </stimulate>
+      <to>S8</to>
+    </arc>
+  </state>
+  <state>
+    <name>S8</name>
+    <arc label="prob">
+      <name>S8_S9_m9</name>
+      <prob>1.0</prob>
+      <to>S9</to>
+    </arc>
+  </state>
+  <state>
+    <name>S9</name>
+  </state>
+  <state>
+    <name>S10</name>
+    <arc label="prob">
+      <name>S10_S11_m21</name>
+      <prob>1.0</prob>
+      <to>S11</to>
+    </arc>
+  </state>
+  <state>
+    <name>S11</name>
+    <arc label="prob">
+      <name>S11_S12_m22</name>
+      <prob>1.0</prob>
+      <to>S12</to>
+    </arc>
+  </state>
+  <state>
+    <name>S12</name>
+  </state>
+  <state>
+    <name>S13</name>
+    <arc label="prob">
+      <name>S13_S14_m31</name>
+      <prob>1.0</prob>
+      <to>S14</to>
+    </arc>
+  </state>
+  <state>
+    <name>S14</name>
+    <arc label="prob">
+      <name>S14_S15</name>
+      <prob>1.0</prob>
+      <to>S15</to>
+    </arc>
+  </state>
+  <state>
+    <name>S15</name>
+    <arc label="prob">
+      <name>S15_S13</name>
+      <prob>0.5882352941176471</prob>
+      <to>S13</to>
+    </arc>
+    <arc label="prob">
+      <name>S15_S16_m32</name>
+      <prob>0.4117647058823529</prob>
+      <to>S16</to>
+    </arc>
+  </state>
+  <state>
+    <name>S16</name>
+    <arc label="prob">
+      <name>S16_S17_m33</name>
+      <prob>0.5</prob>
+      <to>S17</to>
+    </arc>
+    <arc label="prob">
+      <name>S16_S20_m35</name>
+      <prob>0.5</prob>
+      <to>S20</to>
+    </arc>
+  </state>
+  <state>
+    <name>S17</name>
+    <arc label="prob">
+      <name>S17_S18_m34</name>
+      <prob>1.0</prob>
+      <to>S18</to>
+    </arc>
+  </state>
+  <state>
+    <name>S18</name>
+    <arc label="prob">
+      <name>S18_S19</name>
+      <prob>1.0</prob>
+      <to>S19</to>
+    </arc>
+  </state>
+  <state>
+    <name>S19</name>
+    <arc label="prob">
+      <name>S19_S21_m36</name>
+      <prob>1.0</prob>
+      <to>S21</to>
+    </arc>
+  </state>
+  <state>
+    <name>S20</name>
+    <arc label="prob">
+      <name>S20_S19</name>
+      <prob>1.0</prob>
+      <to>S19</to>
+    </arc>
+  </state>
+  <state>
+    <name>S21</name>
+    <arc label="prob">
+      <name>S21_S22_m37</name>
+      <prob>0.5</prob>
+      <to>S22</to>
+    </arc>
+    <arc label="prob">
+      <name>S21_S25_m39</name>
+      <prob>0.5</prob>
+      <to>S25</to>
+    </arc>
+  </state>
+  <state>
+    <name>S22</name>
+    <arc label="prob">
+      <name>S22_S23_m38</name>
+      <prob>1.0</prob>
+      <to>S23</to>
+    </arc>
+  </state>
+  <state>
+    <name>S23</name>
+    <arc label="prob">
+      <name>S23_S24</name>
+      <prob>1.0</prob>
+      <to>S24</to>
+    </arc>
+  </state>
+  <state>
+    <name>S24</name>
+    <arc label="prob">
+      <name>S24_S26_m310</name>
+      <prob>1.0</prob>
+      <to>S26</to>
+    </arc>
+  </state>
+  <state>
+    <name>S25</name>
+    <arc label="prob">
+      <name>S25_S24</name>
+      <prob>1.0</prob>
+      <to>S24</to>
+    </arc>
+  </state>
+  <state>
+    <name>S26</name>
+  </state>
+</Model>

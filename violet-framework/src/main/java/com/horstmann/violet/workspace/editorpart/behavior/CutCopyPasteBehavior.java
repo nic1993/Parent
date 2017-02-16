@@ -18,6 +18,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.BlockingDeque;
+import java.util.concurrent.LinkedBlockingDeque;
 
 import javax.swing.undo.AbstractUndoableEdit;
 import javax.swing.undo.CannotRedoException;
@@ -62,6 +64,9 @@ public class CutCopyPasteBehavior extends AbstractEditorPartBehavior
      * 
      * @param editorPart
      */
+    
+    public static BlockingDeque<Integer> lock = new LinkedBlockingDeque<Integer>();
+    
     public CutCopyPasteBehavior(IEditorPart editorPart)
     {
         BeanInjector.getInjector().inject(this);

@@ -95,6 +95,7 @@ public class ConditionEditor extends PropertyEditorSupport
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				saveCondition(e);
+				
 			}
 		});
         conditionDeleteButton.setText("É¾³ý");

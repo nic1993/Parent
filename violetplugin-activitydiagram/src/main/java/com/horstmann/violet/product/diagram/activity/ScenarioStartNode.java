@@ -78,7 +78,7 @@ public class ScenarioStartNode extends EllipticalNode
     {
         return (ScenarioStartNode) super.clone();
     }
-
+ 
     /** default node diameter */
     private static int DEFAULT_DIAMETER = 19;
 

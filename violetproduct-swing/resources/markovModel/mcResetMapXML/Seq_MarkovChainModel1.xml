@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Model version="1.0" type="uml:Model" name="Markov_Model"
+	visibility="public" authorNmae="Terence">
+	<ModelType>Seq_Markov</ModelType>
+	<Owned>设定自稳模式参数</Owned>
+	<name>设定自稳模式参数</name>
+	<state>
+		<name>S0</name>
+		<arc label="prob">
+			<name>S0_S1_init_flight_mode(int, int)</name>
+			<assignValue>flightThrottle</assignValue>
+			<assignType>bool</assignType>
+			<prob>1.0</prob>
+			<stimulate>
+				<parameter>
+					<paramName>flight_mode</paramName>
+					<paramType>int</paramType>
+				</parameter>
+				<parameter>
+					<paramName>switch_position</paramName>
+					<paramType>int</paramType>
+				</parameter>
+			</stimulate>
+			<to>S1</to>
+		</arc>
+	</state>
+	<state>
+		<name>S1</name>
+		<arc label="prob">
+			<name>S1_S2_set_switch_position1(int)</name>
+			<prob>0.25</prob>
+			<stimulate>
+				<parameter>
+					<paramName>flight_mode</paramName>
+					<paramType>int</paramType>
+				</parameter>
+			</stimulate>
+			<to>S2</to>
+		</arc>
+		<arc label="prob">
+			<name>S1_S4_set_switch_position2(int)</name>
+			<prob>0.25</prob>
+			<stimulate>
+				<parameter>
+					<paramName>flight_mode</paramName>
+					<paramType>int</paramType>
+				</parameter>
+			</stimulate>
+			<to>S4</to>
+		</arc>
+		<arc label="prob">
+			<name>S1_S5_set_switch_position3(int)</name>
+			<prob>0.25</prob>
+			<stimulate>
+				<parameter>
+					<paramName>flight_mode</paramName>
+					<paramType>int</paramType>
+				</parameter>
+			</stimulate>
+			<to>S5</to>
+		</arc>
+		<arc label="prob">
+			<name>S1_S6_set_switch_position4(int)</name>
+			<prob>0.25</prob>
+			<stimulate>
+				<parameter>
+					<paramName>flight_mode</paramName>
+					<paramType>int</paramType>
+				</parameter>
+			</stimulate>
+			<to>S6</to>
+		</arc>
+	</state>
+	<state>
+		<name>S2</name>
+		<arc label="prob">
+			<name>S2_S3</name>
+			<prob>1.0</prob>
+			<to>S3</to>
+		</arc>
+	</state>
+	<state>
+		<name>S3</name>
+		<arc label="prob">
+			<name>S3_S7_set_angle_max(int)</name>
+			<prob>1.0</prob>
+			<stimulate>
+				<parameter>
+					<paramName>angle_max</paramName>
+					<paramType>int</paramType>
+				</parameter>
+			</stimulate>
+			<to>S7</to>
+		</arc>
+	</state>
+	<state>
+		<name>S4</name>
+		<arc label="prob">
+			<name>S4_S3</name>
+			<prob>1.0</prob>
+			<to>S3</to>
+		</arc>
+	</state>
+	<state>
+		<name>S5</name>
+		<arc label="prob">
+			<name>S5_S3</name>
+			<prob>1.0</prob>
+			<to>S3</to>
+		</arc>
+	</state>
+	<state>
+		<name>S6</name>
+		<arc label="prob">
+			<name>S6_S3</name>
+			<prob>1.0</prob>
+			<to>S3</to>
+		</arc>
+	</state>
+	<state>
+		<name>S7</name>
+	</state>
+</Model>

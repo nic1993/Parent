@@ -494,13 +494,13 @@ public abstract class SegmentedLineEdge extends ShapeEdge
         }
         return straightDirection;
     }
-    @XStreamOmitField
+//    @XStreamOmitField
     private LineStyle lineStyle;
-    @XStreamOmitField
+//    @XStreamOmitField
     private ArrowHead startArrowHead;
-    @XStreamOmitField
+//    @XStreamOmitField
     private ArrowHead endArrowHead;
-    @XStreamOmitField
+    
     private BentStyle bentStyle;
     @XStreamOmitField
     private String startLabel;

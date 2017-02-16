@@ -6,12 +6,16 @@
     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd 
     http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang.xsd">
 
-	<bean id="dialogFactory" class="com.horstmann.violet.framework.display.dialog.DialogFactory" depends-on="themeManager">
+	<bean id="dialogFactory"
+		class="com.horstmann.violet.framework.display.dialog.DialogFactory"
+		depends-on="themeManager">
 		<constructor-arg value="DELEGATED" />
 	</bean>
-	
-	<bean id="userPreferencesDao" class="com.horstmann.violet.framework.userpreferences.JNLPUserPreferencesDao" /> 
-	
-	<bean id="fileChooserService" class="com.horstmann.violet.eclipseplugin.file.EclipseFileChooserService" />
-	
+
+	<bean id="userPreferencesDao"
+		class="com.horstmann.violet.framework.userpreferences.JNLPUserPreferencesDao" />
+
+	<bean id="fileChooserService"
+		class="com.horstmann.violet.eclipseplugin.file.EclipseFileChooserService" />
+
 </beans>

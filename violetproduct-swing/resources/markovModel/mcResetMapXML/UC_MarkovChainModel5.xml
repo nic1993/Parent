@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Model version="1.0" type="uml:Model" name="Markov_Model"
+	visibility="public" authorNmae="Terence">
+	<ModelType>UC_Markov</ModelType>
+	<Owned>Software</Owned>
+	<name>自稳模式控制</name>
+	<state>
+		<name>S48</name>
+		<arc label="prob">
+			<name>S48_S49_check_mode()</name>
+			<prob>1.0</prob>
+			<to>S49</to>
+		</arc>
+	</state>
+	<state>
+		<name>S49</name>
+		<arc label="prob">
+			<name>S49_S50_stabilize_run()</name>
+			<prob>0.5</prob>
+			<to>S50</to>
+		</arc>
+		<arc label="prob">
+			<name>S49_S60_althold_run()</name>
+			<prob>0.5</prob>
+			<to>S60</to>
+		</arc>
+	</state>
+	<state>
+		<name>S50</name>
+		<arc label="prob">
+			<name>S50_S51_get_attitude_input()</name>
+			<prob>1.0</prob>
+			<to>S51</to>
+		</arc>
+	</state>
+	<state>
+		<name>S51</name>
+		<arc label="prob">
+			<name>S51_S52_get_angle_max()</name>
+			<assignValue>angle_max</assignValue>
+			<assignType>int</assignType>
+			<prob>1.0</prob>
+			<to>S52</to>
+		</arc>
+	</state>
+	<state>
+		<name>S52</name>
+		<arc label="prob">
+			<name>S52_S53_get_pilot_desired_lean_angles(int,float*,float*,int,int)</name>
+			<prob>1.0</prob>
+			<stimulate>
+				<parameter>
+					<paramName>angle_max</paramName>
+					<paramType>int</paramType>
+				</parameter>
+				<parameter>
+					<paramName>target_pitch</paramName>
+					<paramType>float*</paramType>
+				</parameter>
+				<parameter>
+					<paramName>target_roll</paramName>
+					<paramType>float*</paramType>
+				</parameter>
+				<parameter>
+					<paramName>pitch_control_in</paramName>
+					<paramType>int</paramType>
+				</parameter>
+				<parameter>
+					<paramName>roll_control_in</paramName>
+					<paramType>int</paramType>
+				</parameter>
+			</stimulate>
+			<to>S53</to>
+		</arc>
+	</state>
+	<state>
+		<name>S53</name>
+		<arc label="prob">
+			<name>S53_S54_get_pilot_desired_yaw_rate(int)</name>
+			<assignValue>target_yaw_rat</assignValue>
+			<prob>1.0</prob>
+			<stimulate>
+				<parameter>
+					<paramName>yaw_control_in</paramName>
+					<paramType>int</paramType>
+				</parameter>
+			</stimulate>
+			<to>S54</to>
+		</arc>
+	</state>
+	<state>
+		<name>S54</name>
+		<arc label="prob">
+			<name>S54_S55_get_poilot_desired_throttle(int)</name>
+			<assignValue>pilot_throttle_scaled</assignValue>
+			<prob>1.0</prob>
+			<stimulate>
+				<parameter>
+					<paramName>throttle_control_in</paramName>
+					<paramType>int</paramType>
+				</parameter>
+			</stimulate>
+			<to>S55</to>
+		</arc>
+	</state>
+	<state>
+		<name>S55</name>
+		<arc label="prob">
+			<name>S55_S56_set_throttle_out(int)</name>
+			<prob>1.0</prob>
+			<stimulate>
+				<parameter>
+					<paramName>pilot_throttle_scaled</paramName>
+					<paramType>int</paramType>
+				</parameter>
+			</stimulate>
+			<to>S56</to>
+		</arc>
+	</state>
+	<state>
+		<name>S56</name>
+		<arc label="prob">
+			<name>S56_S57_set_throttle(int)</name>
+			<prob>1.0</prob>
+			<stimulate>
+				<parameter>
+					<paramName>_throttle_in</paramName>
+					<paramType>int</paramType>
+				</parameter>
+			</stimulate>
+			<to>S57</to>
+		</arc>
+	</state>
+	<state>
+		<name>S57</name>
+		<arc label="prob">
+			<name>S57_S58_angle_ef_roll_pitch_rate_ef_yaw_smooth(float, float,
+				float)</name>
+			<prob>1.0</prob>
+			<stimulate>
+				<parameter>
+					<paramName>target_yaw_rate</paramName>
+					<paramType>float</paramType>
+				</parameter>
+				<parameter>
+					<paramName>target_pitch</paramName>
+					<paramType>float</paramType>
+				</parameter>
+				<parameter>
+					<paramName>target_roll</paramName>
+					<paramType>float</paramType>
+				</parameter>
+			</stimulate>
+			<to>S58</to>
+		</arc>
+	</state>
+	<state>
+		<name>S58</name>
+		<arc label="prob">
+			<name>S58_S59</name>
+			<prob>1.0</prob>
+			<to>S59</to>
+		</arc>
+	</state>
+	<state>
+		<name>S59</name>
+		<arc label="prob">
+			<name>S59_S61_rate_controller_run()</name>
+			<prob>1.0</prob>
+			<to>S61</to>
+		</arc>
+	</state>
+	<state>
+		<name>S60</name>
+		<arc label="prob">
+			<name>S60_S59</name>
+			<prob>1.0</prob>
+			<to>S59</to>
+		</arc>
+	</state>
+	<state>
+		<name>S61</name>
+		<arc label="prob">
+			<name>S61_S62_get_gyro()</name>
+			<prob>1.0</prob>
+			<to>S62</to>
+		</arc>
+	</state>
+	<state>
+		<name>S62</name>
+		<arc label="prob">
+			<name>S62_S63_set_roll(float)</name>
+			<prob>1.0</prob>
+			<stimulate>
+				<parameter>
+					<paramName>_roll_control_input</paramName>
+					<paramType>float</paramType>
+				</parameter>
+			</stimulate>
+			<to>S63</to>
+		</arc>
+	</state>
+	<state>
+		<name>S63</name>
+		<arc label="prob">
+			<name>S63_S64_set_pitch(float)</name>
+			<prob>1.0</prob>
+			<stimulate>
+				<parameter>
+					<paramName>_pitch_control_input</paramName>
+					<paramType>float</paramType>
+				</parameter>
+			</stimulate>
+			<to>S64</to>
+		</arc>
+	</state>
+	<state>
+		<name>S64</name>
+		<arc label="prob">
+			<name>S64_S65_set_yaw(float)</name>
+			<prob>1.0</prob>
+			<stimulate>
+				<parameter>
+					<paramName>_yaw_control_input</paramName>
+					<paramType>float</paramType>
+				</parameter>
+			</stimulate>
+			<to>S65</to>
+		</arc>
+	</state>
+	<state>
+		<name>S65</name>
+		<arc label="prob">
+			<name>S65_S66_motors_output()</name>
+			<prob>1.0</prob>
+			<to>S66</to>
+		</arc>
+	</state>
+	<state>
+		<name>S66</name>
+		<arc label="prob">
+			<name>S66_S67</name>
+			<prob>1.0</prob>
+			<to>S67</to>
+		</arc>
+	</state>
+	<state>
+		<name>S67</name>
+		<arc label="prob">
+			<name>S67_S48</name>
+			<prob>0.5</prob>
+			<to>S48</to>
+		</arc>
+		<arc label="prob">
+			<name>S67_S68_send_pwm</name>
+			<prob>0.5</prob>
+			<to>S68</to>
+		</arc>
+	</state>
+	<state>
+		<name>S68</name>
+	</state>
+</Model>

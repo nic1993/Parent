@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Model version="1.0" type="uml:Model" name="Markov_Model" visibility="public" authorNmae="Terence">
+  <ModelType>UC_Markov</ModelType>
+  <Owned>Software</Owned>
+  <name>Use Case2</name>
+  <state>
+    <name>S27</name>
+    <arc label="prob">
+      <name>S27_S28_m1</name>
+      <prob>1.0</prob>
+      <to>S28</to>
+    </arc>
+  </state>
+  <state>
+    <name>S28</name>
+    <arc label="prob">
+      <name>S28_S29_m2</name>
+      <prob>0.5</prob>
+      <to>S29</to>
+    </arc>
+    <arc label="prob">
+      <name>S28_S37_m7</name>
+      <prob>0.5</prob>
+      <to>S37</to>
+    </arc>
+  </state>
+  <state>
+    <name>S29</name>
+    <arc label="prob">
+      <name>S29_S30_m3</name>
+      <prob>0.5</prob>
+      <to>S30</to>
+    </arc>
+    <arc label="prob">
+      <name>S29_S34_m5</name>
+      <prob>0.5</prob>
+      <to>S34</to>
+    </arc>
+  </state>
+  <state>
+    <name>S30</name>
+    <arc label="prob">
+      <name>S30_S31_m4</name>
+      <prob>1.0</prob>
+      <to>S31</to>
+    </arc>
+  </state>
+  <state>
+    <name>S31</name>
+    <arc label="prob">
+      <name>S31_S32</name>
+      <prob>1.0</prob>
+      <to>S32</to>
+    </arc>
+  </state>
+  <state>
+    <name>S32</name>
+    <arc label="prob">
+      <name>S32_S30</name>
+      <prob>0.5</prob>
+      <to>S30</to>
+    </arc>
+    <arc label="prob">
+      <name>S32_S33</name>
+      <prob>0.5</prob>
+      <to>S33</to>
+    </arc>
+  </state>
+  <state>
+    <name>S33</name>
+    <arc label="prob">
+      <name>S33_S36</name>
+      <prob>1.0</prob>
+      <to>S36</to>
+    </arc>
+  </state>
+  <state>
+    <name>S34</name>
+    <arc label="prob">
+      <name>S34_S35_m6</name>
+      <prob>1.0</prob>
+      <to>S35</to>
+    </arc>
+  </state>
+  <state>
+    <name>S35</name>
+    <arc label="prob">
+      <name>S35_S33</name>
+      <prob>1.0</prob>
+      <to>S33</to>
+    </arc>
+  </state>
+  <state>
+    <name>S36</name>
+    <arc label="prob">
+      <name>S36_S45_m14</name>
+      <prob>1.0</prob>
+      <to>S45</to>
+    </arc>
+  </state>
+  <state>
+    <name>S37</name>
+    <arc label="prob">
+      <name>S37_S38_m8</name>
+      <prob>0.5</prob>
+      <to>S38</to>
+    </arc>
+    <arc label="prob">
+      <name>S37_S40_m9</name>
+      <prob>0.5</prob>
+      <to>S40</to>
+    </arc>
+  </state>
+  <state>
+    <name>S38</name>
+    <arc label="prob">
+      <name>S38_S39</name>
+      <prob>1.0</prob>
+      <to>S39</to>
+    </arc>
+  </state>
+  <state>
+    <name>S39</name>
+    <arc label="prob">
+      <name>S39_S42_m11</name>
+      <prob>0.5</prob>
+      <to>S42</to>
+    </arc>
+    <arc label="prob">
+      <name>S39_S44_m12</name>
+      <prob>0.5</prob>
+      <to>S44</to>
+    </arc>
+  </state>
+  <state>
+    <name>S40</name>
+    <arc label="prob">
+      <name>S40_S41_m10</name>
+      <prob>1.0</prob>
+      <to>S41</to>
+    </arc>
+  </state>
+  <state>
+    <name>S41</name>
+    <arc label="prob">
+      <name>S41_S39</name>
+      <prob>1.0</prob>
+      <to>S39</to>
+    </arc>
+  </state>
+  <state>
+    <name>S42</name>
+    <arc label="prob">
+      <name>S42_S43</name>
+      <prob>1.0</prob>
+      <to>S43</to>
+    </arc>
+  </state>
+  <state>
+    <name>S43</name>
+    <arc label="prob">
+      <name>S43_S36</name>
+      <prob>1.0</prob>
+      <to>S36</to>
+    </arc>
+  </state>
+  <state>
+    <name>S44</name>
+    <arc label="prob">
+      <name>S44_S43</name>
+      <prob>1.0</prob>
+      <to>S43</to>
+    </arc>
+  </state>
+  <state>
+    <name>S45</name>
+  </state>
+</Model>

@@ -1,0 +1,158 @@
+<SequenceDiagramGraph id="1">
+  <nodes id="2">
+    <LifelineNode id="3">
+      <children id="4">
+        <ActivationBarNode id="5">
+          <children id="6"/>
+          <parent class="LifelineNode" reference="3"/>
+          <location class="Point2D.Double" id="7" x="32.0" y="80.0"/>
+          <ID>EAID_fbca9afb-38e0-4e25-b3cd-0b34c1b05d24</ID>
+          <id id="8"/>
+          <backgroundColor id="9">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+            <alpha>255</alpha>
+          </backgroundColor>
+          <borderColor id="10">
+            <red>191</red>
+            <green>191</green>
+            <blue>191</blue>
+            <alpha>255</alpha>
+          </borderColor>
+          <textColor id="11">
+            <red>51</red>
+            <green>51</green>
+            <blue>51</blue>
+            <alpha>255</alpha>
+          </textColor>
+        </ActivationBarNode>
+      </children>
+      <location class="Point2D.Double" id="12" x="123.0" y="70.0"/>
+      <ID>EAID_618a6b07-ccd6-4340-a528-499dda4ec575</ID>
+      <id id="13"/>
+      <backgroundColor reference="9"/>
+      <borderColor reference="10"/>
+      <textColor reference="11"/>
+      <name id="14">
+        <text>object1</text>
+      </name>
+      <width>80.0</width>
+    </LifelineNode>
+    <LifelineNode id="15">
+      <children id="16">
+        <ActivationBarNode id="17">
+          <children id="18"/>
+          <parent class="LifelineNode" reference="15"/>
+          <location class="Point2D.Double" id="19" x="32.0" y="90.0"/>
+          <ID>EAID_2717f27d-7413-4fd1-9b28-b12e70b7e8a6</ID>
+          <id id="20"/>
+          <backgroundColor reference="9"/>
+          <borderColor reference="10"/>
+          <textColor reference="11"/>
+        </ActivationBarNode>
+        <ActivationBarNode id="21">
+          <children id="22"/>
+          <parent class="LifelineNode" reference="15"/>
+          <location class="Point2D.Double" id="23" x="32.0" y="141.0"/>
+          <backgroundColor reference="9"/>
+          <borderColor reference="10"/>
+          <textColor reference="11"/>
+        </ActivationBarNode>
+      </children>
+      <location class="Point2D.Double" id="24" x="273.0" y="0.0"/>
+      <ID>EAID_cf9ddedc-46b4-4527-8af1-33dc24d4a45e</ID>
+      <id id="25"/>
+      <backgroundColor reference="9"/>
+      <borderColor reference="10"/>
+      <textColor reference="11"/>
+      <name id="26">
+        <text>object2</text>
+      </name>
+      <width>80.0</width>
+    </LifelineNode>
+    <LifelineNode id="27">
+      <children id="28">
+        <ActivationBarNode id="29">
+          <children id="30"/>
+          <parent class="LifelineNode" reference="27"/>
+          <location class="Point2D.Double" id="31" x="32.0" y="192.0"/>
+          <backgroundColor reference="9"/>
+          <borderColor reference="10"/>
+          <textColor reference="11"/>
+        </ActivationBarNode>
+      </children>
+      <location class="Point2D.Double" id="32" x="403.0" y="0.0"/>
+      <ID>EAID_fa5db87c-4da3-45ba-a50f-b3b884d8751e</ID>
+      <id id="33"/>
+      <backgroundColor reference="9"/>
+      <borderColor reference="10"/>
+      <textColor reference="11"/>
+      <name id="34">
+        <text>object3</text>
+      </name>
+      <width>80.0</width>
+    </LifelineNode>
+    <NoteNode id="35">
+      <children id="36"/>
+      <location class="Point2D.Double" id="37" x="497.0" y="75.0"/>
+      <ID>EAID_d676fc5f-8d45-4853-856d-c00d7032ef21</ID>
+      <id id="38"/>
+      <backgroundColor reference="9"/>
+      <borderColor reference="10"/>
+      <textColor reference="11"/>
+      <text id="39">
+        <text>owned:usecase1;
+postCondiiton:flf;
+probability:0.2;</text>
+      </text>
+      <color id="40">
+        <red>255</red>
+        <green>228</green>
+        <blue>181</blue>
+        <alpha>255</alpha>
+      </color>
+    </NoteNode>
+  </nodes>
+  <edges id="41">
+    <CallEdge id="42">
+      <start class="ActivationBarNode" reference="5"/>
+      <end class="ActivationBarNode" reference="17"/>
+      <startLocation class="Point2D.Double" id="43" x="171.0" y="90.0"/>
+      <endLocation class="Point2D.Double" id="44" x="305.0" y="90.0"/>
+      <id id="45"/>
+      <ID>EAID_16a2d699-c9d4-4528-be5a-370b775ab85e</ID>
+      <middleLabel>m1()</middleLabel>
+      <signal>false</signal>
+    </CallEdge>
+    <CallEdge id="46">
+      <start class="ActivationBarNode" reference="5"/>
+      <end class="ActivationBarNode" reference="21"/>
+      <startLocation class="Point2D.Double" id="47" x="171.0" y="141.0"/>
+      <endLocation class="Point2D.Double" id="48" x="305.0" y="141.0"/>
+      <id id="49"/>
+      <ID>EAID_d86d426f-3967-4cbf-afe2-6e2f6eefb8ff</ID>
+      <middleLabel>m2()</middleLabel>
+      <signal>false</signal>
+    </CallEdge>
+    <CallEdge id="50">
+      <start class="ActivationBarNode" reference="5"/>
+      <end class="ActivationBarNode" reference="29"/>
+      <startLocation class="Point2D.Double" id="51" x="171.0" y="192.0"/>
+      <endLocation class="Point2D.Double" id="52" x="435.0" y="192.0"/>
+      <id id="53"/>
+      <ID>EAID_6cdd1112-7c32-45ea-abbd-8259e5c167b0</ID>
+      <middleLabel>m21(int,int)</middleLabel>
+      <signal>false</signal>
+    </CallEdge>
+    <ReturnEdge id="54">
+      <start class="ActivationBarNode" reference="29"/>
+      <end class="ActivationBarNode" reference="5"/>
+      <startLocation class="Point2D.Double" id="55" x="435.0" y="232.0"/>
+      <endLocation class="Point2D.Double" id="56" x="171.0" y="232.0"/>
+      <id id="57"/>
+      <ID>EAID_5a86e172-63ae-49c1-a736-9bf307b59f08</ID>
+      <middleLabel>m22reply()</middleLabel>
+    </ReturnEdge>
+  </edges>
+</SequenceDiagramGraph>

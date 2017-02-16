@@ -21,6 +21,7 @@
 
 package com.horstmann.violet.framework.propertyeditor;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ItemEvent;
@@ -51,6 +52,7 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -62,6 +64,8 @@ import com.horstmann.violet.framework.propertyeditor.customeditor.BentStyleEdito
 import com.horstmann.violet.framework.propertyeditor.customeditor.ChoiceListEditor;
 import com.horstmann.violet.framework.propertyeditor.customeditor.ColorEditor;
 import com.horstmann.violet.framework.propertyeditor.customeditor.ConditionEditor;
+import com.horstmann.violet.framework.propertyeditor.customeditor.SequenceConstraintEditor;
+import com.horstmann.violet.framework.propertyeditor.customeditor.UsecaseConstraintEditor;
 import com.horstmann.violet.framework.propertyeditor.customeditor.FragmentTypeEditor;
 import com.horstmann.violet.framework.propertyeditor.customeditor.ImageIconEditor;
 import com.horstmann.violet.framework.propertyeditor.customeditor.LineStyleEditor;
@@ -73,6 +77,8 @@ import com.horstmann.violet.product.diagram.abstracts.property.ArrowHead;
 import com.horstmann.violet.product.diagram.abstracts.property.BentStyle;
 import com.horstmann.violet.product.diagram.abstracts.property.ChoiceList;
 import com.horstmann.violet.product.diagram.abstracts.property.Condition;
+import com.horstmann.violet.product.diagram.abstracts.property.SceneConstraint;
+import com.horstmann.violet.product.diagram.abstracts.property.UseConstraint;
 import com.horstmann.violet.product.diagram.abstracts.property.FragmentPart;
 import com.horstmann.violet.product.diagram.abstracts.property.FragmentType;
 import com.horstmann.violet.product.diagram.abstracts.property.LineStyle;
@@ -93,57 +99,142 @@ public class CustomPropertyEditor implements ICustomPropertyEditor
     public CustomPropertyEditor(Object bean)
     {
         panel = new JPanel();
+        JTabbedPane tabbedPane = new JTabbedPane();
         try
         {
             Introspector.flushFromCaches(bean.getClass());// 为了更好的性能，Introspector缓存BeanInfo；
             //因此，若在使用多个类加载器的应用程序中使用Introspector须小心谨慎。可以调用Introspector.flushCaches或Introspector.flushFromCaches方法从缓存中清空内省的类。
             BeanInfo info = Introspector.getBeanInfo(bean.getClass());
-            //通过BeanIndo进行内省
-            PropertyDescriptor[] descriptors = (PropertyDescriptor[]) info.getPropertyDescriptors().clone();
-            Arrays.sort(descriptors, new Comparator<PropertyDescriptor>()
-            {
-                public int compare(PropertyDescriptor d1, PropertyDescriptor d2)
+            if(!bean.getClass().getSimpleName().equals("UseCaseNode"))  //不为usecaseNode
+            { //通过BeanIndo进行内省
+                PropertyDescriptor[] descriptors = (PropertyDescriptor[]) info.getPropertyDescriptors().clone();
+                System.out.println(descriptors.length);
+                Arrays.sort(descriptors, new Comparator<PropertyDescriptor>()
                 {
-                    Integer p1 = (Integer) d1.getValue("priority");
-                    Integer p2 = (Integer) d2.getValue("priority");
-                    if (p1 == null && p2 == null) return 0;
-                    if (p1 == null) return 1;
-                    if (p2 == null) return -1;
-                    return p1.intValue() - p2.intValue();
-                }
-            });
+                    public int compare(PropertyDescriptor d1, PropertyDescriptor d2)
+                    {
+                        Integer p1 = (Integer) d1.getValue("priority");
+                        Integer p2 = (Integer) d2.getValue("priority");
+                        if (p1 == null && p2 == null) return 0;
+                        if (p1 == null) return 1;
+                        if (p2 == null) return -1;
+                        return p1.intValue() - p2.intValue();
+                    }
+                });
 
-            panel.setLayout(new CustomPropertyEditorLayout());
+                panel.setLayout(new CustomPropertyEditorLayout());
 
-            ResourceBundle rs = ResourceBundle.getBundle(ResourceBundleConstant.NODE_AND_EDGE_STRINGS, Locale.getDefault());
-            for (int i = 0; i < descriptors.length; i++)
-            {
-                PropertyEditor editor = getEditor(bean, descriptors[i]);
-                if (editor != null)
+                ResourceBundle rs = ResourceBundle.getBundle(ResourceBundleConstant.NODE_AND_EDGE_STRINGS, Locale.getDefault());
+                for (int i = 0; i < descriptors.length; i++)
                 {
-                    // Try to extract title from resource bundle
-                    String title = descriptors[i].getName();
-                    try
+                    PropertyEditor editor = getEditor(bean, descriptors[i]);
+                    if (editor != null)
                     {
-                        String translatedTitle = rs.getString(title.toLowerCase());
-                        if (translatedTitle != null) title = translatedTitle;
-                    }
-                    catch (MissingResourceException e)
-                    {
-                        // Nothing to do
-                    }
+                        // Try to extract title from resource bundle
+                        String title = descriptors[i].getName();
+                        try
+                        {
+                            String translatedTitle = rs.getString(title.toLowerCase());
+                            if (translatedTitle != null) title = translatedTitle;
+                        }
+                        catch (MissingResourceException e)
+                        {
+                            // Nothing to do
+                        }
 
-                    // Upper case the first character
-                    title = title.substring(0, Math.min(1, title.length())).toUpperCase()
-                            + title.substring(Math.min(1, title.length()), title.length());
-
-                    JLabel label = new JLabel(title);
-                    label.setFont(label.getFont().deriveFont(Font.PLAIN));
-                    panel.add(label);
-                    panel.add(getEditorComponent(editor));
-                    this.isEditable = true;
+                        // Upper case the first character
+                        title = title.substring(0, Math.min(1, title.length())).toUpperCase()
+                                + title.substring(Math.min(1, title.length()), title.length());
+                        
+                        JLabel label = new JLabel(title);
+                        label.setFont(label.getFont().deriveFont(Font.PLAIN));
+                        panel.add(label);
+                        panel.add(getEditorComponent(editor));
+                        this.isEditable = true;
+                    }
                 }
-            }
+                }
+            else {
+            	//通过BeanIndo进行内省
+                PropertyDescriptor[] descriptors = (PropertyDescriptor[]) info.getPropertyDescriptors().clone();
+                System.out.println(descriptors.length);
+                Arrays.sort(descriptors, new Comparator<PropertyDescriptor>()
+                {
+                    public int compare(PropertyDescriptor d1, PropertyDescriptor d2)
+                    {
+                        Integer p1 = (Integer) d1.getValue("priority");
+                        Integer p2 = (Integer) d2.getValue("priority");
+                        if (p1 == null && p2 == null) return 0;
+                        if (p1 == null) return 1;
+                        if (p2 == null) return -1;
+                        return p1.intValue() - p2.intValue();
+                    }
+                });
+
+                panel.setLayout(new BorderLayout());
+
+                ResourceBundle rs = ResourceBundle.getBundle(ResourceBundleConstant.NODE_AND_EDGE_STRINGS, Locale.getDefault());
+                for (int i = 0; i < descriptors.length; i++)
+                {
+                    PropertyEditor editor = getEditor(bean, descriptors[i]);
+                    if (editor != null)
+                    {
+                        // Try to extract title from resource bundle
+                        String title = descriptors[i].getName();
+                        try
+                        {
+                            String translatedTitle = rs.getString(title.toLowerCase());
+                            if (translatedTitle != null) title = translatedTitle;
+                        }
+                        catch (MissingResourceException e)
+                        {
+                            // Nothing to do
+                        }
+
+                        // Upper case the first character
+                        title = title.substring(0, Math.min(1, title.length())).toUpperCase()
+                                + title.substring(Math.min(1, title.length()), title.length());
+                        if(title.equals("Name"))
+                        {
+                        JLabel label = new JLabel(title);
+                        label.setFont(label.getFont().deriveFont(Font.PLAIN));
+//                        JPanel panel1 = new JPanel();
+//                        panel1.add(label);
+//                        panel1.add(getEditorComponent(editor));
+//                        
+//                        tabbedPane.addTab((i)+" ", panel1);
+//                        panel.add(tabbedPane);
+                        JPanel jPanel1 = new JPanel();
+                        jPanel1.add(label);
+                        jPanel1.add(getEditorComponent(editor));
+                        
+                        tabbedPane.addTab("名称", jPanel1);
+//                        panel.add(label);
+//                        panel.add(getEditorComponent(editor));
+                        
+                        panel.add(tabbedPane);
+                        this.isEditable = true;
+                        }
+                        else {
+                        	 JPanel jPanel1 = new JPanel();
+                             jPanel1.add(getEditorComponent(editor));
+                             if(title.equals("Constraint"))
+                             tabbedPane.addTab("用例约束", jPanel1);
+                             else {
+                            	 tabbedPane.addTab("场景约束", jPanel1);
+							}
+//                             panel.add(label);
+//                             panel.add(getEditorComponent(editor));
+                             
+                             panel.add(tabbedPane);
+                             this.isEditable = true;
+						}
+                        
+                    }
+                }
+			}
+                
+           
         }
         catch (IntrospectionException exception)
         {
@@ -414,6 +505,8 @@ public class CustomPropertyEditor implements ICustomPropertyEditor
         editors.put(ImageIcon.class, ImageIconEditor.class);  
         editors.put(FragmentType.class, FragmentTypeEditor.class);
         editors.put(Condition.class, ConditionEditor.class);
+        editors.put(UseConstraint.class, UsecaseConstraintEditor.class);
+        editors.put(SceneConstraint.class, SequenceConstraintEditor.class);
        
     }    
 

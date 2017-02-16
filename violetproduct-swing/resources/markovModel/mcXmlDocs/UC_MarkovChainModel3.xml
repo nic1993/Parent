@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Model version="1.0" type="uml:Model" name="Markov_Model" visibility="public" authorNmae="Terence">
+  <ModelType>UC_Markov</ModelType>
+  <Owned>Software</Owned>
+  <name>Use Case3</name>
+  <state>
+    <name>S46</name>
+    <arc label="prob">
+      <name>S46_S47_m1</name>
+      <prob>1.0</prob>
+      <to>S47</to>
+    </arc>
+  </state>
+  <state>
+    <name>S47</name>
+    <arc label="prob">
+      <name>S47_S48_m2</name>
+      <prob>0.5</prob>
+      <to>S48</to>
+    </arc>
+    <arc label="prob">
+      <name>S47_S63_m12</name>
+      <prob>0.5</prob>
+      <to>S63</to>
+    </arc>
+  </state>
+  <state>
+    <name>S48</name>
+    <arc label="prob">
+      <name>S48_S49_m3</name>
+      <prob>0.3333333333333333</prob>
+      <to>S49</to>
+    </arc>
+    <arc label="prob">
+      <name>S48_S56_m7</name>
+      <prob>0.3333333333333333</prob>
+      <to>S56</to>
+    </arc>
+    <arc label="prob">
+      <name>S48_S58_m9</name>
+      <prob>0.3333333333333333</prob>
+      <to>S58</to>
+    </arc>
+  </state>
+  <state>
+    <name>S49</name>
+    <arc label="prob">
+      <name>S49_S50_m4</name>
+      <prob>0.5</prob>
+      <to>S50</to>
+    </arc>
+    <arc label="prob">
+      <name>S49_S52_m5</name>
+      <prob>0.34</prob>
+      <to>S52</to>
+    </arc>
+    <arc label="prob">
+      <name>S49_S74_m5_1</name>
+      <prob>0.16</prob>
+      <to>S74</to>
+    </arc>
+  </state>
+  <state>
+    <name>S50</name>
+    <arc label="prob">
+      <name>S50_S51</name>
+      <prob>1.0</prob>
+      <to>S51</to>
+    </arc>
+  </state>
+  <state>
+    <name>S51</name>
+    <arc label="prob">
+      <name>S51_S53</name>
+      <prob>0.5</prob>
+      <to>S53</to>
+    </arc>
+    <arc label="prob">
+      <name>S51_S75</name>
+      <prob>0.5</prob>
+      <to>S75</to>
+    </arc>
+  </state>
+  <state>
+    <name>S52</name>
+    <arc label="prob">
+      <name>S52_S51</name>
+      <prob>1.0</prob>
+      <to>S51</to>
+    </arc>
+  </state>
+  <state>
+    <name>S53</name>
+    <arc label="prob">
+      <name>S53_S48</name>
+      <prob>0.5952380952380952</prob>
+      <to>S48</to>
+    </arc>
+    <arc label="prob">
+      <name>S53_S54_m6</name>
+      <prob>0.40476190476190477</prob>
+      <to>S54</to>
+    </arc>
+  </state>
+  <state>
+    <name>S54</name>
+    <arc label="prob">
+      <name>S54_S55</name>
+      <prob>1.0</prob>
+      <to>S55</to>
+    </arc>
+  </state>
+  <state>
+    <name>S55</name>
+    <arc label="prob">
+      <name>S55_S62</name>
+      <prob>1.0</prob>
+      <to>S62</to>
+    </arc>
+  </state>
+  <state>
+    <name>S56</name>
+    <arc label="prob">
+      <name>S56_S57_m8</name>
+      <prob>1.0</prob>
+      <to>S57</to>
+    </arc>
+  </state>
+  <state>
+    <name>S57</name>
+    <arc label="prob">
+      <name>S57_S55</name>
+      <prob>1.0</prob>
+      <to>S55</to>
+    </arc>
+  </state>
+  <state>
+    <name>S58</name>
+    <arc label="prob">
+      <name>S58_S59_m10</name>
+      <prob>0.68</prob>
+      <to>S59</to>
+    </arc>
+    <arc label="prob">
+      <name>S58_S78_m10_1</name>
+      <prob>0.32</prob>
+      <to>S78</to>
+    </arc>
+  </state>
+  <state>
+    <name>S59</name>
+    <arc label="prob">
+      <name>S59_S60_m11</name>
+      <prob>1.0</prob>
+      <to>S60</to>
+    </arc>
+  </state>
+  <state>
+    <name>S60</name>
+    <arc label="prob">
+      <name>S60_S61</name>
+      <prob>1.0</prob>
+      <to>S61</to>
+    </arc>
+  </state>
+  <state>
+    <name>S61</name>
+    <arc label="prob">
+      <name>S61_S58</name>
+      <prob>0.5</prob>
+      <to>S58</to>
+    </arc>
+    <arc label="prob">
+      <name>S61_S55</name>
+      <prob>0.5</prob>
+      <to>S55</to>
+    </arc>
+  </state>
+  <state>
+    <name>S62</name>
+    <arc label="prob">
+      <name>S62_S69_m17</name>
+      <prob>0.68</prob>
+      <to>S69</to>
+    </arc>
+    <arc label="prob">
+      <name>S62_S86_m17_1</name>
+      <prob>0.32</prob>
+      <to>S86</to>
+    </arc>
+  </state>
+  <state>
+    <name>S63</name>
+    <arc label="prob">
+      <name>S63_S64_m13</name>
+      <prob>0.34</prob>
+      <to>S64</to>
+    </arc>
+    <arc label="prob">
+      <name>S63_S66_m14</name>
+      <prob>0.34</prob>
+      <to>S66</to>
+    </arc>
+    <arc label="prob">
+      <name>S63_S81_m13</name>
+      <prob>0.16</prob>
+      <to>S81</to>
+    </arc>
+    <arc label="prob">
+      <name>S63_S84_m15</name>
+      <prob>0.16</prob>
+      <to>S84</to>
+    </arc>
+  </state>
+  <state>
+    <name>S64</name>
+    <arc label="prob">
+      <name>S64_S65</name>
+      <prob>1.0</prob>
+      <to>S65</to>
+    </arc>
+  </state>
+  <state>
+    <name>S65</name>
+    <arc label="prob">
+      <name>S65_S68_m16</name>
+      <prob>1.0</prob>
+      <to>S68</to>
+    </arc>
+  </state>
+  <state>
+    <name>S66</name>
+    <arc label="prob">
+      <name>S66_S67_m15</name>
+      <prob>1.0</prob>
+      <to>S67</to>
+    </arc>
+  </state>
+  <state>
+    <name>S67</name>
+    <arc label="prob">
+      <name>S67_S65</name>
+      <prob>1.0</prob>
+      <to>S65</to>
+    </arc>
+  </state>
+  <state>
+    <name>S68</name>
+    <arc label="prob">
+      <name>S68_S62</name>
+      <prob>1.0</prob>
+      <to>S62</to>
+    </arc>
+  </state>
+  <state>
+    <name>S69</name>
+    <arc label="prob">
+      <name>S69_S70_m18</name>
+      <prob>1.0</prob>
+      <to>S70</to>
+    </arc>
+  </state>
+  <state>
+    <name>S70</name>
+    <arc label="prob">
+      <name>S70_S71_m19</name>
+      <prob>1.0</prob>
+      <to>S71</to>
+    </arc>
+  </state>
+  <state>
+    <name>S71</name>
+    <arc label="prob">
+      <name>S71_S72</name>
+      <prob>1.0</prob>
+      <to>S72</to>
+    </arc>
+  </state>
+  <state>
+    <name>S72</name>
+    <arc label="prob">
+      <name>S72_S69</name>
+      <prob>0.5952380952380952</prob>
+      <to>S69</to>
+    </arc>
+    <arc label="prob">
+      <name>S72_S73_m20</name>
+      <prob>0.40476190476190477</prob>
+      <to>S73</to>
+    </arc>
+  </state>
+  <state>
+    <name>S73</name>
+  </state>
+  <state>
+    <name>S74</name>
+    <arc label="prob">
+      <name>S74_S51</name>
+      <prob>1.0</prob>
+      <to>S51</to>
+    </arc>
+  </state>
+  <state>
+    <name>S75</name>
+    <arc label="prob">
+      <name>S75_S48</name>
+      <prob>0.7575757575757576</prob>
+      <to>S48</to>
+    </arc>
+    <arc label="prob">
+      <name>S75_S76_m6</name>
+      <prob>0.24242424242424243</prob>
+      <to>S76</to>
+    </arc>
+  </state>
+  <state>
+    <name>S76</name>
+    <arc label="prob">
+      <name>S76_S77</name>
+      <prob>1.0</prob>
+      <to>S77</to>
+    </arc>
+  </state>
+  <state>
+    <name>S77</name>
+  </state>
+  <state>
+    <name>S78</name>
+    <arc label="prob">
+      <name>S78_S79_m11_1</name>
+      <prob>1.0</prob>
+      <to>S79</to>
+    </arc>
+  </state>
+  <state>
+    <name>S79</name>
+    <arc label="prob">
+      <name>S79_S80</name>
+      <prob>1.0</prob>
+      <to>S80</to>
+    </arc>
+  </state>
+  <state>
+    <name>S80</name>
+    <arc label="prob">
+      <name>S80_S58</name>
+      <prob>0.5</prob>
+      <to>S58</to>
+    </arc>
+    <arc label="prob">
+      <name>S80_S55</name>
+      <prob>0.5</prob>
+      <to>S55</to>
+    </arc>
+  </state>
+  <state>
+    <name>S81</name>
+    <arc label="prob">
+      <name>S81_S82_m14</name>
+      <prob>1.0</prob>
+      <to>S82</to>
+    </arc>
+  </state>
+  <state>
+    <name>S82</name>
+    <arc label="prob">
+      <name>S82_S83</name>
+      <prob>1.0</prob>
+      <to>S83</to>
+    </arc>
+  </state>
+  <state>
+    <name>S83</name>
+    <arc label="prob">
+      <name>S83_S85_m16</name>
+      <prob>1.0</prob>
+      <to>S85</to>
+    </arc>
+  </state>
+  <state>
+    <name>S84</name>
+    <arc label="prob">
+      <name>S84_S83</name>
+      <prob>1.0</prob>
+      <to>S83</to>
+    </arc>
+  </state>
+  <state>
+    <name>S85</name>
+    <arc label="prob">
+      <name>S85_S62</name>
+      <prob>1.0</prob>
+      <to>S62</to>
+    </arc>
+  </state>
+  <state>
+    <name>S86</name>
+    <arc label="prob">
+      <name>S86_S87_m18</name>
+      <prob>1.0</prob>
+      <to>S87</to>
+    </arc>
+  </state>
+  <state>
+    <name>S87</name>
+    <arc label="prob">
+      <name>S87_S88_m19</name>
+      <prob>1.0</prob>
+      <to>S88</to>
+    </arc>
+  </state>
+  <state>
+    <name>S88</name>
+    <arc label="prob">
+      <name>S88_S89</name>
+      <prob>1.0</prob>
+      <to>S89</to>
+    </arc>
+  </state>
+  <state>
+    <name>S89</name>
+    <arc label="prob">
+      <name>S89_S86</name>
+      <prob>0.7575757575757576</prob>
+      <to>S86</to>
+    </arc>
+    <arc label="prob">
+      <name>S89_S90_m20</name>
+      <prob>0.24242424242424243</prob>
+      <to>S90</to>
+    </arc>
+  </state>
+  <state>
+    <name>S90</name>
+  </state>
+</Model>

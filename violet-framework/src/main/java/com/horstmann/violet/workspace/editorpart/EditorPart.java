@@ -36,6 +36,8 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.Rectangle2D.Double;
 import java.util.List;
+import java.util.concurrent.BlockingDeque;
+import java.util.concurrent.LinkedBlockingDeque;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -299,5 +301,7 @@ public class EditorPart extends JPanel implements IEditorPart
     private static final double GROW_SCALE_FACTOR = Math.sqrt(2);
 
     private IEditorPartBehaviorManager behaviorManager = new EditorPartBehaviorManager();
+    
+    public static BlockingDeque<Integer> lock = new LinkedBlockingDeque<Integer>();
 
 }

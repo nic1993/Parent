@@ -42,6 +42,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -64,8 +65,8 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
 import com.horstmann.violet.application.ApplicationStopper;
-import com.horstmann.violet.application.Stepone.SequenceTabPanel;
-import com.horstmann.violet.application.Stepone.UsecaseTabPanel;
+import com.horstmann.violet.application.SteponeBuildModel.SequenceTabPanel;
+import com.horstmann.violet.application.SteponeBuildModel.UsecaseTabPanel;
 import com.horstmann.violet.application.gui.GBC;
 import com.horstmann.violet.application.gui.MainFrame;
 import com.horstmann.violet.application.menu.util.zhangjian.UMLTransfrom.CreateActivityDiagramEAXml;
@@ -105,6 +106,7 @@ import com.horstmann.violet.framework.plugin.IDiagramPlugin;
 import com.horstmann.violet.framework.plugin.PluginRegistry;
 import com.horstmann.violet.framework.userpreferences.UserPreferencesService;
 import com.horstmann.violet.product.diagram.abstracts.IGraph;
+import com.horstmann.violet.product.diagram.abstracts.node.INode;
 import com.horstmann.violet.workspace.IWorkspace;
 import com.horstmann.violet.workspace.Workspace;
 import com.thoughtworks.xstream.io.StreamException;
@@ -463,6 +465,7 @@ public class FileMenu extends JMenu
      */
     public IFile exchangeFile( IFile selectedFile,IGraphFile graphFile,boolean flag) throws Exception{
     	String url =selectedFile.getDirectory()+"\\"+selectedFile.getFilename();
+
 //    	String base="D:\\ModelDriverProjectFile";
     	 File ffff =FileSystemView.getFileSystemView().getHomeDirectory();
     	 //获得目录
@@ -538,7 +541,6 @@ public class FileMenu extends JMenu
         		cs.create(rs, path+"EA/"+name);
         	}
     	}else if(flag==false){ 		
-    		System.out.println(type);
     		String name="";
     		//选择的文件是EA格式的文件 
     		if("class".equals(type)){
@@ -559,12 +561,16 @@ public class FileMenu extends JMenu
         	}else if("ucase".equals(type)){
         		path=base+"/UseCaseDiagram/";
         		readUseCaseXMLFromEA ru =new readUseCaseXMLFromEA(url,selectedFile);
+        		
         		CreateUseCaseDiagramVioletXml cu =new CreateUseCaseDiagramVioletXml();
+        		
         		ff =new File(path+"Violet/");
         		if(!ff.exists()){
         			ff.mkdirs();
         		}
+        		
         		 name=selectedFile.getFilename().replaceAll("EA", "");	
+        		 
         		cu.create(ru, path+"Violet/"+name);
         		
         		
@@ -578,7 +584,6 @@ public class FileMenu extends JMenu
         		name=selectedFile.getFilename().replaceAll("EA","");
         		directory=selectedFile.getDirectory();
         		fileName=selectedFile.getFilename();
-        		System.out.println("@@"+directory);
         		MainTransEAToViolet.TransEAToViolet(url,path+"Violet/"+name);
         		
         	}else if("state".equals(type)){
@@ -766,7 +771,8 @@ public class FileMenu extends JMenu
 						hashMap.put(node, mainFrame.getStepOneCenterSequenceTabbedPane().getSequenceDiagramTabbedPane().get(length));
 						int count = mainFrame.getStepOneCenterSequenceTabbedPane().getTabCount();
 						mainFrame.getListSequenceTabPanel().get(count - 1).getTitlelabel().setText(name+"  ");
-						mainFrame.getStepOneCenterSequenceTabbedPane().setSelectedComponent(hashMap.get(node));	
+						mainFrame.getStepOneCenterSequenceTabbedPane().setSelectedComponent(hashMap.get(node));
+						mainFrame.getStepOneCenterSequenceTabbedPane().setVisible(true);
 						
 						//切换界面
 						JLabel sequenceLabel =  new JLabel("顺序图是将交互关系表示为一个二维图。纵向是时间轴，时间沿竖线向下延伸。横向轴代表了在协作中各独立对象的类元角色。");
@@ -822,6 +828,10 @@ public class FileMenu extends JMenu
 						mainFrame.getListUsecaseTabPanel().get(count - 1).getTitlelabel().setText(name+"  ");
 						mainFrame.getStepOneCenterUseCaseTabbedPane().setSelectedComponent(hashMap.get(node));
 						mainFrame.getStepOneCenterUseCaseTabbedPane().updateUI();
+						mainFrame.getStepOneCenterUseCaseTabbedPane().setVisible(true);
+						
+						//添加树上用例节点
+						Collection<INode> nodes = graphFile.getGraph().getAllNodes();
 						
 						//切换界面
 						JLabel usecasejJLabel = new JLabel("用例图是指由参与者（Actor）、用例（Use Case）以及它们之间的关系构成的用于描述系统功能的视图。");
@@ -832,9 +842,6 @@ public class FileMenu extends JMenu
 				   		mainFrame.getbotoomJSplitPane().setDividerLocation(0.7);
 				   		mainFrame.getbotoomJSplitPane().setDividerSize(4);
 				   		mainFrame.getReduceOrEnlargePanel().setVisible(true);
-						mainFrame.getCenterTabPanel().removeAll();
-						mainFrame.getCenterTabPanel().add(mainFrame.getStepOneCenterUseCaseTabbedPane());
-						mainFrame.getCenterTabPanel().updateUI();	
 						mainFrame.getpanel().removeAll();
 						mainFrame.getpanel().setLayout(new GridLayout(1, 1));
 						mainFrame.getpanel().add(mainFrame.getOperationButton());
@@ -964,6 +971,7 @@ public class FileMenu extends JMenu
 							Map<DefaultMutableTreeNode, JPanel> hashMap = mainFrame.getsequencetree().getHashMap();
 							int length = mainFrame.getStepOneCenterSequenceTabbedPane().getSequenceDiagramTabbedPane().size() - 1;
 							hashMap.put(node, mainFrame.getStepOneCenterSequenceTabbedPane().getSequenceDiagramTabbedPane().get(length));
+							
 							int count = mainFrame.getStepOneCenterSequenceTabbedPane().getTabCount();
 							mainFrame.getListSequenceTabPanel().get(count - 1).getTitlelabel().setText(str+"  ");
 							mainFrame.getStepOneCenterSequenceTabbedPane().setSelectedComponent(hashMap.get(node));
@@ -974,7 +982,6 @@ public class FileMenu extends JMenu
                         	Icon icon = new ImageIcon("resources/icons/22x22/open.png");
 							String str = (String) JOptionPane.showInputDialog(null,"请输入顺序图名称:\n","title",JOptionPane.PLAIN_MESSAGE,icon,null,"在这输入");
 							mainFrame.getouOutputinformation().geTextArea().append("新建用例图: "+str+".seq.violet.xml\n");
-							
                         	JTree usecasetree = mainFrame.getUsecaseTree().getUsecasetree();
                         	DefaultTreeModel usecasetreemodel = mainFrame.getUsecaseTree().getUsecasetreemodel();
                         	DefaultMutableTreeNode usecasetreerootnode = mainFrame.getUsecaseTree().getUsecasetreerootnode();                        

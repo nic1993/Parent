@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Model version="1.0" type="uml:Model" name="Markov_Model" visibility="public" authorNmae="Terence">
+  <ModelType>Seq_Markov</ModelType>
+  <Owned>Use Case5</Owned>
+  <name>UseCase5-Sequence1-Normal</name>
+  <state>
+    <name>S103</name>
+    <arc label="prob">
+      <name>S103_S104_m1</name>
+      <prob>1.0</prob>
+      <to>S104</to>
+    </arc>
+  </state>
+  <state>
+    <name>S104</name>
+    <arc label="prob">
+      <name>S104_S105_m2</name>
+      <prob>1.0</prob>
+      <to>S105</to>
+    </arc>
+  </state>
+  <state>
+    <name>S105</name>
+    <arc label="prob">
+      <name>S105_S106_m31</name>
+      <prob>1.0</prob>
+      <to>S106</to>
+    </arc>
+  </state>
+  <state>
+    <name>S106</name>
+    <arc label="prob">
+      <name>S106_S107</name>
+      <prob>1.0</prob>
+      <to>S107</to>
+    </arc>
+  </state>
+  <state>
+    <name>S107</name>
+    <arc label="prob">
+      <name>S107_S105</name>
+      <prob>0.5</prob>
+      <to>S105</to>
+    </arc>
+    <arc label="prob">
+      <name>S107_S108_m32</name>
+      <prob>0.5</prob>
+      <to>S108</to>
+    </arc>
+  </state>
+  <state>
+    <name>S108</name>
+    <arc label="prob">
+      <name>S108_S109_m33</name>
+      <prob>0.5</prob>
+      <to>S109</to>
+    </arc>
+    <arc label="prob">
+      <name>S108_S112_m35</name>
+      <prob>0.5</prob>
+      <to>S112</to>
+    </arc>
+  </state>
+  <state>
+    <name>S109</name>
+    <arc label="prob">
+      <name>S109_S110_m34</name>
+      <prob>1.0</prob>
+      <to>S110</to>
+    </arc>
+  </state>
+  <state>
+    <name>S110</name>
+    <arc label="prob">
+      <name>S110_S111</name>
+      <prob>1.0</prob>
+      <to>S111</to>
+    </arc>
+  </state>
+  <state>
+    <name>S111</name>
+    <arc label="prob">
+      <name>S111_S113_m36</name>
+      <prob>1.0</prob>
+      <to>S113</to>
+    </arc>
+  </state>
+  <state>
+    <name>S112</name>
+    <arc label="prob">
+      <name>S112_S111</name>
+      <prob>1.0</prob>
+      <to>S111</to>
+    </arc>
+  </state>
+  <state>
+    <name>S113</name>
+    <arc label="prob">
+      <name>S113_S114_m37</name>
+      <prob>0.5</prob>
+      <to>S114</to>
+    </arc>
+    <arc label="prob">
+      <name>S113_S117_m39</name>
+      <prob>0.5</prob>
+      <to>S117</to>
+    </arc>
+  </state>
+  <state>
+    <name>S114</name>
+    <arc label="prob">
+      <name>S114_S115_m38</name>
+      <prob>1.0</prob>
+      <to>S115</to>
+    </arc>
+  </state>
+  <state>
+    <name>S115</name>
+    <arc label="prob">
+      <name>S115_S116</name>
+      <prob>1.0</prob>
+      <to>S116</to>
+    </arc>
+  </state>
+  <state>
+    <name>S116</name>
+    <arc label="prob">
+      <name>S116_S118_m310</name>
+      <prob>1.0</prob>
+      <to>S118</to>
+    </arc>
+  </state>
+  <state>
+    <name>S117</name>
+    <arc label="prob">
+      <name>S117_S116</name>
+      <prob>1.0</prob>
+      <to>S116</to>
+    </arc>
+  </state>
+  <state>
+    <name>S118</name>
+  </state>
+</Model>

@@ -27,37 +27,54 @@ import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.LayoutManager;
 
-/** 
+/**
  * A layout manager that lays out components along a central axis
  */
 class CustomPropertyEditorLayout implements LayoutManager
-{
-    public Dimension preferredLayoutSize(Container parent)
+{   //获得该容器中，所有组件(一个整体的)的整体的布局大小
+    public Dimension preferredLayoutSize(Container parent)//给定容器的所包含的组件，计算该容器首选大小的维数
     {
-        Component[] components = parent.getComponents();
-        left = 0;
-        right = 0;
-        height = 0;
-        for (int i = 0; i < components.length; i += 2)
-        {
-            Component cleft = components[i];
-            Component cright = components[i + 1];
+//        Component[] components = parent.getComponents();//获得所有的组件,用数组接受
+//        left = 0;
+//        right = 0;
+//        height = 0;
+//        for (int i = 0; i < components.length; i += 2)
+//        {
+//            Component cleft = components[i];
+//            Component cright = components[i + 1];
+//
+//            Dimension dleft = cleft.getPreferredSize();
+//            Dimension dright = cright.getPreferredSize();
+//            left = Math.max(left, dleft.width);
+//            right = Math.max(right, dright.width);
+//            height = height + Math.max(dleft.height, dright.height);
+//        }
+//        return new Dimension(left + GAP + right, height);
+    	//by tan  以上是已经有的
+    	 Component[] components = parent.getComponents();//获得所有的组件,用数组接受
+         left = 0;
+         right = 0;
+         height = 0;
+         for (int i = 0; i < components.length; i += 2)
+         {
+             Component cleft = components[i];
+             Component cright = components[i + 1];
 
-            Dimension dleft = cleft.getPreferredSize();
-            Dimension dright = cright.getPreferredSize();
-            left = Math.max(left, dleft.width);
-            right = Math.max(right, dright.width);
-            height = height + Math.max(dleft.height, dright.height);
-        }
-        return new Dimension(left + GAP + right, height);
+             Dimension dleft = cleft.getPreferredSize();
+             Dimension dright = cright.getPreferredSize();
+             left = Math.max(left, dleft.width);
+             right = Math.max(right, dright.width);
+             height = height + Math.max(dleft.height, dright.height);
+         }
+         return new Dimension(left + GAP + right, height);
     }
 
-    public Dimension minimumLayoutSize(Container parent)
+    public Dimension minimumLayoutSize(Container parent)//给定指定容器所包含的组件，计算该容器最小大小的维数 在这里定义的与上面的首选相等
     {
         return preferredLayoutSize(parent);
     }
 
-    public void layoutContainer(Container parent)
+    public void layoutContainer(Container parent)//布置指定的容器
     {
         preferredLayoutSize(parent); // sets left, right
 

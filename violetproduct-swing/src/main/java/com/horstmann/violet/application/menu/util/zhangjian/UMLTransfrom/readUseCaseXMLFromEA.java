@@ -16,9 +16,10 @@ public class readUseCaseXMLFromEA{
 
 	public readUseCaseXMLFromEA(String url,IFile file){
 		//Administrator
-		String aimPath="C:/Users/Xiaole/Desktop/ModelDriveProjectFile/UseCaseDiagram/EA";
+		String aimPath="C:/Users/ccc/Desktop/ModelDriverProjectFile/UseCaseDiagram/EA";
 		XMLUtils.AutoSave(url, aimPath,file.getFilename());
 		getInformationFormXML(url);
+		
 	}
 
 	private  void getInformationFormXML(String url) {
@@ -36,30 +37,33 @@ public class readUseCaseXMLFromEA{
 				}else{
 					an.setType("UseCaseNode");
 				}
-				
 				an.setId(element.attributeValue("id"));
 				an.setName(element.attributeValue("name"));
 				nodeList.add(an);
-			}else{
+			}else if(type.toString().equals("uml:Association")){
 				Edge edge=new Edge();
 				edge.setType(type);
 				edge.setId(element.attributeValue("id"));
-				edge.setName(element.attributeValue("name"));
+				if(element.attributeValue("name") != null)
+				edge.setName(element.attributeValue("name")); 
+				else {
+					edge.setName(element.attributeValue("type"));
+				}
 				edgeList.add(edge);	
 			}
 		}
-		
 		
 		Element extension= root.element("Extension");
 		List<Element> connectors= extension.element("connectors").elements();
 		for(Element conn:connectors){
 			boolean flag=SelectEdge(conn.attributeValue("idref"),edgeList);
 			if(flag){
-				
 				Edge edge=new Edge();
 				edge.setId(conn.attributeValue("idref"));
-				edge.setName(conn.attributeValue("name"));
-				edge.setType("Inheritance");
+				Element labels = conn.element("labels");
+
+				edge.setName(labels.attributeValue("mb")); //ºóÆÚÐÞ¸Ä
+				edge.setType(labels.attributeValue("mb"));
 				edgeList.add(edge);
 			}	
 			
@@ -101,8 +105,7 @@ public class readUseCaseXMLFromEA{
 						Point p2=new Point(x2,y2);
 						node.setRightLocation(p2);
 					}
-				}
-				
+				}	
 			}
 	}
 	

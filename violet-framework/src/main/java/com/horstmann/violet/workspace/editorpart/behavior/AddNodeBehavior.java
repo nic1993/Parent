@@ -6,7 +6,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.BlockingDeque;
+import java.util.concurrent.LinkedBlockingDeque;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JTree;
 
 import com.horstmann.violet.product.diagram.abstracts.IGraph;
@@ -100,6 +105,10 @@ public class AddNodeBehavior extends AbstractEditorPartBehavior
         {
             if (graph.addNode(newNode, location))
             {
+            	if(newNode.getToolTip().equals("Use case"))
+            	{
+            	lock.push(1);
+            	}
                 newNode.incrementRevision();
                 isAdded = true;
             }
@@ -121,7 +130,7 @@ public class AddNodeBehavior extends AbstractEditorPartBehavior
 
     private IGraphToolsBar graphToolsBar;
 
-    
+    public static BlockingDeque<Integer> lock = new LinkedBlockingDeque<Integer>();
     
     
 }

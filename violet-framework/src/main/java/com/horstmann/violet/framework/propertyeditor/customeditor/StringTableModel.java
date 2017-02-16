@@ -32,6 +32,7 @@ import javax.swing.table.AbstractTableModel;
  */
 public class StringTableModel extends AbstractTableModel {
   private List<String> entries = new LinkedList<String>();
+  private List<String> constraints = new LinkedList<String>();
 
   /**
    * Adds an entry.

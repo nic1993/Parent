@@ -72,7 +72,7 @@ public class OptionalToolsPanelUI extends PanelUI
             this.panel = new JPanel();
             this.panel.setOpaque(false);
             this.panel.setBorder(new EmptyBorder(0, 5, 0, 0));
-            GridLayout layout = new GridLayout(0, 6, 15, 10);
+            GridLayout layout = new GridLayout(0, 6, 10, 10);
             this.panel.setLayout(layout);
         }
         return this.panel;

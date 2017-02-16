@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Model version="1.0" type="uml:Model" name="Markov_Model"
+	visibility="public" authorNmae="Terence">
+	<ModelType>Seq_Markov</ModelType>
+	<Owned>获取姿态信息</Owned>
+	<name>获取姿态信息</name>
+	<state>
+		<name>S8</name>
+		<arc label="prob">
+			<name>S8_S9_read_AHRS()</name>
+			<prob>1.0</prob>
+			<to>S9</to>
+		</arc>
+	</state>
+	<state>
+		<name>S9</name>
+		<arc label="prob">
+			<name>S9_S10_update()</name>
+			<prob>1.0</prob>
+			<to>S10</to>
+		</arc>
+	</state>
+	<state>
+		<name>S10</name>
+		<arc label="prob">
+			<name>S10_S11_grab()</name>
+			<prob>1.0</prob>
+			<to>S11</to>
+		</arc>
+	</state>
+	<state>
+		<name>S11</name>
+		<arc label="prob">
+			<name>S11_S12_get_data</name>
+			<prob>1.0</prob>
+			<to>S12</to>
+		</arc>
+	</state>
+	<state>
+		<name>S12</name>
+		<arc label="prob">
+			<name>S12_S13_get_delta_time()</name>
+			<assignValue>delta_t</assignValue>
+			<assignType>float</assignType>
+			<prob>1.0</prob>
+			<to>S13</to>
+		</arc>
+	</state>
+	<state>
+		<name>S13</name>
+		<arc label="prob">
+			<name>S13_S14_calculate_x()</name>
+			<assignValue>gyro_x</assignValue>
+			<assignType>int</assignType>
+			<prob>1.0</prob>
+			<to>S14</to>
+		</arc>
+	</state>
+	<state>
+		<name>S14</name>
+		<arc label="prob">
+			<name>S14_S15_calculate_y()</name>
+			<assignValue>gyro_y</assignValue>
+			<assignType>int</assignType>
+			<prob>1.0</prob>
+			<to>S15</to>
+		</arc>
+	</state>
+	<state>
+		<name>S15</name>
+		<arc label="prob">
+			<name>S15_S16_calculate_z()</name>
+			<assignValue>gyro_z</assignValue>
+			<assignType>int</assignType>
+			<prob>1.0</prob>
+			<to>S16</to>
+		</arc>
+	</state>
+	<state>
+		<name>S16</name>
+		<arc label="prob">
+			<name>S16_S17</name>
+			<prob>1.0</prob>
+			<to>S17</to>
+		</arc>
+	</state>
+	<state>
+		<name>S17</name>
+		<arc label="prob">
+			<name>S17_S18_matrix_update(int)</name>
+			<prob>1.0</prob>
+			<stimulate>
+				<parameter>
+					<paramName>delta_t</paramName>
+					<paramType>int</paramType>
+				</parameter>
+			</stimulate>
+			<to>S18</to>
+		</arc>
+	</state>
+	<state>
+		<name>S18</name>
+		<arc label="prob">
+			<name>S18_S19</name>
+			<prob>1.0</prob>
+			<to>S19</to>
+		</arc>
+	</state>
+	<state>
+		<name>S19</name>
+		<arc label="prob">
+			<name>S19_S8</name>
+			<prob>1.0</prob>
+			<to>S8</to>
+		</arc>
+	</state>
+</Model>

@@ -31,6 +31,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.BlockingDeque;
+import java.util.concurrent.LinkedBlockingDeque;
 
 import com.horstmann.violet.product.diagram.abstracts.edge.HorizontalChild;
 import com.horstmann.violet.product.diagram.abstracts.edge.IEdge;
@@ -289,6 +291,10 @@ public abstract  class AbstractGraph implements Serializable, Cloneable, IGraph
         {
             if (this.nodes.contains(aNodeToRemove))
             {
+            	if(aNodeToRemove.getToolTip().equals("Use case"))
+            	{
+            	lock.push(1);
+            	}
                 this.nodes.remove(aNodeToRemove);
             }
         }
@@ -418,4 +424,5 @@ public abstract  class AbstractGraph implements Serializable, Cloneable, IGraph
     private transient Rectangle2D 
     minBounds;
     private transient IGridSticker gridSticker;
+    public static BlockingDeque<Integer> lock = new LinkedBlockingDeque<Integer>();
 }

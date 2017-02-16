@@ -12,25 +12,12 @@
 	<version>${applicationVersion}</version>
 	<build>
 		<plugins>
-<!-- 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-install-plugin</artifactId>
-				<executions>
-					<execution>
-						<goals>
-							<goal>install-file</goal>
-						</goals>
-						<phase>install</phase>
-						<configuration>
-							<file>${project.build.directory}/rpm/violet/RPMS/noarch/violet-${rpm.version}-${rpm.release}.noarch.rpm</file>
-							<groupId>com.horstmann.violet</groupId>
-							<artifactId>violetdistrib-rpm</artifactId>
-							<version>${rpm.version}-${rpm.release}.noarch</version>
-							<packaging>rpm</packaging>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin> -->
+			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-install-plugin</artifactId> 
+				<executions> <execution> <goals> <goal>install-file</goal> </goals> <phase>install</phase> 
+				<configuration> <file>${project.build.directory}/rpm/violet/RPMS/noarch/violet-${rpm.version}-${rpm.release}.noarch.rpm</file> 
+				<groupId>com.horstmann.violet</groupId> <artifactId>violetdistrib-rpm</artifactId> 
+				<version>${rpm.version}-${rpm.release}.noarch</version> <packaging>rpm</packaging> 
+				</configuration> </execution> </executions> </plugin> -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>

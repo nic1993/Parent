@@ -25,6 +25,8 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.concurrent.BlockingDeque;
+import java.util.concurrent.LinkedBlockingDeque;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -86,6 +88,7 @@ public class EditorToolsPanel extends JPanel implements ISideBarElement
         {
             public void actionPerformed(ActionEvent e)
             {
+            	
                 workspace.getEditorPart().removeSelected();//删除选定的节点或边
             }
         });
@@ -266,5 +269,5 @@ public class EditorToolsPanel extends JPanel implements ISideBarElement
     private JButton bPaste;
     @ResourceBundleBean(key = "title.standardbuttons.text")
     private String title;
-    
+
 }

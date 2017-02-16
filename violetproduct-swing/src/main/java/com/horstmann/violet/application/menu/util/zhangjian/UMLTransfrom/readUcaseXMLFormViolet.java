@@ -25,6 +25,7 @@ public class readUcaseXMLFormViolet {
 	
 	public  readUcaseXMLFormViolet(String url){
 		getInformationFormXML(url);
+		
 	}
 	
 	private  void getInformationFormXML(String url) {

@@ -73,8 +73,6 @@ public class GraphFile implements IGraphFile
             System.out.println("#@$%^&*");
             this.currentFilename = fileOpener.getFileDefinition().getFilename();
             this.currentDirectory = fileOpener.getFileDefinition().getDirectory();
-            System.out.println("当前："+currentFilename);
-            System.out.println("当前："+currentDirectory);
         }
         else
         {
