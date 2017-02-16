@@ -107,6 +107,7 @@ import com.horstmann.violet.framework.plugin.PluginRegistry;
 import com.horstmann.violet.framework.userpreferences.UserPreferencesService;
 import com.horstmann.violet.product.diagram.abstracts.IGraph;
 import com.horstmann.violet.product.diagram.abstracts.node.INode;
+import com.horstmann.violet.product.diagram.usecase.UseCaseNode;
 import com.horstmann.violet.workspace.IWorkspace;
 import com.horstmann.violet.workspace.Workspace;
 import com.thoughtworks.xstream.io.StreamException;
@@ -814,7 +815,7 @@ public class FileMenu extends JMenu
                 	    JTree usecasetree = mainFrame.getUsecaseTree().getUsecasetree();
                    	    DefaultTreeModel usecasetreemodel = mainFrame.getUsecaseTree().getUsecasetreemodel();
                       	DefaultMutableTreeNode usecasetreerootnode = mainFrame.getUsecaseTree().getUsecasetreerootnode();                        
-						DefaultMutableTreeNode node=new DefaultMutableTreeNode(name);
+						DefaultMutableTreeNode node=new DefaultMutableTreeNode(name); //用例图节点
 						usecasetreemodel.insertNodeInto(node, usecasetreerootnode, usecasetreerootnode.getChildCount());
 						TreePath path=new TreePath(usecasetreerootnode.getPath());
 						if(!usecasetree.isVisible(path)){
@@ -832,6 +833,21 @@ public class FileMenu extends JMenu
 						
 						//添加树上用例节点
 						Collection<INode> nodes = graphFile.getGraph().getAllNodes();
+						for(INode ucase : nodes)
+						{
+							if(ucase.getClass().getSimpleName().equals("UseCaseNode"))
+							{
+								String ucaseName = ((UseCaseNode)ucase).getName().getText();
+								DefaultMutableTreeNode ucaseNode=new DefaultMutableTreeNode(ucaseName); //用例图节点
+								usecasetreemodel.insertNodeInto(ucaseNode, node, node.getChildCount());
+								TreePath nodePath=new TreePath(usecasetreerootnode.getPath());
+								if(!usecasetree.isVisible(nodePath)){
+									usecasetree.makeVisible(nodePath);
+								}
+								usecasetree.getSelectionModel().setSelectionPath(new TreePath(ucaseNode.getPath()));
+							}
+							
+						}
 						
 						//切换界面
 						JLabel usecasejJLabel = new JLabel("用例图是指由参与者（Actor）、用例（Use Case）以及它们之间的关系构成的用于描述系统功能的视图。");
