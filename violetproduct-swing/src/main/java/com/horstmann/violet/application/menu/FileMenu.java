@@ -760,7 +760,15 @@ public class FileMenu extends JMenu
                    	   DefaultTreeModel sequencetreemodel = mainFrame.getsequencetree().getSequencetreemodel();
                    	   DefaultMutableTreeNode sequencetreerootnode = mainFrame.getsequencetree().getSequencetreerootnode();
                    	
-						DefaultMutableTreeNode node=new DefaultMutableTreeNode(name);
+						DefaultMutableTreeNode node=new DefaultMutableTreeNode("无人机监测");
+						
+						Collection<INode> nodes = graphFile.getGraph().getAllNodes();
+						for(INode ucase : nodes)
+						{
+
+								DefaultMutableTreeNode ucaseNode=new DefaultMutableTreeNode(11); //用例图节点
+								sequencetreemodel.insertNodeInto(ucaseNode, node, node.getChildCount());
+						}
 						sequencetreemodel.insertNodeInto(node, sequencetreerootnode, sequencetreerootnode.getChildCount());
 						TreePath path=new TreePath(sequencetreerootnode.getPath());
 						if(!sequencetree.isVisible(path)){
@@ -812,11 +820,23 @@ public class FileMenu extends JMenu
                    		mainFrame.getListUsecaseTabPanel().get(mainFrame.getListUsecaseTabPanel().size()-1).getPanel().setBackground(Color.white);
                    		mainFrame.getListUsecaseTabPanel().get(mainFrame.getListUsecaseTabPanel().size()-1).getDeletelabel().setIcon(new ImageIcon("resources\\icons\\22x22\\beforeClose.png"));
                    		}
-                	    JTree usecasetree = mainFrame.getUsecaseTree().getUsecasetree();
-                   	    DefaultTreeModel usecasetreemodel = mainFrame.getUsecaseTree().getUsecasetreemodel();
-                      	DefaultMutableTreeNode usecasetreerootnode = mainFrame.getUsecaseTree().getUsecasetreerootnode();                        
-						DefaultMutableTreeNode node=new DefaultMutableTreeNode(name); //用例图节点
+                	   JTree usecasetree = mainFrame.getUsecaseTree().getUsecasetree();
+                   	   DefaultTreeModel usecasetreemodel = mainFrame.getUsecaseTree().getUsecasetreemodel();
+                   	   DefaultMutableTreeNode usecasetreerootnode = mainFrame.getUsecaseTree().getUsecasetreerootnode();                        
+						DefaultMutableTreeNode node=new DefaultMutableTreeNode(name);
 						usecasetreemodel.insertNodeInto(node, usecasetreerootnode, usecasetreerootnode.getChildCount());
+						Collection<INode> nodes = graphFile.getGraph().getAllNodes();
+						int i=1;
+						for(INode ucase : nodes)
+						{
+							if(ucase.getClass().getSimpleName().equals("UseCaseNode"))
+							{
+								String ucaseName = ((UseCaseNode)ucase).getName().getText();
+								DefaultMutableTreeNode ucaseNode=new DefaultMutableTreeNode(11); //用例图节点
+								usecasetreemodel.insertNodeInto(ucaseNode, node, node.getChildCount());
+							}
+						}
+						
 						TreePath path=new TreePath(usecasetreerootnode.getPath());
 						if(!usecasetree.isVisible(path)){
 							usecasetree.makeVisible(path);
@@ -830,24 +850,7 @@ public class FileMenu extends JMenu
 						mainFrame.getStepOneCenterUseCaseTabbedPane().setSelectedComponent(hashMap.get(node));
 						mainFrame.getStepOneCenterUseCaseTabbedPane().updateUI();
 						mainFrame.getStepOneCenterUseCaseTabbedPane().setVisible(true);
-						
-						//添加树上用例节点
-						Collection<INode> nodes = graphFile.getGraph().getAllNodes();
-						for(INode ucase : nodes)
-						{
-							if(ucase.getClass().getSimpleName().equals("UseCaseNode"))
-							{
-								String ucaseName = ((UseCaseNode)ucase).getName().getText();
-								DefaultMutableTreeNode ucaseNode=new DefaultMutableTreeNode(ucaseName); //用例图节点
-								usecasetreemodel.insertNodeInto(ucaseNode, node, node.getChildCount());
-								TreePath nodePath=new TreePath(usecasetreerootnode.getPath());
-								if(!usecasetree.isVisible(nodePath)){
-									usecasetree.makeVisible(nodePath);
-								}
-								usecasetree.getSelectionModel().setSelectionPath(new TreePath(ucaseNode.getPath()));
-							}
-							
-						}
+									
 						
 						//切换界面
 						JLabel usecasejJLabel = new JLabel("用例图是指由参与者（Actor）、用例（Use Case）以及它们之间的关系构成的用于描述系统功能的视图。");
@@ -870,7 +873,8 @@ public class FileMenu extends JMenu
 						mainFrame.getinformationPanel().add(mainFrame.getouOutputinformation());
 						mainFrame.getReduceOrEnlargePanel().setLayout(new GridLayout(1, 1));
 						mainFrame.getReduceOrEnlargePanel().add(mainFrame.getstepOneCenterRightPanel());
-						mainFrame.getOpreationPart().revalidate();
+						mainFrame.getUsecaseTree().setVisible(true);
+						
 						
                    }
                    userPreferencesService.addOpenedFile(graphFile);

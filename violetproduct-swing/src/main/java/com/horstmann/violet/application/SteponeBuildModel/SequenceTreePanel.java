@@ -133,24 +133,26 @@ public class SequenceTreePanel extends JPanel{
 				}
 				
 				if(e.getClickCount()==2){
-					System.out.println(111111);
 					 DefaultMutableTreeNode node = (DefaultMutableTreeNode) sequencetree
 							.getLastSelectedPathComponent();
 					 if(!node.equals(sequencetreerootnode)){
-					mainFrame.getStepOneCenterSequenceTabbedPane().setSelectedComponent(hashMap.get(node));
-					int index = mainFrame.getStepOneCenterSequenceTabbedPane().getSelectedIndex();
-					for(int i = 0;i < mainFrame.getListSequenceTabPanel().size();i++)
-					{
-						if(i!= index)
-						{
-							mainFrame.getListSequenceTabPanel().get(i).getPanel().setBackground(new Color(246,246,246));
-							mainFrame.getListSequenceTabPanel().get(i).getDeletelabel().setIcon(null);
-						}
-						else {
-							mainFrame.getListSequenceTabPanel().get(i).getPanel().setBackground(Color.white);
-							mainFrame.getListSequenceTabPanel().get(i).getDeletelabel().setIcon(new ImageIcon("resources\\icons\\22x22\\beforeClose.png"));
-						}
-					}
+						 if(node.getLevel() == 1)
+						 {
+							 mainFrame.getStepOneCenterSequenceTabbedPane().setSelectedComponent(hashMap.get(node));
+								int index = mainFrame.getStepOneCenterSequenceTabbedPane().getSelectedIndex();
+								for(int i = 0;i < mainFrame.getListSequenceTabPanel().size();i++)
+								{
+									if(i!= index)
+									{
+										mainFrame.getListSequenceTabPanel().get(i).getPanel().setBackground(new Color(246,246,246));
+										mainFrame.getListSequenceTabPanel().get(i).getDeletelabel().setIcon(null);
+									}
+									else {
+										mainFrame.getListSequenceTabPanel().get(i).getPanel().setBackground(Color.white);
+										mainFrame.getListSequenceTabPanel().get(i).getDeletelabel().setIcon(new ImageIcon("resources\\icons\\22x22\\beforeClose.png"));
+									}
+								}
+						 }
 					 }
 				}
 			}

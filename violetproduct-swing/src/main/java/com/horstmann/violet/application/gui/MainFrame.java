@@ -211,11 +211,9 @@ public class MainFrame extends JFrame
      		}
      		this.UseCaseworkspaceList.add(workspace);
      		int pos = this.UseCaseworkspaceList.indexOf(workspace);
-     		//this.getStepOneCenterTabbedPane().getSequenceDiagramTabbedPane().removeAll();
      		JPanel panel = new JPanel();
      		panel.setLayout(new GridBagLayout());
-     		
-     		UsecaseTabPanel usecaseTabPanel =  new UsecaseTabPanel(this, "ÓÃÀýÍ¼", pos);
+     		UsecaseTabPanel usecaseTabPanel =  new UsecaseTabPanel(this, "ÓÃÀýÍ¼", pos);    		
      		this.getStepOneCenterUseCaseTabbedPane().getUsecaseDiagramTabbedPane().add(panel);
      		this.getStepOneCenterUseCaseTabbedPane().getUsecaseDiagramTabbedPane().get(pos).add(workspace.getAWTComponent(),new GBC(0,0).setWeight(1, 1).setFill(GBC.BOTH));
      		this.getStepOneCenterUseCaseTabbedPane().addTab("ÓÃÀýÍ¼",this.getStepOneCenterUseCaseTabbedPane().getUsecaseDiagramTabbedPane().get(pos));
@@ -287,6 +285,7 @@ public class MainFrame extends JFrame
      		}
      		this.UseCaseworkspaceList.add(workspace);
      		int pos = this.UseCaseworkspaceList.indexOf(workspace);
+     		
      		//this.getStepOneCenterTabbedPane().getSequenceDiagramTabbedPane().removeAll();
      		JPanel panel = new JPanel();
      		panel.setLayout(new GridBagLayout());
@@ -360,7 +359,6 @@ public class MainFrame extends JFrame
             public void titleChanged(String newTitle)
             {
                 int pos = workspaceList.indexOf(diagramPanel);
-                
             }
 
             public void graphCouldBeSaved()
@@ -456,6 +454,7 @@ public class MainFrame extends JFrame
         if (this.UseCaseworkspaceList.contains(diagramPanel))       		
         {   
         int pos = this.UseCaseworkspaceList.indexOf(diagramPanel);
+        System.out.println("É¾³ýpos:"+pos);
         for(UsecaseTabPanel usecaseTabPanel : this.getListUsecaseTabPanel())
         {
         	if(usecaseTabPanel.getPos() > pos){

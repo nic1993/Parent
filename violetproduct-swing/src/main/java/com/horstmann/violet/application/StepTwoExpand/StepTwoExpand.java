@@ -54,7 +54,7 @@ public class StepTwoExpand extends JPanel{
 	{
 		this.mainFrame = mainFrame;	
 		init();
-		expandModelPanel.setVisible(false);
+		expandModelPanel.setVisible(true);
 		expandCasePanel.setVisible(false);
 		estimatepPanel.setVisible(false);
 		exchangepPanel.setVisible(true);

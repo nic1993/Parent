@@ -24,7 +24,7 @@ import javax.swing.plaf.basic.BasicTabbedPaneUI;
  * @Email z.zuoqiang@gmail.com
  * @time 2012-3-22 ионГ10:36:21
  * @do
- * @Modify
+ * @ModifygetUseCaseJtree()
  */
 public class EclipseTabbedPaneUI extends BasicTabbedPaneUI {
 

@@ -117,6 +117,8 @@ public class UsecaseTreePanel extends JPanel implements Cloneable{
 					mainFrame.getReduceOrEnlargePanel().setLayout(new GridLayout(1, 1));
 					mainFrame.getReduceOrEnlargePanel().add(mainFrame.getstepOneCenterRightPanel());
 					mainFrame.getOpreationPart().revalidate();
+					mainFrame.getUsecaseTree().setVisible(true);
+					
 				}
 				
 				if(e.getButton()==e.BUTTON3 ){
@@ -208,12 +210,10 @@ public class UsecaseTreePanel extends JPanel implements Cloneable{
 					}
 				}
 				}
-				
 			}
 		});
 		
         new Thread(new Runnable() {
-			
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
@@ -259,7 +259,6 @@ public class UsecaseTreePanel extends JPanel implements Cloneable{
 		}).start();
         
         new Thread(new Runnable() {
-			
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub

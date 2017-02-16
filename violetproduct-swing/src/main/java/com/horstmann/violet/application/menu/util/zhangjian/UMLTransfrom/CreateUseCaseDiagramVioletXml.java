@@ -3,6 +3,7 @@ package com.horstmann.violet.application.menu.util.zhangjian.UMLTransfrom;
 
 
 import java.awt.Point;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,11 +28,8 @@ public class CreateUseCaseDiagramVioletXml {
 	public  void create(readUseCaseXMLFromEA ra,String path) throws IOException {
 		nodeList=ra.getNodeList();
 		edgeList=ra.getEdgeList();
-		
-		
 		Document document=createDocument();
-		
-		FileWriter fw = new FileWriter(path);
+		FileOutputStream fw = new FileOutputStream(path);
 		OutputFormat xmlFormat=new OutputFormat();  
 		xmlFormat.setEncoding("UTF-8");
 //		xmlFormat.setNewlines(true);
@@ -189,6 +187,7 @@ public class CreateUseCaseDiagramVioletXml {
 						}		
 						Element name =ActorNode.addElement("name").addAttribute("id", k+4+"");
 								name.addElement("text").addText(node.getName());//节点的name属�?	
+
 								k=k+5;
 					if(node.getType().equals("UseCaseNode")){
 						Element useConstraint =ActorNode.addElement("useConstraint").addAttribute("id", k+5+"");	
