@@ -80,7 +80,6 @@ public class SteponeBottomPanel extends JPanel{
 				// TODO Auto-generated method stub
 				initStepTwoPanel();
 				mainFrame.getStepTwoPanel().validate();
-				mainFrame.getStepTwoPanel().add(mainFrame.getStepTwoLeftButton());
 				mainFrame.getStepTwoPanel().revalidate();
 				
 				mainFrame.getOpreationPart().add(mainFrame.getStepTwoButton());

@@ -75,22 +75,20 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import org.eclipse.draw2d.geometry.Rectangle;
 
 
+import com.horstmann.violet.application.StepTwoCaseExpand.StepTwoCaseExpandTabbedPane;
+import com.horstmann.violet.application.StepTwoCaseExpand.StepTwoCaseOperation;
 import com.horstmann.violet.application.StepTwoExchange.StepTwoExchangeMarkovTree;
 import com.horstmann.violet.application.StepTwoExchange.StepTwoExchangeOperation;
 import com.horstmann.violet.application.StepTwoExchange.StepTwoExchangeTabbedPane;
-import com.horstmann.violet.application.StepTwoExpand.StepTwoBottomPanel;
-import com.horstmann.violet.application.StepTwoExpand.StepTwoCaseExpandTree;
-import com.horstmann.violet.application.StepTwoExpand.StepTwoCenterRightPanel;
-import com.horstmann.violet.application.StepTwoExpand.StepTwoExpand;
-import com.horstmann.violet.application.StepTwoExpand.StepTwoModelExpandTabbedPane;
-import com.horstmann.violet.application.StepTwoExpand.StepTwoLeftButton;
-import com.horstmann.violet.application.StepTwoExpand.StepTwoModelExpandTree;
-import com.horstmann.violet.application.StepTwoExpand.StepTwoModelVerificationTree;
-import com.horstmann.violet.application.StepTwoExpand.StepTwoModelOperation;
-import com.horstmann.violet.application.StepTwoExpand.StepTwoUsecaseModel;
-import com.horstmann.violet.application.StepTwoExpand.StepTwoVerificationList;
-import com.horstmann.violet.application.StepTwoExpand.StepTwoVerificationOperation;
-import com.horstmann.violet.application.StepTwoExpand.StepTwoVerificationTabbedPane;
+import com.horstmann.violet.application.StepTwoModelExpand.StepTwoExpandBottom;
+import com.horstmann.violet.application.StepTwoModelExpand.StepTwoCenterRightPanel;
+import com.horstmann.violet.application.StepTwoModelExpand.StepTwoExpand;
+
+import com.horstmann.violet.application.StepTwoModelExpand.StepTwoModelExpandTabbedPane;
+
+import com.horstmann.violet.application.StepTwoModelExpand.StepTwoModelOperation;
+
+
 import com.horstmann.violet.application.SteponeBuildModel.HeadTitle;
 import com.horstmann.violet.application.SteponeBuildModel.Outputinformation;
 import com.horstmann.violet.application.SteponeBuildModel.SequenceTabPanel;
@@ -986,13 +984,7 @@ public class MainFrame extends JFrame
 		}
 		return stepTwoPanel;
 	}
-    public StepTwoLeftButton getStepTwoLeftButton() {
-    	if(this.stepTwoLeftButton == null)
-    	{
-    		stepTwoLeftButton = new StepTwoLeftButton(this);
-    	}
-		return stepTwoLeftButton;
-	}
+
 	public StepTwoExpand getStepTwoButton() {
 		if(this.stepTwoExpand == null)
 		{
@@ -1000,19 +992,12 @@ public class MainFrame extends JFrame
 		}
 		return stepTwoExpand;
 	}
-	public StepTwoUsecaseModel getStepTwoUsecaseTree() {
-		if(this.stepTwoUsecaseModel == null)
+	public StepTwoExpandBottom getStepTwoBottomPanel() {
+		if(this.stepTwoExpandBottom == null)
 		{
-			stepTwoUsecaseModel = new StepTwoUsecaseModel(this);
+			stepTwoExpandBottom = new StepTwoExpandBottom(this);
 		}
-		return stepTwoUsecaseModel;
-	}
-	public StepTwoBottomPanel getStepTwoBottomPanel() {
-		if(this.stepTwoBottomPanel == null)
-		{
-			stepTwoBottomPanel = new StepTwoBottomPanel(this);
-		}
-		return stepTwoBottomPanel;
+		return stepTwoExpandBottom;
 	}
 	public StepTwoCenterRightPanel getStepTwoCenterRightPanel() {
 		if(this.stepTwoCenterRightPanel == null)
@@ -1048,20 +1033,7 @@ public class MainFrame extends JFrame
 		}
 		return stepTwoModelExpandTabbedPane;
 	}	
-	public StepTwoCaseExpandTree getStepTwoCaseExpandTree() {
-		if(this.stepTwoCaseExpandTree == null)
-		{
-			this.stepTwoCaseExpandTree = new StepTwoCaseExpandTree(this);
-		}
-		return stepTwoCaseExpandTree;
-	}
-	public StepTwoModelExpandTree getStepTwoModelExpandTree() {
-		if(this.stepTwoModelExpandTree == null)
-		{
-			stepTwoModelExpandTree = new StepTwoModelExpandTree(this);
-		}
-		return stepTwoModelExpandTree;
-	}
+
 	
 	
 
@@ -1075,21 +1047,8 @@ public class MainFrame extends JFrame
 //		return stepTwoVerificationList;
 //	}
 
-	public StepTwoModelVerificationTree getStepTwoModelVerificationTree() {
-		if(this.stepTwoModelVerificationTree == null)
-		{
-			this.stepTwoModelVerificationTree = new StepTwoModelVerificationTree(this);
-		}
-		return stepTwoModelVerificationTree;
-	}
 
-	public StepTwoVerificationTabbedPane getStepTwoVerificationTabbedPane() {
-		if(this.stepTwoVerificationTabbedPane == null)
-		{
-			stepTwoVerificationTabbedPane = new StepTwoVerificationTabbedPane(this);
-		}
-		return stepTwoVerificationTabbedPane;
-	}
+
 	public List<String> getNameList() {
 		return nameList;
 	}
@@ -1099,13 +1058,6 @@ public class MainFrame extends JFrame
 	}
 	
 
-	public StepTwoVerificationOperation getStepTwoVerificationOperation() {
-		if(this.stepTwoVerificationOperation == null)
-		{
-			stepTwoVerificationOperation = new StepTwoVerificationOperation(this);
-		}
-		return stepTwoVerificationOperation;
-	}
 
 
 	public StepTwoExchangeMarkovTree getStepTwoExchangeMarkovTree() {
@@ -1141,6 +1093,26 @@ public class MainFrame extends JFrame
 		}
 		return stepTwoExchangeTabbedPane;
 	}
+
+   
+	public StepTwoCaseExpandTabbedPane getStepTwoCaseExpandTabbedPane() {
+		if(this.stepTwoCaseExpandTabbedPane == null)
+		{
+			stepTwoCaseExpandTabbedPane = new StepTwoCaseExpandTabbedPane();
+		}
+		return stepTwoCaseExpandTabbedPane;
+	}
+    
+	
+
+	public StepTwoCaseOperation getStepTwoCaseOperation() {
+		if(this.stepTwoCaseOperation == null)
+		{
+			stepTwoCaseOperation = new StepTwoCaseOperation(this);
+		}
+		return stepTwoCaseOperation;
+	}
+
 
 
 	/**
@@ -1308,35 +1280,24 @@ public class MainFrame extends JFrame
 
     
     //第二步扩展
-    private StepTwoLeftButton stepTwoLeftButton;
     
     private StepTwoExpand stepTwoExpand;
-    
-    private StepTwoUsecaseModel stepTwoUsecaseModel;
-    
-    private StepTwoBottomPanel stepTwoBottomPanel;
+
+    private StepTwoExpandBottom stepTwoExpandBottom;
 
     private StepTwoCenterRightPanel stepTwoCenterRightPanel;
     
     private StepTwoModelOperation stepTwoModelOperation;
     
     private StepTwoModelExpandTabbedPane stepTwoModelExpandTabbedPane;
-    
-    private StepTwoModelExpandTree stepTwoModelExpandTree;
-    
-    private StepTwoCaseExpandTree stepTwoCaseExpandTree;
+
 	
-   //第二步验证
+   //用例扩展
+    private StepTwoCaseExpandTabbedPane stepTwoCaseExpandTabbedPane;
     
-    private StepTwoVerificationList stepTwoVerificationList;
-    
-    private StepTwoVerificationTabbedPane stepTwoVerificationTabbedPane;
-    
-    private StepTwoModelVerificationTree stepTwoModelVerificationTree;
-    
+    private StepTwoCaseOperation stepTwoCaseOperation;
+   //第二步验证  
     private List<String> nameList; //存放验证用例模型名称
-    
-    private StepTwoVerificationOperation stepTwoVerificationOperation;
         
     private StepTwoExchangeMarkovTree stepTwoExchangeMarkovTree;
     

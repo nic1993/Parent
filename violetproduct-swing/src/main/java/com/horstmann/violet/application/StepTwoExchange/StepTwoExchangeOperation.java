@@ -16,7 +16,7 @@ import javax.swing.JProgressBar;
 
 import org.dom4j.DocumentException;
 
-import com.horstmann.violet.application.StepTwoExpand.ProgressUI;
+import com.horstmann.violet.application.StepTwoModelExpand.ProgressUI;
 import com.horstmann.violet.application.gui.GBC;
 import com.horstmann.violet.application.gui.MainFrame;
 import com.horstmann.violet.application.gui.util.tanchao.MarkovXML2GraphFile;
