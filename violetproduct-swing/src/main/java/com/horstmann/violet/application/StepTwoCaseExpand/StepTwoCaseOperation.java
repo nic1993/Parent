@@ -68,7 +68,7 @@ public class StepTwoCaseOperation extends JPanel{
 	private StepTwoCaseExpandTabbedPane stepTwoCaseExpandTabbedPane; 
 	private JLabel label;
 	private JPanel labelPanel;
-	private Map<String, List<InterfaceUCRelation>> ucMap; 
+	private List<InterfaceIsogenySD> IISDList;
 	private List<String> relations;  //获取关系集合
 	private List<Double> relationsData;
 	private List<double[][]> tableDatas;
@@ -168,12 +168,8 @@ public class StepTwoCaseOperation extends JPanel{
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}	 //瑙ｆ瀽UML妯�?��?�鐨刋ML鏂囦�?
-                ucMap=worker.provideUCRelation(); //鑾峰彇鐢ㄤ緥鎵ц椤哄簭鍏崇郴
-                List<InterfaceIsogenySD> IISDList=worker.provideIsogencySD();//获取用例场景信息
-                for(InterfaceIsogenySD interfaceIsogenySD : IISDList)
-                {
-                	System.out.println("======"+interfaceIsogenySD.getUcName());
-                }
+                IISDList=worker.provideIsogencySD();//获取用例场景信息
+                
 				if(numberTextField.getText() == null)
 				{ 
 				   //添加弹出�?
@@ -192,19 +188,22 @@ public class StepTwoCaseOperation extends JPanel{
 						stepTwoTabelPanel.getTabelPanel().setLayout(new GridBagLayout());
 						for(InterfaceIsogenySD interfaceIsogenySD : IISDList)
 						{
-							relations.add(interfaceIsogenySD.getUcName());  //添加用例名称
-							List<InterfaceSD> ISDList = interfaceIsogenySD.getISDList();
-							for(InterfaceSD interfaceSD : ISDList)
+							if(interfaceIsogenySD.getISDList().size() > 1)
 							{
-								relations.add(interfaceSD.getName()); //添加用例场景名称
+								relations.add(interfaceIsogenySD.getUcName());  //添加用例名称
+								List<InterfaceSD> ISDList = interfaceIsogenySD.getISDList();
+								for(InterfaceSD interfaceSD : ISDList)
+								{
+									relations.add(interfaceSD.getName()); //添加用例场景名称
+								}
+								ScenceTabelPanel scenceTabelPanel = new ScenceTabelPanel(relations);
+								StepTwoMatrixPanel stepTwoMatrixPanel = new StepTwoMatrixPanel();
+								stepTwoMatrixPanel.getTitleLabel().setText("用例名称:"+interfaceIsogenySD.getUcName());
+								stepTwoMatrixPanel.getTabelPanel().add(scenceTabelPanel);
+								stepTwoTabelPanel.getTabelPanel().add(stepTwoMatrixPanel, new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
+								i++;
+								relations.clear();
 							}
-							ScenceTabelPanel scenceTabelPanel = new ScenceTabelPanel(relations);
-							StepTwoMatrixPanel stepTwoMatrixPanel = new StepTwoMatrixPanel();
-							stepTwoMatrixPanel.getTitleLabel().setText("用例名称:"+interfaceIsogenySD.getUcName());
-							stepTwoMatrixPanel.getTabelPanel().add(scenceTabelPanel);
-							stepTwoTabelPanel.getTabelPanel().add(stepTwoMatrixPanel, new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
-							i++;
-							relations.clear();
 						}
 					    stepTwoCaseExpandTabbedPane.getCaseExpandPanel().add(stepTwoTabelPanel,new GBC(0, j).setFill(GBC.BOTH).setWeight(1, 0));
 					}
@@ -219,31 +218,24 @@ public class StepTwoCaseOperation extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				relations.clear();
-				for(String key : ucMap.keySet()) //求解生成
+				for(InterfaceIsogenySD interfaceIsogenySD : IISDList)
 				{
-					List<InterfaceUCRelation> interfaceUCRelations = ucMap.get(key);
-					if(interfaceUCRelations.size() == 1)
+					List<InterfaceSD> ISDList = interfaceIsogenySD.getISDList();
+					if(ISDList.size() == 1)
 					{
-						relations.add(interfaceUCRelations.get(0).getUCRelation());
-						interfaceUCRelations.get(0).setUCRelProb(1.0);
+						relations.add(ISDList.get(0).getName());
+						ISDList.get(0).setPro(1.0);
 						relationsData.add(1.0);
-					}
-					else if (key.equals("Use Case3")) {   //后期修改 重复
-						for(InterfaceUCRelation interfaceUCRelation:interfaceUCRelations)
-						{
-							relations.add(interfaceUCRelation.getUCRelation());
-							relationsData.add(1.0);
-						}
 					}
 					else 
 					{    
-						for(InterfaceUCRelation interfaceUCRelation:interfaceUCRelations)
+						for(InterfaceSD interfaceSD:ISDList)
 						{
-							relations.add(interfaceUCRelation.getUCRelation());
+							relations.add(interfaceSD.getName());
 						}
 					   	 for(int i = 0;i <number;i++)
 					   	 {
-					   		 int location = getplace(key);
+					   		 int location = getplace(interfaceIsogenySD.getUcName());
 					   		 if(location != -1)
 					   		 {
 					   			JPanel panel = ((StepTwoTabelPanel) stepTwoCaseExpandTabbedPane.getCaseExpandPanel().getComponent(i)).getTabelPanel();
@@ -269,7 +261,7 @@ public class StepTwoCaseOperation extends JPanel{
 						double[] datas = (double[]) list.get(1);
 						for(int k = 0; k < datas.length;k++)
 						{
-							interfaceUCRelations.get(k).setUCRelProb(datas[k]);
+							ISDList.get(k).setPro(datas[k]);
 							relationsData.add(datas[k]);
 						}
 						tableDatas.clear();
@@ -278,11 +270,12 @@ public class StepTwoCaseOperation extends JPanel{
 				//生成验证报告
 				if(relations.size() > 0)
 				{
-
+                    System.out.println("relations:"+relations.size());
+                    System.out.println("relationsData:"+relationsData.size());
 					ScenceTabelPanel scenceTabelPanel = new ScenceTabelPanel(relations, relationsData);
 					stepTwoCaseExpandTabbedPane.getValidationResults().add(scenceTabelPanel);
 					label.removeAll();
-					label.setText("对Primary用例模型扩展验证完成,可以对该模型进行用例扩展验证!");
+					label.setText("对Primary用例扩展验证完成,可以对该模型进行一致性验证!");
 				}	
 			}
 		});
@@ -303,7 +296,7 @@ public class StepTwoCaseOperation extends JPanel{
 		for(int i = 0;i < panel.getComponentCount();i++)
 		{
 			JLabel titleLabel = ((StepTwoMatrixPanel)panel.getComponent(i)).getTitleLabel();
-			if(titleLabel.getText().equals(key))
+			if(titleLabel.getText().contains(key))
 			{
 				return i;
 			}
