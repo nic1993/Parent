@@ -169,6 +169,7 @@ public class WorkImpl implements Work  {
 				ISDList.add(ISD);
 			}
 			IID.setISDList(ISDList);
+			IIDList.add(IID);
 		}
 		return IIDList;
 	}
