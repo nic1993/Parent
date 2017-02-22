@@ -11,7 +11,7 @@ import cn.edu.hdu.lab.dao.uml.UseCase;
 
 public class ConInfoParse {
 	
-	public static List<ConUseCase> conInfoParse(List<UseCase> useCases)
+	public List<ConUseCase> conInfoParse(List<UseCase> useCases)
 	{
 		List<ConUseCase> conUseCases=new ArrayList<ConUseCase>();
 		for(Iterator<UseCase> it=useCases.iterator();it.hasNext();)

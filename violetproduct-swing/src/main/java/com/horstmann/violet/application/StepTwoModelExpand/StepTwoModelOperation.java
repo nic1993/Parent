@@ -17,6 +17,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -69,6 +70,8 @@ public class StepTwoModelOperation extends JPanel{
 	private List<double[][]> tableDatas;
 	private Work worker;
 	private int number;
+	private String model_name;
+	private Map<String, ScenceTabelPanel> tabelResultMap;
 	public StepTwoModelOperation(MainFrame mainFrame)
 	{
 		this.mainFrame = mainFrame;
@@ -90,11 +93,10 @@ public class StepTwoModelOperation extends JPanel{
 		this.add(otherPanel);
 		
 		layout.setConstraints(numberLabel, new GBC(0, 0, 1, 1).setFill(GBC.BOTH).setWeight(0, 1).setInsets(10, 28, 10, 2));
-		layout.setConstraints(numberTextField, new GBC(1, 0, 1, 1).setFill(GBC.BOTH).setWeight(0, 1).setInsets(10, 2, 10, 10));
+		layout.setConstraints(numberTextField, new GBC(1, 0, 1, 1).setFill(GBC.BOTH).setWeight(0.1, 1).setInsets(10, 2, 10, 10));
 		layout.setConstraints(startExpandButton, new GBC(2, 0, 1, 1).setFill(GBC.BOTH).setWeight(0, 1).setInsets(10));
 		layout.setConstraints(startVerificationButton, new GBC(3, 0, 1, 1).setFill(GBC.BOTH).setWeight(0, 1).setInsets(10));
-		layout.setConstraints(verificationProgressBar, new GBC(4, 0, 1, 1).setFill(GBC.BOTH).setWeight(0, 1).setInsets(10));
-		layout.setConstraints(rightpanel, new GBC(5, 0, 1, 1).setFill(GBC.BOTH).setWeight(1, 0));
+		layout.setConstraints(verificationProgressBar, new GBC(4, 0, 1, 1).setFill(GBC.BOTH).setWeight(1, 1).setInsets(10,10,10,21));
 		layout.setConstraints(otherPanel, new GBC(0, 1, 5, 1).setFill(GBC.BOTH).setWeight(1, 1).setInsets(10, 28, 10, 0));
 	}
 	public void initComponent()
@@ -107,7 +109,7 @@ public class StepTwoModelOperation extends JPanel{
 		
 		numberTextField = new JTextField();
 		numberTextField.setFont(new Font("宋体", Font.PLAIN, 16));
-		numberTextField.setPreferredSize(new Dimension(30,30));
+		numberTextField.setPreferredSize(new Dimension(20, 30));
 		
 		startExpandButton = new JButton("开始扩展");
 		startVerificationButton = new JButton("开始验证");
@@ -134,7 +136,7 @@ public class StepTwoModelOperation extends JPanel{
 	            Graphics2D g2 = (Graphics2D)g;
 	            g2.setStroke(new BasicStroke(2f));
 	            g2.setColor(new Color(188,188,188));
-	            g2.drawLine(0, 0, width - 10, 0);
+	            g2.drawLine(0, 0, width - 20, 0);
 	          }
 		};
 		
@@ -146,8 +148,10 @@ public class StepTwoModelOperation extends JPanel{
 		otherPanel.setLayout(new GridBagLayout());
 		otherPanel.add(label, new GBC(0, 0).setFill(GBC.BOTH).setWeight(1, 0).setInsets(10, 0, 0, 0));
 		otherPanel.add(labelPanel,new GBC(1, 0).setFill(GBC.BOTH).setWeight(1, 0));
+		
+		tabelResultMap = new HashMap<String,ScenceTabelPanel>();
 		buttonListen();
-
+        
 	}
 	public void buttonListen()
 	{
@@ -155,7 +159,7 @@ public class StepTwoModelOperation extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				 
+				model_name = mainFrame.getjRadionPanel().getSelectName();
 				worker=new WorkImpl();
 				try {
 					worker.transInitial(StaticConfig.umlPath);
@@ -165,6 +169,14 @@ public class StepTwoModelOperation extends JPanel{
 				}	 //瑙ｆ瀽UML妯�?��?�鐨刋ML鏂囦�?
                 ucMap=worker.provideUCRelation(); //鑾峰彇鐢ㄤ緥鎵ц椤哄簭鍏崇郴
 				List<InterfaceIsogenySD> IISDList=worker.provideIsogencySD();//鑾峰彇鐢ㄤ緥鍦烘櫙淇℃伅
+				
+				try {
+					List verList=worker.transVerify();
+					System.out.println(verList.get(0));
+				} catch (InvalidTagException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} 
 				if(numberTextField.getText() == null)
 				{ 
 				   //添加弹出�?
@@ -260,6 +272,7 @@ public class StepTwoModelOperation extends JPanel{
 					}
 					if(tableDatas.size() > 0)
 					{
+					
 						List list=worker.calculateProb(tableDatas); //带入界面填写的矩阵数组集合，返回计算结果
 						double[] datas = (double[]) list.get(1);
 						for(int k = 0; k < datas.length;k++)
@@ -273,14 +286,15 @@ public class StepTwoModelOperation extends JPanel{
 				//生成验证报告
 				if(relations.size() > 0)
 				{
-
 					ScenceTabelPanel scenceTabelPanel = new ScenceTabelPanel(relations, relationsData);
 					stepTwoModelExpandTabbedPane.getValidationResults().add(scenceTabelPanel);
-					label.removeAll();
-					label.setText("对Primary用例模型扩展验证完成,可以对该模型进行用例扩展验证!");
+					
+					tabelResultMap.put(model_name, scenceTabelPanel);
+					System.out.println("model_name:"+model_name);
 				}	
 			}
 		});
+
 	}	
 	
 
@@ -298,7 +312,7 @@ public class StepTwoModelOperation extends JPanel{
 		for(int i = 0;i < panel.getComponentCount();i++)
 		{
 			JLabel titleLabel = ((StepTwoMatrixPanel)panel.getComponent(i)).getTitleLabel();
-			if(titleLabel.getText().equals(key))
+			if(titleLabel.getText().contains(key))
 			{
 				return i;
 			}
@@ -309,4 +323,10 @@ public class StepTwoModelOperation extends JPanel{
 	public JPanel getOtherPanel(){
 		return otherPanel;
 	}
+	public Map<String, ScenceTabelPanel> getTabelResultMap() {
+		return tabelResultMap;
+	}
+	public String getModel_name() {
+		return model_name;
+	}	
 }

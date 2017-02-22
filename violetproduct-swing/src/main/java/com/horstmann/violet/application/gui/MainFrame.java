@@ -76,10 +76,14 @@ import org.eclipse.draw2d.geometry.Rectangle;
 
 
 import com.horstmann.violet.application.StepTwoCaseExpand.StepTwoCaseExpandTabbedPane;
-import com.horstmann.violet.application.StepTwoCaseExpand.StepTwoCaseOperation;
+import com.horstmann.violet.application.StepTwoCaseExpand.StepTwoCaseExpandTree;
+import com.horstmann.violet.application.StepTwoCaseExpand.StepTwoCaseExpandOperation;
+import com.horstmann.violet.application.StepTwoEvaluate.StepTwoEvaluateOperation;
+import com.horstmann.violet.application.StepTwoEvaluate.StepTwoEvaluateTabbedPane;
 import com.horstmann.violet.application.StepTwoExchange.StepTwoExchangeMarkovTree;
 import com.horstmann.violet.application.StepTwoExchange.StepTwoExchangeOperation;
 import com.horstmann.violet.application.StepTwoExchange.StepTwoExchangeTabbedPane;
+import com.horstmann.violet.application.StepTwoModelExpand.JRadionPanel;
 import com.horstmann.violet.application.StepTwoModelExpand.StepTwoExpandBottom;
 import com.horstmann.violet.application.StepTwoModelExpand.StepTwoCenterRightPanel;
 import com.horstmann.violet.application.StepTwoModelExpand.StepTwoExpand;
@@ -99,6 +103,7 @@ import com.horstmann.violet.application.SteponeBuildModel.StepOneCenterSequenceT
 import com.horstmann.violet.application.SteponeBuildModel.StepOneCenterUseCaseTabbedPane;
 import com.horstmann.violet.application.SteponeBuildModel.StepOneOperationButton;
 import com.horstmann.violet.application.SteponeBuildModel.SteponeBottomPanel;
+import com.horstmann.violet.application.SteponeBuildModel.TitlePanel;
 import com.horstmann.violet.application.SteponeBuildModel.UsecaseTabPanel;
 import com.horstmann.violet.application.SteponeBuildModel.UsecaseTreePanel;
 import com.horstmann.violet.application.consolepart.ConsolePart;
@@ -908,6 +913,14 @@ public class MainFrame extends JFrame
 		return this.panel;
 	}
     
+	public TitlePanel getTitlePanel() {
+		if(this.titlePanel == null)
+		{
+			titlePanel = new TitlePanel(this);
+		}
+		return titlePanel;
+	}
+
 	public SteponeBottomPanel getsteponebottmopanel()
 	{
 		if(this.steponeBottomPanel == null)
@@ -977,6 +990,7 @@ public class MainFrame extends JFrame
 		return this.botoomJSplitPane;
 	}
 	
+	
     public JPanel getStepTwoPanel() {
 		if(this.stepTwoPanel == null)
 		{
@@ -985,7 +999,24 @@ public class MainFrame extends JFrame
 		return stepTwoPanel;
 	}
 
-	public StepTwoExpand getStepTwoButton() {
+    
+	public JRadionPanel getjRadionPanel() {
+		if(this.jRadionPanel == null)
+		{
+			jRadionPanel = new JRadionPanel(this);
+		}
+		return jRadionPanel;
+	}
+    
+	public List<String> getNameList() {
+		if(this.nameList == null)
+		{
+			nameList = new ArrayList<String>();
+		}
+		return nameList;
+	}
+
+	public StepTwoExpand getStepTwoExpand() {
 		if(this.stepTwoExpand == null)
 		{
 			stepTwoExpand = new StepTwoExpand(this);
@@ -1018,7 +1049,7 @@ public class MainFrame extends JFrame
 		}
 		return stepTwoCenterRightPanel;
 	}
-	public StepTwoModelOperation getStepModelTwoOperation() {
+	public StepTwoModelOperation getStepTwoModelOperation() {
 		if(this.stepTwoModelOperation == null)
 		{
 			stepTwoModelOperation = new StepTwoModelOperation(this);
@@ -1033,32 +1064,6 @@ public class MainFrame extends JFrame
 		}
 		return stepTwoModelExpandTabbedPane;
 	}	
-
-	
-	
-
-
-	
-//	public StepTwoVerificationList getStepTwoVerificationList() {
-//		if(this.stepTwoVerificationList == null)
-//		{
-//			stepTwoVerificationList = new StepTwoVerificationList(nameList);
-//		}
-//		return stepTwoVerificationList;
-//	}
-
-
-
-	public List<String> getNameList() {
-		return nameList;
-	}
-
-	public void setNameList(List<String> nameList) {
-		this.nameList = nameList;
-	}
-	
-
-
 
 	public StepTwoExchangeMarkovTree getStepTwoExchangeMarkovTree() {
 	
@@ -1105,16 +1110,40 @@ public class MainFrame extends JFrame
     
 	
 
-	public StepTwoCaseOperation getStepTwoCaseOperation() {
-		if(this.stepTwoCaseOperation == null)
+	public StepTwoCaseExpandOperation getStepTwoCaseOperation() {
+		if(this.stepTwoCaseExpandOperation == null)
 		{
-			stepTwoCaseOperation = new StepTwoCaseOperation(this);
+			stepTwoCaseExpandOperation = new StepTwoCaseExpandOperation(this);
 		}
-		return stepTwoCaseOperation;
+		return stepTwoCaseExpandOperation;
 	}
 
+	public StepTwoCaseExpandTree getStepTwoCaseExpandTree() {
+		if(this.stepTwoCaseExpandTree == null)
+		{
+			stepTwoCaseExpandTree = new StepTwoCaseExpandTree();
+		}
+		return stepTwoCaseExpandTree;
+	}
+
+	public StepTwoEvaluateOperation getStepTwoEvaluateOperation() {
+		if(this.stepTwoEvaluateOperation == null)
+		{
+			stepTwoEvaluateOperation = new StepTwoEvaluateOperation(this);
+		}
+		return stepTwoEvaluateOperation;
+	}
+    
 
 
+
+	public StepTwoEvaluateTabbedPane getStepTwoEvaluateTabbedPane() {
+		if(this.stepTwoEvaluateTabbedPane == null)
+		{
+			stepTwoEvaluateTabbedPane = new StepTwoEvaluateTabbedPane();
+		}
+		return stepTwoEvaluateTabbedPane;
+	}
 	/**
      * Tabbed pane instance
      */
@@ -1196,6 +1225,7 @@ public class MainFrame extends JFrame
 //    }
     private HeadTitle headTitle;
     
+    private TitlePanel titlePanel;
     private JPanel StepLeftButtonPanel; 
     
     private StepOneButton stepOneButton;
@@ -1280,6 +1310,9 @@ public class MainFrame extends JFrame
 
     
     //第二步扩展
+    private JRadionPanel jRadionPanel;
+    
+    private List<String> nameList;
     
     private StepTwoExpand stepTwoExpand;
 
@@ -1295,9 +1328,15 @@ public class MainFrame extends JFrame
    //用例扩展
     private StepTwoCaseExpandTabbedPane stepTwoCaseExpandTabbedPane;
     
-    private StepTwoCaseOperation stepTwoCaseOperation;
+    private StepTwoCaseExpandOperation stepTwoCaseExpandOperation;
+    
+    private StepTwoCaseExpandTree stepTwoCaseExpandTree;
+    
+    //评估
+    private StepTwoEvaluateOperation stepTwoEvaluateOperation;
+    
+    private StepTwoEvaluateTabbedPane stepTwoEvaluateTabbedPane;
    //第二步验证  
-    private List<String> nameList; //存放验证用例模型名称
         
     private StepTwoExchangeMarkovTree stepTwoExchangeMarkovTree;
     

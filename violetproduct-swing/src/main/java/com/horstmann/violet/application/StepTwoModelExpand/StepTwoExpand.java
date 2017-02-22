@@ -12,6 +12,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -47,15 +49,15 @@ public class StepTwoExpand extends JPanel{
 	private JPanel estimatepPanel;
 	private JPanel exchangepPanel;
 	
+	private JRadionPanel jRadionPanel;
 	private static JPanel bottompanel;
 	private MainFrame mainFrame;
-	
 	private boolean usecase;
 	public StepTwoExpand(MainFrame mainFrame)
 	{
 		this.mainFrame = mainFrame;	
 		init();
-		expandModelPanel.setVisible(true);
+		expandModelPanel.setVisible(false);
 		expandCasePanel.setVisible(false);
 		estimatepPanel.setVisible(false);
 		exchangepPanel.setVisible(true);
@@ -65,6 +67,8 @@ public class StepTwoExpand extends JPanel{
 		
 		this.add(expandCaseModel,new GBC(0, 2).setFill(GBC.BOTH).setWeight(1, 0).setInsets(10, 10, 0, 150));
 		this.add(expandCasePanel,new GBC(0, 3).setFill(GBC.BOTH).setWeight(1, 0).setInsets(0, 10, 0, 150));
+		expandCasePanel.setLayout(new GridLayout(1, 1));
+		expandCasePanel.add(mainFrame.getStepTwoCaseExpandTree());
 		
 		this.add(estimateLabel,new GBC(0, 4).setFill(GBC.BOTH).setWeight(1, 0).setInsets(10, 10, 0, 150));
 		this.add(estimatepPanel,new GBC(0, 5).setFill(GBC.BOTH).setWeight(1, 0).setInsets(0, 10, 0, 150));
@@ -72,14 +76,9 @@ public class StepTwoExpand extends JPanel{
 		this.add(exchangeLabel,new GBC(0, 6).setFill(GBC.BOTH).setWeight(1, 0).setInsets(10, 10, 0, 150));
 		this.add(exchangepPanel,new GBC(0, 7).setFill(GBC.BOTH).setWeight(1, 1).setInsets(0, 10, 0, 150));
 		
-		JRadioButton radioButton = new JRadioButton("Primary");
-		radioButton.setFont(new Font("ËÎÌå", Font.PLAIN, 15));
-		ButtonGroup buttonGroup = new ButtonGroup();
-		buttonGroup.add(radioButton);
-		expandModelPanel.setLayout(new GridLayout(1, 1));
-		expandModelPanel.add(radioButton, new GBC(0, 0).setFill(GBC.BOTH).setWeight(1, 0));
-		
-		
+		jRadionPanel = mainFrame.getjRadionPanel();
+		expandModelPanel.setLayout(new GridBagLayout());
+		expandModelPanel.add(jRadionPanel, new GBC(0, 0).setFill(GBC.BOTH).setWeight(1, 0).setInsets(0, 25, 0, 0));	
 	}
 	
 //	private void setupUI()
@@ -109,6 +108,7 @@ public class StepTwoExpand extends JPanel{
 		estimatepPanel.setBackground(new Color(233,233,233));
 		exchangepPanel.setBackground(new Color(233,233,233));
 		
+		mainFrame.getNameList().add("Primary");
 		labelListen();
 	}
 	
@@ -140,9 +140,16 @@ public class StepTwoExpand extends JPanel{
 				estimateLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 18));
 				exchangeLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 18));
 				
+				if(expandModelPanel.isVisible())
+					expandCasePanel.setVisible(false);
+					else {
+						expandCasePanel.setVisible(true);
+					}
+				expandCasePanel.updateUI();
 				clearPanel();
 				mainFrame.getpanel().add(mainFrame.getStepTwoCaseOperation());
 				mainFrame.getCenterTabPanel().add(mainFrame.getStepTwoCaseExpandTabbedPane());
+				mainFrame.getpanel().updateUI();
 			}
 		});
 		estimateLabel.addMouseListener(new MouseAdapter(){	
@@ -153,6 +160,11 @@ public class StepTwoExpand extends JPanel{
 				expandCaseModel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 18));
 				estimateLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 18));
 				exchangeLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 18));
+				
+				clearPanel();
+				mainFrame.getpanel().add(mainFrame.getStepTwoEvaluateOperation());
+				mainFrame.getCenterTabPanel().add(mainFrame.getStepTwoEvaluateTabbedPane());
+				mainFrame.getpanel().updateUI();
 			}
 		});
 		exchangeLabel.addMouseListener(new MouseAdapter(){	
@@ -175,6 +187,4 @@ public class StepTwoExpand extends JPanel{
 		mainFrame.getpanel().removeAll();
 		mainFrame.getCenterTabPanel().removeAll();
 	}
-	
-
 }

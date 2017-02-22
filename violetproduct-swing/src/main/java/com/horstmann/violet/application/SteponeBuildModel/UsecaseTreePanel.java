@@ -59,7 +59,7 @@ public class UsecaseTreePanel extends JPanel implements Cloneable{
 	private static Map<DefaultMutableTreeNode, UseCaseNode> INodeMap;
 	private Set<DefaultMutableTreeNode> treeNodes;
 	public  JTree usecaseTree;
-	private  static DefaultTreeModel usecasetreemodel;
+	private static DefaultTreeModel usecasetreemodel;
 	private static DefaultMutableTreeNode usecasetreerootnode;
 	
     private Collection<INode> nodes; //用例图中所有的节点
@@ -324,8 +324,6 @@ public class UsecaseTreePanel extends JPanel implements Cloneable{
 	   		mainFrame.getbotoomJSplitPane().setDividerLocation(0.7);
 	   		mainFrame.getbotoomJSplitPane().setDividerSize(4);
 	   		mainFrame.getReduceOrEnlargePanel().setVisible(true);
-//	   		if(mainFrame.getsteponeButton().getbottompanel().getComponentCount() != 0)
-//	   			mainFrame.getsteponeButton().getbottompanel().getComponent(0).setVisible(true);
 	   	}
 	   
 	 private static DefaultMutableTreeNode getKey(Map<DefaultMutableTreeNode, JPanel> map,JPanel panel)

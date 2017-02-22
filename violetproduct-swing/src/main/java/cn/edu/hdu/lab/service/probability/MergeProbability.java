@@ -15,10 +15,9 @@ public class MergeProbability {
 		this.normalMatrixs=proMatrixList;
 	}
 
-	@SuppressWarnings("unchecked")
-	public  List mergeProbability()
+	public  List<Object> mergeProbability()
 	{
-		List resultList=new ArrayList<>();
+		List<Object> resultList=new ArrayList<>();
 		double[] proArray=new double[number];
 		
 		DecimalFormat f=new DecimalFormat("0.000");
@@ -43,13 +42,12 @@ public class MergeProbability {
 				proArray[i]=0;
 			}
 			resultList.add(proArray);
-			return resultList;
 		}
 		else//生成场景最大特征值对应的特征向量归一化后的结果；
 		{
 			proArray=M.getProList();
-			System.out.println("判断矩阵一致性指标 CR="+f.format(M.getCR()));
-			System.out.println("各个分量的概率为："+M.getProList());
+			resultList.add("计算结果正常,CR="+M.getCR()+",概率值为一维数组结果：");
+			resultList.add(proArray);
 		}
 		return resultList;//计算结果提示+结算概率
 

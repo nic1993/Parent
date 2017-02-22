@@ -134,32 +134,10 @@ public class HeadTitle extends JPanel{
 				updatePanel();
 				//添加标题
 				JPanel labelpanel=mainFrame.getStepJLabel();
-				JPanel picturePanel = new JPanel();				
-				JPanel leftlabelpanel = new JPanel();
-				JPanel panel = new ImagePanel("resources/icons/72x72/steponeimage.png", 0, 0);
-				Icon icon = new ImageIcon("resources/icons/72x72/violet.png");
-				JLabel jLabel2 = new JLabel();
-				jLabel2.setIcon(icon);
-				JLabel jLabel=new JLabel();
-				jLabel.setText("第一步:uml建立模型");
-				jLabel.setFont(new Font("微软雅黑", Font.PLAIN, 22));
-				jLabel.setForeground(Color.black);
-				leftlabelpanel.setLayout(new GridBagLayout());
-				leftlabelpanel.setBackground(new Color(222,222,222));
-				picturePanel.setBackground( new Color(222,222,222));
-				picturePanel.setLayout(new GridLayout(1,1));
-				picturePanel.add(jLabel2);
-				JLabel jLabel1 = new JLabel();
-				jLabel1.setText("对uml图形进行正确绘制。");
-				jLabel1.setFont(new Font("宋体", Font.PLAIN, 16));
-				leftlabelpanel.add(picturePanel, new GBC(0,0,1,2).setFill(GBC.BOTH));
-				leftlabelpanel.add(jLabel, new GBC(1,0,1,1).setFill(GBC.BOTH).setInsets(10, 0, 0, 250));
-				leftlabelpanel.add(jLabel1, new GBC(1,1,1,1).setFill(GBC.BOTH).setInsets(17, 28, 0, 0));
-				labelpanel.setLayout(new GridBagLayout());
-				labelpanel.removeAll();   //移除原有标签
-				labelpanel.validate();
-				labelpanel.add(leftlabelpanel,new GBC(0, 0).setWeight(0, 0).setInsets(15,30,30,80));
-				labelpanel.add(panel,new GBC(1, 0).setFill(GBC.BOTH).setWeight(1, 1));
+				labelpanel.setLayout(new GridLayout(1, 1));
+				labelpanel.add(mainFrame.getTitlePanel());
+				mainFrame.getTitlePanel().getBigTitle().setText("第一步:uml建立模型");
+				mainFrame.getTitlePanel().getSmallTitle().setText("对uml图形进行正确绘制。");
 				labelpanel.revalidate();	
 				
 				//修改操作区域

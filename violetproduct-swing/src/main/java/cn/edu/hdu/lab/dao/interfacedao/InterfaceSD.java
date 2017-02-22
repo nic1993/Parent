@@ -4,6 +4,7 @@ public class InterfaceSD {
 	private String ID;
 	private String name;
 	private double pro;
+	private String postCondition;
 	public InterfaceSD(){}
 	public String getID() {
 		return ID;
@@ -22,6 +23,12 @@ public class InterfaceSD {
 	}
 	public void setPro(double pro) {
 		this.pro = pro;
+	}
+	public String getpostCondition() {
+		return postCondition;
+	}
+	public void setpostCondition(String postCondition) {
+		this.postCondition = postCondition;
 	}
 	
 	

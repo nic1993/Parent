@@ -79,10 +79,13 @@ public class SteponeBottomPanel extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				initStepTwoPanel();
+				mainFrame.getTitlePanel().getBigTitle().setText("第二步:uml模型转换成Markov模型");
+				mainFrame.getTitlePanel().getSmallTitle().setText("对第一步模型进行扩展、评估、转换成Markov链模型");
+				
 				mainFrame.getStepTwoPanel().validate();
 				mainFrame.getStepTwoPanel().revalidate();
 				
-				mainFrame.getOpreationPart().add(mainFrame.getStepTwoButton());
+				mainFrame.getOpreationPart().add(mainFrame.getStepTwoExpand());
 				mainFrame.getOpreationPart().updateUI();
 				
 				mainFrame.getconsolepartPanel().add(mainFrame.getStepTwoBottomPanel());
@@ -91,7 +94,7 @@ public class SteponeBottomPanel extends JPanel{
 				mainFrame.getReduceOrEnlargePanel().add(mainFrame.getStepTwoCenterRightPanel());
 				mainFrame.getReduceOrEnlargePanel().updateUI();
 				
-				mainFrame.getpanel().add(mainFrame.getStepModelTwoOperation());
+				mainFrame.getpanel().add(mainFrame.getStepTwoModelOperation());
 				stepTwoLabel = new JLabel("对用例模型进行扩展，即用户填写后续用例执行概率以及同源场景集按照不同使用频率进行两两对比打分");
 				stepTwoLabel.setFont(new Font("宋体", Font.PLAIN, 16));
 				mainFrame.getOperationButton().getOtherPanel().setLayout(new GridBagLayout());

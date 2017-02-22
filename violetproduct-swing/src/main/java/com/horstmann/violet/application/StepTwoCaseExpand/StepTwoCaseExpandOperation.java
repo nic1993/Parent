@@ -17,6 +17,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -56,7 +57,7 @@ import com.horstmann.violet.application.gui.GBC;
 import com.horstmann.violet.application.gui.MainFrame;
 import com.horstmann.violet.application.menu.FileMenu;
 
-public class StepTwoCaseOperation extends JPanel{
+public class StepTwoCaseExpandOperation extends JPanel{
 	private JLabel numberLabel;
 	private JTextField numberTextField;
 	private JButton startExpandButton;
@@ -74,7 +75,9 @@ public class StepTwoCaseOperation extends JPanel{
 	private List<double[][]> tableDatas;
 	private Work worker;
 	private int number;
-	public StepTwoCaseOperation(MainFrame mainFrame)
+	
+	private Map<String, ScenceTabelPanel> caseTabelMap;
+	public StepTwoCaseExpandOperation(MainFrame mainFrame)
 	{
 		this.mainFrame = mainFrame;
 		stepTwoCaseExpandTabbedPane = mainFrame.getStepTwoCaseExpandTabbedPane();
@@ -95,15 +98,16 @@ public class StepTwoCaseOperation extends JPanel{
 		this.add(otherPanel);
 		
 		layout.setConstraints(numberLabel, new GBC(0, 0, 1, 1).setFill(GBC.BOTH).setWeight(0, 1).setInsets(10, 28, 10, 2));
-		layout.setConstraints(numberTextField, new GBC(1, 0, 1, 1).setFill(GBC.BOTH).setWeight(0, 1).setInsets(10, 2, 10, 10));
+		layout.setConstraints(numberTextField, new GBC(1, 0, 1, 1).setFill(GBC.BOTH).setWeight(0.1, 1).setInsets(10, 2, 10, 10));
 		layout.setConstraints(startExpandButton, new GBC(2, 0, 1, 1).setFill(GBC.BOTH).setWeight(0, 1).setInsets(10));
 		layout.setConstraints(startVerificationButton, new GBC(3, 0, 1, 1).setFill(GBC.BOTH).setWeight(0, 1).setInsets(10));
-		layout.setConstraints(verificationProgressBar, new GBC(4, 0, 1, 1).setFill(GBC.BOTH).setWeight(0, 1).setInsets(10));
-		layout.setConstraints(rightpanel, new GBC(5, 0, 1, 1).setFill(GBC.BOTH).setWeight(1, 0));
+		layout.setConstraints(verificationProgressBar, new GBC(4, 0, 1, 1).setFill(GBC.BOTH).setWeight(1, 1).setInsets(10,10,10,21));
 		layout.setConstraints(otherPanel, new GBC(0, 1, 5, 1).setFill(GBC.BOTH).setWeight(1, 1).setInsets(10, 28, 10, 0));
 	}
 	public void initComponent()
 	{
+		caseTabelMap = new HashMap<String, ScenceTabelPanel>();
+		
 		relations = new ArrayList<String>();
 		relationsData = new ArrayList<Double>();
 		tableDatas = new ArrayList<double[][]>();
@@ -112,7 +116,6 @@ public class StepTwoCaseOperation extends JPanel{
 		
 		numberTextField = new JTextField();
 		numberTextField.setFont(new Font("宋体", Font.PLAIN, 16));
-		numberTextField.setPreferredSize(new Dimension(30,30));
 		
 		startExpandButton = new JButton("开始扩展");
 		startVerificationButton = new JButton("开始验证");
@@ -120,7 +123,9 @@ public class StepTwoCaseOperation extends JPanel{
 		
 		verificationProgressBar = new JProgressBar();
 		verificationProgressBar.setUI(new ProgressUI(verificationProgressBar,Color.green));
-		verificationProgressBar.setPreferredSize(new Dimension(750, 30));
+		verificationProgressBar.setPreferredSize(new Dimension(750,30));
+		
+		System.out.println("======"+this.getPreferredSize());
 		rightpanel = new JPanel();
 //		rightpanel.setLayout(new GridBagLayout());
 //		JLabel label = new JLabel("当前选择扩展的markov�?: �?");
@@ -139,7 +144,7 @@ public class StepTwoCaseOperation extends JPanel{
 	            Graphics2D g2 = (Graphics2D)g;
 	            g2.setStroke(new BasicStroke(2f));
 	            g2.setColor(new Color(188,188,188));
-	            g2.drawLine(0, 0, width - 10, 0);
+	            g2.drawLine(0, 0, width - 20, 0);
 	          }
 		};
 		
@@ -236,6 +241,7 @@ public class StepTwoCaseOperation extends JPanel{
 					   	 for(int i = 0;i <number;i++)
 					   	 {
 					   		 int location = getplace(interfaceIsogenySD.getUcName());
+					   		 System.out.println("======"+location);
 					   		 if(location != -1)
 					   		 {
 					   			JPanel panel = ((StepTwoTabelPanel) stepTwoCaseExpandTabbedPane.getCaseExpandPanel().getComponent(i)).getTabelPanel();
@@ -270,10 +276,10 @@ public class StepTwoCaseOperation extends JPanel{
 				//生成验证报告
 				if(relations.size() > 0)
 				{
-                    System.out.println("relations:"+relations.size());
-                    System.out.println("relationsData:"+relationsData.size());
+					stepTwoCaseExpandTabbedPane.getValidationResults().removeAll();
 					ScenceTabelPanel scenceTabelPanel = new ScenceTabelPanel(relations, relationsData);
 					stepTwoCaseExpandTabbedPane.getValidationResults().add(scenceTabelPanel);
+					caseTabelMap.put(mainFrame.getStepTwoModelOperation().getModel_name(), scenceTabelPanel);
 					label.removeAll();
 					label.setText("对Primary用例扩展验证完成,可以对该模型进行一致性验证!");
 				}	
@@ -307,4 +313,8 @@ public class StepTwoCaseOperation extends JPanel{
 	public JPanel getOtherPanel(){
 		return otherPanel;
 	}
+	public Map<String, ScenceTabelPanel> getCaseTabelMap() {
+		return caseTabelMap;
+	}
+	
 }

@@ -8,11 +8,12 @@ public class ProMatrix {
 	
 	Matrix m;
 	double CR=0.0;
-	double[] proArray=new double[m.eig().getD().getColumnDimension()];
+	double[] proArray;
 	private static double[] RI={0.00,0.00,0.58,0.90,1.12,1.24,1.32,1.41,1.45};
 	public ProMatrix(Matrix m)
 	{
 		this.m=m;
+		proArray=new double[m.eig().getD().getColumnDimension()];
 		computeCR();
 	}
 	//º∆À„CR;
@@ -83,7 +84,7 @@ public class ProMatrix {
 				
 				for(int k=0;k<tempPro.length;k++)
 				{
-					proArray[k]=tempPro[k]/sum;
+					proArray[k]=Double.valueOf(f.format(tempPro[k]/sum));
 				}
 			}
 			else

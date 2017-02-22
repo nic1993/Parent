@@ -50,7 +50,7 @@ public class StepTwoTabelPanel extends JPanel{
 		   reduceTabel = new JLabel();
 		   reduceTabel.setFont(new Font("ËÎÌו", Font.PLAIN, 18));
 		   tabelPanel = new JPanel();
-		   tabelPanel.setLayout(new GridLayout(1, 1));
+		   tabelPanel.setLayout(new GridBagLayout());
 		   reduceTabel.setIcon(new ImageIcon("resources/icons/16x16/down.png"));
 		   reduceTabel.addMouseListener(new MouseAdapter() {
 			   @Override
