@@ -26,9 +26,9 @@ public class ConWork {
 	{
 		conUseCases=(new ConInfoParse()).conInfoParse(useCases);
 	}
-	public List ConsistencyCheck()
+	public List<Object> ConsistencyCheck()
 	{
-		List verifyReList=new ArrayList();
+		List<Object> verifyReList=new ArrayList<Object>();
 		
 	/*确定性;
 		1、场景后置条件唯一;
@@ -143,6 +143,7 @@ public class ConWork {
 		
 		verifyReList.add(true);
 		verifyReList.add("一致性验证通过！");
+		verifyReList.add(graph.getAdjoinMatrix());
 		return verifyReList;
 		
 	}
