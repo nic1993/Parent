@@ -172,7 +172,7 @@ public class StepTwoModelOperation extends JPanel{
 				
 				try {
 					List verList=worker.transVerify();
-					System.out.println(verList.get(0));
+					
 				} catch (InvalidTagException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
