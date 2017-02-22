@@ -65,6 +65,7 @@ public class StepTwoModelOperation extends JPanel{
 	private JLabel label;
 	private JPanel labelPanel;
 	private Map<String, List<InterfaceUCRelation>> ucMap; 
+	private List verList;
 	private List<String> relations;  //获取关系集合
 	private List<Double> relationsData;
 	private List<double[][]> tableDatas;
@@ -169,9 +170,8 @@ public class StepTwoModelOperation extends JPanel{
 				}	 //瑙ｆ瀽UML妯�?��?�鐨刋ML鏂囦�?
                 ucMap=worker.provideUCRelation(); //鑾峰彇鐢ㄤ緥鎵ц椤哄簭鍏崇郴
 				List<InterfaceIsogenySD> IISDList=worker.provideIsogencySD();//鑾峰彇鐢ㄤ緥鍦烘櫙淇℃伅
-				
 				try {
-					List verList=worker.transVerify();
+					verList=worker.transVerify();
 					
 				} catch (InvalidTagException e1) {
 					// TODO Auto-generated catch block
@@ -328,5 +328,9 @@ public class StepTwoModelOperation extends JPanel{
 	}
 	public String getModel_name() {
 		return model_name;
+	}
+	public List getVerList() {
+		return verList;
 	}	
+	
 }

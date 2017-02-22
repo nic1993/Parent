@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.JButton;
@@ -31,6 +32,7 @@ public class StepTwoEvaluateOperation extends JPanel{
        private Map<String, ScenceTabelPanel> tabelResultMap;
        private Map<String, ScenceTabelPanel> caseTabelMap;
        private String modelName;
+       private List list;
        public StepTwoEvaluateOperation(MainFrame mainFrame)
        {
     	   this.mainFrame = mainFrame;
@@ -87,7 +89,9 @@ public class StepTwoEvaluateOperation extends JPanel{
 				stepTwoTabelPanel.getTabelPanel().add(relationMatrixPanel, new GBC(0, 1).setFill(GBC.BOTH).setWeight(1, 0));
 				
 				mainFrame.getStepTwoEvaluateTabbedPane().getEvaluateResults().add(stepTwoTabelPanel,new GBC(0, 0).setFill(GBC.BOTH).setWeight(1, 0));
-				mainFrame.getStepTwoEvaluateTabbedPane().getEvaluateResults().add(new JPanel(),new GBC(0, 1).setFill(GBC.BOTH).setWeight(1, 1));
+				
+				//添加确定性信息
+				list = mainFrame.getStepTwoModelOperation().getVerList();
 				
 			}
 		});
