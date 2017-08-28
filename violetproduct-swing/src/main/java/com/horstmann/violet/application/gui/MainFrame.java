@@ -196,7 +196,7 @@ public class MainFrame extends JFrame
                 botoomJSplitPane.setDividerLocation(0.7);
         }
     });
-        System.out.println(1111);
+        
     }
 
     /**
