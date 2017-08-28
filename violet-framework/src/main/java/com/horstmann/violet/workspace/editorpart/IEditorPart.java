@@ -8,6 +8,7 @@ import javax.swing.JComponent;
 
 import com.horstmann.violet.product.diagram.abstracts.IGraph;
 import com.horstmann.violet.product.diagram.abstracts.node.INode;
+import com.horstmann.violet.workspace.IWorkspace;
 
 /**
  * Defines the editor behaviour (an editor is something embedding an IGraph)
@@ -51,7 +52,7 @@ public interface IEditorPart
      * 
      * @param steps the number of steps by which to change the zoom. A positive value zooms in, a negative value zooms out.
      */
-    public abstract void changeZoom(int steps);
+    public abstract void changeZoom(int steps,IWorkspace workspace);
     
     /**
      * @return current zoom factor

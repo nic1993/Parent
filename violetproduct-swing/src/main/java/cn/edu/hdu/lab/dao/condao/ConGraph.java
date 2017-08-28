@@ -3,6 +3,8 @@ package cn.edu.hdu.lab.dao.condao;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.edu.hdu.lab.config.StaticConfig;
+
 public class ConGraph {
 	private static int num; //节点数;
 	private static List<ConVertex> vertexList=new ArrayList<ConVertex>(); //顶点表,存储节点（对应着用例）信息
@@ -40,7 +42,7 @@ public class ConGraph {
 	public void graphInitial(List<ConUseCase> conUseCases)
 	{
 		num=1;
-		//根据前置条件 初始化一个首结点;
+		//根据前置条件 初始化一个首状态结点;
 		ConVertex initVertex=new ConVertex("000000","Initial",0);
 		vertexList.add(initVertex);
 		
@@ -52,6 +54,7 @@ public class ConGraph {
 		}
 		//初始化一个尾节点；表示软件执行结束;
 		ConVertex exitVertex=new ConVertex("999999","Exit",num++);
+		
 		vertexList.add(exitVertex);
 		adjoinMatrix=new int[num][num];
 		for(int i=0;i<num;i++)
@@ -74,11 +77,10 @@ public class ConGraph {
 			{
 				for(ConUseCase uc:conUseCases)
 				{
-					if(uc.getPreCondition().contains("correctiveness"))
+					if(uc.getPreCondition()!=null&&uc.getPreCondition().contains(StaticConfig.initialCondition))
 					{
 						for(ConVertex vertex:vertexList)
 						{
-							
 							if(vertex.getID()!=null&&vertex.getID().equals(uc.getID()))
 							{
 								adjoinMatrix[0][vertex.getNickID()]=1;
@@ -108,7 +110,7 @@ public class ConGraph {
 					{
 						for(ConUseCase tempUc:conUseCases)
 						{
-							if(sd.getPostCondition().contains(tempUc.getPreCondition()))
+							if(tempUc.getPreCondition()!=null&&sd.getPostCondition().contains(tempUc.getPreCondition()))
 							{
 								for(ConVertex vertex:vertexList)
 								{

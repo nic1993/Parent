@@ -6,6 +6,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.SequenceInputStream;
@@ -14,31 +16,69 @@ import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
+import com.horstmann.violet.application.gui.MainFrame;
 import com.horstmann.violet.workspace.IWorkspace;
 
-public class StepTwoModelExpandTabbedPane extends JTabbedPane{
+public class StepTwoModelExpandTabbedPane extends JTabbedPane {
+	private MainFrame mainFrame;
 	private JPanel ValidationResults;
 	private JPanel modelExpandPanel;
-    private List<ScenceTabelPanel> modelValidationList;
-    private JScrollPane jScrollPane;
-	public StepTwoModelExpandTabbedPane()
-	{
+	private List<ScenceTabelPanel> modelValidationList;
+	private JScrollPane jScrollPane;
+	private JScrollPane jScrollPane1;
+
+	public StepTwoModelExpandTabbedPane(MainFrame mainFrame) {
 		init();
-		this.add("验证报告",ValidationResults);
-		this.add("用例模型扩展矩阵",jScrollPane);
+		this.mainFrame = mainFrame;
+		this.add("评分矩阵", jScrollPane);
+		this.add("用例迁移概率", jScrollPane1);
 	}
 
-	private void init()
-	{
+	private void init() {
 		ValidationResults = new JPanel();
-		ValidationResults.setLayout(new GridLayout(1, 1));
+		ValidationResults.setLayout(new GridLayout());
 		modelExpandPanel = new JPanel();
 		modelExpandPanel.setLayout(new GridBagLayout());
 		jScrollPane = new JScrollPane(modelExpandPanel);
+		jScrollPane.setBorder(null);
+		jScrollPane1 = new JScrollPane(ValidationResults);
+		jScrollPane1.setBorder(null);
 		modelValidationList = new ArrayList<ScenceTabelPanel>();
+		listen();
+	}
+
+	public void listen() {
+		this.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				// TODO Auto-generated method stub
+				mainFrame.renewPanel();
+			}
+		});
+
+		jScrollPane.setBorder(null);
+		JScrollBar HorizontalBar = jScrollPane.getHorizontalScrollBar();
+		JScrollBar VerticalBar = jScrollPane.getVerticalScrollBar();
+		HorizontalBar.addAdjustmentListener(new AdjustmentListener() {
+			@Override
+			public void adjustmentValueChanged(AdjustmentEvent e) {
+				// TODO Auto-generated method stub
+				mainFrame.renewPanel();
+			}
+		});
+		VerticalBar.addAdjustmentListener(new AdjustmentListener() {
+			@Override
+			public void adjustmentValueChanged(AdjustmentEvent e) {
+				// TODO Auto-generated method stub
+				mainFrame.renewPanel();
+			}
+		});
 	}
 
 	public JPanel getValidationResults() {
@@ -52,6 +92,5 @@ public class StepTwoModelExpandTabbedPane extends JTabbedPane{
 	public List<ScenceTabelPanel> getModelValidationList() {
 		return modelValidationList;
 	}
-	
-}
 
+}

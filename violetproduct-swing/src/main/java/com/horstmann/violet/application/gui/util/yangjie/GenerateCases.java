@@ -19,8 +19,9 @@ public class GenerateCases {
 	private static final int COEFFICIENT = 8; // 设置一个常量系数
 	private int oneBatchSize; // 生成的每一批的测试用例个数
 	private List<List<Integer>> testPaths = new ArrayList<List<Integer>>(); // 测试路径集合
-	private List<List<String>> testCases = new ArrayList<List<String>>(); // 测试用例集合
-	private List<List<Stimulate>> testCasesExtend = new ArrayList<List<Stimulate>>();
+	public List<List<String>> testCases = new ArrayList<List<String>>(); // 测试用例集合
+	public List<List<Stimulate>> testCasesExtend = new ArrayList<List<Stimulate>>();
+	public List<String> abstractTS = new ArrayList<String>();
 
 	/**
 	 * 产生测试用例和路径并打印至控制台，同时将用例写入文件。
@@ -52,8 +53,12 @@ public class GenerateCases {
 					.setStateAccessTimes(currentState.getStateAccessTimes() + 1);
 
 			while (!currentState.getLabel().equals("final")) {
+				// 打印当前状态节点名和其出迁移个数
 
-				// System.out.println(currentState.getOutTransitions().size());
+				// System.out.println("currentStateName:"
+				// + currentState.getStateName() + "#"
+				// + currentState.getOutTransitions().size());
+
 				Transition nextTransition = rouletteWheels(currentState
 						.getOutTransitions()); // 通过赌轮算法获取当前状态节点的下一个出迁移
 
@@ -74,6 +79,7 @@ public class GenerateCases {
 			testPaths.add(onePath);
 			testCases.add(oneCase);
 			testCasesExtend.add(oneCaseExtend);
+			// 封装成测试用例详细javabean
 
 			// bufw.write(oneCase.toString());
 			// bufw.newLine();
@@ -90,27 +96,40 @@ public class GenerateCases {
 			List<Stimulate> oneCaseExtend, List<Integer> onePath, Element root) {
 
 		System.out.print("测试序列:");
+		String testSequence = "";
 		for (int i = 0; i < oneCase.size(); i++) {
 			if (i != oneCase.size() - 1) {
-				System.out.print(oneCase.get(i) + "-->>");
+				testSequence = testSequence + oneCase.get(i) + "-->>";
+				// System.out.print(oneCase.get(i) + "-->>");
 			} else {
-				System.out.println(oneCase.get(i));
+				testSequence = testSequence + oneCase.get(i);
+				// System.out.println(oneCase.get(i));
 			}
 		}
+		System.out.println(testSequence);
+		abstractTS.add(testSequence);
+		TCDetail.getInstance().setTestSequence(testSequence);
 
 		System.out.print("激励序列:");
+		String stimulateSequence = "";
 		for (int i = 0; i < oneCaseExtend.size(); i++) {
 			if (i != oneCaseExtend.size() - 1) {
-				System.out.print(oneCaseExtend.get(i).toString() + "-->>");
+				stimulateSequence = stimulateSequence
+						+ oneCaseExtend.get(i).toString() + "-->>";
+				// System.out.print(oneCaseExtend.get(i).toString() + "-->>");
 			} else {
-				System.out.println(oneCaseExtend.get(i).toString());
+				stimulateSequence = stimulateSequence
+						+ oneCaseExtend.get(i).toString();
+				// System.out.println(oneCaseExtend.get(i).toString());
 			}
 		}
+		System.out.println(stimulateSequence);
+		TCDetail.getInstance().setStimulateSequence(stimulateSequence);
 
-		System.out.print("测试用例:");
+		System.out.println("测试用例:");
 		// Evaluation.getValue(oneCaseExtend);
 
-		RandomCase.getCase(oneCaseExtend, root);
+		// RandomCase.getCase(oneCaseExtend, root);
 
 		System.out.print("测试路径:");
 		for (int i = 0; i < onePath.size(); i++) {

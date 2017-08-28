@@ -7,6 +7,7 @@ public class State {
 	
 	private String notation;//存放场景后置条件
 	//private String notion;   // 状态对应组合片段的信息 
+	private String stopTimeConstraint;
 	public State(){}
 	public State(String name)
 	{
@@ -53,7 +54,13 @@ public class State {
 	
 	public void print_state() {
 		System.out.println("State [TmcID=" + TmcID + ", name=" + name + ", "
-				+"label="+label+",notation="+ notation  + "]");
+				+"label="+label+"---delayTime="+stopTimeConstraint+",notation="+ notation  + "]");
+	}
+	public String getStopTimeConstraint() {
+		return stopTimeConstraint;
+	}
+	public void setStopTimeConstraint(String stopTimeConstraint) {
+		this.stopTimeConstraint = stopTimeConstraint;
 	}
 	
 	

@@ -1,7 +1,13 @@
 package com.horstmann.violet.application.gui.util.xiaole.GraghLayout;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.Map.Entry;
 
 import org.dom4j.Attribute;
 import org.dom4j.Document;
@@ -33,16 +39,26 @@ public class UpdateXml {
     public void Update(int a) throws Exception{
 		
 		int i = 0, j=0,n = 0, m = 0, p = 0, xxxx, yyyy, YYYY,k = 0;
-		String XXX[] = new String[30];
-		String YYY[] = new String[30];
-		String xxx[] = new String[30];
-		String yyy[] = new String[30];
-		int[] A = new int[30];
+		String XXX[] = new String[1000];
+		String YYY[] = new String[1000];
+		String xxx[] = new String[1000];
+		String yyy[] = new String[1000];
+		int[] A = new int[500];
 	
+		int Min, index;
+		Min = -1;
+		index = 0;
+		Map<Integer, Integer> AYMap = new TreeMap<Integer, Integer>();
 	    root=dom.getRootElement();
 		List<Element> LIST=root.elements("template");//LIST表示XML有几个Template
 		List<Element> list=LIST.get(a).elements("transition");
  		List<Element> List=LIST.get(a).elements("location");//List代表着点的集合
+ 		
+ 		System.out.println("/*/*/*/****************"+filename);
+ 		for(Element e:List){
+ 			System.out.println(e.attributeValue("id"));
+ 		}
+ 		
 		Element Template=List.get(0);//Template指向点
         Element template1=list.get(0);
  		Iterator it = List.iterator();
@@ -58,10 +74,57 @@ public class UpdateXml {
 		    	j++;//j代表着每个Template有几条边
 		    }
          A=new TestGraph(filename).init(a);
+         
+         for (int I = 0; I < 2 * i; I+=2) {
+    		 A[I] += 900;//这里面是把每个点的X坐标下移100像素
+    		 }
     
-			for(int I=0;I<2*i;I++)
-		
-			A[I]*=1.5;//这里面是把每个点的X，Y坐标都乘以相同的倍数，以在不改变有向图格局的前提下，放大有向图，以致减少标签的重叠，因为标签有长度
+		 for (int I = 0; I < 2 * i; I++) {
+		 A[I] *= 3;//这里面是把每个点的X，Y坐标都乘以相同的倍数，以在不改变有向图格局的前提下，放大有向图，以致减少标签的重叠，因为标签有长度
+		 }
+
+		//System.out.println("------------------------");
+
+//		for (int I = 0; I < 2 * i; I += 2) {
+//			AYMap.put(I / 2, A[I]);
+//		}
+//		// 这里将map.entrySet()转换成list
+//		List<Map.Entry<Integer, Integer>> aylist = new ArrayList<Map.Entry<Integer, Integer>>(AYMap.entrySet());
+//		// 然后通过比较器来实现排序
+//		Collections.sort(aylist, new Comparator<Map.Entry<Integer, Integer>>() {
+//			// 升序排序
+//			public int compare(Entry<Integer, Integer> o1, Entry<Integer, Integer> o2) {
+//				return o1.getValue().compareTo(o2.getValue());
+//			}
+//		});
+//		// 遍历AYMap,并逐行增加y轴高度
+//		int count=0;
+//		for (Map.Entry<Integer, Integer> mapping : aylist) {
+//			System.out.println(mapping.getKey() + ":" + mapping.getValue());
+//			if (Min != mapping.getValue()) {
+//				index++;
+//				count=0;
+//				Min = mapping.getValue();
+//			}
+////			if(count%2==0){
+//				AYMap.put(mapping.getKey(), mapping.getValue() + 30 * index);
+////			}
+//			count++;
+//		}
+//		// 按key排序，将y轴高度赋值给A[]
+//		for (Map.Entry<Integer, Integer> sortmap : AYMap.entrySet()) {
+//			// System.out.println(sortmap.getKey() + ":" + sortmap.getValue());
+//			A[sortmap.getKey() * 2] = sortmap.getValue();
+//		}
+//		for (int I = 0; I < i; I++) {
+//			A[I * 2] += 300;
+//		}
+		 
+//		for (int I = 0; I < 2 * i; I++) {
+//			System.out.println(A[I] + " ++ " + A[++I]);
+//		}
+		//System.out.println("------------------------");
+
 		    //i代表着多少个点		
 			while (n < i) {
 				Template  = List.get(n);
@@ -132,9 +195,13 @@ public class UpdateXml {
 				yyyy = (Integer.valueOf(yyy[k]) + Integer.valueOf(YYY[k])) / 2-20;//标签有长度
 				String xxxxx = String.valueOf(xxxx);
 				String yyyyy = String.valueOf(yyyy);
-				System.out.println("标签设置成功！！！");
-				template1.element("label").attribute("y").setText(yyyyy);//这段如果出现空指针错误，是因为边上没有标签
-				template1.element("label").attribute("x").setText(xxxxx);
+				System.out.println("标签设置成功！！！"+"--"+yyyyy+"--");
+				if(template1.element("label")!=null){
+					template1.element("label").attribute("y").setText(yyyyy);//这段如果出现空指针错误，是因为边上没有标签
+					template1.element("label").attribute("x").setText(xxxxx);
+				}
+//				template1.element("label").attribute("y").setText(yyyyy);//这段如果出现空指针错误，是因为边上没有标签
+//				template1.element("label").attribute("x").setText(xxxxx);
 				k++;
 				}
 			}

@@ -8,7 +8,7 @@ public class UseCase {
 	private String useCaseName;
 	private ArrayList<Behavior> behaviors;
 	private ArrayList<Diagram> diagrams;
-	private ArrayList<SDSet> sdSets;
+	private ArrayList<SD> sdSets;
 	private String preCondition;
 	private double useCasePro;
 	
@@ -37,10 +37,10 @@ public class UseCase {
 	public void setDiagrams(ArrayList<Diagram> diagrams) {
 		this.diagrams = diagrams;
 	}
-	public ArrayList<SDSet> getSdSets() {
+	public ArrayList<SD> getSdSets() {
 		return sdSets;
 	}
-	public void setSdSets(ArrayList<SDSet> sdSets) {
+	public void setSdSets(ArrayList<SD> sdSets) {
 		this.sdSets = sdSets;
 	}
 	public String getPreCondition() {
@@ -80,7 +80,7 @@ public class UseCase {
 		
 		if(sdSets!=null)
 		{
-			for(SDSet sd:sdSets)
+			for(SD sd:sdSets)
 			{
 				sd.print_SDSet();
 			}

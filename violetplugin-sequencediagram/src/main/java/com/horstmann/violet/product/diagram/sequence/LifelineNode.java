@@ -270,14 +270,14 @@ public class LifelineNode extends RectangularNode//生命线节点
 
         // Backup current color;
         Color oldColor = g2.getColor();
-
+        g2.setColor(Color.black);//已改  
         // Perform drawing
         Rectangle2D top = getShape();
         g2.setColor(getBackgroundColor());
         g2.fill(top);
-        g2.setColor(getBorderColor());
+        g2.setColor(Color.black);//已改  
         g2.draw(top);
-        g2.setColor(getTextColor());
+//        g2.setColor(getTextColor());
         name.draw(g2, top);
         double xmid = top.getCenterX();
         Line2D line = new Line2D.Double(xmid, top.getMaxY(), xmid, getMaxYOverAllLifeLineNodes());
@@ -287,12 +287,13 @@ public class LifelineNode extends RectangularNode//生命线节点
                 5.0f,
                 5.0f
         }, 0.0f));
-        g2.setColor(getBorderColor());
+//        g2.setColor(getBorderColor());
         g2.draw(line);
         g2.setStroke(oldStroke);
 
         // Restore first color
-        g2.setColor(oldColor);
+//        g2.setColor(oldColor);
+//        g2.setColor(Color.black);
         // Draw its children
         for (INode node : getChildren())
         {

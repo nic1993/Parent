@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Model version="1.0" type="uml:Model" name="Markov_Model" visibility="public" authorNmae="Terence">
+  <ModelType>UC_Markov</ModelType>
+  <Owned>Software</Owned>
+  <name>着陆检测</name>
+  <state>
+    <name>S58</name>
+    <arc label="prob" type="common">
+      <name>S58_S59_update_land_detectors()</name>
+      <owned>update_land_detectors</owned>
+      <prob>1.0</prob>
+      <to>S59</to>
+    </arc>
+  </state>
+  <state>
+    <name>S59</name>
+    <arc label="prob" type="common">
+      <name>S59_S60_armed()</name>
+      <owned>armed</owned>
+      <assignValue>has_armed</assignValue>
+      <assignType>bool</assignType>
+      <prob>1.0</prob>
+      <to>S60</to>
+    </arc>
+  </state>
+  <state>
+    <name>S60</name>
+    <arc label="prob" type="common">
+      <name>S60_S61_set_land_complete(bool)</name>
+      <owned>set_land_complete</owned>
+      <prob>1.0</prob>
+      <stimulate>
+        <parameter>
+          <paramName>b</paramName>
+          <paramType>bool</paramType>
+          <domain type="discrete">true,false</domain>
+        </parameter>
+      </stimulate>
+      <to>S61</to>
+    </arc>
+    <arc label="prob" type="common">
+      <name>S60_S63_get_throttle()</name>
+      <owned>get_throttle</owned>
+      <assignValue>get_the_throttle</assignValue>
+      <assignType>float</assignType>
+      <prob>1.0</prob>
+      <to>S63</to>
+    </arc>
+    <arc label="prob" type="common">
+      <name>S60_S67_set_land_complete(bool)</name>
+      <owned>set_land_complete</owned>
+      <prob>1.0</prob>
+      <stimulate>
+        <parameter>
+          <paramName>b</paramName>
+          <paramType>bool</paramType>
+          <domain type="discrete">true,false</domain>
+        </parameter>
+      </stimulate>
+      <to>S67</to>
+    </arc>
+  </state>
+  <state>
+    <name>S61</name>
+    <arc label="prob" type="void">
+      <name>S61_S62</name>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S62</to>
+    </arc>
+  </state>
+  <state>
+    <name>S62</name>
+    <arc label="prob" type="common">
+      <name>S62_S70_set_land_complete_maybe(bool)</name>
+      <owned>set_land_complete_maybe</owned>
+      <prob>1.0</prob>
+      <stimulate>
+        <parameter>
+          <paramName>b</paramName>
+          <paramType>bool</paramType>
+          <domain type="discrete">true,false</domain>
+        </parameter>
+      </stimulate>
+      <to>S70</to>
+    </arc>
+  </state>
+  <state>
+    <name>S63</name>
+    <arc label="prob" type="common">
+      <name>S63_S64_get_non_takeoffthrotle()</name>
+      <owned>get_non_takeoffthrotle</owned>
+      <assignValue>get_non_takeoffthrotle</assignValue>
+      <prob>1.0</prob>
+      <to>S64</to>
+    </arc>
+  </state>
+  <state>
+    <name>S64</name>
+    <arc label="prob" type="common">
+      <name>S64_S65_set_land_complete(bool)</name>
+      <owned>set_land_complete</owned>
+      <prob>1.0</prob>
+      <stimulate>
+        <parameter>
+          <paramName>b</paramName>
+          <paramType>bool</paramType>
+          <domain type="discrete">true,false</domain>
+        </parameter>
+      </stimulate>
+      <to>S65</to>
+    </arc>
+  </state>
+  <state>
+    <name>S65</name>
+    <arc label="prob" type="void">
+      <name>S65_S66</name>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S66</to>
+    </arc>
+  </state>
+  <state>
+    <name>S66</name>
+    <arc label="prob" type="void">
+      <name>S66_S62</name>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S62</to>
+    </arc>
+  </state>
+  <state>
+    <name>S67</name>
+    <arc label="prob" type="void">
+      <name>S67_S68</name>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S68</to>
+    </arc>
+  </state>
+  <state>
+    <name>S68</name>
+    <arc label="prob" type="void">
+      <name>S68_S69</name>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S69</to>
+    </arc>
+  </state>
+  <state>
+    <name>S69</name>
+    <arc label="prob" type="void">
+      <name>S69_S62</name>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S62</to>
+    </arc>
+  </state>
+  <state>
+    <name>S70</name>
+  </state>
+</Model>

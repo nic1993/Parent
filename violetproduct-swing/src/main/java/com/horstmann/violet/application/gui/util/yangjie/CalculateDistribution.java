@@ -3,7 +3,6 @@ package com.horstmann.violet.application.gui.util.yangjie;
 import org.junit.Test;
 
 
-
 /**
  * 专门用来计算markov链平稳分布的工具类
  * @author YJ

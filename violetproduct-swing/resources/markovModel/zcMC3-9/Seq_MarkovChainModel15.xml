@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Model version="1.0" type="uml:Model" name="Markov_Model" visibility="public" authorNmae="Terence">
+  <ModelType>Seq_Markov</ModelType>
+  <Owned>碰撞检测</Owned>
+  <name>crash_check</name>
+  <state>
+    <name>S6</name>
+  </state>
+</Model>

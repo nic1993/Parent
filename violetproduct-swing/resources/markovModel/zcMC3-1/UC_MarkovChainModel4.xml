@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Model version="1.0" type="uml:Model" name="Markov_Model" visibility="public" authorNmae="Terence">
+  <ModelType>UC_Markov</ModelType>
+  <Owned>Software</Owned>
+  <name>电机加锁</name>
+  <state>
+    <name>S48</name>
+    <arc label="prob">
+      <name>S48_S49_init_disarm_motors()</name>
+      <prob>1.0</prob>
+      <to>S49</to>
+    </arc>
+  </state>
+  <state>
+    <name>S49</name>
+    <arc label="prob">
+      <name>S49_S50_get_primary()</name>
+      <assignValue>get_primary</assignValue>
+      <assignType>unsigned int</assignType>
+      <prob>1.0</prob>
+      <to>S50</to>
+    </arc>
+  </state>
+  <state>
+    <name>S50</name>
+    <arc label="prob">
+      <name>S50_S51_set_and_save_offsets(unsigned char, Vector3f)</name>
+      <prob>NaN</prob>
+      <stimulate>
+        <parameter>
+          <paramName>i</paramName>
+          <paramType>unsigned char</paramType>
+          <domain type="serial">0&lt;i&lt;256</domain>
+        </parameter>
+        <parameter>
+          <paramName>offsets</paramName>
+          <paramType>Vector3f</paramType>
+        </parameter>
+      </stimulate>
+      <to>S51</to>
+    </arc>
+  </state>
+  <state>
+    <name>S51</name>
+    <arc label="prob">
+      <name>S51_S52</name>
+      <prob>1.0</prob>
+      <to>S52</to>
+    </arc>
+  </state>
+  <state>
+    <name>S52</name>
+    <arc label="prob">
+      <name>S52_S53_set_land_complete(bool)</name>
+      <prob>NaN</prob>
+      <stimulate>
+        <parameter>
+          <paramName>b</paramName>
+          <paramType>bool</paramType>
+          <domain type="serial">true,false</domain>
+        </parameter>
+      </stimulate>
+      <to>S53</to>
+    </arc>
+  </state>
+  <state>
+    <name>S53</name>
+    <arc label="prob">
+      <name>S53_S54_set_land_complete_maybe(bool)</name>
+      <prob>NaN</prob>
+      <stimulate>
+        <parameter>
+          <paramName>b</paramName>
+          <paramType>bool</paramType>
+          <domain type="serial">true,false</domain>
+        </parameter>
+      </stimulate>
+      <to>S54</to>
+    </arc>
+  </state>
+  <state>
+    <name>S54</name>
+    <arc label="prob">
+      <name>S54_S55_armed(bool)</name>
+      <prob>NaN</prob>
+      <stimulate>
+        <parameter>
+          <paramName>arm</paramName>
+          <paramType>bool</paramType>
+        </parameter>
+      </stimulate>
+      <to>S55</to>
+    </arc>
+  </state>
+  <state>
+    <name>S55</name>
+    <arc label="prob">
+      <name>S55_S56_reset()</name>
+      <prob>NaN</prob>
+      <to>S56</to>
+    </arc>
+  </state>
+  <state>
+    <name>S56</name>
+    <arc label="prob">
+      <name>S56_S57_set_correct_centrifugal(bool)</name>
+      <prob>NaN</prob>
+      <stimulate>
+        <parameter>
+          <paramName>setting</paramName>
+          <paramType>bool</paramType>
+        </parameter>
+      </stimulate>
+      <to>S57</to>
+    </arc>
+  </state>
+  <state>
+    <name>S57</name>
+    <arc label="prob">
+      <name>S57_S58</name>
+      <prob>1.0</prob>
+      <to>S58</to>
+    </arc>
+  </state>
+  <state>
+    <name>S58</name>
+  </state>
+</Model>

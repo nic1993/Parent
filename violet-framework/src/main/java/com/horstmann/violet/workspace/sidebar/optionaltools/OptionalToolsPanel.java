@@ -39,7 +39,7 @@ public class OptionalToolsPanel extends JPanel implements ISideBarElement
 {
 
     /**
-     * Default contructor
+     * Default contructor 
      */
     public OptionalToolsPanel()
     {

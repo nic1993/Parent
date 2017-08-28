@@ -7,7 +7,7 @@ public class LifeLine {
 	 */
 	private String id;
 	private String name;
-	private ArrayList<Node> nodes;
+	private ArrayList<Node> nodes=new ArrayList<Node>();
 	
 	public LifeLine() {}
 	
@@ -45,7 +45,9 @@ public class LifeLine {
 	public void setNodes(ArrayList<Node> nodes) {
 		this.nodes = nodes;
 	}
-	
+	public void addNode(Node node) {
+		this.nodes.add(node);
+	}
 	
 	public String toString() 
 	{

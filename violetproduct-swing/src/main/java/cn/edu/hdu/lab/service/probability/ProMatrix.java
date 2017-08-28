@@ -60,7 +60,7 @@ public class ProMatrix {
 			{
 				CR=(maxLamta-m.getColumnDimension())
 						/((m.getColumnDimension()-1)*RI[m.getColumnDimension()-1]);
-				
+				CR=Double.valueOf(f.format(CR));
 			}
 			double[] tempPro=new double[m.getColumnDimension()];
 			for(int i=0;i<m.eig().getD().getColumnDimension();i++)

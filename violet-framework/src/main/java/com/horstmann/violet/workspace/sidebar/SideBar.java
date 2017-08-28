@@ -30,6 +30,8 @@ import javax.swing.JPanel;
 import com.horstmann.violet.workspace.IWorkspace;
 import com.horstmann.violet.workspace.sidebar.colortools.ColorToolsBarPanel;
 import com.horstmann.violet.workspace.sidebar.colortools.IColorChoiceBar;
+import com.horstmann.violet.workspace.sidebar.edgecoloretools.EdgeColorToolsBarPanel;
+import com.horstmann.violet.workspace.sidebar.edgecoloretools.IEdgeColorChoiceBar;
 import com.horstmann.violet.workspace.sidebar.editortools.EditorToolsPanel;
 import com.horstmann.violet.workspace.sidebar.graphtools.GraphToolsBar;
 import com.horstmann.violet.workspace.sidebar.graphtools.IGraphToolsBar;
@@ -61,7 +63,7 @@ public class SideBar extends JPanel implements ISideBar
         element.install(this.diagramPanel);
         this.externalContributionElements.put(element, title);
     }
-
+    //返回图片的选择工具
     public IGraphToolsBar getGraphToolsBar()
     {
         if (this.graphToolsBar == null)
@@ -71,7 +73,7 @@ public class SideBar extends JPanel implements ISideBar
         }
         return this.graphToolsBar;
     }
-
+    //返回sideBarElement
     protected ISideBarElement getEditorToolsBar()
     {
         if (this.editorToolsBar == null)
@@ -102,7 +104,15 @@ public class SideBar extends JPanel implements ISideBar
         return this.colorChoiceBar;
 
     }
-
+    //添加一个IEdgeColorChoiceBar-----------
+    public IEdgeColorChoiceBar getEdgeColorChoiceBar(){
+    	if(this.edgeColorChoiceBar==null){
+    		this.edgeColorChoiceBar=new EdgeColorToolsBarPanel();
+    		this.edgeColorChoiceBar.install(this.diagramPanel);
+    	}
+    	return null;
+    }
+    //----------
     protected Map<ISideBarElement, String> getExternalContributionElements()
     {
         return this.externalContributionElements;
@@ -123,6 +133,10 @@ public class SideBar extends JPanel implements ISideBar
     private ISideBarElement editorToolsBar;
     private ISideBarElement optionalToolsBar;
     private IColorChoiceBar colorChoiceBar;
+    //新加的属性
+    private IEdgeColorChoiceBar edgeColorChoiceBar;
+    //
+    
     private Map<ISideBarElement, String> externalContributionElements = new HashMap<ISideBarElement, String>();
 
 }

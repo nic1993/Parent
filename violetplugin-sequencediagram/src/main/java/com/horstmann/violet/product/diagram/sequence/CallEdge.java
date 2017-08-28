@@ -94,15 +94,14 @@ public class CallEdge extends SegmentedLineEdgeByCai
     @Override
     public ArrayList<Point2D> getPoints()//获取相连边中的点
     {
-    	
-    	
-    
-       INode endingNode = getEnd();
+        INode endingNode = getEnd();
+      
         INode startingNode = getStart();
+      
         if (isActivationBarsOnSameLifeline(startingNode, endingNode))//如果两个节点连在同一生命线上
         {
             return getPointsForLoopOnActivationBarNode(startingNode, endingNode);
-        }
+        } 
         return getPointsForActivationBarsOnDifferentLifeLines(startingNode, endingNode);
     }
 
@@ -135,11 +134,16 @@ public class CallEdge extends SegmentedLineEdgeByCai
     {
         ArrayList<Point2D> a = new ArrayList<Point2D>();
         Point2D startingPoint = startingNode.getConnectionPoint(this);
+        
         Point2D endingPoint = endingNode.getConnectionPoint(this);
         Point2D p = startingPoint;
         Point2D q = new Point2D.Double(endingPoint.getX() + LOOP_GAP, p.getY());
         Point2D r = new Point2D.Double(q.getX(), endingPoint.getY());
         Point2D s = endingPoint;
+        
+        this.setStartLocation(p);
+        this.setEndLocation(s);
+        
         a.add(p);
         a.add(q);
         a.add(r);

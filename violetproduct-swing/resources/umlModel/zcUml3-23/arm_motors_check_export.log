@@ -1,0 +1,26 @@
+Exporting package to 'C:\Users\Terence\Desktop\zcUml3-1\arm_motors_check.xml'
+Retrieving data for export: diagram elements
+Retrieving data for export: links
+Retrieving data for export: constraints
+Retrieving data for export: attribute tagged values
+Retrieving data for export: operation tagged values
+Retrieving data for export: operation parameter tagged values
+Retrieving data for export: connector tagged values
+Completed data retrieval
+Pre-processing export tree...
+Completed pre-processing
+Processing package: arm_motors_check
+Diagram: arm_motors_check
+Element:0: 
+Element:1: copter
+Element:2: dias arm the motors
+Element:3: ensure throttle is not down
+Element:4: motors
+Element:5: no exit
+Element:6: no exit
+Element:7: scheduler
+Element:8: yaw position
+Adding State-Tables
+Sequencing Interaction Diagrams
+Formatting output XML...please wait
+XMI Document Export Complete!

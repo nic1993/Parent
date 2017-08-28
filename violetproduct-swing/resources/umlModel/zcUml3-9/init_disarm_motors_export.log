@@ -1,0 +1,24 @@
+Exporting package to 'C:\Users\Terence\Desktop\zcUml3-1\init_disarm_motors.xml'
+Retrieving data for export: diagram elements
+Retrieving data for export: links
+Retrieving data for export: constraints
+Retrieving data for export: attribute tagged values
+Retrieving data for export: operation tagged values
+Retrieving data for export: operation parameter tagged values
+Retrieving data for export: connector tagged values
+Completed data retrieval
+Pre-processing export tree...
+Completed pre-processing
+Processing package: init_disarm_motors
+Diagram: init_disarm_motors
+Element:0: ahrs
+Element:1: compass
+Element:2: copter
+Element:3: mission
+Element:4: motors
+Element:5: return immediately if we are already disarmed
+Element:6: save compass offsets learned by the EKF
+Adding State-Tables
+Sequencing Interaction Diagrams
+Formatting output XML...please wait
+XMI Document Export Complete!

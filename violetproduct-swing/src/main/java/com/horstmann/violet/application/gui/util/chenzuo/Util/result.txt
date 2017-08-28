@@ -1,0 +1,18 @@
+testcCaseID:1
+-->processList:[
+	# ProcessID:1	ProcessName:peopleComing ( 	ProcessParameter:null	ProcessStatus:t1=0.004 ) 
+	# ProcessID:2	ProcessName:newPeople ( 	ProcessParameter:null	ProcessStatus:t2=0.101 ) 
+	# ProcessID:3	ProcessName:pushCallUp ( 	ProcessParameter:null	ProcessStatus:t3=0.045 ) 
+	# ProcessID:4	ProcessName:response ( 	ProcessParameter:null	ProcessStatus:t4=0.03 ) 
+	# ProcessID:5	ProcessName:controller ( 	ProcessParameter:Floor=1,State=0	ProcessStatus:t5=0.052 ) 
+	# ProcessID:6	ProcessName:peopleOutIn ( 	ProcessParameter:State=0	ProcessStatus:t7=2005.65 ) 
+	& ProcessID:7	ProcessName:thisFloorPeopleOut ( 	ProcessParameter:elevator_thisFloorOut=True	ProcessStatus:t9 ) 
+	& ProcessID:8	ProcessName:thisFloorPeopleOut_return ( 	ProcessParameter:elevator_thisFloorOut=True	ProcessStatus:t13 ) 
+	& ProcessID:9	ProcessName:thisFloorPeopleIn ( 	ProcessParameter:getCurrentFloor_empty=False,elevator_thisFloorOut=False,elevator_thisFloorOut=False	ProcessStatus:t18 ) 
+	& ProcessID:10	ProcessName:thisFloorPeopleIn_return ( 	ProcessParameter:getCurrentFloor_empty=False	ProcessStatus:t14 ) 
+	& ProcessID:11	ProcessName:close ( 	ProcessParameter:getCurrentFloor_empty=True,getCurrentFloor_empty=True	ProcessStatus:t21 ) 
+	& ProcessID:12	ProcessName:close_return ( 	ProcessParameter:null	ProcessStatus:t15 ) 
+	& ProcessID:13	ProcessName:prepareMove ( 	ProcessParameter:null	ProcessStatus:t22 ) 
+	& ProcessID:14	ProcessName:goUpstairs ( 	ProcessParameter:null	ProcessStatus:t23 ) ]
+-->execStatus:[1:1]
+-->resultStatus:[ timeLimit:t1>=0,t1+t2>=0,t1+t2+t3>=0,t1+t2+t3+t4>=0,t5<=25,t5>=0,t5+t7>=0,t9<=30,t9>=0,t9+t13>=0,t18<=30,t18>=0,t18+t14>=0,t21<=25,t21>=0,t21+t15>=0,t22<=15,t22>=0,t22+t23>=0|close&t21&300,close_return&t15&300,controller&t5&0.052,goUpstairs&t23&300,newPeople&t2&0.101,peopleComing&t1&0.004,peopleOutIn&t7&2005.65,prepareMove&t22&300,pushCallUp&t3&0.045,response&t4&0.03,thisFloorPeopleIn&t18&300,thisFloorPeopleIn_return&t14&300,thisFloorPeopleOut&t9&300,thisFloorPeopleOut_return&t13&300|t9<=30,t9>=0,t9+t13>=0,t18<=30,t18>=0,t18+t14>=0,t21<=25,t21>=0,t21+t15>=0,t22<=15,t22>=0,t22+t23>=0]

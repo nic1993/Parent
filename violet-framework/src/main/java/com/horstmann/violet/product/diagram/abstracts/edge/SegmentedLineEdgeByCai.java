@@ -24,7 +24,6 @@ package com.horstmann.violet.product.diagram.abstracts.edge;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.geom.GeneralPath;
@@ -54,12 +53,14 @@ public abstract class SegmentedLineEdgeByCai extends ShapeEdge
      */
     public SegmentedLineEdgeByCai()
     {
-    	name = "";
-        input = "";
-        parameter = "";
-        output = "";
-        timing = "";
-        timereset = "";
+        message = "";
+        parameters = "";
+        arguments = "";
+        returnvalue = "";
+        condition = "";
+        constraint = "";
+        alias = "";
+        timeconstraint = "";
     }
     
     @Override
@@ -67,7 +68,7 @@ public abstract class SegmentedLineEdgeByCai extends ShapeEdge
     {
         return true;
     }
-     
+    
     @Override
     public void setTransitionPoints(Point2D[] transitionPoints)
     {
@@ -173,116 +174,103 @@ public abstract class SegmentedLineEdgeByCai extends ShapeEdge
         return this.endArrowHead;
     }
 
-    /**
-     * Sets the start label property
-     * 
-     * @param newValue the new value
-     */
-    public void setinput(String newValue)
-    {
-        input = newValue;
-    }
 
-    /**
-     * Gets the start label property
-     * 
-     * @return the label at the start of the edge
-     */
-    public String getinput()
-    {
-        return input;
-    }
 
-    /**
-     * Sets the middle label property
-     * 
-     * @param newValue the new value
-     */
-    public void setparameter(String newValue)
-    {
-        parameter = newValue;
-    }
-
-    /**
-     * Gets the middle label property
-     * 
-     * @return the label at the middle of the edge
-     */
-    public String getparameter()
-    {
-        return parameter;
-    }
-
-    /**
-     * Sets the end label property
-     * 
-     * @param newValue the new value
-     */
-    public void setoutput(String newValue)
-    {
-        output = newValue;
-    }
-
-    /**
-     * Gets the end label property
-     * 
-     * @return the label at the end of the edge
-     */
-    public String getoutput()
-    {
-        return output;
-    }
-    public String getName() {
-  		return name;
-  	}
-
-  	public void setName(String name) {
-  		this.name = name;
-  	}
-
-  	public String getTiming() {
-  		return timing;
-  	}
-
-  	public void setTiming(String timing) {
-  		this.timing = timing;
-  	}
-  	public String getTimereset() {
-		return timereset;
+	public String getParameters() {
+		return parameters;
 	}
 
-	public void setTimereset(String timereset) {
-		this.timereset = timereset;
+	public void setParameters(String parameters) {
+		this.parameters = parameters;
 	}
-    /**
+
+	public String getArguments() {
+		return arguments;
+	}
+
+	public void setArguments(String arguments) {
+		this.arguments = arguments;
+	}
+
+	public String getAssign() {
+		return assign;
+	}
+
+	public void setAssign(String assign) {
+		this.assign = assign;
+	}
+
+	public String getReturnvalue() {
+		return returnvalue;
+	}
+
+	public void setReturnvalue(String returnvalue) {
+		this.returnvalue = returnvalue;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public String getCondition() {
+		return condition;
+	}
+
+	public void setCondition(String condition) {
+		this.condition = condition;
+	}
+
+	public String getConstraint() {
+		return constraint;
+	}
+
+	public void setConstraint(String constraint) {
+		this.constraint = constraint;
+	}
+
+	public String getAlias() {
+		return alias;
+	}
+
+	public void setAlias(String alias) {
+		this.alias = alias;
+	}
+	
+	public String getTimeconstraint() {
+		return timeconstraint;
+	}
+
+	public void setTimeconstraint(String timeconstraint) {
+		this.timeconstraint = timeconstraint;
+	}
+
+	/**
      * Draws the edge.
      * 
      * @param g2 the graphics context
      */
     public void draw(Graphics2D g2)
     {
-    	//System.out.println("draw....+SegmentedLineEdge");
     	Color oldColor = g2.getColor();
     	g2.setColor(Color.BLACK);   	
     	ArrayList<Point2D> points = getPoints();
-        Stroke oldStroke = g2.getStroke();
-        g2.setStroke(getLineStyle().getStroke());
-        g2.draw(getSegmentPath());      
-        g2.setStroke(oldStroke);
-        setStartLocation(getPoints().get(0));
-        setEndLocation(getPoints().get(1));
-        getStartArrowHead().draw(g2, (Point2D) points.get(1), (Point2D) points.get(0));
-        getEndArrowHead().draw(g2, (Point2D) points.get(points.size() - 2), (Point2D) points.get(points.size() - 1));
-        int x = (int)points.get(0).getX()+40;
-        int y = (int)points.get(0).getY();
-        Point2D point2d = new Point(x, y);
-        //drawString(g2, (Point2D) points.get(1), point2d, getStartArrowHead(), input, false);
-        drawString(g2, (Point2D) points.get(points.size() / 2 - 1), (Point2D) points.get(points.size() / 2), null, name,
-                true);
-//        drawString(g2, (Point2D) points.get(points.size() - 2), (Point2D) points.get(points.size() - 1), getEndArrowHead(),
-//                output, false);
-        g2.setColor(oldColor);
-    }
+    		Stroke oldStroke = g2.getStroke();
+            g2.setStroke(getLineStyle().getStroke());
+            g2.draw(getSegmentPath());      
+            g2.setStroke(oldStroke);
+          
+            getStartArrowHead().draw(g2, (Point2D) points.get(1), (Point2D) points.get(0));
+            getEndArrowHead().draw(g2, (Point2D) points.get(points.size() - 2), (Point2D) points.get(points.size() - 1));
+            drawString(g2, (Point2D) points.get(points.size() / 2 - 1), (Point2D) points.get(points.size() / 2), null, message,
+                    true);
+            g2.setColor(oldColor);
+    	}
+        
+    
 
     /**
      * Draws a string.
@@ -388,39 +376,50 @@ public abstract class SegmentedLineEdgeByCai extends ShapeEdge
     public Rectangle2D getBounds()
     {
         ArrayList<Point2D> points = getPoints();
-        Rectangle2D r = super.getBounds();
-        r.add(getStringBounds((Point2D) points.get(1), (Point2D) points.get(0), getStartArrowHead(), input, false));
-        r.add(getStringBounds((Point2D) points.get(points.size() / 2 - 1), (Point2D) points.get(points.size() / 2), null,
-                parameter, true));
-        r.add(getStringBounds((Point2D) points.get(points.size() - 2), (Point2D) points.get(points.size() - 1), getEndArrowHead(),
-                output, false));
-        return r;
+        if(points != null)
+        {
+        	 Rectangle2D r = super.getBounds();
+             r.add(getStringBounds((Point2D) points.get(points.size() / 2 - 1), (Point2D) points.get(points.size() / 2), null,
+                     message, true));
+             return r;
+        }
+       return null;
     }
 
     @Override
     public Shape getShape()
     {
         GeneralPath path = getSegmentPath();
-        ArrayList<Point2D> points = getPoints();
-        path.append(getStartArrowHead().getPath((Point2D) points.get(1), (Point2D) points.get(0)), false);
-        path.append(getEndArrowHead().getPath((Point2D) points.get(points.size() - 2), (Point2D) points.get(points.size() - 1)),
-                false);
-        return path;
+        if(path != null)
+        {
+        	ArrayList<Point2D> points = getPoints();
+            path.append(getStartArrowHead().getPath((Point2D) points.get(1), (Point2D) points.get(0)), false);
+            path.append(getEndArrowHead().getPath((Point2D) points.get(points.size() - 2), (Point2D) points.get(points.size() - 1)),
+                    false);
+            return path;
+        }
+        return null;
     }
 
     public GeneralPath getSegmentPath()
     {
         ArrayList<Point2D> points = getPoints();
-
-        GeneralPath path = new GeneralPath();
-        Point2D p = (Point2D) points.get(points.size() - 1);
-        path.moveTo((float) p.getX(), (float) p.getY());
-        for (int i = points.size() - 2; i >= 0; i--)
+        if(points != null)
         {
-            p = (Point2D) points.get(i);
-            path.lineTo((float) p.getX(), (float) p.getY());
+        	GeneralPath path = new GeneralPath();
+            Point2D p = (Point2D) points.get(points.size() - 1);
+            path.moveTo((float) p.getX(), (float) p.getY());
+            for (int i = points.size() - 2; i >= 0; i--)
+            {
+                p = (Point2D) points.get(i);
+                path.lineTo((float) p.getX(), (float) p.getY());
+            }
+            return path;
         }
-        return path;
+        else {
+			return null;
+		}
+        
     }
 
     /**
@@ -524,22 +523,23 @@ public abstract class SegmentedLineEdgeByCai extends ShapeEdge
         }
         return straightDirection;
     }
-    @XStreamOmitField
+//    @XStreamOmitField
     private LineStyle lineStyle;
-    @XStreamOmitField
+//    @XStreamOmitField
     private ArrowHead startArrowHead;
-    @XStreamOmitField
+//    @XStreamOmitField
     private ArrowHead endArrowHead;
-    @XStreamOmitField
-    private BentStyle bentStyle;
-
-    private String input;
-    private String parameter;
-    private String output;
-  
-	private String name;
-    private String timing;
     
-	private String timereset;
+    private BentStyle bentStyle;
+    private String parameters;
+    private String arguments;
+    private String assign;
+    private String returnvalue;  
+    private String message;
+    private String condition;    
+    private String constraint;
+    private String alias;
+    private String timeconstraint;
+
     private static JLabel label = new JLabel();
 }

@@ -1,5 +1,7 @@
 package com.horstmann.violet.framework.propertyeditor.customeditor;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Vector;
 
 import javax.swing.DefaultCellEditor;
@@ -18,9 +20,13 @@ public class SequenceJtabel extends JTable{
     	   this.setModel(sequenceTabelModel);
     	   
            comboBoxVector = new Vector();
-           comboBoxVector.add("post-conditon"); 
-           comboBoxVector.add("pre-conditon"); 
+           comboBoxVector.add("post-condition"); 
+           comboBoxVector.add("pre-condition"); 
+           comboBoxVector.add("Process");
+           comboBoxVector.add("Invariant");
+           comboBoxVector.add("OCL");
            jComboBox = new JComboBox(comboBoxVector);
+           
 	   }
 	   public void addcolumn()
        {
@@ -33,6 +39,5 @@ public class SequenceJtabel extends JTable{
 		   int selectRow = this.getSelectedRow();
 		   sequenceTabelModel.delete(selectRow);
        }
-       
 
 }

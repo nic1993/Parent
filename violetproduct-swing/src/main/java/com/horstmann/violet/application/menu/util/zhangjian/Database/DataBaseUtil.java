@@ -11,12 +11,14 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.horstmann.violet.application.gui.util.yangjie.TCDetail;
+
 public  class DataBaseUtil {
 	static ResultSet ret = null;  
  	public static final String url ="jdbc:mysql://localhost:3306/mydb"; 
     public static final String name ="com.mysql.jdbc.Driver";  
     public static final String user ="root";  
-    public static final String password ="123456";  
+    public static final String password ="root";  
     public static Connection conn = null;  
     public static PreparedStatement pst = null;  
     /**
@@ -563,6 +565,33 @@ public  class DataBaseUtil {
 		return list;
 	}
 	
-
+	//----------------------------≤È—Ø tcdtail-----------------
 	
+    public static List<TCDetail>  showTCDetailAll(String sql){
+    	List<TCDetail> list=new ArrayList<TCDetail>();
+        init();
+        try {
+			pst=conn.prepareStatement(sql);
+			ret=pst.executeQuery();
+			while(ret.next()){
+				TCDetail tcd=new TCDetail();
+				int id=ret.getInt(1);
+				tcd.setId(id);
+				String testSequence=ret.getString(2);
+				tcd.setTestSequence(testSequence);
+				String stimulateSequence=ret.getString(3);
+				tcd.setStimulateSequence(stimulateSequence);
+				String testCase=ret.getString(4);
+				tcd.setTestCase(testCase);
+				list.add(tcd);
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return list;
+    }
+	
+  
 }

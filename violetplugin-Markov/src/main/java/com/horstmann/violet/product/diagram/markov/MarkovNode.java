@@ -61,7 +61,6 @@ public class MarkovNode extends EllipticalNode {
 	    public MarkovNode clone()
 	    {
 	    	MarkovNode cloned =(MarkovNode) super.clone();
-	    	
 	    	return cloned;
 	    }
 	    public void setFinal(boolean dummy)

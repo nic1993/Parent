@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<xmi:XMI xmi:version="2.1" xmlns:uml="http://schema.omg.org/spec/UML/2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1">
+	<xmi:Documentation exporter="Enterprise Architect" exporterVersion="6.5"/>
+	<uml:Model xmi:type="uml:Model" name="EA_Model" visibility="public">
+		<packagedElement xmi:type="uml:Package" xmi:id="EAPK_170D1B6C_FCB6_4818_86CB_44ED17A14088" name="update_land_detector" visibility="public">
+			<packagedElement xmi:type="uml:Collaboration" xmi:id="EAID_CB000000_B6C_FCB6_4818_86CB_44ED17A1408" name="EA_Collaboration1" visibility="public">
+				<ownedBehavior xmi:type="uml:Interaction" xmi:id="EAID_IN000000_B6C_FCB6_4818_86CB_44ED17A1408" name="EA_Interaction1" visibility="public">
+					<fragment xmi:type="uml:CombinedFragment" xmi:id="EAID_3924D09C_A619_47e8_9F9E_7A2DADA206A9" visibility="public" interactionOperator="alt">
+						<covered xmi:idref="EAID_12550811_FC64_4cba_8172_24C130DEF6FD"/>
+						<operand xmi:type="uml:InteractionOperand" xmi:id="EAID_OP000002_A619_47e8_9F9E_7A2DADA206A9">
+							<guard xmi:type="uml:InteractionConstraint" xmi:id="EAID_IC000002_A619_47e8_9F9E_7A2DADA206A9">
+								<specification xmi:type="uml:OpaqueExpression" xmi:id="EAID_OE000002_A619_47e8_9F9E_7A2DADA206A9" body="has_armed==false#has_armed:bool"/>
+							</guard>
+						</operand>
+						<operand xmi:type="uml:InteractionOperand" xmi:id="EAID_OP000001_A619_47e8_9F9E_7A2DADA206A9">
+							<guard xmi:type="uml:InteractionConstraint" xmi:id="EAID_IC000001_A619_47e8_9F9E_7A2DADA206A9">
+								<specification xmi:type="uml:OpaqueExpression" xmi:id="EAID_OE000001_A619_47e8_9F9E_7A2DADA206A9" body="has_armed==true &amp;&amp; ap.land_complete==1,0&lt;=ap.land_complete&lt;=1#has_armed:bool,ap.land_complete:uint8_t"/>
+							</guard>
+						</operand>
+						<operand xmi:type="uml:InteractionOperand" xmi:id="EAID_OP000000_A619_47e8_9F9E_7A2DADA206A9">
+							<guard xmi:type="uml:InteractionConstraint" xmi:id="EAID_IC000000_A619_47e8_9F9E_7A2DADA206A9">
+								<specification xmi:type="uml:OpaqueExpression" xmi:id="EAID_OE000000_A619_47e8_9F9E_7A2DADA206A9" body="has_armed==true &amp;&amp; ap.land_complete==0,0&lt;=ap.land_complete&lt;=1#has_armed:bool,ap.land_complete:uint8_t"/>
+							</guard>
+						</operand>
+					</fragment>
+					<lifeline xmi:type="uml:Lifeline" xmi:id="EAID_12550811_FC64_4cba_8172_24C130DEF6FD" name="copter" visibility="public" represents="EAID_AT000000_FC64_4cba_8172_24C130DEF6FD"/>
+					<lifeline xmi:type="uml:Lifeline" xmi:id="EAID_93ECD421_D2F2_4f34_A184_7FA4468D11BC" name="motors" visibility="public" represents="EAID_AT000000_D2F2_4f34_A184_7FA4468D11BC"/>
+					<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000004_FC64_4cba_8172_24C130DEF6FD" covered="EAID_12550811_FC64_4cba_8172_24C130DEF6FD"/>
+					<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000005_FC64_4cba_8172_24C130DEF6FD" covered="EAID_12550811_FC64_4cba_8172_24C130DEF6FD"/>
+					<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000006_FC64_4cba_8172_24C130DEF6FD" covered="EAID_12550811_FC64_4cba_8172_24C130DEF6FD"/>
+					<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000000_D2F2_4f34_A184_7FA4468D11BC" covered="EAID_93ECD421_D2F2_4f34_A184_7FA4468D11BC"/>
+					<fragment xmi:type="uml:CombinedFragment" xmi:id="EAID_3ABD3C03_E67B_498c_9395_8D98974EDAB1" name="if disarmed, always landed." visibility="public" interactionOperator="alt">
+						<covered xmi:idref="EAID_12550811_FC64_4cba_8172_24C130DEF6FD"/>
+						<covered xmi:idref="EAID_93ECD421_D2F2_4f34_A184_7FA4468D11BC"/>
+						<operand xmi:type="uml:InteractionOperand" xmi:id="EAID_OP000002_E67B_498c_9395_8D98974EDAB1">
+							<guard xmi:type="uml:InteractionConstraint" xmi:id="EAID_IC000002_E67B_498c_9395_8D98974EDAB1">
+								<specification xmi:type="uml:OpaqueExpression" xmi:id="EAID_OE000002_E67B_498c_9395_8D98974EDAB1" body="has_armed==false#has_armed:bool"/>
+							</guard>
+							<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000002_FC64_4cba_8172_24C130DEF6FD" covered="EAID_12550811_FC64_4cba_8172_24C130DEF6FD"/>
+							<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000003_FC64_4cba_8172_24C130DEF6FD" covered="EAID_12550811_FC64_4cba_8172_24C130DEF6FD"/>
+						</operand>
+						<operand xmi:type="uml:InteractionOperand" xmi:id="EAID_OP000001_E67B_498c_9395_8D98974EDAB1">
+							<guard xmi:type="uml:InteractionConstraint" xmi:id="EAID_IC000001_E67B_498c_9395_8D98974EDAB1">
+								<specification xmi:type="uml:OpaqueExpression" xmi:id="EAID_OE000001_E67B_498c_9395_8D98974EDAB1" body="has_armed==true &amp;&amp; ap.land_complete==1,0&lt;=ap.land_complete&lt;=1#has_armed:bool,ap.land_complete:uint8_t"/>
+							</guard>
+							<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000009_FC64_4cba_8172_24C130DEF6FD" covered="EAID_12550811_FC64_4cba_8172_24C130DEF6FD"/>
+							<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000001_D2F2_4f34_A184_7FA4468D11BC" covered="EAID_93ECD421_D2F2_4f34_A184_7FA4468D11BC"/>
+							<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000010_FC64_4cba_8172_24C130DEF6FD" covered="EAID_12550811_FC64_4cba_8172_24C130DEF6FD"/>
+							<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000011_FC64_4cba_8172_24C130DEF6FD" covered="EAID_12550811_FC64_4cba_8172_24C130DEF6FD"/>
+							<fragment xmi:type="uml:CombinedFragment" xmi:id="EAID_4FB2573A_CB4F_4ee4_B96B_36A8BA808108" name="judge get_the_throttle get_non_takeoffthrotle" visibility="public" interactionOperator="opt">
+								<covered xmi:idref="EAID_12550811_FC64_4cba_8172_24C130DEF6FD"/>
+								<operand xmi:type="uml:InteractionOperand" xmi:id="EAID_OP000000_CB4F_4ee4_B96B_36A8BA808108">
+									<guard xmi:type="uml:InteractionConstraint" xmi:id="EAID_IC000000_CB4F_4ee4_B96B_36A8BA808108">
+										<specification xmi:type="uml:OpaqueExpression" xmi:id="EAID_OE000000_CB4F_4ee4_B96B_36A8BA808108" body="get_the_throttle &gt; get_non_takeoffthrotle#get_the_throttle:float,get_non_takeoffthrotle:float"/>
+									</guard>
+									<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000007_FC64_4cba_8172_24C130DEF6FD" covered="EAID_12550811_FC64_4cba_8172_24C130DEF6FD"/>
+									<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000008_FC64_4cba_8172_24C130DEF6FD" covered="EAID_12550811_FC64_4cba_8172_24C130DEF6FD"/>
+								</operand>
+							</fragment>
+						</operand>
+						<operand xmi:type="uml:InteractionOperand" xmi:id="EAID_OP000000_E67B_498c_9395_8D98974EDAB1">
+							<guard xmi:type="uml:InteractionConstraint" xmi:id="EAID_IC000000_E67B_498c_9395_8D98974EDAB1">
+								<specification xmi:type="uml:OpaqueExpression" xmi:id="EAID_OE000000_E67B_498c_9395_8D98974EDAB1" body="has_armed==true &amp;&amp; ap.land_complete==0,0&lt;=ap.land_complete&lt;=1#has_armed:bool,ap.land_complete:uint8_t"/>
+							</guard>
+							<fragment xmi:type="uml:CombinedFragment" xmi:id="EAID_89BDD906_2EF7_4f1d_8FC5_710AAA9741D0" visibility="public" interactionOperator="opt">
+								<covered xmi:idref="EAID_12550811_FC64_4cba_8172_24C130DEF6FD"/>
+								<operand xmi:type="uml:InteractionOperand" xmi:id="EAID_OP000000_2EF7_4f1d_8FC5_710AAA9741D0">
+									<guard xmi:type="uml:InteractionConstraint" xmi:id="EAID_IC000000_2EF7_4f1d_8FC5_710AAA9741D0">
+										<specification xmi:type="uml:OpaqueExpression" xmi:id="EAID_OE000000_2EF7_4f1d_8FC5_710AAA9741D0" body="motors_at_lower_limit==true&amp;&amp;accel_stationary==true#motors_at_lower_limit:bool,accel_stationary:bool"/>
+									</guard>
+									<fragment xmi:type="uml:CombinedFragment" xmi:id="EAID_E9AAF2FD_CAB9_4b7b_B037_AEFC7F08291E" visibility="public" interactionOperator="opt">
+										<covered xmi:idref="EAID_12550811_FC64_4cba_8172_24C130DEF6FD"/>
+										<operand xmi:type="uml:InteractionOperand" xmi:id="EAID_OP000000_CAB9_4b7b_B037_AEFC7F08291E">
+											<guard xmi:type="uml:InteractionConstraint" xmi:id="EAID_IC000000_CAB9_4b7b_B037_AEFC7F08291E">
+												<specification xmi:type="uml:OpaqueExpression" xmi:id="EAID_OE000000_CAB9_4b7b_B037_AEFC7F08291E" body="land_detector_count&gt;=400#land_detector_count:uint32_t"/>
+											</guard>
+											<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000012_FC64_4cba_8172_24C130DEF6FD" covered="EAID_12550811_FC64_4cba_8172_24C130DEF6FD"/>
+											<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000013_FC64_4cba_8172_24C130DEF6FD" covered="EAID_12550811_FC64_4cba_8172_24C130DEF6FD"/>
+										</operand>
+									</fragment>
+								</operand>
+							</fragment>
+						</operand>
+					</fragment>
+					<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000000_FC64_4cba_8172_24C130DEF6FD" covered="EAID_12550811_FC64_4cba_8172_24C130DEF6FD"/>
+					<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000001_FC64_4cba_8172_24C130DEF6FD" covered="EAID_12550811_FC64_4cba_8172_24C130DEF6FD"/>
+					<message xmi:type="uml:Message" xmi:id="EAID_283935C6_DAF6_45cf_911A_96B6556D348B" name="update_land_detectors()" messageKind="complete" messageSort="synchCall" sendEvent="EAID_FR000004_FC64_4cba_8172_24C130DEF6FD" receiveEvent="EAID_FR000005_FC64_4cba_8172_24C130DEF6FD"/>
+					<message xmi:type="uml:Message" xmi:id="EAID_368F7B43_EEC5_44fc_9961_D7F2AD47C142" name="armed()" messageKind="complete" messageSort="synchCall" sendEvent="EAID_FR000006_FC64_4cba_8172_24C130DEF6FD" receiveEvent="EAID_FR000000_D2F2_4f34_A184_7FA4468D11BC"/>
+					<message xmi:type="uml:Message" xmi:id="EAID_23A18FEA_E486_4e1c_9C1E_FA3E3C8C2991" name="set_land_complete(bool)" messageKind="complete" messageSort="synchCall" sendEvent="EAID_FR000002_FC64_4cba_8172_24C130DEF6FD" receiveEvent="EAID_FR000003_FC64_4cba_8172_24C130DEF6FD">
+						<argument xmi:type="uml:LiteralString" xmi:id="EAID_AR000000_E486_4e1c_9C1E_FA3E3C8C2991" name="b"/>
+					</message>
+					<message xmi:type="uml:Message" xmi:id="EAID_A663AC96_E6E7_45ee_8971_7D9B57518BA4" name="get_throttle()" messageKind="complete" messageSort="synchCall" sendEvent="EAID_FR000009_FC64_4cba_8172_24C130DEF6FD" receiveEvent="EAID_FR000001_D2F2_4f34_A184_7FA4468D11BC"/>
+					<message xmi:type="uml:Message" xmi:id="EAID_CF412CE9_D9CF_4563_A2B8_C882DA33D312" name="get_non_takeoffthrotle()" messageKind="complete" messageSort="synchCall" sendEvent="EAID_FR000010_FC64_4cba_8172_24C130DEF6FD" receiveEvent="EAID_FR000011_FC64_4cba_8172_24C130DEF6FD"/>
+					<message xmi:type="uml:Message" xmi:id="EAID_4D4993DE_D8FA_4270_87DD_745F6C0B1DB3" name="set_land_complete(bool)" messageKind="complete" messageSort="synchCall" sendEvent="EAID_FR000007_FC64_4cba_8172_24C130DEF6FD" receiveEvent="EAID_FR000008_FC64_4cba_8172_24C130DEF6FD">
+						<argument xmi:type="uml:LiteralString" xmi:id="EAID_AR000000_D8FA_4270_87DD_745F6C0B1DB3" name="b">
+							<defaultValue xmi:type="uml:LiteralString" xmi:id="EAID_LS000000_D8FA_4270_87DD_745F6C0B1DB3" value="false"/>
+						</argument>
+					</message>
+					<message xmi:type="uml:Message" xmi:id="EAID_DFFFC6E9_C0C4_42e2_8985_13721F140316" name="set_land_complete(bool)" messageKind="complete" messageSort="synchCall" sendEvent="EAID_FR000012_FC64_4cba_8172_24C130DEF6FD" receiveEvent="EAID_FR000013_FC64_4cba_8172_24C130DEF6FD">
+						<argument xmi:type="uml:LiteralString" xmi:id="EAID_AR000000_C0C4_42e2_8985_13721F140316" name="b">
+							<defaultValue xmi:type="uml:LiteralString" xmi:id="EAID_LS000000_C0C4_42e2_8985_13721F140316" value="true"/>
+						</argument>
+					</message>
+					<message xmi:type="uml:Message" xmi:id="EAID_19384225_AED9_49ca_A6F1_462A13D079E1" name="set_land_complete_maybe(bool)" messageKind="complete" messageSort="synchCall" sendEvent="EAID_FR000000_FC64_4cba_8172_24C130DEF6FD" receiveEvent="EAID_FR000001_FC64_4cba_8172_24C130DEF6FD">
+						<argument xmi:type="uml:LiteralString" xmi:id="EAID_AR000000_AED9_49ca_A6F1_462A13D079E1" name="b"/>
+					</message>
+				</ownedBehavior>
+				<ownedAttribute xmi:type="uml:Property" xmi:id="EAID_AT000000_FC64_4cba_8172_24C130DEF6FD"/>
+				<ownedAttribute xmi:type="uml:Property" xmi:id="EAID_AT000000_D2F2_4f34_A184_7FA4468D11BC"/>
+			</packagedElement>
+		</packagedElement>
+	</uml:Model>
+	<xmi:Extension extender="Enterprise Architect" extenderID="6.5">
+		<elements>
+			<element xmi:idref="EAPK_170D1B6C_FCB6_4818_86CB_44ED17A14088" xmi:type="uml:Package" name="update_land_detector" scope="public">
+				<model package2="EAID_170D1B6C_FCB6_4818_86CB_44ED17A14088" package="EAPK_12D61F71_42AF_4f6e_948D_F7972938140A" tpos="6" ea_localid="107" ea_eleType="package"/>
+				<properties isSpecification="false" sType="Package" nType="0" scope="public"/>
+				<project author="&#24352;&#25104;" version="1.0" phase="1.0" created="2017-03-06 09:28:16" modified="2017-03-08 09:47:27" complexity="1" status="Proposed"/>
+				<code gentype="C++"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="sequences"/>
+				<packageproperties version="1.0" tpos="6"/>
+				<paths/>
+				<times created="2017-03-06 09:28:16" modified="2017-03-08 09:47:27" lastloaddate="2017-03-06 09:28:16" lastsavedate="2017-03-06 09:28:16"/>
+				<flags iscontrolled="FALSE" isprotected="FALSE" batchsave="0" batchload="0" usedtd="FALSE" logxml="FALSE"/>
+			</element>
+			<element xmi:idref="EAID_E9AAF2FD_CAB9_4b7b_B037_AEFC7F08291E" xmi:type="uml:InteractionFragment" scope="public">
+				<model package="EAPK_170D1B6C_FCB6_4818_86CB_44ED17A14088" tpos="0" ea_localid="600" ea_eleType="element"/>
+				<properties isSpecification="false" sType="InteractionFragment" nType="1" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
+				<project author="&#24352;&#25104;" version="1.0" phase="1.0" created="2017-03-09 10:05:10" modified="2017-03-09 10:05:33" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=3;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs value="$XREFPROP=$XID={817A7CF8-EA0B-42b1-B3A9-F7DA69989F67}$XID;$NAM=Partitions$NAM;$TYP=element property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@PAR;Name=land_detector_count&gt;=400#land_detector_count:uint32_t;Size=40;GUID={0F8B65A1-8BA1-4f4b-A878-702241E0BFD3};@ENDPAR;$DES;$CLT={E9AAF2FD-CAB9-4b7b-B037-AEFC7F08291E}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
+				<extendedProperties tagged="0" package_name="update_land_detector" diagram="EAID_75F37017_23E0_4eed_A2A9_BD66BC46DECE"/>
+			</element>
+			<element xmi:idref="EAID_3924D09C_A619_47e8_9F9E_7A2DADA206A9" xmi:type="uml:InteractionFragment" scope="public">
+				<model package="EAPK_170D1B6C_FCB6_4818_86CB_44ED17A14088" tpos="0" ea_localid="585" ea_eleType="element"/>
+				<properties isSpecification="false" sType="InteractionFragment" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
+				<project author="&#24352;&#25104;" version="1.0" phase="1.0" created="2017-03-06 09:28:16" modified="2017-03-06 09:28:16" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=3;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs value="$XREFPROP=$XID={1102813A-9EC5-4277-B91F-57B97B27A874}$XID;$NAM=Partitions$NAM;$TYP=element property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@PAR;Name=has_armed==true &amp;&amp; ap.land_complete==0,0&lt;=ap.land_complete&lt;=1#has_armed:bool,ap.land_complete:uint8_t;Size=40;GUID={EC156CA7-D831-4226-9418-0B8D99A99BF7};@ENDPAR;@PAR;Name=has_armed==true &amp;&amp; ap.land_complete==1,0&lt;=ap.land_complete&lt;=1#has_armed:bool,ap.land_complete:uint8_t;Size=40;GUID={A61BD1A5-13D2-4d2c-8B99-FF593DE89396};@ENDPAR;@PAR;Name=has_armed==false#has_armed:bool;Size=150;GUID={19B1C3F3-F560-4436-8A0D-A6097FB21E1E};@ENDPAR;$DES;$CLT={3924D09C-A619-47e8-9F9E-7A2DADA206A9}$CLT;$ENDXREF;"/>
+				<extendedProperties tagged="0" package_name="update_land_detector" diagram="EAID_75F37017_23E0_4eed_A2A9_BD66BC46DECE"/>
+			</element>
+			<element xmi:idref="EAID_89BDD906_2EF7_4f1d_8FC5_710AAA9741D0" xmi:type="uml:InteractionFragment" scope="public">
+				<model package="EAPK_170D1B6C_FCB6_4818_86CB_44ED17A14088" tpos="0" ea_localid="599" ea_eleType="element"/>
+				<properties isSpecification="false" sType="InteractionFragment" nType="1" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
+				<project author="&#24352;&#25104;" version="1.0" phase="1.0" created="2017-03-09 10:04:14" modified="2017-03-09 10:04:40" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=3;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs value="$XREFPROP=$XID={4CA4AB03-12DD-4aec-B0E7-AB9E38E385A3}$XID;$NAM=Partitions$NAM;$TYP=element property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@PAR;Name=motors_at_lower_limit==true&amp;&amp;accel_stationary==true#motors_at_lower_limit:bool,accel_stationary:bool;Size=40;GUID={84F95D5C-3035-4148-BE87-6C6522A1396B};@ENDPAR;$DES;$CLT={89BDD906-2EF7-4f1d-8FC5-710AAA9741D0}$CLT;$SUP=&lt;none&gt;$SUP;$ENDXREF;"/>
+				<extendedProperties tagged="0" package_name="update_land_detector" diagram="EAID_75F37017_23E0_4eed_A2A9_BD66BC46DECE"/>
+			</element>
+			<element xmi:idref="EAID_12550811_FC64_4cba_8172_24C130DEF6FD" xmi:type="uml:Sequence" name="copter" scope="public">
+				<model package="EAPK_170D1B6C_FCB6_4818_86CB_44ED17A14088" tpos="0" ea_localid="588" ea_eleType="element"/>
+				<properties isSpecification="false" sType="Sequence" nType="0" scope="public"/>
+				<project author="&#24352;&#25104;" version="1.0" phase="1.0" created="2017-03-06 09:28:16" modified="2017-03-06 09:28:16" complexity="1" status="Proposed"/>
+				<code gentype="C++"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="update_land_detector"/>
+				<links>
+					<Sequence xmi:id="EAID_19384225_AED9_49ca_A6F1_462A13D079E1" start="EAID_12550811_FC64_4cba_8172_24C130DEF6FD" end="EAID_12550811_FC64_4cba_8172_24C130DEF6FD"/>
+					<Sequence xmi:id="EAID_23A18FEA_E486_4e1c_9C1E_FA3E3C8C2991" start="EAID_12550811_FC64_4cba_8172_24C130DEF6FD" end="EAID_12550811_FC64_4cba_8172_24C130DEF6FD"/>
+					<Sequence xmi:id="EAID_283935C6_DAF6_45cf_911A_96B6556D348B" start="EAID_12550811_FC64_4cba_8172_24C130DEF6FD" end="EAID_12550811_FC64_4cba_8172_24C130DEF6FD"/>
+					<Sequence xmi:id="EAID_368F7B43_EEC5_44fc_9961_D7F2AD47C142" start="EAID_12550811_FC64_4cba_8172_24C130DEF6FD" end="EAID_93ECD421_D2F2_4f34_A184_7FA4468D11BC"/>
+					<Sequence xmi:id="EAID_4D4993DE_D8FA_4270_87DD_745F6C0B1DB3" start="EAID_12550811_FC64_4cba_8172_24C130DEF6FD" end="EAID_12550811_FC64_4cba_8172_24C130DEF6FD"/>
+					<Sequence xmi:id="EAID_A663AC96_E6E7_45ee_8971_7D9B57518BA4" start="EAID_12550811_FC64_4cba_8172_24C130DEF6FD" end="EAID_93ECD421_D2F2_4f34_A184_7FA4468D11BC"/>
+					<Sequence xmi:id="EAID_CF412CE9_D9CF_4563_A2B8_C882DA33D312" start="EAID_12550811_FC64_4cba_8172_24C130DEF6FD" end="EAID_12550811_FC64_4cba_8172_24C130DEF6FD"/>
+					<Sequence xmi:id="EAID_DFFFC6E9_C0C4_42e2_8985_13721F140316" start="EAID_12550811_FC64_4cba_8172_24C130DEF6FD" end="EAID_12550811_FC64_4cba_8172_24C130DEF6FD"/>
+					<Sequence xmi:id="EAID_19384225_AED9_49ca_A6F1_462A13D079E1" start="EAID_12550811_FC64_4cba_8172_24C130DEF6FD" end="EAID_12550811_FC64_4cba_8172_24C130DEF6FD"/>
+					<Sequence xmi:id="EAID_23A18FEA_E486_4e1c_9C1E_FA3E3C8C2991" start="EAID_12550811_FC64_4cba_8172_24C130DEF6FD" end="EAID_12550811_FC64_4cba_8172_24C130DEF6FD"/>
+					<Sequence xmi:id="EAID_283935C6_DAF6_45cf_911A_96B6556D348B" start="EAID_12550811_FC64_4cba_8172_24C130DEF6FD" end="EAID_12550811_FC64_4cba_8172_24C130DEF6FD"/>
+					<Sequence xmi:id="EAID_4D4993DE_D8FA_4270_87DD_745F6C0B1DB3" start="EAID_12550811_FC64_4cba_8172_24C130DEF6FD" end="EAID_12550811_FC64_4cba_8172_24C130DEF6FD"/>
+					<Sequence xmi:id="EAID_CF412CE9_D9CF_4563_A2B8_C882DA33D312" start="EAID_12550811_FC64_4cba_8172_24C130DEF6FD" end="EAID_12550811_FC64_4cba_8172_24C130DEF6FD"/>
+					<Sequence xmi:id="EAID_DFFFC6E9_C0C4_42e2_8985_13721F140316" start="EAID_12550811_FC64_4cba_8172_24C130DEF6FD" end="EAID_12550811_FC64_4cba_8172_24C130DEF6FD"/>
+				</links>
+			</element>
+			<element xmi:idref="EAID_3ABD3C03_E67B_498c_9395_8D98974EDAB1" xmi:type="uml:InteractionFragment" name="if disarmed, always landed." scope="public">
+				<model package="EAPK_170D1B6C_FCB6_4818_86CB_44ED17A14088" tpos="0" ea_localid="586" ea_eleType="element"/>
+				<properties isSpecification="false" sType="InteractionFragment" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
+				<project author="&#24352;&#25104;" version="1.0" phase="1.0" created="2017-03-06 09:28:16" modified="2017-03-06 09:28:16" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=3;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs value="$XREFPROP=$XID={5ECFE2C2-9AB6-4cac-8821-0EE7182030B7}$XID;$NAM=Partitions$NAM;$TYP=element property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@PAR;Name=has_armed==true &amp;&amp; ap.land_complete==0,0&lt;=ap.land_complete&lt;=1#has_armed:bool,ap.land_complete:uint8_t;Size=169;GUID={53F913AA-8682-4117-AFFA-8BA25CA08FC0};@ENDPAR;@PAR;Name=has_armed==true &amp;&amp; ap.land_complete==1,0&lt;=ap.land_complete&lt;=1#has_armed:bool,ap.land_complete:uint8_t;Size=373;GUID={1CBDCC8F-CD89-4362-9206-BA6543C5D30F};@ENDPAR;@PAR;Name=has_armed==false#has_armed:bool;Size=174;GUID={D2B92B54-5B58-4e8c-9D60-4C6F121EC5BE};@ENDPAR;$DES;$CLT={3ABD3C03-E67B-498c-9395-8D98974EDAB1}$CLT;$ENDXREF;"/>
+				<extendedProperties tagged="0" package_name="update_land_detector" diagram="EAID_75F37017_23E0_4eed_A2A9_BD66BC46DECE"/>
+			</element>
+			<element xmi:idref="EAID_4FB2573A_CB4F_4ee4_B96B_36A8BA808108" xmi:type="uml:InteractionFragment" name="judge get_the_throttle get_non_takeoffthrotle" scope="public">
+				<model package="EAPK_170D1B6C_FCB6_4818_86CB_44ED17A14088" tpos="0" ea_localid="587" ea_eleType="element"/>
+				<properties isSpecification="false" sType="InteractionFragment" nType="1" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
+				<project author="&#24352;&#25104;" version="1.0" phase="1.0" created="2017-03-06 09:28:16" modified="2017-03-06 09:28:16" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=3;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs value="$XREFPROP=$XID={6806AFC7-CCD0-4ab8-8AC6-A98094CB50F6}$XID;$NAM=Partitions$NAM;$TYP=element property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@PAR;Name=get_the_throttle &gt; get_non_takeoffthrotle#get_the_throttle:float,get_non_takeoffthrotle:float;Size=40;GUID={ECB639F2-7D86-4474-A419-EE6637BC6CD0};@ENDPAR;$DES;$CLT={4FB2573A-CB4F-4ee4-B96B-36A8BA808108}$CLT;$ENDXREF;"/>
+				<extendedProperties tagged="0" package_name="update_land_detector" diagram="EAID_75F37017_23E0_4eed_A2A9_BD66BC46DECE"/>
+			</element>
+			<element xmi:idref="EAID_93ECD421_D2F2_4f34_A184_7FA4468D11BC" xmi:type="uml:Sequence" name="motors" scope="public">
+				<model package="EAPK_170D1B6C_FCB6_4818_86CB_44ED17A14088" tpos="0" ea_localid="589" ea_eleType="element"/>
+				<properties isSpecification="false" sType="Sequence" nType="0" scope="public"/>
+				<project author="&#24352;&#25104;" version="1.0" phase="1.0" created="2017-03-06 09:28:16" modified="2017-03-06 09:28:16" complexity="1" status="Proposed"/>
+				<code gentype="C++"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="update_land_detector"/>
+				<links>
+					<Sequence xmi:id="EAID_368F7B43_EEC5_44fc_9961_D7F2AD47C142" start="EAID_12550811_FC64_4cba_8172_24C130DEF6FD" end="EAID_93ECD421_D2F2_4f34_A184_7FA4468D11BC"/>
+					<Sequence xmi:id="EAID_A663AC96_E6E7_45ee_8971_7D9B57518BA4" start="EAID_12550811_FC64_4cba_8172_24C130DEF6FD" end="EAID_93ECD421_D2F2_4f34_A184_7FA4468D11BC"/>
+				</links>
+			</element>
+		</elements>
+		<connectors>
+			<connector xmi:idref="EAID_19384225_AED9_49ca_A6F1_462A13D079E1">
+				<source xmi:idref="EAID_12550811_FC64_4cba_8172_24C130DEF6FD">
+					<model ea_localid="588" type="Sequence" name="copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Non-Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_12550811_FC64_4cba_8172_24C130DEF6FD">
+					<model ea_localid="588" type="Sequence" name="copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="629"/>
+				<properties name="set_land_complete_maybe(bool)" ea_type="Sequence" direction="Source -&gt; Destination"/>
+				<documentation value="Condition(bool-b[true&amp;amp;false])#"/>
+				<appearance linemode="1" linecolor="0" linewidth="0" seqno="8" headStyle="0" lineStyle="0"/>
+				<labels mt="set_land_complete_maybe(bool)"/>
+				<extendedProperties stateflags="StartCoregionHead=0;EndCoregionHead=0;StartCoregionTail=0;EndCoregionTail=0;Activation=0;" virtualInheritance="0" diagram="EAID_75F37017_23E0_4eed_A2A9_BD66BC46DECE" privatedata1="Synchronous" privatedata2="retval=void;params=;paramsDlg=b;" privatedata3="Call" privatedata4="0" privatedata5="SX=0;SY=-66;EX=0;EY=0;$LLB=;LLT=;LMT=CX=155:CY=13:OX=40:OY=15:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMB=;LRT=;LRB=;IRHS=;ILHS=;" sequence_points="PtStartX=190;PtStartY=-1041;PtEndX=195;PtEndY=-1056;"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_23A18FEA_E486_4e1c_9C1E_FA3E3C8C2991">
+				<source xmi:idref="EAID_12550811_FC64_4cba_8172_24C130DEF6FD">
+					<model ea_localid="588" type="Sequence" name="copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Non-Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_12550811_FC64_4cba_8172_24C130DEF6FD">
+					<model ea_localid="588" type="Sequence" name="copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="628"/>
+				<properties name="set_land_complete(bool)" ea_type="Sequence" direction="Source -&gt; Destination"/>
+				<documentation value="Condition(bool-b[true&amp;amp;false])#"/>
+				<appearance linemode="1" linecolor="-1" linewidth="0" seqno="3" headStyle="0" lineStyle="0"/>
+				<labels mt="set_land_complete(bool)"/>
+				<extendedProperties virtualInheritance="0" diagram="EAID_75F37017_23E0_4eed_A2A9_BD66BC46DECE" privatedata1="Synchronous" privatedata2="retval=void;params=;paramsDlg=b;" privatedata3="Call" privatedata4="0" privatedata5="SX=0;SY=-87;EX=0;EY=-87;$LLB=;LLT=;LMT=CX=117:CY=13:OX=40:OY=15:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMB=;LRT=;LRB=;IRHS=;ILHS=;" sequence_points="PtStartX=190;PtStartY=-341;PtEndX=195;PtEndY=-356;"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_283935C6_DAF6_45cf_911A_96B6556D348B">
+				<source xmi:idref="EAID_12550811_FC64_4cba_8172_24C130DEF6FD">
+					<model ea_localid="588" type="Sequence" name="copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Non-Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_12550811_FC64_4cba_8172_24C130DEF6FD">
+					<model ea_localid="588" type="Sequence" name="copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="635"/>
+				<properties name="update_land_detectors()" ea_type="Sequence" direction="Source -&gt; Destination"/>
+				<documentation/>
+				<appearance linemode="1" linecolor="-1" linewidth="0" seqno="1" headStyle="0" lineStyle="0"/>
+				<labels mt="update_land_detectors()"/>
+				<extendedProperties stateflags="Activation=0;ExtendActivationUp=0;" virtualInheritance="0" diagram="EAID_75F37017_23E0_4eed_A2A9_BD66BC46DECE" privatedata1="Synchronous" privatedata2="retval=void;" privatedata3="Call" privatedata4="0" privatedata5="SX=0;SY=-40;EX=0;EY=0;$LLB=;LLT=;LMT=CX=114:CY=13:OX=40:OY=15:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMB=;LRT=;LRB=;IRHS=;ILHS=;" sequence_points="PtStartX=190;PtStartY=-175;PtEndX=195;PtEndY=-190;"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_368F7B43_EEC5_44fc_9961_D7F2AD47C142">
+				<source xmi:idref="EAID_12550811_FC64_4cba_8172_24C130DEF6FD">
+					<model ea_localid="588" type="Sequence" name="copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Non-Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_93ECD421_D2F2_4f34_A184_7FA4468D11BC">
+					<model ea_localid="589" type="Sequence" name="motors"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="634"/>
+				<properties name="armed()" ea_type="Sequence" direction="Source -&gt; Destination"/>
+				<documentation/>
+				<appearance linemode="1" linecolor="-1" linewidth="0" seqno="2" headStyle="0" lineStyle="0"/>
+				<labels mt=" has_armed= armed() :bool"/>
+				<extendedProperties virtualInheritance="0" diagram="EAID_75F37017_23E0_4eed_A2A9_BD66BC46DECE" privatedata1="Synchronous" privatedata2="retval=bool;retatt=has_armed;" privatedata3="Call" privatedata4="0" privatedata5="SX=0;SY=-9;EX=0;EY=0;$LLB=;LLT=;LMT=CX=124:CY=13:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMB=;LRT=;LRB=;IRHS=;ILHS=;" sequence_points="PtStartX=190;PtStartY=-219;PtEndX=670;PtEndY=-219;"/>
+				<style value="alias=io=out.;"/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_4D4993DE_D8FA_4270_87DD_745F6C0B1DB3">
+				<source xmi:idref="EAID_12550811_FC64_4cba_8172_24C130DEF6FD">
+					<model ea_localid="588" type="Sequence" name="copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Non-Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_12550811_FC64_4cba_8172_24C130DEF6FD">
+					<model ea_localid="588" type="Sequence" name="copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="633"/>
+				<properties name="set_land_complete(bool)" ea_type="Sequence" direction="Source -&gt; Destination"/>
+				<documentation value="Condition(bool-b[true&amp;amp;false])#"/>
+				<appearance linemode="1" linecolor="-1" linewidth="0" seqno="6" headStyle="0" lineStyle="0"/>
+				<labels mt="set_land_complete(false)"/>
+				<extendedProperties virtualInheritance="0" diagram="EAID_75F37017_23E0_4eed_A2A9_BD66BC46DECE" privatedata1="Synchronous" privatedata2="retval=void;params=;paramsDlg=b;" privatedata3="Call" privatedata4="0" privatedata5="SX=0;SY=-134;EX=0;EY=0;$LLB=;LLT=;LMT=CX=118:CY=13:OX=40:OY=15:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMB=;LRT=;LRB=;IRHS=;ILHS=;" sequence_points="PtStartX=190;PtStartY=-724;PtEndX=195;PtEndY=-739;"/>
+				<style value="paramvalues=false;"/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_A663AC96_E6E7_45ee_8971_7D9B57518BA4">
+				<source xmi:idref="EAID_12550811_FC64_4cba_8172_24C130DEF6FD">
+					<model ea_localid="588" type="Sequence" name="copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Non-Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_93ECD421_D2F2_4f34_A184_7FA4468D11BC">
+					<model ea_localid="589" type="Sequence" name="motors"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="642"/>
+				<properties name="get_throttle()" ea_type="Sequence" direction="Source -&gt; Destination"/>
+				<documentation/>
+				<appearance linemode="1" linecolor="-1" linewidth="0" seqno="4" headStyle="0" lineStyle="0"/>
+				<labels mt=" get_the_throttle= get_throttle() :float"/>
+				<extendedProperties virtualInheritance="0" diagram="EAID_75F37017_23E0_4eed_A2A9_BD66BC46DECE" privatedata1="Synchronous" privatedata2="retval=float;retatt=get_the_throttle;" privatedata3="Call" privatedata4="0" privatedata5="SX=0;SY=-126;EX=0;EY=0;$LLB=;LLT=;LMT=CX=171:CY=13:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMB=;LRT=;LRB=;IRHS=;ILHS=;" sequence_points="PtStartX=190;PtStartY=-502;PtEndX=670;PtEndY=-502;"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_CF412CE9_D9CF_4563_A2B8_C882DA33D312">
+				<source xmi:idref="EAID_12550811_FC64_4cba_8172_24C130DEF6FD">
+					<model ea_localid="588" type="Sequence" name="copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Non-Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_12550811_FC64_4cba_8172_24C130DEF6FD">
+					<model ea_localid="588" type="Sequence" name="copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="630"/>
+				<properties name="get_non_takeoffthrotle()" ea_type="Sequence" direction="Source -&gt; Destination"/>
+				<documentation/>
+				<appearance linemode="1" linecolor="-1" linewidth="0" seqno="5" headStyle="0" lineStyle="0"/>
+				<labels mt=" get_non_takeoffthrotle= get_non_takeoffthrotle() "/>
+				<extendedProperties virtualInheritance="0" diagram="EAID_75F37017_23E0_4eed_A2A9_BD66BC46DECE" privatedata1="Synchronous" privatedata2="retval=float;retatt=get_non_takeoffthrotle;" privatedata3="Call" privatedata4="0" privatedata5="SX=0;SY=-18;EX=0;EY=0;$LLB=;LLT=;LMT=CX=254:CY=13:OX=42:OY=15:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMB=;LRT=;LRB=;IRHS=;ILHS=;" sequence_points="PtStartX=190;PtStartY=-555;PtEndX=195;PtEndY=-570;"/>
+				<style value="alias=io=out,;"/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_DFFFC6E9_C0C4_42e2_8985_13721F140316">
+				<source xmi:idref="EAID_12550811_FC64_4cba_8172_24C130DEF6FD">
+					<model ea_localid="588" type="Sequence" name="copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Non-Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_12550811_FC64_4cba_8172_24C130DEF6FD">
+					<model ea_localid="588" type="Sequence" name="copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="648"/>
+				<properties name="set_land_complete(bool)" ea_type="Sequence" direction="Source -&gt; Destination"/>
+				<documentation value="Condition(bool-b[true&amp;amp;false])#"/>
+				<appearance linemode="1" linecolor="-1" linewidth="0" seqno="7" headStyle="0" lineStyle="0"/>
+				<labels mt="set_land_complete(true)"/>
+				<extendedProperties virtualInheritance="0" diagram="EAID_75F37017_23E0_4eed_A2A9_BD66BC46DECE" privatedata1="Synchronous" privatedata2="retval=void;params=;paramsDlg=b;" privatedata3="Call" privatedata4="0" privatedata5="SX=0;SY=-181;EX=0;EY=0;$LLB=;LLT=;LMT=CX=114:CY=13:OX=40:OY=15:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMB=;LRT=;LRB=;IRHS=;ILHS=;" sequence_points="PtStartX=190;PtStartY=-940;PtEndX=195;PtEndY=-955;"/>
+				<style value="paramvalues=true;"/>
+				<xrefs/>
+				<tags/>
+			</connector>
+		</connectors>
+		<primitivetypes>
+			<packagedElement xmi:type="uml:Package" xmi:id="EAPrimitiveTypesPackage" name="EA_PrimitiveTypes_Package" visibility="public"/>
+		</primitivetypes>
+		<profiles/>
+		<diagrams>
+			<diagram xmi:id="EAID_75F37017_23E0_4eed_A2A9_BD66BC46DECE">
+				<model package="EAPK_170D1B6C_FCB6_4818_86CB_44ED17A14088" localID="139" owner="EAPK_170D1B6C_FCB6_4818_86CB_44ED17A14088"/>
+				<properties name="update_land_detectors" type="Sequence"/>
+				<project author="&#24352;&#25104;" version="1.0" created="2017-03-06 09:28:16" modified="2017-03-09 10:08:30"/>
+				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=827;DocSize.cy=1169;ShowDetails=0;Orientation=P;Zoom=122;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
+				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=0;INT_ARGS=;INT_RET=;INT_ATT=;SeqTopMargin=50;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;SaveTag=92DD3B75;"/>
+				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=-1;bold=false;fcol=0;;cls=0;"/>
+				<matrixitems value="locked=false;matrixactive=false;swimlanesactive=true;width=1;"/>
+				<extendedProperties/>
+				<elements>
+					<element geometry="Left=160;Top=900;Right=570;Bottom=970;" subject="EAID_E9AAF2FD_CAB9_4b7b_B037_AEFC7F08291E" seqno="1" style="DUID=D6A51783;"/>
+					<element geometry="Left=140;Top=859;Right=580;Bottom=979;" subject="EAID_89BDD906_2EF7_4f1d_8FC5_710AAA9741D0" seqno="2" style="DUID=B2782DC1;"/>
+					<element geometry="Left=169;Top=654;Right=493;Bottom=795;" subject="EAID_4FB2573A_CB4F_4ee4_B96B_36A8BA808108" seqno="3" style="DUID=D3464CA7;"/>
+					<element geometry="Left=116;Top=279;Right=763;Bottom=995;" subject="EAID_3ABD3C03_E67B_498c_9395_8D98974EDAB1" seqno="4" style="DUID=20FA63D4;"/>
+					<element geometry="Left=630;Top=50;Right=720;Bottom=1077;" subject="EAID_93ECD421_D2F2_4f34_A184_7FA4468D11BC" seqno="5" style="DUID=FF845AB6;"/>
+					<element geometry="Left=140;Top=50;Right=230;Bottom=1077;" subject="EAID_12550811_FC64_4cba_8172_24C130DEF6FD" seqno="6" style="DUID=8859738D;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;Path=;" subject="EAID_283935C6_DAF6_45cf_911A_96B6556D348B" style=";Hidden=0;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;Path=;" subject="EAID_368F7B43_EEC5_44fc_9961_D7F2AD47C142" style=";Hidden=0;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;Path=;" subject="EAID_23A18FEA_E486_4e1c_9C1E_FA3E3C8C2991" style=";Hidden=0;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;Path=;" subject="EAID_A663AC96_E6E7_45ee_8971_7D9B57518BA4" style=";Hidden=0;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;Path=;" subject="EAID_CF412CE9_D9CF_4563_A2B8_C882DA33D312" style=";Hidden=0;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;Path=;" subject="EAID_4D4993DE_D8FA_4270_87DD_745F6C0B1DB3" style=";Hidden=0;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;Path=;" subject="EAID_DFFFC6E9_C0C4_42e2_8985_13721F140316" style=";Hidden=0;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;Path=;" subject="EAID_19384225_AED9_49ca_A6F1_462A13D079E1" style=";Hidden=0;"/>
+				</elements>
+			</diagram>
+		</diagrams>
+	</xmi:Extension>
+</xmi:XMI>

@@ -1,0 +1,20 @@
+Exporting package to 'C:\Users\Terence\Desktop\zcUml3-1\update_land_and_crash_detectors.xml'
+Retrieving data for export: diagram elements
+Retrieving data for export: links
+Retrieving data for export: constraints
+Retrieving data for export: attribute tagged values
+Retrieving data for export: operation tagged values
+Retrieving data for export: operation parameter tagged values
+Retrieving data for export: connector tagged values
+Completed data retrieval
+Pre-processing export tree...
+Completed pre-processing
+Processing package: update_land_and_crash_detectors
+Diagram: update_land_and_crash_detector
+Element:0: 
+Element:1: check if crashing for 2 seconds
+Element:2: copter
+Adding State-Tables
+Sequencing Interaction Diagrams
+Formatting output XML...please wait
+XMI Document Export Complete!

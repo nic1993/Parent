@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Model version="1.0" type="uml:Model" name="Markov_Model" visibility="public" authorNmae="Terence">
+  <ModelType>Seq_Markov</ModelType>
+  <Owned>读取所有电源实例的电流与电压</Owned>
+  <name>battery_read</name>
+  <state>
+    <name>S7</name>
+  </state>
+</Model>

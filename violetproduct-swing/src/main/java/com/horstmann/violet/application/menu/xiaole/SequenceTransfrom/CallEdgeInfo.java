@@ -10,12 +10,13 @@ public class CallEdgeInfo {
   private String endLocationX;
   private String endLocationY;
   private String Id;
-  private String name = "";
-  private String input = "";
-  private String output = "";
+  private String message = "";
+  private String alias = "";
+  private String returnvalue = "";
   private String parameter = "";
-  private String timing = "";
-  private String timereset = "";
+  private String assign = "";
+  private String arguments = "";
+  private String condition = "";
 public String getStartReferenceId() {
 	return startReferenceId;
 }
@@ -70,23 +71,23 @@ public String getId() {
 public void setId(String id) {
 	Id = id;
 }
-public String getName() {
-	return name;
+public String getmessage() {
+	return message;
 }
-public void setName(String middleLabel) {
-	this.name = middleLabel;
+public void setMessage(String middleLabel) {
+	this.message = middleLabel;
 }
-public String getInput() {
-	return input;
+public String getAlias() {
+	return alias;
 }
-public void setInput(String input) {
-	this.input = input;
+public void setAlias(String alias) {
+	this.alias = alias;
 }
-public String getOutput() {
-	return output;
+public String getReturnvalue() {
+	return returnvalue;
 }
-public void setOutput(String output) {
-	this.output = output;
+public void setReturnvalue(String output) {
+	this.returnvalue = output;
 }
 public String getParameter() {
 	return parameter;
@@ -94,17 +95,24 @@ public String getParameter() {
 public void setParameter(String parameter) {
 	this.parameter = parameter;
 }
-public String getTiming() {
-	return timing;
+public String getAssign() {
+	return assign;
 }
-public void setTiming(String timing) {
-	this.timing = timing;
+public void setAssign(String assign) {
+	this.assign = assign;
 }
-public String getTimereset() {
-	return timereset;
+public String getArguments() {
+	return arguments;
 }
-public void setTimereset(String timereset) {
-	this.timereset = timereset;
-} 
+public void setArguments(String timereset) {
+	this.arguments = timereset;
+}
+public String getCondition() {
+	return condition;
+}
+public void setCondition(String condition) {
+	this.condition = condition;
+}
+
   
 }

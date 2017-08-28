@@ -28,6 +28,7 @@ import com.horstmann.violet.framework.injection.resources.ResourceBundleInjector
 import com.horstmann.violet.framework.injection.resources.annotation.ResourceBundleBean;
 import com.horstmann.violet.framework.printer.PrintEngine;
 import com.horstmann.violet.product.diagram.abstracts.IGraph;
+import com.sun.javaws.jnl.XMLUtils;
 
 public class GraphFile implements IGraphFile
 {
@@ -70,7 +71,6 @@ public class GraphFile implements IGraphFile
         if (in != null)
         {
             this.graph = this.filePersistenceService.read(in);
-            System.out.println("#@$%^&*");
             this.currentFilename = fileOpener.getFileDefinition().getFilename();
             this.currentDirectory = fileOpener.getFileDefinition().getDirectory();
         }
@@ -126,7 +126,7 @@ public class GraphFile implements IGraphFile
     public void save()
     {
 //        if (this.isNewFile()) {
-//        	saveToNewLocation();
+        	saveToNewLocation();
 //        	return;
 //        }
 //    	try
@@ -192,7 +192,6 @@ public class GraphFile implements IGraphFile
 //        }
     	  try
           {
-          	
               IFileWriter fileSaver = getFileSaver(true);
               if (fileSaver == null) { 
               	// This appends when the action is cancelled
@@ -203,9 +202,13 @@ public class GraphFile implements IGraphFile
               this.isSaveRequired = false;
               this.currentFilename = fileSaver.getFileDefinition().getFilename();
               this.currentDirectory = fileSaver.getFileDefinition().getDirectory();
-              System.out.println( this.getGraph().getClass().getName().toString());
-              System.out.println(currentDirectory);
-              System.out.println(currentFilename);	
+              
+//              File newFile = new File(currentFilename+currentDirectory);
+//              if(currentFilename.contains(".ucase.violet.xml")){
+//            	  AutoSave(newFile, )
+//              }
+              
+              
               fireGraphSaved();
               
               
@@ -227,7 +230,7 @@ public class GraphFile implements IGraphFile
      * @param isAskedForNewLocation if true, then the FileChooser will open a dialog box to allow to choice a new location
      * @return f
      */
-    private IFileWriter getFileSaver(boolean isAskedForNewLocation)
+    public IFileWriter getFileSaver(boolean isAskedForNewLocation)
     {
         try
         {
@@ -345,9 +348,8 @@ public class GraphFile implements IGraphFile
     /*
      * 张建
      */
-    public void saveToOneLocation() throws IOException
+    public void saveToOneLocation(String soucePath) throws IOException
     {	
-    	System.out.println("请将文件放入对应的文件夹下面");
     	  try
           {
               IFileWriter fileSaver = getFileSaver2(true);
@@ -360,9 +362,9 @@ public class GraphFile implements IGraphFile
               this.isSaveRequired = false;
               this.currentFilename = fileSaver.getFileDefinition().getFilename();
               this.currentDirectory = fileSaver.getFileDefinition().getDirectory();
-              System.out.println( this.getGraph().getClass().getName().toString());
-              System.out.println(currentDirectory);
-              System.out.println(currentFilename);	
+              
+              File newFile = new File(currentFilename + currentDirectory);
+              AutoSave(currentDirectory + "/"+currentFilename,soucePath,currentFilename);
               fireGraphSaved();
               
           }
@@ -402,11 +404,11 @@ public class GraphFile implements IGraphFile
  * @see com.horstmann.violet.framework.file.IGraphFile#dsave()
  */
     @Override
-	public void dsave() 
+	public void dsave(String sourePath) 
     {
 		if(this.isNewFile()){
 			try {
-				saveToOneLocation();
+				saveToOneLocation(sourePath);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -459,6 +461,25 @@ public class GraphFile implements IGraphFile
 		}
 		
 	}
+	public static void AutoSave(String sourcePath,String aimPath,String fileName){ //cai
+		 try {
+				InputStream in =new FileInputStream(sourcePath);
+				 File f =new File(aimPath);
+				if (!f.exists()) {
+					f.mkdirs();
+				}
+				FileOutputStream out =new FileOutputStream(aimPath+"/"+fileName);
+				byte[] buffer = new byte[1024]; 
+			    int b;
+			    while ( ( b = in.read(buffer)) != -1) { 
+	              out.write(buffer, 0, b); 
+	            } 
+	            in.close(); 
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+	}
+	
     private IGraph graph;
 
     /**
@@ -501,5 +522,7 @@ public class GraphFile implements IGraphFile
     private DialogFactory dialogFactory;
 
     private List<IGraphFileListener> listeners = new ArrayList<IGraphFileListener>();
+
+
 
 }

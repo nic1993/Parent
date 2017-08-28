@@ -246,7 +246,6 @@ public class EditMenu extends JMenu
     private boolean isThereAnyWorkspaceDisplayed()
     {
         return mainFrame.getUseCaseWorkspaceList().size() > 0
-        		||mainFrame.getTimingWorkspaceList().size() > 0
         		||mainFrame.getSequenceWorkspaceList().size() > 0;
     }
     

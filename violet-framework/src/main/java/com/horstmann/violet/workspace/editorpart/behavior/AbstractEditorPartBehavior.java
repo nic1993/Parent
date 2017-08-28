@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.geom.Point2D;
+import java.beans.IntrospectionException;
 import java.beans.PropertyChangeEvent;
 
 import com.horstmann.violet.product.diagram.abstracts.edge.IEdge;

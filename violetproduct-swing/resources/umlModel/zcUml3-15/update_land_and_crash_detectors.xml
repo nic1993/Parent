@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<xmi:XMI xmi:version="2.1" xmlns:uml="http://schema.omg.org/spec/UML/2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1">
+	<xmi:Documentation exporter="Enterprise Architect" exporterVersion="6.5"/>
+	<uml:Model xmi:type="uml:Model" name="EA_Model" visibility="public">
+		<packagedElement xmi:type="uml:Package" xmi:id="EAPK_2F6700BA_2747_4b41_84A4_C6FEDFA9CEB6" name="update_land_and_crash_detectors" visibility="public">
+			<packagedElement xmi:type="uml:Collaboration" xmi:id="EAID_CB000000_0BA_2747_4b41_84A4_C6FEDFA9CEB" name="EA_Collaboration1" visibility="public">
+				<ownedBehavior xmi:type="uml:Interaction" xmi:id="EAID_IN000000_0BA_2747_4b41_84A4_C6FEDFA9CEB" name="EA_Interaction1" visibility="public">
+					<fragment xmi:type="uml:CombinedFragment" xmi:id="EAID_4FD3C215_6504_44c2_ABF7_7CD8EF103522" visibility="public" interactionOperator="alt">
+						<operand xmi:type="uml:InteractionOperand" xmi:id="EAID_OP000000_6504_44c2_ABF7_7CD8EF103522">
+							<guard xmi:type="uml:InteractionConstraint" xmi:id="EAID_IC000000_6504_44c2_ABF7_7CD8EF103522">
+								<specification xmi:type="uml:OpaqueExpression" xmi:id="EAID_OE000000_6504_44c2_ABF7_7CD8EF103522"/>
+							</guard>
+						</operand>
+					</fragment>
+					<fragment xmi:type="uml:CombinedFragment" xmi:id="EAID_CC3BBAD8_F1AF_4746_8A6C_8DB252C96058" name="check if crashing for 2 seconds" visibility="public" interactionOperator="opt">
+						<operand xmi:type="uml:InteractionOperand" xmi:id="EAID_OP000000_F1AF_4746_8A6C_8DB252C96058">
+							<guard xmi:type="uml:InteractionConstraint" xmi:id="EAID_IC000000_F1AF_4746_8A6C_8DB252C96058">
+								<specification xmi:type="uml:OpaqueExpression" xmi:id="EAID_OE000000_F1AF_4746_8A6C_8DB252C96058" body="crash_counter&gt;=800#crash_counter:uint16_t"/>
+							</guard>
+						</operand>
+					</fragment>
+					<lifeline xmi:type="uml:Lifeline" xmi:id="EAID_6B94DB92_3C04_4f9c_86E5_4F5D837669B2" name="copter" visibility="public" represents="EAID_AT000000_3C04_4f9c_86E5_4F5D837669B2"/>
+					<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000000_3C04_4f9c_86E5_4F5D837669B2" covered="EAID_6B94DB92_3C04_4f9c_86E5_4F5D837669B2"/>
+					<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000001_3C04_4f9c_86E5_4F5D837669B2" covered="EAID_6B94DB92_3C04_4f9c_86E5_4F5D837669B2"/>
+					<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000002_3C04_4f9c_86E5_4F5D837669B2" covered="EAID_6B94DB92_3C04_4f9c_86E5_4F5D837669B2"/>
+					<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000003_3C04_4f9c_86E5_4F5D837669B2" covered="EAID_6B94DB92_3C04_4f9c_86E5_4F5D837669B2"/>
+					<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000004_3C04_4f9c_86E5_4F5D837669B2" covered="EAID_6B94DB92_3C04_4f9c_86E5_4F5D837669B2"/>
+					<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000005_3C04_4f9c_86E5_4F5D837669B2" covered="EAID_6B94DB92_3C04_4f9c_86E5_4F5D837669B2"/>
+					<message xmi:type="uml:Message" xmi:id="EAID_35B2BDAF_2286_4524_8898_BB93A82DB4ED" name="update_land_and_crash_detectors()" messageKind="complete" messageSort="synchCall" sendEvent="EAID_FR000000_3C04_4f9c_86E5_4F5D837669B2" receiveEvent="EAID_FR000001_3C04_4f9c_86E5_4F5D837669B2"/>
+					<message xmi:type="uml:Message" xmi:id="EAID_86CAEE6B_54E7_4932_9BB9_3A1735E42C7E" name="update_land_detector()" messageKind="complete" messageSort="synchCall" sendEvent="EAID_FR000002_3C04_4f9c_86E5_4F5D837669B2" receiveEvent="EAID_FR000003_3C04_4f9c_86E5_4F5D837669B2"/>
+					<message xmi:type="uml:Message" xmi:id="EAID_CCBF182C_08CC_4759_8E8F_1D88607B8AE5" name="crash_check()" messageKind="complete" messageSort="synchCall" sendEvent="EAID_FR000004_3C04_4f9c_86E5_4F5D837669B2" receiveEvent="EAID_FR000005_3C04_4f9c_86E5_4F5D837669B2"/>
+				</ownedBehavior>
+				<ownedAttribute xmi:type="uml:Property" xmi:id="EAID_AT000000_3C04_4f9c_86E5_4F5D837669B2"/>
+			</packagedElement>
+		</packagedElement>
+	</uml:Model>
+	<xmi:Extension extender="Enterprise Architect" extenderID="6.5">
+		<elements>
+			<element xmi:idref="EAPK_2F6700BA_2747_4b41_84A4_C6FEDFA9CEB6" xmi:type="uml:Package" name="update_land_and_crash_detectors" scope="public">
+				<model package2="EAID_2F6700BA_2747_4b41_84A4_C6FEDFA9CEB6" package="EAPK_12D61F71_42AF_4f6e_948D_F7972938140A" tpos="5" ea_localid="105" ea_eleType="package"/>
+				<properties isSpecification="false" sType="Package" nType="0" scope="public"/>
+				<project author="&#24352;&#25104;" version="1.0" phase="1.0" created="2017-03-06 09:27:37" modified="2017-03-08 09:47:17" complexity="1" status="Proposed"/>
+				<code gentype="C++"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="sequences"/>
+				<packageproperties version="1.0" tpos="5"/>
+				<paths/>
+				<times created="2017-03-06 09:27:37" modified="2017-03-08 09:47:17" lastloaddate="2017-03-06 09:27:37" lastsavedate="2017-03-06 09:27:37"/>
+				<flags iscontrolled="FALSE" isprotected="FALSE" batchsave="0" batchload="0" usedtd="FALSE" logxml="FALSE"/>
+			</element>
+			<element xmi:idref="EAID_4FD3C215_6504_44c2_ABF7_7CD8EF103522" xmi:type="uml:InteractionFragment" scope="public">
+				<model package="EAPK_2F6700BA_2747_4b41_84A4_C6FEDFA9CEB6" tpos="0" ea_localid="578" ea_eleType="element"/>
+				<properties isSpecification="false" sType="InteractionFragment" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
+				<project author="&#24352;&#25104;" version="1.0" phase="1.0" created="2017-03-06 09:27:37" modified="2017-03-06 09:27:37" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=3;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="update_land_and_crash_detectors" diagram="EAID_1F5CCF84_B041_4e21_ACB3_084E0230D65A"/>
+			</element>
+			<element xmi:idref="EAID_CC3BBAD8_F1AF_4746_8A6C_8DB252C96058" xmi:type="uml:InteractionFragment" name="check if crashing for 2 seconds" scope="public">
+				<model package="EAPK_2F6700BA_2747_4b41_84A4_C6FEDFA9CEB6" tpos="0" ea_localid="579" ea_eleType="element"/>
+				<properties isSpecification="false" sType="InteractionFragment" nType="1" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
+				<project author="&#24352;&#25104;" version="1.0" phase="1.0" created="2017-03-06 09:27:37" modified="2017-03-06 09:27:37" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=3;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs value="$XREFPROP=$XID={F0B3CFAD-A140-4261-AA02-53BA7A8FB0EB}$XID;$NAM=Partitions$NAM;$TYP=element property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@PAR;Name=crash_counter&gt;=800#crash_counter:uint16_t;Size=229;GUID={CBD4DC9F-C91C-467c-AE4E-B6ECB1C837E4};@ENDPAR;$DES;$CLT={CC3BBAD8-F1AF-4746-8A6C-8DB252C96058}$CLT;$ENDXREF;"/>
+				<extendedProperties tagged="0" package_name="update_land_and_crash_detectors" diagram="EAID_1F5CCF84_B041_4e21_ACB3_084E0230D65A"/>
+			</element>
+			<element xmi:idref="EAID_6B94DB92_3C04_4f9c_86E5_4F5D837669B2" xmi:type="uml:Sequence" name="copter" scope="public">
+				<model package="EAPK_2F6700BA_2747_4b41_84A4_C6FEDFA9CEB6" tpos="0" ea_localid="580" ea_eleType="element"/>
+				<properties isSpecification="false" sType="Sequence" nType="0" scope="public"/>
+				<project author="&#24352;&#25104;" version="1.0" phase="1.0" created="2017-03-06 09:27:37" modified="2017-03-06 09:27:37" complexity="1" status="Proposed"/>
+				<code gentype="C++"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="update_land_and_crash_detectors"/>
+				<links>
+					<Sequence xmi:id="EAID_35B2BDAF_2286_4524_8898_BB93A82DB4ED" start="EAID_6B94DB92_3C04_4f9c_86E5_4F5D837669B2" end="EAID_6B94DB92_3C04_4f9c_86E5_4F5D837669B2"/>
+					<Sequence xmi:id="EAID_86CAEE6B_54E7_4932_9BB9_3A1735E42C7E" start="EAID_6B94DB92_3C04_4f9c_86E5_4F5D837669B2" end="EAID_6B94DB92_3C04_4f9c_86E5_4F5D837669B2"/>
+					<Sequence xmi:id="EAID_CCBF182C_08CC_4759_8E8F_1D88607B8AE5" start="EAID_6B94DB92_3C04_4f9c_86E5_4F5D837669B2" end="EAID_6B94DB92_3C04_4f9c_86E5_4F5D837669B2"/>
+					<Sequence xmi:id="EAID_35B2BDAF_2286_4524_8898_BB93A82DB4ED" start="EAID_6B94DB92_3C04_4f9c_86E5_4F5D837669B2" end="EAID_6B94DB92_3C04_4f9c_86E5_4F5D837669B2"/>
+					<Sequence xmi:id="EAID_86CAEE6B_54E7_4932_9BB9_3A1735E42C7E" start="EAID_6B94DB92_3C04_4f9c_86E5_4F5D837669B2" end="EAID_6B94DB92_3C04_4f9c_86E5_4F5D837669B2"/>
+					<Sequence xmi:id="EAID_CCBF182C_08CC_4759_8E8F_1D88607B8AE5" start="EAID_6B94DB92_3C04_4f9c_86E5_4F5D837669B2" end="EAID_6B94DB92_3C04_4f9c_86E5_4F5D837669B2"/>
+				</links>
+			</element>
+		</elements>
+		<connectors>
+			<connector xmi:idref="EAID_35B2BDAF_2286_4524_8898_BB93A82DB4ED">
+				<source xmi:idref="EAID_6B94DB92_3C04_4f9c_86E5_4F5D837669B2">
+					<model ea_localid="580" type="Sequence" name="copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Non-Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_6B94DB92_3C04_4f9c_86E5_4F5D837669B2">
+					<model ea_localid="580" type="Sequence" name="copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="626"/>
+				<properties name="update_land_and_crash_detectors()" ea_type="Sequence" direction="Source -&gt; Destination"/>
+				<documentation/>
+				<appearance linemode="1" linecolor="0" linewidth="0" seqno="1" headStyle="0" lineStyle="0"/>
+				<labels mt="update_land_and_crash_detectors()"/>
+				<extendedProperties stateflags="Activation=0;ExtendActivationUp=0;StartCoregionHead=0;EndCoregionHead=0;StartCoregionTail=0;EndCoregionTail=0;" virtualInheritance="0" diagram="EAID_1F5CCF84_B041_4e21_ACB3_084E0230D65A" privatedata1="Synchronous" privatedata2="retval=void;" privatedata3="Call" privatedata4="0" privatedata5="SX=0;SY=-67;EX=0;EY=0;$LLB=;LLT=;LMT=CX=168:CY=13:OX=40:OY=15:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMB=;LRT=;LRB=;IRHS=;ILHS=;" sequence_points="PtStartX=410;PtStartY=-202;PtEndX=415;PtEndY=-217;"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_86CAEE6B_54E7_4932_9BB9_3A1735E42C7E">
+				<source xmi:idref="EAID_6B94DB92_3C04_4f9c_86E5_4F5D837669B2">
+					<model ea_localid="580" type="Sequence" name="copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Non-Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_6B94DB92_3C04_4f9c_86E5_4F5D837669B2">
+					<model ea_localid="580" type="Sequence" name="copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="624"/>
+				<properties name="update_land_detector()" ea_type="Sequence" direction="Source -&gt; Destination"/>
+				<documentation/>
+				<appearance linemode="1" linecolor="-1" linewidth="0" seqno="2" headStyle="0" lineStyle="0"/>
+				<labels mt="update_land_detector()"/>
+				<extendedProperties virtualInheritance="0" diagram="EAID_1F5CCF84_B041_4e21_ACB3_084E0230D65A" privatedata1="Synchronous" privatedata2="retval=void;" privatedata3="Call" privatedata4="0" privatedata5="SX=0;SY=-60;EX=0;EY=0;$LLB=;LLT=;LMT=CX=110:CY=13:OX=40:OY=15:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMB=;LRT=;LRB=;IRHS=;ILHS=;" sequence_points="PtStartX=410;PtStartY=-297;PtEndX=415;PtEndY=-312;"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_CCBF182C_08CC_4759_8E8F_1D88607B8AE5">
+				<source xmi:idref="EAID_6B94DB92_3C04_4f9c_86E5_4F5D837669B2">
+					<model ea_localid="580" type="Sequence" name="copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Non-Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_6B94DB92_3C04_4f9c_86E5_4F5D837669B2">
+					<model ea_localid="580" type="Sequence" name="copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="625"/>
+				<properties name="crash_check()" ea_type="Sequence" direction="Source -&gt; Destination"/>
+				<documentation/>
+				<appearance linemode="1" linecolor="0" linewidth="0" seqno="3" headStyle="0" lineStyle="0"/>
+				<labels mt="crash_check()"/>
+				<extendedProperties stateflags="StartCoregionHead=0;EndCoregionHead=0;StartCoregionTail=0;EndCoregionTail=0;Activation=0;" virtualInheritance="0" diagram="EAID_1F5CCF84_B041_4e21_ACB3_084E0230D65A" privatedata1="Synchronous" privatedata2="retval=void;" privatedata3="Call" privatedata4="0" privatedata5="SX=0;SY=-29;EX=0;EY=0;$LLB=;LLT=;LMT=CX=62:CY=13:OX=41:OY=15:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMB=;LRT=;LRB=;IRHS=;ILHS=;" sequence_points="PtStartX=410;PtStartY=-361;PtEndX=415;PtEndY=-376;"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+		</connectors>
+		<primitivetypes>
+			<packagedElement xmi:type="uml:Package" xmi:id="EAPrimitiveTypesPackage" name="EA_PrimitiveTypes_Package" visibility="public"/>
+		</primitivetypes>
+		<profiles/>
+		<diagrams>
+			<diagram xmi:id="EAID_1F5CCF84_B041_4e21_ACB3_084E0230D65A">
+				<model package="EAPK_2F6700BA_2747_4b41_84A4_C6FEDFA9CEB6" localID="137" owner="EAPK_2F6700BA_2747_4b41_84A4_C6FEDFA9CEB6"/>
+				<properties name="update_land_and_crash_detector" type="Sequence"/>
+				<project author="&#24352;&#25104;" version="1.0" created="2017-03-06 09:27:37" modified="2017-03-06 09:27:37"/>
+				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=1;PPgs.cy=1;DocSize.cx=827;DocSize.cy=1169;ShowDetails=0;Orientation=P;Zoom=122;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
+				<style2 value="SaveTag=87ED37EA;ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=0;INT_ARGS=;INT_RET=;INT_ATT=;SeqTopMargin=50;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;"/>
+				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=-1;bold=false;fcol=0;;cls=0;"/>
+				<matrixitems value="locked=false;matrixactive=false;swimlanesactive=true;width=1;"/>
+				<extendedProperties/>
+				<elements>
+					<element geometry="Left=360;Top=50;Right=450;Bottom=640;" subject="EAID_6B94DB92_3C04_4f9c_86E5_4F5D837669B2" seqno="1" style="DUID=AC92DE56;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;Path=;" subject="EAID_35B2BDAF_2286_4524_8898_BB93A82DB4ED" style=";Hidden=0;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;Path=;" subject="EAID_86CAEE6B_54E7_4932_9BB9_3A1735E42C7E" style=";Hidden=0;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;Path=;" subject="EAID_CCBF182C_08CC_4759_8E8F_1D88607B8AE5" style=";Hidden=0;"/>
+				</elements>
+			</diagram>
+		</diagrams>
+	</xmi:Extension>
+</xmi:XMI>

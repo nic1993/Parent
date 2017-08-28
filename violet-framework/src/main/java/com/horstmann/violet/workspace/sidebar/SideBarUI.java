@@ -44,10 +44,10 @@ public class SideBarUI extends PanelUI
         addElementToTaskPane(this.sideBar.getEditorToolsBar().getAWTComponent(), "图形编辑   ", 1);
         addElementToTaskPane(this.sideBar.getGraphToolsBar().getAWTComponent(), "图形工具     ", 2);
         addElementToTaskPane(this.sideBar.getOptionalToolsBar().getAWTComponent(), "其他功能     ", 3);
-        addElementToTaskPane(this.sideBar.getColorChoiceBar().getAWTComponent(), "选择颜色       ", 4);
+        addElementToTaskPane(this.sideBar.getColorChoiceBar().getAWTComponent(), "颜色选择       ", 4);
         //addElementToTaskPane(new ProjectTree().getjTree(),"project", 0);
       //添加4个组件
-        int i = 4;
+        int i = 3;
         for (ISideBarElement anExternalElement : this.sideBar.getExternalContributionElements().keySet()) {
             String externalElementTitle = this.sideBar.getExternalContributionElements().get(anExternalElement);
             addElementToTaskPane(anExternalElement.getAWTComponent(), externalElementTitle, i++);

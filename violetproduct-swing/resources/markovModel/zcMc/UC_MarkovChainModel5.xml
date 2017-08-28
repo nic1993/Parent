@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Model version="1.0" type="uml:Model" name="Markov_Model" visibility="public" authorNmae="Terence">
+  <ModelType>UC_Markov</ModelType>
+  <Owned>Software</Owned>
+  <name>电源监控</name>
+  <state>
+    <name>S0</name>
+    <arc label="prob" type="common">
+      <name>S0_S1_set_voltage(float)</name>
+      <owned>set_voltage</owned>
+      <prob>0.0</prob>
+      <stimulate>
+        <parameter>
+          <paramName>volt</paramName>
+          <paramType>float</paramType>
+          <domain type="serial">-32768&lt;volt&lt;32769</domain>
+        </parameter>
+      </stimulate>
+      <to>S1</to>
+    </arc>
+    <arc label="prob" type="common">
+      <name>S0_S2_set_current(float)</name>
+      <owned>set_current</owned>
+      <prob>0.0</prob>
+      <stimulate>
+        <parameter>
+          <paramName>amps</paramName>
+          <paramType>float</paramType>
+          <domain type="serial">-32768&lt;amps&lt;32769</domain>
+        </parameter>
+      </stimulate>
+      <to>S2</to>
+    </arc>
+    <arc label="prob" type="common">
+      <name>S0_S3_set_current(float)</name>
+      <owned>set_current</owned>
+      <prob>0.0</prob>
+      <stimulate>
+        <parameter>
+          <paramName>amps</paramName>
+          <paramType>float</paramType>
+          <domain type="serial">-32768&lt;amps&lt;32769</domain>
+        </parameter>
+      </stimulate>
+      <to>S3</to>
+    </arc>
+  </state>
+  <state>
+    <name>S1</name>
+  </state>
+  <state>
+    <name>S2</name>
+  </state>
+  <state>
+    <name>S3</name>
+  </state>
+</Model>

@@ -97,7 +97,8 @@ public class ActorNode extends RectangularNode
         path.lineTo(hipX, hipY);
         path.lineTo(feetX2, feetY);
 
-        g2.setColor(getBorderColor());
+//        g2.setColor(getBorderColor());
+        g2.setColor(Color.black);
         g2.draw(path);
 
         // Draw name

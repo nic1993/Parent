@@ -1,9 +1,15 @@
 package com.horstmann.violet.framework.propertyeditor.customeditor;
 
 import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.beans.PropertyEditorSupport;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -14,6 +20,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.LayoutStyle;
 import javax.swing.ListSelectionModel;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import com.horstmann.violet.product.diagram.abstracts.property.SceneConstraint;
 import com.horstmann.violet.product.diagram.abstracts.property.SequenceConstraint;
@@ -29,6 +36,7 @@ public class SequenceConstraintEditor extends PropertyEditorSupport{
     public Component getCustomEditor()
     {     
         final JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(1,1));
         panel.add(getOtherComponent());
         return panel;
     }
@@ -36,12 +44,29 @@ public class SequenceConstraintEditor extends PropertyEditorSupport{
 	private Component getOtherComponent() {
 		// TODO Auto-generated method stub
 		scenceConstraint = (SceneConstraint)getValue();
-		constrainttable = new SequenceJtabel(constraintTableModel);
-		JPanel panel = new JPanel();
+		constrainttable = new SequenceJtabel(constraintTableModel)
+				{
+			public String getToolTipText(MouseEvent e) {  
+                int row=constrainttable.rowAtPoint(e.getPoint());  
+                int col=constrainttable.columnAtPoint(e.getPoint());  
+                String tiptextString=null;  
+                if(row>-1 && col>-1){  
+                    Object value=constrainttable.getValueAt(row, col);  
+                    if(null!=value && !"".equals(value))  
+                        tiptextString=value.toString();//悬浮显示单元格内容  
+                }  
+                return tiptextString;  
+            } 
+				};
+		constrainttable.setRowHeight(25);
+		constrainttable.setFont(new Font("宋体",Font.PLAIN,14));
+		DefaultTableCellRenderer defaultTableCellRenderer = new DefaultTableCellRenderer();
+		constrainttable.getTableHeader().setFont(new Font("宋体",Font.PLAIN,14));
         constrainttable.getTableHeader().setVisible(true);
-        constrainttable.getTableHeader().setReorderingAllowed(false);
-        constrainttable.getTableHeader().setResizingAllowed(false);        
+        constrainttable.getTableHeader().setReorderingAllowed(true);
+        constrainttable.getTableHeader().setResizingAllowed(true);        
         constrainttable.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        constrainttable.getTableHeader().setPreferredSize(new Dimension(400, 25));       
         initconstraint();
         constraintAddButton.setText("新建");
         constraintAddButton.addActionListener(new ActionListener(){
@@ -70,36 +95,44 @@ public class SequenceConstraintEditor extends PropertyEditorSupport{
         });
         jScrollPane.setBorder(BorderFactory.createEtchedBorder());
         jScrollPane.setViewportView(constrainttable);        
-        GroupLayout panelLayout=new GroupLayout(panel);
-        panel.setLayout(panelLayout);
-        panelLayout.setHorizontalGroup(
-        	panelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-        	.addGroup(panelLayout.createSequentialGroup()       	    	    
-        	       .addGroup(panelLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-        		       .addGroup(panelLayout.createSequentialGroup()
-        		           .addContainerGap()
-        		           .addComponent(constraintAddButton, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
-        		           .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-        		           .addComponent(constraintDeleteButton, GroupLayout.PREFERRED_SIZE, 60,GroupLayout.PREFERRED_SIZE)
-        		           .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-        		           .addComponent(constraintSaveButton,GroupLayout.PREFERRED_SIZE,60,GroupLayout.PREFERRED_SIZE))
-        		           .addComponent(jScrollPane, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 230, GroupLayout.PREFERRED_SIZE)))
-        		                		                 		          
-        		);
-       panelLayout.setVerticalGroup(
-        	      panelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-        	      .addGroup(panelLayout.createSequentialGroup()
-        	    		  
-        	        .addGroup(panelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-        	          .addGroup(panelLayout.createSequentialGroup()          
-        	          .addComponent(jScrollPane,GroupLayout.PREFERRED_SIZE, 123, GroupLayout.PREFERRED_SIZE)))       	         
-        	          .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-        	          .addGroup(panelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-        	          .addComponent(constraintDeleteButton)
-        	          .addComponent(constraintAddButton)
-        	          .addComponent(constraintSaveButton))
-        	        .addContainerGap())
-        	    );
+        jScrollPane.setPreferredSize(new Dimension(500, 400));
+//        GroupLayout panelLayout=new GroupLayout(panel);
+//        panel.setLayout(panelLayout);
+//        panelLayout.setHorizontalGroup(
+//        	panelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+//        	.addGroup(panelLayout.createSequentialGroup()       	    	    
+//        	       .addGroup(panelLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+//        		       .addGroup(panelLayout.createSequentialGroup()
+//        		           .addContainerGap()
+//        		           .addComponent(constraintAddButton, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
+//        		           .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+//        		           .addComponent(constraintDeleteButton, GroupLayout.PREFERRED_SIZE, 60,GroupLayout.PREFERRED_SIZE)
+//        		           .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+//        		           .addComponent(constraintSaveButton,GroupLayout.PREFERRED_SIZE,60,GroupLayout.PREFERRED_SIZE))
+//        		           .addComponent(jScrollPane, GroupLayout.Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 230, GroupLayout.PREFERRED_SIZE)))
+//        		                		                 		          
+//        		);
+//       panelLayout.setVerticalGroup(
+//        	      panelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+//        	      .addGroup(panelLayout.createSequentialGroup()
+//        	    		  
+//        	        .addGroup(panelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+//        	          .addGroup(panelLayout.createSequentialGroup()          
+//        	          .addComponent(jScrollPane,GroupLayout.PREFERRED_SIZE, 123, GroupLayout.PREFERRED_SIZE)))       	         
+//        	          .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+//        	          .addGroup(panelLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+//        	          .addComponent(constraintDeleteButton)
+//        	          .addComponent(constraintAddButton)
+//        	          .addComponent(constraintSaveButton))
+//        	        .addContainerGap())
+//        	    );
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridBagLayout());
+        panel.add(jScrollPane,new GBC(0, 0, 4, 1).setFill(GBC.BOTH).setWeight(1, 1).setInsets(0, 0, 20, 0));
+        panel.add(new JPanel(),new GBC(0, 1, 1, 1).setFill(GBC.BOTH).setWeight(1, 0));
+        panel.add(constraintAddButton,new GBC(1, 1, 1, 1).setFill(GBC.BOTH).setWeight(0, 0));
+        panel.add(constraintDeleteButton,new GBC(2, 1, 1, 1).setFill(GBC.BOTH).setWeight(0, 0));
+        panel.add(constraintSaveButton,new GBC(3, 1, 1, 1).setFill(GBC.BOTH).setWeight(0, 0));
         return panel;
 	    }
 	    public void initconstraint()
@@ -127,27 +160,20 @@ public class SequenceConstraintEditor extends PropertyEditorSupport{
 	    {
 	    	int count = constrainttable.getRowCount();
 	    	scenceConstraint.getConstraints().clear();
+	    	scenceConstraint.getSequenceName().clear();
 	    	if(count != 0)
 	    	{
 	    		for(int i = 0;i < count ;i++)
 	    		{
 	    			SequenceConstraint constraint = new SequenceConstraint();
 	    			constraint.setSequenceName((String) constrainttable.getModel().getValueAt(i, 0));
+	    			scenceConstraint.getSequenceName().add((String) constrainttable.getModel().getValueAt(i, 0));
 	    			constraint.setName((String) constrainttable.getModel().getValueAt(i, 1));
 	    			constraint.setContent((String) constrainttable.getModel().getValueAt(i, 2));
 	    			constraint.setType((String) constrainttable.getModel().getValueAt(i, 3));
 	    			scenceConstraint.getConstraints().add(constraint);
 	    		}
 	    	}
-//	    	allConstraint.getNameList().clear();
-//	    	allConstraint.getContentList().clear();
-//	    	allConstraint.getTypeList().clear();
-//	    	for(int i = 0;i < count ;i++)
-//	    	{
-//	    		allConstraint.getNameList().add((String) constrainttable.getModel().getValueAt(i, 0));
-//	    		allConstraint.getContentList().add((String) constrainttable.getModel().getValueAt(i, 1));
-//	    		allConstraint.getTypeList().add((String) constrainttable.getModel().getValueAt(i, 2));
-//	    	}
 	    }
 	    private SceneConstraint scenceConstraint;
 	    private SequenceJtabel constrainttable;

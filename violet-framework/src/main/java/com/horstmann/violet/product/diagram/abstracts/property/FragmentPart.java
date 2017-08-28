@@ -24,6 +24,7 @@ public class FragmentPart implements Serializable{
 	   borderline=new Line2D.Double();	
 	   nestingChildNodesID=new ArrayList<String>();
 	   coveredMessagesID=new ArrayList<String>();
+	   coveredLifelinedID = new ArrayList<String>();
 	}			
 	public String getConditionText() {
 		return conditionText;
@@ -36,6 +37,15 @@ public class FragmentPart implements Serializable{
 	}
 	public void AddCoveredMessagesID(String coveredMessageID) {
 		this.coveredMessagesID.add(coveredMessageID);
+	}
+	public ArrayList<String> getCoveredLifelinedID() {
+		if(this.coveredLifelinedID == null){
+			coveredLifelinedID = new ArrayList<String>();
+		}
+		return coveredLifelinedID;
+	}
+	public void AddCoveredLifelinedID(String coveredLifelinedID) {
+		this.coveredLifelinedID.add(coveredLifelinedID);
 	}
 	public Line2D getBorderline() {
 		return borderline;
@@ -72,6 +82,7 @@ public class FragmentPart implements Serializable{
 	}
 	private String conditionText;//监护条件的内容	
 	private ArrayList<String> coveredMessagesID;//覆盖的消息
+	private ArrayList<String> coveredLifelinedID; //覆盖生命线的信息
 	private Line2D borderline;//默认界定线
 	private ArrayList<String> nestingChildNodesID;//嵌套的孩子,默认没有	
 	private boolean borderlinehaschanged = false;

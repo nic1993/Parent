@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+
+import com.horstmann.violet.application.gui.MainFrame;
 
 import cn.edu.hdu.lab.config.StaticConfig;
 import cn.edu.hdu.lab.dao.interfacedao.InterfaceIsogenySD;
@@ -15,12 +18,14 @@ import cn.edu.hdu.lab.dao.interfacedao.InterfaceUCRelation;
 import cn.edu.hdu.lab.dao.tmc.State;
 import cn.edu.hdu.lab.dao.tmc.Tmc;
 import cn.edu.hdu.lab.dao.tmc.Transition;
-import cn.edu.hdu.lab.dao.uml.SDSet;
+import cn.edu.hdu.lab.dao.uml.Message;
+import cn.edu.hdu.lab.dao.uml.SD;
 import cn.edu.hdu.lab.dao.uml.UseCase;
 import cn.edu.hdu.lab.service.consisFunc.ConWork;
 import cn.edu.hdu.lab.service.interfaces.Work;
-import cn.edu.hdu.lab.service.parser.InfoRetrieve;
-import cn.edu.hdu.lab.service.parser.InvalidTagException;
+import cn.edu.hdu.lab.service.parserEA.InfoRetrieve;
+import cn.edu.hdu.lab.service.parserEA.InvalidTagException;
+import cn.edu.hdu.lab.service.parserHDU.XMLReaderHDU;
 import cn.edu.hdu.lab.service.probability.MergeProbability;
 import cn.edu.hdu.lab.service.write.Write;
 
@@ -44,23 +49,41 @@ public class WorkImpl implements Work  {
 		return f_Tmc;
 	}
 
-
 	public void setF_Tmc(Tmc f_Tmc) {
 		this.f_Tmc = f_Tmc;
 	}
 
 	//初始化，解析UML模型的XML文件信息
-	public void transInitial(String xmlFileName) throws InvalidTagException
+	public void transInitial(String xmlFileName) throws Exception
 	{
 		InfoRetrieve api=new InfoRetrieve(xmlFileName);
 		api.initialize();
 		api.getUseCasesInfo(); //封装了所有信息
-		System.out.println("useCases Informations:");
-		api.print_useCases(); //输出信息
 		this.useCases=api.getUseCases();
 	}
-	
-	//根据解析信息提供用例执行顺序关系(轻量级)
+	public void transInitialHDU(String xmlFileName) throws Throwable
+	{
+		XMLReaderHDU reader=new XMLReaderHDU(xmlFileName);
+		try {
+			this.useCases=reader.parser();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally{			
+			for(UseCase uc:useCases)
+			{
+				uc.print_useCase();
+			}
+		}
+	}
+	/**
+	 * 根据解析信息提供用例执行顺序关系(轻量级)
+	 * Map<String, List<InterfaceUCRelation>> 用例执行顺序关系
+	 * String:用例名称
+	 * List<InterfaceUCRelation>：用例名称对应的用例执行顺序关系
+	 * 
+	 */
 	@Override
 	public Map<String, List<InterfaceUCRelation>> provideUCRelation() {
 		
@@ -72,13 +95,14 @@ public class WorkImpl implements Work  {
 		InterfaceUC initialStateUC=new InterfaceUC();
 		initialStateUC.setID("0");
 		initialStateUC.setName("InitialState");//初始状态	
+		
 		InterfaceUC endStateUC=new InterfaceUC();
 		endStateUC.setID("-1");
 		endStateUC.setName("EndState");//结束状态
-		
+		System.out.println("*****");
 		for(UseCase uc:useCases)
 		{
-			if(StaticConfig.initialCondition.contains(uc.getPreCondition()))
+			if(uc.getPreCondition()!=null&&StaticConfig.initialCondition.trim().equals(uc.getPreCondition().trim()))
 			{
 				InterfaceUC interfaceUC=new InterfaceUC();//结束用例
 				interfaceUC.setID(uc.getUseCaseID());
@@ -90,14 +114,17 @@ public class WorkImpl implements Work  {
 				IUR.setUCRelation(IUR.getStartUC().getName()+"-"+IUR.getEndUC().getName());
 				IUR.setUCRelProb(0);
 				initialIURList.add(IUR);
+				System.out.println("*****");
 			}
+			
 		}
+		//System.out.println("*****"+initialIURList.get(0).getStartUC().getName()+"****"+initialIURList);
 		UCRelationMap.put(initialIURList.get(0).getStartUC().getName(), initialIURList);
 		
-		System.out.println(UCRelationMap.size()+"**"+UCRelationMap.keySet().toString());
+		//System.out.println(UCRelationMap.size()+"**"+UCRelationMap.keySet().toString());
 		
 		//遍历用例集合下每个用例，根据场景后置条件和用例前置条件遍历出用例执行顺序关系
-		System.out.println(useCases.size());
+		//System.out.println(useCases.size());
 		
 		for(UseCase uc:useCases)
 		{
@@ -107,27 +134,30 @@ public class WorkImpl implements Work  {
 			startUC.setID(uc.getUseCaseID());
 			startUC.setName(uc.getUseCaseName());	
 			
-			for(SDSet sd:uc.getSdSets())
+			if(uc.getSdSets()!=null)
 			{
-				for(UseCase postUC:useCases)
+				for(SD sd:uc.getSdSets())
 				{
-					if(sd.getPostSD().contains(postUC.getPreCondition()))
+					for(UseCase postUC:useCases)
 					{
-						InterfaceUC endUC=new InterfaceUC();//结束用例
-						endUC.setID(postUC.getUseCaseID());
-						endUC.setName(postUC.getUseCaseName());
+						if(postUC.getPreCondition()!=null&&postUC.getPreCondition().trim()!=""&&(sd.getPostSD().equals(postUC.getPreCondition())))
+						{
+							InterfaceUC endUC=new InterfaceUC();//结束用例
+							endUC.setID(postUC.getUseCaseID());
+							endUC.setName(postUC.getUseCaseName());
+							
+							InterfaceUCRelation IUR=new InterfaceUCRelation();//用例执行顺序关系
+							IUR.setStartUC(startUC);
+							IUR.setEndUC(endUC);
+							IUR.setUCRelation(IUR.getStartUC().getName()+"-"+IUR.getEndUC().getName());
+							IUR.setUCRelProb(0);
+							
+							IURList.add(IUR);
+						}
 						
-						InterfaceUCRelation IUR=new InterfaceUCRelation();//用例执行顺序关系
-						IUR.setStartUC(startUC);
-						IUR.setEndUC(endUC);
-						IUR.setUCRelation(IUR.getStartUC().getName()+"-"+IUR.getEndUC().getName());
-						IUR.setUCRelProb(0);
-						
-						IURList.add(IUR);
 					}
-					if(sd.getPostSD().contains(StaticConfig.endCondition))
+					if(sd.getPostSD().trim().equals(StaticConfig.endCondition))
 					{
-						
 						InterfaceUCRelation IUR=new InterfaceUCRelation();//用例执行顺序关系
 						IUR.setStartUC(startUC);
 						IUR.setEndUC(endStateUC);
@@ -139,12 +169,61 @@ public class WorkImpl implements Work  {
 					}
 				}
 			}
+			
 			if(IURList.size()>0)//过滤掉没有后置用例的空集合（size=0）
 			{
 				UCRelationMap.put(IURList.get(0).getStartUC().getName(), IURList);
+			}			
+		}
+		
+		//过滤掉重复的关系
+		for(Entry<String, List<InterfaceUCRelation>> en:UCRelationMap.entrySet())
+		{
+			//Stirng:用例执行关系，InterfaceUCRelation对应的关系结构
+			Map<String,InterfaceUCRelation> list=new HashMap<String,InterfaceUCRelation>();
+			for(InterfaceUCRelation iur:en.getValue())
+			{
+				if(list.containsKey(iur.getUCRelation()))
+				{
+					continue;					
+				}
+				else
+				{
+					list.put(iur.getUCRelation(), iur);					
+				}
 			}
-			
-			System.out.println(UCRelationMap.size()+"**"+UCRelationMap.keySet().toString());
+			//放剩余重复的关系，便于后续删除
+			List<InterfaceUCRelation> tList=new ArrayList<InterfaceUCRelation>();
+			for(InterfaceUCRelation iur:en.getValue())
+			{
+				for(Entry<String,InterfaceUCRelation> e:list.entrySet())
+				{
+					int f=0;
+					if(e.getKey().equals(iur.getUCRelation()))
+					{
+						if(e.getValue()==iur)
+						{
+							continue;
+						}
+						else
+						{
+							f=1;							
+							tList.add(iur);
+								
+						}
+					}
+					if(f==1)
+					{
+						continue;
+					}
+				}
+			}	
+			for(InterfaceUCRelation iur:tList)
+			{
+				en.getValue().remove(iur);
+			}
+			tList.clear();
+			list.clear();
 		}
 		
 		return UCRelationMap;
@@ -154,6 +233,7 @@ public class WorkImpl implements Work  {
 	@Override
 	public List<InterfaceIsogenySD> provideIsogencySD()
 	{
+		
 		List<InterfaceIsogenySD> IIDList=new ArrayList<InterfaceIsogenySD>();
 		for(UseCase uc:useCases)
 		{
@@ -161,19 +241,25 @@ public class WorkImpl implements Work  {
 			IID.setUcID(uc.getUseCaseID());
 			IID.setUcName(uc.getUseCaseName());
 			List<InterfaceSD> ISDList=new ArrayList<InterfaceSD>();
-			for(SDSet sd:uc.getSdSets())
+			if(uc.getSdSets()!=null)
 			{
-				InterfaceSD ISD=new InterfaceSD();
-				ISD.setID(sd.getId());
-				ISD.setName(sd.getName());
-				ISDList.add(ISD);
+				for(SD sd:uc.getSdSets())
+				{
+					InterfaceSD ISD=new InterfaceSD();
+					ISD.setID(sd.getId());
+					ISD.setName(sd.getName());
+					ISD.setpostCondition(sd.getPostSD());
+					ISDList.add(ISD);
+				}
 			}
+			
 			IID.setISDList(ISDList);
 			IIDList.add(IID);
 		}
+		
 		return IIDList;
 	}
-	@SuppressWarnings({ "null", "unchecked" })
+	
 	@Override
 	public List<Object> calculateProb(List<double[][]> proMatrixList) {
 		List<Object> resultList=new ArrayList<Object>();
@@ -230,9 +316,14 @@ public class WorkImpl implements Work  {
 		
 	}
 	
-	@Override
+	/*
+	 * (non-Javadoc)概率赋值
+	 * @see cn.edu.hdu.lab.service.interfaces.Work#assignmentPro(java.util.List)
+	 */
+	@Override 
 	public void assignmentPro(List<InterfaceIsogenySD> IISDList)
 	{
+		System.out.println("**********给每个用例下的场景赋概率值**********");
 		for(InterfaceIsogenySD IISD:IISDList)
 		{
 			for(UseCase uc:useCases)
@@ -241,25 +332,44 @@ public class WorkImpl implements Work  {
 				{
 					for(InterfaceSD ISD:IISD.getISDList())
 					{
-						for(SDSet sd:uc.getSdSets())
+						for(SD sd:uc.getSdSets())
 						{
 							if(ISD.getID().equals(sd.getId()))
 							{
+								//System.out.println(ISD.getPro());
 								sd.setProb(ISD.getPro());
+								//System.out.println(sd.getName()+"-"+sd.getProb());
 							}
 						}
 					}
+					break;
 				}
 			}
 		}
+
+		for(UseCase uc:useCases)
+		{
+			for(SD sd:uc.getSdSets())
+			{
+				for(Message mess:sd.getMessages())
+				{
+					mess.setProb(sd.getProb());
+				}
+					
+			}
+		}
+	
 	}
 	
-	public List transVerify() throws InvalidTagException
+	/*
+	 * (non-Javadoc)一致性验证
+	 * @see cn.edu.hdu.lab.service.interfaces.Work#transVerify()
+	 */
+	public List<Object> transVerify() throws InvalidTagException
 	{
 		ConWork work=new ConWork(this.useCases);
 		work.Initialize();
-		@SuppressWarnings("rawtypes")
-		List verifyReList= work.ConsistencyCheck(); //包含两个量：T/F、验证结果的量
+		List<Object> verifyReList= work.ConsistencyCheck(); 
 		if(verifyReList!=null)
 		{
 			if((boolean)verifyReList.get(0)==true)
@@ -275,12 +385,14 @@ public class WorkImpl implements Work  {
 		return verifyReList;
 	}
 	@Override
-	public void transToMarckov(Map<String, List<InterfaceUCRelation>> UCRMap)
+	public void transToMarckov(Map<String, List<InterfaceUCRelation>> UCRMap) throws Exception
 	{
-		
 		Translation translation=new Translation();
-		f_Tmc=translation.UMLTranslationToMarkovChain(useCases,UCRMap); //得到软件级Markov
-		
+		/*for(UseCase uc:useCases)
+		{
+			uc.print_useCase();
+		}*/
+		f_Tmc=translation.UMLTranslationToMarkovChain(useCases,UCRMap); //得到软件级Markov		
 		seqTmcs=translation.getSeqTmcList();//得到场景逐步叠加的Markov
 		ucTmcs=translation.getTmcs();    //得到用例Markov
 		
@@ -288,11 +400,15 @@ public class WorkImpl implements Work  {
 	}
 	
 	//查看最终模型所有结点出迁移概率之和是否为一
-	public void probabilityTest()
+	public void probabilityAndReachableTest() throws Exception
 	{
 		double proSum=0;
 		for(State state:f_Tmc.getStates())
 		{
+			if(state.getNotation()!=null&&state.getNotation().contains(StaticConfig.endCondition))
+			{
+				break;
+			}
 			proSum=0;
 			for(Transition tr:f_Tmc.getTransitions())
 			{
@@ -301,32 +417,81 @@ public class WorkImpl implements Work  {
 					proSum+=tr.getTransFlag().getProb();
 				}
 			}
-			if(proSum!=1.0)
+			if(proSum<0.999||proSum>1.001)
 			{
-				System.out.println(state.getName());
+				System.out.println(proSum);
+				throw new Exception("结点："+state.getName()+" 出迁移概率不为1");
+//				System.out.println("结点："+state.getName()+" 出迁移概率不为1");
 			}
 		}
+		
+		//可达性
+		for(State state:f_Tmc.getStates())
+		{
+			if(state.getLabel()!=null&&state.getLabel().contains("Exit"))
+			{
+				break;
+			}
+			boolean result=DFSSearchFinishState(state,f_Tmc);
+			if(!result)
+			{
+				throw new Exception("异常：状态存在断路不可达的情况;异常结点："+state.getName()+"。");
+			}
+			
+		}
+	}
+	private static boolean  DFSSearchFinishState(State state,Tmc f_Tmc)
+	{
+		boolean f=false;
+		
+		for(Transition tr:f_Tmc.getTransitions())
+		{
+			if(tr.getFrom().equals(state))
+			{
+				if(tr.getNotation()==null||
+						(tr.getNotation()!=null&&!tr.getNotation().contains("backLoop")))
+				{
+					if(tr.getTo().getNotation()!=null&&tr.getTo().getNotation().contains(StaticConfig.endCondition))
+					{
+						return true;
+					}
+					else
+					{
+						f= DFSSearchFinishState(tr.getTo(),f_Tmc);
+						if(f==true)
+						{
+							break;
+						}
+					}				
+				}
+			}
+			
+			
+		}
+		return f;
 	}
 	
-	public void writeMarkov(String mcXMLFileName) throws IOException
+	public void writeMarkov(String mcXMLFileName,MainFrame mainFrame) throws Exception
 	{
-		String McName="MarkovChainModel";
-		int count=1;
-		for(Tmc tmc:seqTmcs)
-		{
-			String fileName=mcXMLFileName+"Seq_"+McName+count+".xml";
-			Write.writeMarkov2XML(tmc, fileName);
-			count++; 
-		}
-		count=1;
-		for(Tmc tmc:ucTmcs) //用例级别
-		{
-			String fileName=mcXMLFileName+"UC_"+McName+count+".xml";
-			Write.writeMarkov2XML(tmc,fileName);
-			count++;
-		}
+//		String McName="MarkovChainModel";
+//		int count=1;
+//		for(Tmc tmc:seqTmcs)
+//		{
+//			String fileName=mcXMLFileName+"Seq_"+McName+count+".xml";
+//			Write.writeMarkov2XML(tmc, fileName);
+//			count++; 
+//		}
+//		count=1;
+//		for(Tmc tmc:ucTmcs) //用例级别
+//		{
+//			String fileName=mcXMLFileName+"UC_"+McName+count+".xml";
+//			Write.writeMarkov2XML(tmc,fileName);
+//			count++;
+//		}
 		
-		Write.writeMarkov2XML(f_Tmc,(mcXMLFileName+"Sofeware_"+McName+".xml"));   
+		Write.writeMarkov2XML(f_Tmc,mcXMLFileName+".xml",mainFrame);   
 	}
+
+	
 	
 }

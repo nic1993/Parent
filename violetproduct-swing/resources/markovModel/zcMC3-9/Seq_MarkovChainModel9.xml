@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Model version="1.0" type="uml:Model" name="Markov_Model" visibility="public" authorNmae="Terence">
+  <ModelType>Seq_Markov</ModelType>
+  <Owned>电机加解锁监控</Owned>
+  <name>arm_motors_check</name>
+  <state>
+    <name>S99</name>
+    <arc label="prob" type="common">
+      <name>S99_S100_arm_motors_check()</name>
+      <owned>arm_motors_check</owned>
+      <prob>1.0</prob>
+      <to>S100</to>
+    </arc>
+  </state>
+  <state>
+    <name>S100</name>
+    <arc label="prob" type="common">
+      <name>S100_S101_mode_has_manual_throttle(unsigned char)</name>
+      <owned>mode_has_manual_throttle</owned>
+      <assignValue>mhmt</assignValue>
+      <assignType>boo</assignType>
+      <prob>1.0</prob>
+      <stimulate>
+        <parameter>
+          <paramName>mode</paramName>
+          <paramType>unsigned char</paramType>
+          <domain type="serial">-32768&lt;mode&lt;32769</domain>
+        </parameter>
+      </stimulate>
+      <to>S101</to>
+    </arc>
+    <arc label="prob" type="common">
+      <name>S100_S107_mode_has_manual_throttle(unsigned char)</name>
+      <owned>mode_has_manual_throttle</owned>
+      <assignValue>mhmt</assignValue>
+      <assignType>boo</assignType>
+      <prob>1.0</prob>
+      <stimulate>
+        <parameter>
+          <paramName>mode</paramName>
+          <paramType>unsigned char</paramType>
+          <domain type="serial">-32768&lt;mode&lt;32769</domain>
+        </parameter>
+      </stimulate>
+      <to>S107</to>
+    </arc>
+  </state>
+  <state>
+    <name>S101</name>
+    <arc label="prob" type="common">
+      <name>S101_S102_armed()</name>
+      <owned>armed</owned>
+      <assignValue>is_armed</assignValue>
+      <assignType>bool</assignType>
+      <prob>1.0</prob>
+      <to>S102</to>
+    </arc>
+  </state>
+  <state>
+    <name>S102</name>
+    <arc label="prob" type="common">
+      <name>S102_S103_init_disarm_motors()</name>
+      <owned>init_disarm_motors</owned>
+      <prob>1.0</prob>
+      <to>S103</to>
+    </arc>
+  </state>
+  <state>
+    <name>S103</name>
+    <arc label="prob" type="void">
+      <name>S103_S104</name>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S104</to>
+    </arc>
+  </state>
+  <state>
+    <name>S104</name>
+    <arc label="prob" type="void">
+      <name>S104_S105</name>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S105</to>
+    </arc>
+  </state>
+  <state>
+    <name>S105</name>
+    <arc label="prob" type="void">
+      <name>S105_S106</name>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S106</to>
+    </arc>
+  </state>
+  <state>
+    <name>S106</name>
+    <arc label="prob" type="void">
+      <name>S106_S112</name>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S112</to>
+    </arc>
+  </state>
+  <state>
+    <name>S107</name>
+    <arc label="prob" type="common">
+      <name>S107_S108_armed()</name>
+      <owned>armed</owned>
+      <assignValue>is_armed</assignValue>
+      <assignType>bool</assignType>
+      <prob>1.0</prob>
+      <to>S108</to>
+    </arc>
+  </state>
+  <state>
+    <name>S108</name>
+    <arc label="prob" type="common">
+      <name>S108_S109_init_disarm_motors()</name>
+      <owned>init_disarm_motors</owned>
+      <prob>1.0</prob>
+      <to>S109</to>
+    </arc>
+  </state>
+  <state>
+    <name>S109</name>
+    <arc label="prob" type="void">
+      <name>S109_S110</name>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S110</to>
+    </arc>
+  </state>
+  <state>
+    <name>S110</name>
+    <arc label="prob" type="void">
+      <name>S110_S111</name>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S111</to>
+    </arc>
+  </state>
+  <state>
+    <name>S111</name>
+    <arc label="prob" type="void">
+      <name>S111_S106</name>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S106</to>
+    </arc>
+  </state>
+  <state>
+    <name>S112</name>
+  </state>
+</Model>

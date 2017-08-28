@@ -1,0 +1,24 @@
+Exporting package to 'C:\Users\Terence\Desktop\zcUml3-1\update_land_detector.xml'
+Retrieving data for export: diagram elements
+Retrieving data for export: links
+Retrieving data for export: constraints
+Retrieving data for export: attribute tagged values
+Retrieving data for export: operation tagged values
+Retrieving data for export: operation parameter tagged values
+Retrieving data for export: connector tagged values
+Completed data retrieval
+Pre-processing export tree...
+Completed pre-processing
+Processing package: update_land_detector
+Diagram: update_land_detectors
+Element:0: 
+Element:1: 
+Element:2: 
+Element:3: copter
+Element:4: if disarmed, always landed.
+Element:5: judge get_the_throttle get_non_takeoffthrotle
+Element:6: motors
+Adding State-Tables
+Sequencing Interaction Diagrams
+Formatting output XML...please wait
+XMI Document Export Complete!

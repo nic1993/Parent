@@ -11,8 +11,10 @@ import java.util.List;
 public class Route {
 
 	private List<Transition> transitionList;// 路径中迁移序列集合
+	private String tcSequence;// 路径测试序列
 	private double routeProbability; // 路径概率
 	private int number; // 固定测试用例个数时，此路径所占个数
+	private double actualPercent;
 
 	public List<Transition> getTransitionList() {
 		return transitionList;
@@ -43,6 +45,22 @@ public class Route {
 		return "Route [transitionList=" + transitionList
 				+ ", routeProbability=" + routeProbability + ", number="
 				+ number + "]";
+	}
+
+	public String getTcSequence() {
+		return tcSequence;
+	}
+
+	public void setTcSequence(String tcSequence) {
+		this.tcSequence = tcSequence;
+	}
+
+	public double getActualPercent() {
+		return actualPercent;
+	}
+
+	public void setActualPercent(double actualPercent) {
+		this.actualPercent = actualPercent;
 	}
 
 }

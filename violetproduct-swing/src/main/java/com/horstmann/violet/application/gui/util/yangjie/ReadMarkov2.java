@@ -7,6 +7,7 @@ import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
+
 /**
  * 建立一个用于读取存放markov链的XML文件,在内存中构成markov链的邻接表表示结构
  * 其中包含了获取XML文件的dom对象的函数和通过dom对象读取xml文件构成markov链的 邻接表表示结构
@@ -25,10 +26,13 @@ public class ReadMarkov2 {
 	 * @return 返回指定xml文件的dom对象
 	 * 
 	 * */
-	public Document getDom() throws Exception {
+	public Document getDom(String route) throws Exception {
 		SAXReader reader = new SAXReader();
 		// Document dom = reader.read("telephone_extend_2.xml");
-		Document dom = reader.read("telephone_nocircle.xml");
+		// Document dom = reader.read("Primary Use Cases.xml");
+		// Document dom = reader.read("NewMarkov.xml");
+		// Document dom = reader.read("Software_MarkovChainModel1.xml");
+		Document dom = reader.read(route);
 		return dom;
 	}
 
@@ -37,8 +41,8 @@ public class ReadMarkov2 {
 	 * 
 	 * @return 返回邻接表结构的markov链对象
 	 * */
-	public Markov readMarkov() throws Exception {
-		Document dom = getDom();
+	public Markov readMarkov(String route) throws Exception {
+		Document dom = getDom(route);
 		Element root = dom.getRootElement();
 		List stateList = root.selectNodes("//state"); // xpath语法
 														// 获取到xml中所有的state标签
@@ -60,23 +64,65 @@ public class ReadMarkov2 {
 			headState.setStateName(name.getText());
 			headState.setStateNum(i);
 			headState.setStateAccessTimes(0);
+
+			String stateLabel = state.attributeValue("label");
+			if (stateLabel != null) {
+				if (stateLabel.equals("final")) {
+					headState.setLabel("final");
+					markov.setFinalState(headState);
+				} else if (stateLabel.equals("initial")) {
+					headState.setLabel("initial");
+					markov.setInitialState(headState);
+				}
+			}
+
 			// 遍历当前状态的后续迁移(出迁移)集合
 			List arcs = state.elements("arc");
+			double outTransProb = 0.0;
 			for (Object arcNode : arcs) {
 				Element arc = (Element) arcNode;
-				Element arcName = arc.element("name");// 激励名称节点
+				// Element arcName = arc.element("name");// 激励名称节点
+				Element arcName = arc.element("owned");// 激励名称节点
 				Element nextState = arc.element("to");
 				Element probability = arc.element("prob");
+				Element assignValue = arc.element("assignValue");
+				Element assignType = arc.element("assignType");
+				Element conditions = arc.element("conditions");
 				// 每遍历到一个出迁移，就创建一个迁移对象，并将从xml中读到的值赋值给其相应变量
 				Transition t = new Transition();
-				t.setName(arcName.getText());
+				t.setName(arcName.getText().trim());
+				if (t.getName().equals("")) {
+					throw new RuntimeException("状态" + headState.getStateName()
+							+ "下的owned标签内容为空不符要求");
+				}
 				t.setProbability(Double.parseDouble(probability.getText()));
+				// 打印每条迁移的概率
+				System.out.println("状态" + headState.getStateName() + "的迁移"
+						+ t.getName() + "的概率为：" + t.getProbability());
+				outTransProb += t.getProbability();// 出迁移总概率
+
 				t.setAccessTimes(0);
 				t.setNextStateName(nextState.getText());
+				if (assignValue != null) {
+					t.setAssignValue(assignValue.getText());
+				}
+				if (assignType != null) {
+					t.setAssignType(assignType.getText());
+				}
+
+				// 设置测试所需各种条件
+				t.setConditions(conditions.getTextTrim());
 
 				// 封装transition上的激励stimulate，并赋值给transition上面的stimulate属性
 				Stimulate stimulate = new Stimulate();
-				stimulate.setName(arcName.getText());
+				stimulate.setName(arcName.getText().trim());
+				if (assignValue != null) {
+					stimulate.setAssignValue(assignValue.getText());
+				}
+				if (assignType != null) {
+					stimulate.setAssignType(assignType.getText());
+				}
+				stimulate.setConditions(conditions.getTextTrim());
 				// 先封装stimulate上面的参数集合属性
 				List<Parameter> parameters = new ArrayList<Parameter>();// 存储每个迁移上的激励中的参数
 				// 再封装stimulate上的参数间约束表达式集合
@@ -86,14 +132,31 @@ public class ReadMarkov2 {
 
 					List paramList = stimulate_ele.elements("parameter");
 					for (Object parameterNode : paramList) {
+
 						// 封装每个参数实体
 						Parameter parameter = new Parameter();
 						Element parameterElement = (Element) parameterNode;
+
+						System.out.println("当前读到的状态名："
+								+ headState.getStateName()
+								+ "当前读到的激励参数名："
+								+ parameterElement.element("paramName")
+										.getText());
+
 						Element paramName = parameterElement
 								.element("paramName");
 						Element paramType = parameterElement
 								.element("paramType");
 						Element domain = parameterElement.element("domain");
+						if (domain == null) {
+							throw new RuntimeException("状态"
+									+ headState.getStateName()
+									+ "下的迁移："
+									+ arc.element("name").getText().trim()
+									+ "中的参数"
+									+ parameterElement.element("paramName")
+											.getText() + "缺少domain标签！");
+						}
 						parameter.setName(paramName.getText());
 						parameter.setParamType(paramType.getText());
 						parameter.setDomainType(domain.attributeValue("type"));
@@ -127,6 +190,17 @@ public class ReadMarkov2 {
 				outTransitions.add(t); // 将当前封装的出迁移存入出迁移集合
 				transitions.add(t); // 将当前封装的迁移存入总迁移集合
 			}
+			// 打印出迁移概率和
+			// System.out.println("状态节点" + headState.getStateName() +
+			// "的出迁移概率和为："
+			// + outTransProb);
+			if (outTransProb < 0.9 && !headState.getStateName().equals("Exit")) {
+				throw new RuntimeException("状态节点" + headState.getStateName()
+						+ "的出迁移概率和为" + outTransProb + "小于1");
+			} else if (outTransProb > 1.1) {
+				throw new RuntimeException("状态节点" + headState.getStateName()
+						+ "的出迁移概率和为" + outTransProb + "大于1");
+			}
 			headState.setOutTransitions(outTransitions); // 将出迁移集合赋值给当前的状态节点的出迁移集合对象
 			// System.out.println("第"+i+"个头结点有"+outTransitions.size());
 			// outTransitions.clear();不能用clear 已经赋值的状态节点的出迁移集合又会变成null
@@ -159,12 +233,13 @@ public class ReadMarkov2 {
 		}
 
 		// 设置markov链的初始状态节点
-		markov.getStates().get(0).setLabel("initial");
-		markov.setInitialState(markov.getStates().get(0));
-		// 设置markov链的终止状态节点
-		markov.getStates().get(markov.getStates().size() - 1).setLabel("final");
-		markov.setFinalState(markov.getStates().get(
-				markov.getStates().size() - 1));
+		/*
+		 * markov.getStates().get(0).setLabel("initial");
+		 * markov.setInitialState(markov.getStates().get(0)); //
+		 * 设置markov链的终止状态节点 markov.getStates().get(markov.getStates().size() -
+		 * 1).setLabel("final"); markov.setFinalState(markov.getStates().get(
+		 * markov.getStates().size() - 1));
+		 */
 
 		// System.out.println(markov.getTransitions().size());
 		return markov; // 将构造成功的邻接表结构的markov链对象返回

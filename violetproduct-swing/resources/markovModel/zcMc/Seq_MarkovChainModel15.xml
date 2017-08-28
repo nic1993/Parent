@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Model version="1.0" type="uml:Model" name="Markov_Model" visibility="public" authorNmae="Terence">
+  <ModelType>Seq_Markov</ModelType>
+  <Owned>电源失效保护</Owned>
+  <name>failsafe_battery_event; set_mode_RTL_or_land_with_pause</name>
+  <state>
+    <name>S4</name>
+    <arc label="prob" type="common">
+      <name>S4_S5_set_mode_RTL_or_land_with_pause()</name>
+      <owned>set_mode_RTL_or_land_with_pause</owned>
+      <prob>0.0</prob>
+      <to>S5</to>
+    </arc>
+  </state>
+  <state>
+    <name>S5</name>
+  </state>
+</Model>

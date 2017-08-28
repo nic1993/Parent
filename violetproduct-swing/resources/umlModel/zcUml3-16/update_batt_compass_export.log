@@ -1,0 +1,25 @@
+Exporting package to 'C:\Users\Terence\Desktop\zcUml3-1\update_batt_compass.xml'
+Retrieving data for export: diagram elements
+Retrieving data for export: links
+Retrieving data for export: constraints
+Retrieving data for export: attribute tagged values
+Retrieving data for export: operation tagged values
+Retrieving data for export: operation parameter tagged values
+Retrieving data for export: connector tagged values
+Completed data retrieval
+Pre-processing export tree...
+Completed pre-processing
+Processing package: update_batt_compass
+Diagram: update_batt_compass
+Element:0: battery
+Element:1: compass
+Element:2: copter
+Element:3: motors
+Element:4: read_battery has_current true
+Element:5: scheduler
+Element:6: update compass with current value
+Element:7: update motors with voltage and current
+Adding State-Tables
+Sequencing Interaction Diagrams
+Formatting output XML...please wait
+XMI Document Export Complete!

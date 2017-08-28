@@ -52,6 +52,8 @@ public class DragSelectedBehavior extends AbstractEditorPartBehavior
             return;
         }
         selectedNode=selectionHandler.getLastSelectedNode();
+
+        
         String combinedStr = "class com.horstmann.violet.product.diagram.sequence.CombinedFragment";
         double zoom = editorPart.getZoomFactor();
         final Point2D mousePoint = new Point2D.Double(event.getX() / zoom, event.getY() / zoom);
@@ -68,35 +70,38 @@ public class DragSelectedBehavior extends AbstractEditorPartBehavior
      
         if (isMouseOnNode(mousePoint))
         {   
-        	if(selectedNode.getClass().toString().equals(combinedStr))
-        	
-        	{    
-        		 this.isReadyForDragging = true;
-        	     changeSelectedElementIfNeeded(mousePoint);//转变选取目标节点
-        		 List<FragmentPart> fragmentparts=selectedNode.getFragmentParts();       		
-        	     for(FragmentPart fragmentPart: fragmentparts)
-        	     { 
-        		 Line2D borderline= fragmentPart.getBorderline();
-                 double locationX=borderline.getP1().getX();
-                 double locationY=borderline.getP1().getY()-5;
-                 Rectangle2D borderlinebound=new Rectangle2D.Double(locationX,locationY,selectedNode.getWidth(),10);
-                 if(borderlinebound.contains(mousePoint))
-                 {	
-                	 this.isReadyForDragging=false;
-                	 break;
-                 }
-                }
-                 this.lastMousePoint = mousePoint;
-                 this.initialCursor = this.editorPart.getSwingComponent().getCursor();
-                 this.editorPart.getSwingComponent().setCursor(this.dragCursor);       	            	   
-        	}        
-        else{
-            changeSelectedElementIfNeeded(mousePoint);
-            this.isReadyForDragging = true;
-            this.lastMousePoint = mousePoint;
-            this.initialCursor = this.editorPart.getSwingComponent().getCursor();
-            this.editorPart.getSwingComponent().setCursor(this.dragCursor);
+        	if(selectedNode != null)
+        	{
+        		if(selectedNode.getClass().toString().equals(combinedStr))
+            	{    
+            		 this.isReadyForDragging = true;
+            	     changeSelectedElementIfNeeded(mousePoint);//转变选取目标节点
+            		 List<FragmentPart> fragmentparts=selectedNode.getFragmentParts();       		
+            	     for(FragmentPart fragmentPart: fragmentparts)
+            	     { 
+            		 Line2D borderline= fragmentPart.getBorderline();
+                     double locationX=borderline.getP1().getX();
+                     double locationY=borderline.getP1().getY()-5;
+                     Rectangle2D borderlinebound=new Rectangle2D.Double(locationX,locationY,selectedNode.getWidth(),10);
+                     if(borderlinebound.contains(mousePoint))
+                     {	
+                    	 this.isReadyForDragging=false;
+                    	 break;
+                     }
+                    }
+                     this.lastMousePoint = mousePoint;
+                     this.initialCursor = this.editorPart.getSwingComponent().getCursor();
+//                     this.editorPart.getSwingComponent().setCursor(this.dragCursor);       	            	   
+            	}        
+            else{
+                changeSelectedElementIfNeeded(mousePoint);
+                this.isReadyForDragging = true;
+                this.lastMousePoint = mousePoint;
+                this.initialCursor = this.editorPart.getSwingComponent().getCursor();
+                this.editorPart.getSwingComponent().setCursor(this.dragCursor);
+            	}
         	}
+        	
         }
     }
 
@@ -136,6 +141,7 @@ public class DragSelectedBehavior extends AbstractEditorPartBehavior
         // particularly with multiple selection, we might never be
         // able to get them back.
         List<INode> selectedNodes = selectionHandler.getSelectedNodes();
+       
         for (INode n : selectedNodes)
             bounds.add(n.getBounds());
         dx = Math.max(dx, -bounds.getX());
@@ -146,12 +152,14 @@ public class DragSelectedBehavior extends AbstractEditorPartBehavior
         IGridSticker gridSticker = graph.getGridSticker();
         for (INode n : selectedNodes)
         {
+        	
             if (selectedNodes.contains(n.getParent())) continue; // parents are responsible for translating their
             // children
             Point2D currentNodeLocation = n.getLocation();
             Point2D futureNodeLocation = new Point2D.Double(currentNodeLocation.getX() + dx, currentNodeLocation.getY() + dy);                     
             String str1= "class com.horstmann.violet.product.diagram.timing.State_Lifeline";
             String str2= "class com.horstmann.violet.product.diagram.sequence.CombinedFragment";
+            
             if (!currentNodeLocation.equals(futureNodeLocation))
             {            	
                      n.setLocation(futureNodeLocation);                   
@@ -162,9 +170,9 @@ public class DragSelectedBehavior extends AbstractEditorPartBehavior
             	  //获取到图中所有节点
             	  for(FragmentPart fragmentPart: n.getFragmentParts())
             	 {
-            		 
             	  fragmentPart.getNestingChildNodesID().clear();
            	      fragmentPart.getCoveredMessagesID().clear();//每次在移动时重置，因为每次点击时都需要判断嵌套关系
+           	      fragmentPart.getCoveredLifelinedID().clear();
             	 }
             	 
                   for(INode node : Nodes)
@@ -173,12 +181,9 @@ public class DragSelectedBehavior extends AbstractEditorPartBehavior
                  	 {   
                  		 for(FragmentPart fragmentPart: n.getFragmentParts())
                  		 {		 
-                 		if(fragmentPart.getBounds().contains(node.getBounds()))
+                 		 if(fragmentPart.getBounds().contains(node.getBounds()))
                  				{ 
-//                 			System.out.println(n);
-//                 			System.out.println(node);
-                 			//System.out.println(node.getID());
-                 			   fragmentPart.AddNestingChildNodesID(node.getID().toString());            			 
+                 			    fragmentPart.AddNestingChildNodesID(node.getID().toString());            			 
                  				}  
                  		 }
                  	 }
@@ -198,8 +203,20 @@ public class DragSelectedBehavior extends AbstractEditorPartBehavior
             	 {
             		if(fragmentPart.getBounds().contains(edge.getStartLocation()))
             		{      
-            			
             			fragmentPart.AddCoveredMessagesID(edge.getID().toString());
+            			INode startNodeParent = edge.getStart().getParent();
+                        INode endNodeParent = edge.getEnd().getParent();
+                        
+            			if(startNodeParent.getClass().getSimpleName().equals("LifelineNode") 
+            					&& !fragmentPart.getCoveredLifelinedID().contains(startNodeParent.getID()))
+            			{
+            				fragmentPart.AddCoveredLifelinedID(startNodeParent.getID());
+            			}
+            			if(endNodeParent.getClass().getSimpleName().equals("LifelineNode")
+            					&& !fragmentPart.getCoveredLifelinedID().contains(endNodeParent.getID()))
+            			{
+            				fragmentPart.AddCoveredLifelinedID(endNodeParent.getID());
+            			}
             		}            		            		 
             	 }
               }           	         	
@@ -209,7 +226,6 @@ public class DragSelectedBehavior extends AbstractEditorPartBehavior
    	    	 SEdge s= ((StatelineParent)n).getStateLine();  	      
    	    	for(IHorizontalChild horizontalchild:s.gethorizontalChild())//改变孩子位置
    	    	{
-   	    		
    	    		Point2D P1=new Point2D.Double(horizontalchild.getStart().getX()+dx,
    	    				horizontalchild.getStart().getY()+dy);
    	    		Point2D P2=new Point2D.Double(horizontalchild.getEnd().getX()+dx,
@@ -218,7 +234,6 @@ public class DragSelectedBehavior extends AbstractEditorPartBehavior
    	    		horizontalchild.setEnd(P2);  	    
    	    	}
             }
-   	    	
    	              //    到这里为止                                 
            }
         // Drag transition points on edges

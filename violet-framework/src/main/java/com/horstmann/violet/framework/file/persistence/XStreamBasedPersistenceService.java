@@ -57,13 +57,12 @@ public class XStreamBasedPersistenceService implements IFilePersistenceService {
 			OutputStreamWriter writer = new OutputStreamWriter(out);
 			XStream xStream = new XStream(new DomDriver("UTF-8"));
 			xStream = getConfiguredXStream(xStream);
-			xStream.toXML(graph, writer);
+			xStream.toXML(graph, writer);			
 			writer.close();
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
-	}
-	
+	}	
 	private XStream getConfiguredXStream(XStream xStream) {
 		xStream.autodetectAnnotations(true);
 		xStream.setMode(XStream.ID_REFERENCES);//idµÄÒýÓÃ

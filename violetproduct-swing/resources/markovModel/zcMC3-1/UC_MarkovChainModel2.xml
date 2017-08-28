@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Model version="1.0" type="uml:Model" name="Markov_Model" visibility="public" authorNmae="Terence">
+  <ModelType>UC_Markov</ModelType>
+  <Owned>Software</Owned>
+  <name>电源失效保护</name>
+  <state>
+    <name>S19</name>
+    <arc label="prob">
+      <name>S19_S20_failsafe_battery_event()</name>
+      <prob>0.093</prob>
+      <to>S20</to>
+    </arc>
+    <arc label="prob">
+      <name>S19_S40_set_mode_RTL_or_land_with_pause()</name>
+      <prob>0.272</prob>
+      <to>S40</to>
+    </arc>
+    <arc label="prob">
+      <name>S19_S41_set_mode_and_with_pause()</name>
+      <prob>0.635</prob>
+      <to>S41</to>
+    </arc>
+  </state>
+  <state>
+    <name>S20</name>
+    <arc label="prob">
+      <name>S20_S21_armed()</name>
+      <assignValue>has_armed</assignValue>
+      <assignType>bool</assignType>
+      <prob>NaN</prob>
+      <to>S21</to>
+    </arc>
+  </state>
+  <state>
+    <name>S21</name>
+    <arc label="prob">
+      <name>S21_S22_init_disarm_motors()</name>
+      <prob>NaN</prob>
+      <to>S22</to>
+    </arc>
+    <arc label="prob">
+      <name>S21_S24_set_mode_RTL_or_land_with_pause()</name>
+      <prob>NaN</prob>
+      <to>S24</to>
+    </arc>
+    <arc label="prob">
+      <name>S21_S26_set_mode_land_with_pause()</name>
+      <prob>NaN</prob>
+      <to>S26</to>
+    </arc>
+    <arc label="prob">
+      <name>S21_S28_init_disarm_motors()</name>
+      <prob>NaN</prob>
+      <to>S28</to>
+    </arc>
+    <arc label="prob">
+      <name>S21_S30_set_mode_RTL_or_land_with_pause()</name>
+      <prob>NaN</prob>
+      <to>S30</to>
+    </arc>
+    <arc label="prob">
+      <name>S21_S31_set_mode_land_with_pause()</name>
+      <prob>NaN</prob>
+      <to>S31</to>
+    </arc>
+    <arc label="prob">
+      <name>S21_S32_init_disarm_motors()</name>
+      <prob>NaN</prob>
+      <to>S32</to>
+    </arc>
+    <arc label="prob">
+      <name>S21_S34_set_mode_RTL_or_land_with_pause()</name>
+      <prob>NaN</prob>
+      <to>S34</to>
+    </arc>
+    <arc label="prob">
+      <name>S21_S35_set_mode_land_with_pause()</name>
+      <prob>NaN</prob>
+      <to>S35</to>
+    </arc>
+    <arc label="prob">
+      <name>S21_S37_set_failsafe_battery(bool)</name>
+      <assignValue>failsafe.battery</assignValue>
+      <assignType>uin</assignType>
+      <prob>NaN</prob>
+      <stimulate>
+        <parameter>
+          <paramName>b</paramName>
+          <paramType>bool</paramType>
+          <domain type="serial">true,false</domain>
+        </parameter>
+      </stimulate>
+      <to>S37</to>
+    </arc>
+  </state>
+  <state>
+    <name>S22</name>
+    <arc label="prob">
+      <name>S22_S23</name>
+      <prob>1.0</prob>
+      <to>S23</to>
+    </arc>
+  </state>
+  <state>
+    <name>S23</name>
+    <arc label="prob">
+      <name>S23_S27</name>
+      <prob>1.0</prob>
+      <to>S27</to>
+    </arc>
+  </state>
+  <state>
+    <name>S24</name>
+    <arc label="prob">
+      <name>S24_S25</name>
+      <prob>1.0</prob>
+      <to>S25</to>
+    </arc>
+  </state>
+  <state>
+    <name>S25</name>
+    <arc label="prob">
+      <name>S25_S23</name>
+      <prob>1.0</prob>
+      <to>S23</to>
+    </arc>
+  </state>
+  <state>
+    <name>S26</name>
+    <arc label="prob">
+      <name>S26_S25</name>
+      <prob>1.0</prob>
+      <to>S25</to>
+    </arc>
+  </state>
+  <state>
+    <name>S27</name>
+    <arc label="prob">
+      <name>S27_S36</name>
+      <prob>1.0</prob>
+      <to>S36</to>
+    </arc>
+  </state>
+  <state>
+    <name>S28</name>
+    <arc label="prob">
+      <name>S28_S29</name>
+      <prob>1.0</prob>
+      <to>S29</to>
+    </arc>
+  </state>
+  <state>
+    <name>S29</name>
+  </state>
+  <state>
+    <name>S30</name>
+    <arc label="prob">
+      <name>S30_S29</name>
+      <prob>1.0</prob>
+      <to>S29</to>
+    </arc>
+  </state>
+  <state>
+    <name>S31</name>
+    <arc label="prob">
+      <name>S31_S29</name>
+      <prob>1.0</prob>
+      <to>S29</to>
+    </arc>
+  </state>
+  <state>
+    <name>S32</name>
+    <arc label="prob">
+      <name>S32_S33</name>
+      <prob>1.0</prob>
+      <to>S33</to>
+    </arc>
+  </state>
+  <state>
+    <name>S33</name>
+    <arc label="prob">
+      <name>S33_S27</name>
+      <prob>1.0</prob>
+      <to>S27</to>
+    </arc>
+  </state>
+  <state>
+    <name>S34</name>
+    <arc label="prob">
+      <name>S34_S33</name>
+      <prob>1.0</prob>
+      <to>S33</to>
+    </arc>
+  </state>
+  <state>
+    <name>S35</name>
+    <arc label="prob">
+      <name>S35_S33</name>
+      <prob>1.0</prob>
+      <to>S33</to>
+    </arc>
+  </state>
+  <state>
+    <name>S36</name>
+  </state>
+  <state>
+    <name>S37</name>
+    <arc label="prob">
+      <name>S37_S38</name>
+      <prob>1.0</prob>
+      <to>S38</to>
+    </arc>
+  </state>
+  <state>
+    <name>S38</name>
+    <arc label="prob">
+      <name>S38_S39</name>
+      <prob>1.0</prob>
+      <to>S39</to>
+    </arc>
+  </state>
+  <state>
+    <name>S39</name>
+  </state>
+  <state>
+    <name>S40</name>
+  </state>
+  <state>
+    <name>S41</name>
+  </state>
+</Model>

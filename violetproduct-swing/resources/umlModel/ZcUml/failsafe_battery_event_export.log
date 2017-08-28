@@ -1,0 +1,27 @@
+Exporting package to 'C:\Users\Terence\Desktop\zc-uml\failsafe_battery_event.xml'
+Retrieving data for export: diagram elements
+Retrieving data for export: links
+Retrieving data for export: constraints
+Retrieving data for export: attribute tagged values
+Retrieving data for export: operation tagged values
+Retrieving data for export: operation parameter tagged values
+Retrieving data for export: connector tagged values
+Completed data retrieval
+Pre-processing export tree...
+Completed pre-processing
+Processing package: failsafe_battery_event
+Diagram: failsafe_battery_event
+Element:0: check for low voltage or current if the low voltage check hasn't already been triggered
+Element:1: copter
+Element:2: failsafe_battery_event control_mode
+Element:3: failsafe_battery_event failsafe check
+Element:4: failsafe_battery_event if mission has not started AND vehicle is landed, disarm motors
+Element:5: failsafe_battery_event if throttle is zero OR vehicle is landed disarm motors
+Element:6: failsafe_battery_event set mode to RTL or LAND
+Element:7: failsafe_battery_event used for AltHold, Guided, Loiter...
+Element:8: motors
+Element:9: return immediately if low battery event has already been triggered
+Adding State-Tables
+Sequencing Interaction Diagrams
+Formatting output XML...please wait
+XMI Document Export Complete!

@@ -1,0 +1,18 @@
+Exporting package to 'C:\Users\Terence\Desktop\zcUml3-1\set_mode_RTL_or_land_with_pause.xml'
+Retrieving data for export: diagram elements
+Retrieving data for export: links
+Retrieving data for export: constraints
+Retrieving data for export: attribute tagged values
+Retrieving data for export: operation tagged values
+Retrieving data for export: operation parameter tagged values
+Retrieving data for export: connector tagged values
+Completed data retrieval
+Pre-processing export tree...
+Completed pre-processing
+Processing package: set_mode_RTL_or_land_with_pause
+Diagram: set_mode_RTL_or_land_with_pause
+Element:0: copter
+Adding State-Tables
+Sequencing Interaction Diagrams
+Formatting output XML...please wait
+XMI Document Export Complete!

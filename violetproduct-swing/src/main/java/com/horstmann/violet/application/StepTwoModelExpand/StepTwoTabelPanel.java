@@ -45,7 +45,7 @@ public class StepTwoTabelPanel extends JPanel{
 		          }
 		   };
 		   titleLabel = new JLabel();
-		   titleLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 18));
+		   titleLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 18));
 		   gapPanel = new JPanel();
 		   reduceTabel = new JLabel();
 		   reduceTabel.setFont(new Font("ËÎÌå", Font.PLAIN, 18));
@@ -59,11 +59,11 @@ public class StepTwoTabelPanel extends JPanel{
 				   if(tabelPanel.isVisible())
 				   {
 					   tabelPanel.setVisible(false);
-					   reduceTabel.setIcon(new ImageIcon("resources/icons/16x16/down.png"));
+//					   reduceTabel.setIcon(new ImageIcon("resources/icons/16x16/down.png"));
 				   }
 				   else {
 					   tabelPanel.setVisible(true);
-					   reduceTabel.setIcon(new ImageIcon("resources/icons/16x16/down.png"));
+//					   reduceTabel.setIcon(new ImageIcon("resources/icons/16x16/down.png"));
 				}  
 			}
 		});   
@@ -72,11 +72,18 @@ public class StepTwoTabelPanel extends JPanel{
 		   titlePanel.add(gapPanel,new GBC(1, 0).setFill(GBC.BOTH).setWeight(1, 0));
 		   titlePanel.add(reduceTabel,new GBC(2, 0).setFill(GBC.BOTH).setWeight(0, 0).setInsets(5));
 	   }
+	   
+	public JPanel getTitlePanel() {
+		return titlePanel;
+	}
 	public JLabel getTitleLabel() {
 		return titleLabel;
 	}
 	public JPanel getTabelPanel() {
 		return tabelPanel;
 	}
-       
+	public JPanel getGapPanel() {
+		return gapPanel;
+	}
+     
 }

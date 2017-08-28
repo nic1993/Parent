@@ -14,6 +14,7 @@ import com.horstmann.violet.product.diagram.abstracts.edge.IEdge;
 import com.horstmann.violet.product.diagram.abstracts.edge.StatelineParent;
 import com.horstmann.violet.product.diagram.abstracts.node.INode;
 import com.horstmann.violet.product.diagram.abstracts.property.FragmentPart;
+import com.horstmann.violet.product.diagram.abstracts.property.FragmentType;
 import com.horstmann.violet.workspace.editorpart.IEditorPart;
 import com.horstmann.violet.workspace.editorpart.IEditorPartSelectionHandler;
 import com.horstmann.violet.workspace.sidebar.graphtools.GraphTool;
@@ -76,7 +77,6 @@ public class ResizeElement extends AbstractEditorPartBehavior
     @Override
     public void onMouseDragged(MouseEvent event)
     {
-    	
         if (!isReadyForDragging)
         {
             return;
@@ -90,6 +90,7 @@ public class ResizeElement extends AbstractEditorPartBehavior
         {
             return;
         }   
+        
         double dx = mousePoint.getX() - lastMousePoint.getX();
         double dy = mousePoint.getY() - lastMousePoint.getY();    
         // we don't want to drag nodes into negative coordinates
@@ -105,23 +106,66 @@ public class ResizeElement extends AbstractEditorPartBehavior
              n.setWidth(currentNodeWidth+dx);    
              n.setHeight(currentNodeHeight+dy);
              isAtLeastOneNodeMoved = true;
-             String str2= "class com.horstmann.violet.product.diagram.sequence.CombinedFragment";           
+             String str2= "class com.horstmann.violet.product.diagram.sequence.CombinedFragment"; 
+             
+             System.out.println(n.getClass().toString());
              if(n.getClass().toString().equals(str2)){
-                 List<FragmentPart> fragmentParts= n.getFragmentParts();
-                 for(FragmentPart fragmentPart : fragmentParts)
-                 {
-                	 Line2D borderline=fragmentPart.getBorderline();
-                	
-                	 Point2D p1=new Point2D.Double(borderline.getP1().getX(),
-                	 borderline.getP1().getY());
-                	 Point2D p2=new Point2D.Double(borderline.getP2().getX()+dx,
-                     borderline.getP2().getY());
-                	 Line2D newborderline=new Line2D.Double(p1,p2);
-                	 if(!borderline.equals(newborderline)&&fragmentPart.isBorderlinehaschanged()==true)
-                	 { 
-                	 fragmentPart.setBorderline(newborderline);              
-                	 }
-                 }  
+            	 IsReadyForExchange = true;
+            	 List<FragmentPart> fragmentParts= n.getFragmentParts();
+            	 int size = fragmentParts.size();
+            	 if(size == 0)
+            	 {
+            		 if(mousePoint.getX() < (n.getBounds().getX() + 45)
+                     		|| mousePoint.getY() < (n.getBounds().getY() + 25))
+                     	 {
+                     		 IsReadyForExchange=false;
+                     		 n.setWidth(currentNodeWidth);    
+                             n.setHeight(currentNodeHeight);
+                     	 } 
+            	 }
+            	 else if (size == 1) {
+            		 FragmentPart last = fragmentParts.get(size - 1);
+            		 Line2D borderline = last.getBorderline();
+            		 if(mousePoint.getX() < (n.getBounds().getX() + 45)
+                      		|| mousePoint.getY() < (borderline.getY1() + 50))
+                      	 {
+                      		 IsReadyForExchange=false;
+                      		 n.setWidth(currentNodeWidth);    
+                             n.setHeight(currentNodeHeight);
+                      	 } 
+				}
+            	 else{
+            		 FragmentPart last = fragmentParts.get(size - 1);
+            		 Line2D borderline = last.getBorderline();
+            		 if(mousePoint.getX() < (n.getBounds().getX() + 45)
+                      		|| mousePoint.getY() < (borderline.getY1() + 20))
+                      	 {
+                      		 IsReadyForExchange=false;
+                      		 n.setWidth(currentNodeWidth);    
+                              n.setHeight(currentNodeHeight);
+                      	 } 
+				}
+            	 if(!IsReadyForExchange)
+            	 {
+            		 return;
+            	 }
+            	 else
+            	 {
+                     for(FragmentPart fragmentPart : fragmentParts)
+                     {
+                    	 Line2D borderline=fragmentPart.getBorderline();
+                    	 Point2D p1=new Point2D.Double(borderline.getP1().getX(),
+                    	 borderline.getP1().getY());
+                    	 Point2D p2=new Point2D.Double(borderline.getP2().getX()+dx,
+                         borderline.getP2().getY());
+                    	 Line2D newborderline=new Line2D.Double(p1,p2);
+                    	 if(!borderline.equals(newborderline)&&fragmentPart.isBorderlinehaschanged()==true)
+                    	 { 
+                    	 fragmentPart.setBorderline(newborderline);              
+                    	 }
+                     }  
+            	 }
+                 
              }
         if (isAtLeastOneNodeMoved)
         {
@@ -168,6 +212,7 @@ public class ResizeElement extends AbstractEditorPartBehavior
     private IEditorPart editorPart;
     private IGraphToolsBar graphToolsBar;
     private boolean isReadyForDragging = false;
+    private boolean IsReadyForExchange;
     private Cursor initialCursor = null;
     private Cursor dragCursor = new Cursor(Cursor.SE_RESIZE_CURSOR);
 }

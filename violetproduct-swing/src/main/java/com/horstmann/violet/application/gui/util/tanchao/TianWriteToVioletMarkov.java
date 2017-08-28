@@ -19,11 +19,11 @@ import org.dom4j.io.XMLWriter;
 public class TianWriteToVioletMarkov {
    SAXReader reader =new SAXReader();
    //状态的集合
-   List<MarkovNode> markovNodeInfo=new ArrayList<MarkovNode>();
+   List<TanchaoMarkovNode> markovNodeInfo=new ArrayList<TanchaoMarkovNode>();
    //消息的集合
-   List<MarkovTransitionEdge> markovTransitionEdgeInfo=new ArrayList<MarkovTransitionEdge>();
+   List<TanchaoMarkovTransitionEdge> markovTransitionEdgeInfo=new ArrayList<TanchaoMarkovTransitionEdge>();
    //开始的状态
-   MarkovStartNode markovStartNode=new MarkovStartNode();
+   TanchaoMarkovStartNode TanchaoMarkovStartNode=new TanchaoMarkovStartNode();
    int statesId=0;//用于遍历states集合的游标
    int i,j=0;//分别是状态的 list的集合的游标，消息list的游标
    //先固定坐标，后期再展开 (因为标签里面是String类型)
@@ -43,15 +43,15 @@ public class TianWriteToVioletMarkov {
 	   //****先处理state的集合确定所有的state的唯一id****
        for(int i=0,j=0;i<length;i++){
     	   if(i==0){//第一个开始node单独处理
-    		   markovStartNode.setId(UUID.randomUUID().toString());
-    		   markovStartNode.setChildren_id(UUID.randomUUID().toString());
-    		   markovStartNode.setLocation_id(UUID.randomUUID().toString());
-    		   markovStartNode.setUnderLocation_id(UUID.randomUUID().toString());
-    		   markovStartNode.setName_id(UUID.randomUUID().toString());
-    		   markovStartNode.setName(states.get(0).element("name").getText());
+    		   TanchaoMarkovStartNode.setId(UUID.randomUUID().toString());
+    		   TanchaoMarkovStartNode.setChildren_id(UUID.randomUUID().toString());
+    		   TanchaoMarkovStartNode.setLocation_id(UUID.randomUUID().toString());
+    		   TanchaoMarkovStartNode.setUnderLocation_id(UUID.randomUUID().toString());
+    		   TanchaoMarkovStartNode.setName_id(UUID.randomUUID().toString());
+    		   TanchaoMarkovStartNode.setName(states.get(0).element("name").getText());
     	   }
     	   else{//其他的node
-    	   markovNodeInfo.add(new MarkovNode());
+    	   markovNodeInfo.add(new TanchaoMarkovNode());
     	   markovNodeInfo.get(j).setId(UUID.randomUUID().toString());
     	   markovNodeInfo.get(j).setChildren_id(UUID.randomUUID().toString());
     	   markovNodeInfo.get(j).setLocation_id(UUID.randomUUID().toString());
@@ -69,19 +69,46 @@ public class TianWriteToVioletMarkov {
 	   //以该node出度的消息  出度的消息可能有多个
 	   List<Element> arcs=startElement.elements("arc");
 	   for(Element ele:arcs){
-	 	   
+//		   List<Element> sonEles=ele.elements();
+//		   for(Element e:sonEles){
+//			   System.out.println(e.attributeValue("assignType"));
+//		   }
+		   		   
 		   String arc_name=ele.element("name").getText();
 		   String arcToNode=ele.element("to").getText();
-		   String content=ele.element("prob").getText();
-		   markovTransitionEdgeInfo.add(new MarkovTransitionEdge());
+		   String prob=ele.element("prob").getText();
+		   
+		   String conditions=ele.element("conditions").getText();
+		   String owned=ele.element("owned").getText();
+		   
+//		   System.out.println(ele.element("assignType").getText());
+		   String assignType="";
+		   if(ele.element("assignType")!=null){
+			   assignType=ele.element("assignType").getText();
+		   }
+		   
+		   String assignValue="";
+		   if(ele.element("assignValue")!=null){
+			   assignValue=ele.element("assignValue").getText();
+		   }
+		   
+//		   String assignType=ele.element("assignType").getText();
+//		   String assignValue=ele.element("assignValue").getText();
+		   
+		   markovTransitionEdgeInfo.add(new TanchaoMarkovTransitionEdge());
 		   markovTransitionEdgeInfo.get(j).setId(UUID.randomUUID().toString());
 		   markovTransitionEdgeInfo.get(j).setName(arc_name);
 		   markovTransitionEdgeInfo.get(j).setStart_reference(startElement.element("name").getText());
-		   markovTransitionEdgeInfo.get(j).setContent(content);
+		   markovTransitionEdgeInfo.get(j).setProb(prob);
 		   markovTransitionEdgeInfo.get(j).setEnd_reference(arcToNode);
 		   markovTransitionEdgeInfo.get(j).setStartLocation_id(UUID.randomUUID().toString());
 		   markovTransitionEdgeInfo.get(j).setEndLocation_id(UUID.randomUUID().toString());
 		   markovTransitionEdgeInfo.get(j).setUnderLocation_id(UUID.randomUUID().toString());
+		   
+		   markovTransitionEdgeInfo.get(j).setConditions(conditions);
+		   markovTransitionEdgeInfo.get(j).setOwned(owned);
+		   markovTransitionEdgeInfo.get(j).setAssignType(assignType);
+		   markovTransitionEdgeInfo.get(j).setAssignValue(assignValue);
 		   j++;
 	   }
 	   statesId++;
@@ -100,13 +127,33 @@ public class TianWriteToVioletMarkov {
 		   String arcName=ele.element("name").getText();//消息name
 		   String arcFromNode=state.element("name").getText();//消息开始node的name
 		   String arcToNode1=ele.element("to").getText();//消息终点的name
-		   String arccontent=getContent(ele);//消息上面的内容(在下面封装啦)
-		   markovTransitionEdgeInfo.add(new MarkovTransitionEdge());
+		   
+		   String conditions=ele.element("conditions").getText();
+		   String owned=ele.element("owned").getText();
+		   String assignType="";
+		   if(ele.element("assignType")!=null){
+			   assignType=ele.element("assignType").getText();
+		   }
+		   
+		   String assignValue="";
+		   if(ele.element("assignValue")!=null){
+			   assignValue=ele.element("assignValue").getText();
+		   }
+		   String prob=ele.element("prob").getText();
+		   
+//		   String arccontent=getContent(ele);//消息上面的内容(在下面封装啦)
+		   markovTransitionEdgeInfo.add(new TanchaoMarkovTransitionEdge());
 		   markovTransitionEdgeInfo.get(j).setId(UUID.randomUUID().toString());
 		   markovTransitionEdgeInfo.get(j).setName(arcName);
-		   markovTransitionEdgeInfo.get(j).setContent(arccontent);
+//		   markovTransitionEdgeInfo.get(j).setContent(arccontent);
 		   markovTransitionEdgeInfo.get(j).setStart_reference(arcFromNode);
 		   markovTransitionEdgeInfo.get(j).setEnd_reference(arcToNode1);
+		   
+		   markovTransitionEdgeInfo.get(j).setConditions(conditions);
+		   markovTransitionEdgeInfo.get(j).setOwned(owned);
+		   markovTransitionEdgeInfo.get(j).setAssignType(assignType);
+		   markovTransitionEdgeInfo.get(j).setAssignValue(assignValue);
+		   markovTransitionEdgeInfo.get(j).setProb(prob);;
 		   j++;
            }
            i++;
@@ -132,39 +179,38 @@ public class TianWriteToVioletMarkov {
 		   if("to".equals(ele.getName())){//当遍历到to的时候，终止
 			   break;
 		   }
-		   else if("stimulate".equals(ele.getName())){//当出现激励的时候单独处理
-			   //出现激励的时候构造String的类型是stimulate{paraName1:value1 paraName2:value2}
-			   content+=ele.getName();
-			   content+="{";
-			   List<Element> parameters=ele.elements();//获得parameter的element的集合
-			   for(Element eleChild:parameters){
-				   String name="paramName";
-				   content+=name;
-				   content+=":";
-				   String value=eleChild.element("paramName").getText();
-				   content+=value;
-				   content+=" ";
-				   
-				   String typeName="paramType";
-				   content+=typeName;
-				   content+=":";
-				   String typeValue=eleChild.element("paramType").getText();
-				   content+=typeValue;
-				   content+=" ";
-				   
-			   }
-			   String name=ele.getName();
-			   content+=name;
-			   content+="} ";
-		   }
+//		   else if("stimulate".equals(ele.getName())){//当出现激励的时候单独处理
+//			   //出现激励的时候构造String的类型是stimulate{paraName1:value1 paraName2:value2}
+//			   content+=ele.getName();
+//			   content+="{";
+//			   List<Element> parameters=ele.elements();//获得parameter的element的集合
+//			   for(Element eleChild:parameters){
+//				   String name="paramName";
+//				   content+=name;
+//				   content+=":";
+//				   String value=eleChild.element("paramName").getText();
+//				   content+=value;
+//				   content+=" ";
+//				   
+//				   String typeName="paramType";
+//				   content+=typeName;
+//				   content+=":";
+//				   String typeValue=eleChild.element("paramType").getText();
+//				   content+=typeValue;
+//				   content+=" ";
+//				   
+//			   }
+//			   String name=ele.getName();
+//			   content+=name;
+//			   content+="} ";
+//		   }
 		   else{//构造String的类型是 name1:value1 name2:value2
 			   String name=ele.getName();
 			   content+=name;
 			   content+=":";
-			   String value=ele.getName();
+			   String value=ele.getText();
 			   content+=value;
 			   content+=" ";
-			   
 		   }
 		   
 	   }
@@ -181,23 +227,23 @@ public class TianWriteToVioletMarkov {
 		nodes.addAttribute("id", String.valueOf(idcount++));//2
 		//处理startNode
 		Element markovStartNode1=nodes.addElement("MarkovStartNode");
-		markovStartNode1.addAttribute("id", markovStartNode.getId());
+		markovStartNode1.addAttribute("id", TanchaoMarkovStartNode.getId());
 		Element children=markovStartNode1.addElement("children");
-		children.addAttribute("id", markovStartNode.getChildren_id());
+		children.addAttribute("id", TanchaoMarkovStartNode.getChildren_id());
 		Element location=markovStartNode1.addElement("location");
-		location.addAttribute("class", "Point2D.Double").addAttribute("id", markovStartNode.getChildren_id())
+		location.addAttribute("class", "Point2D.Double").addAttribute("id", TanchaoMarkovStartNode.getChildren_id())
 		.addAttribute("x", location_x).addAttribute("y", location_y);
 		Element id=markovStartNode1.addElement("idN");
-		id.addAttribute("id", markovStartNode.getUnderLocation_id());
+		id.addAttribute("id", TanchaoMarkovStartNode.getUnderLocation_id());
 		//添加颜色(3个颜色)
 		setColor(markovStartNode1);
 		//添加name
 		Element name=markovStartNode1.addElement("name");
 		name.addAttribute("id", String.valueOf(idcount++));
-		name.addElement("text").setText(markovStartNode.getName());
+		name.setText(TanchaoMarkovStartNode.getName());
 		
 		//处理剩下的node
-		for(MarkovNode node:markovNodeInfo){
+		for(TanchaoMarkovNode node:markovNodeInfo){
 			Element MarkovNode=nodes.addElement("MarkovNode");
 			MarkovNode.addAttribute("id", node.getId());
 			Element children1=MarkovNode.addElement("children");
@@ -210,13 +256,13 @@ public class TianWriteToVioletMarkov {
       		setColor(MarkovNode);
       		Element name1=MarkovNode.addElement("name");
       		name1.addAttribute("id", node.getName_id());
-      		name1.addElement("text").setText(node.getName());
+      		name1.setText(node.getName());
 //      		name1.setText(node.getName());
 		}
 		//*********************edges***************************
 		Element edges=MarkovGraph.addElement("edges");
 		edges.addAttribute("id", String.valueOf(idcount++));
-		for(MarkovTransitionEdge edge:markovTransitionEdgeInfo){
+		for(TanchaoMarkovTransitionEdge edge:markovTransitionEdgeInfo){
 			
 			Element MarkovTransitionEdge=edges.addElement("MarkovTransitionEdge");
 			MarkovTransitionEdge.addAttribute("id", edge.getId());
@@ -232,8 +278,18 @@ public class TianWriteToVioletMarkov {
             .addAttribute("x", location_x).addAttribute("y", location_y);
             Element edgeId=MarkovTransitionEdge.addElement("idE");
             edgeId.addAttribute("id", edge.getUnderLocation_id());
-            Element probability=MarkovTransitionEdge.addElement("probability");
-            probability.setText(edge.getContent());
+//            Element probability=MarkovTransitionEdge.addElement("probability");
+//            probability.setText(edge.getContent());
+            Element conditions=MarkovTransitionEdge.addElement("conditions");
+            conditions.setText(edge.getConditions());
+            Element owned=MarkovTransitionEdge.addElement("owned");
+            owned.setText(edge.getOwned());
+            Element assignValue=MarkovTransitionEdge.addElement("assignValue");
+            assignValue.setText(edge.getAssignValue());
+            Element assignType=MarkovTransitionEdge.addElement("assignType");
+            assignType.setText(edge.getAssignType());
+            Element pro=MarkovTransitionEdge.addElement("pro");
+            pro.setText(edge.getProb());
 		}
 		outputXML(doc,toFileName);
 	}
@@ -253,10 +309,10 @@ public class TianWriteToVioletMarkov {
 //			}
 //		}
 //		return "";//目前返回" "，后期修改
-		if(name.equals(markovStartNode.getName()))
-			return markovStartNode.getId();
+		if(name.equals(TanchaoMarkovStartNode.getName()))
+			return TanchaoMarkovStartNode.getId();
 		else{
-			for(MarkovNode node:markovNodeInfo){
+			for(TanchaoMarkovNode node:markovNodeInfo){
 				if(name.equals(node.getName()))
 					return node.getId();
 			}
@@ -328,9 +384,9 @@ public class TianWriteToVioletMarkov {
 //	public static void main(String[] args) {
 //		TianWriteToVioletMarkov t=new TianWriteToVioletMarkov();
 //		try {
-//			t.find("C:\\Users\\Admin\\Desktop\\markov\\Sofeware_MarkovChainModel.xml");
+//			t.find("C:\\Users\\Admin\\Desktop\\Primary Use Cases.xml");
 ////			t.find("C:\\Users\\Admin\\Desktop\\markov\\Seq_MarkovChainModel2.xml");
-//			t.writeVioletMarkov("C:\\Users\\ccc\\Desktop\\markov\\Seq_MarkovChainModel2_(a).markov.violet.xml");
+//			t.writeVioletMarkov("C:\\Users\\Admin\\Desktop\\123456.markov.violet.xml");
 //		} catch (DocumentException e) {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();

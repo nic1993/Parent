@@ -46,6 +46,7 @@ import com.horstmann.violet.workspace.editorpart.behavior.ColorizeBehavior;
 import com.horstmann.violet.workspace.editorpart.behavior.CutCopyPasteBehavior;
 import com.horstmann.violet.workspace.editorpart.behavior.DragCombinedFragmentBorderLineBehavior;
 import com.horstmann.violet.workspace.editorpart.behavior.DragGraphBehavior;
+import com.horstmann.violet.workspace.editorpart.behavior.DragMessageBehavaior;
 import com.horstmann.violet.workspace.editorpart.behavior.DragSelectedBehavior;
 import com.horstmann.violet.workspace.editorpart.behavior.DragTransitionPointBehavior;
 import com.horstmann.violet.workspace.editorpart.behavior.DragUppaalMessageBehavior;
@@ -153,7 +154,7 @@ public class Workspace implements IWorkspace
     {
         if (this.graphEditor == null)
         {
-            this.graphEditor = new EditorPart(this.graphFile.getGraph());
+            this.graphEditor = new EditorPart(this,this.graphFile.getGraph());
             IEditorPartBehaviorManager behaviorManager = this.graphEditor.getBehaviorManager();
             behaviorManager.addBehavior(new SelectByLassoBehavior(this.graphEditor, this.getSideBar().getGraphToolsBar()));
             behaviorManager.addBehavior(new SelectByClickBehavior(this.graphEditor, this.getSideBar().getGraphToolsBar()));
@@ -163,12 +164,13 @@ public class Workspace implements IWorkspace
             behaviorManager.addBehavior(new AddEdgeBehavior(this.graphEditor, this.getSideBar().getGraphToolsBar()));
             behaviorManager.addBehavior(new AddTransitionPointBehavior(this.graphEditor, this.getSideBar().getGraphToolsBar()));
             behaviorManager.addBehavior(new DragSelectedBehavior(this.graphEditor, this.getSideBar().getGraphToolsBar()));
+            behaviorManager.addBehavior(new DragMessageBehavaior(this.graphEditor, this.getSideBar().getGraphToolsBar()));
             behaviorManager.addBehavior(new DragTransitionPointBehavior(this.graphEditor, this.getSideBar().getGraphToolsBar()));
             behaviorManager.addBehavior(new DragGraphBehavior(this));
             behaviorManager.addBehavior(new EditSelectedBehavior(this.graphEditor));
             behaviorManager.addBehavior(new FileCouldBeSavedBehavior(this.getGraphFile()));
             behaviorManager.addBehavior(new ResizeNodeBehavior(this.graphEditor, this.getSideBar().getGraphToolsBar()));
-            behaviorManager.addBehavior(new ZoomByWheelBehavior(this.getEditorPart()));
+            behaviorManager.addBehavior(new ZoomByWheelBehavior(this.getEditorPart(),this));
             behaviorManager.addBehavior(new ChangeToolByWeelBehavior(this.getSideBar().getGraphToolsBar()));
             behaviorManager.addBehavior(new ShowMenuOnRightClickBehavior(this.graphEditor));
             behaviorManager.addBehavior(new UndoRedoCompoundBehavior(this.graphEditor));
@@ -352,6 +354,18 @@ public class Workspace implements IWorkspace
     	
     	this.workspacePanel = workspacePanel;
     }
+    
+    @Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return name;
+	}
+
+	@Override
+	public void setName(String name) {
+		// TODO Auto-generated method stub
+		this.name = name;
+	}
 
     public WorkspacePanel workspacePanel;
     private IGraphFile graphFile;
@@ -361,8 +375,9 @@ public class Workspace implements IWorkspace
     private String title;
     private Vector<IWorkspaceListener> listeners = new Vector<IWorkspaceListener>();
     private Id id;
-    
+    private String name;
     @InjectedBean
     private PluginRegistry pluginRegistry;
 
+	
 }

@@ -12,7 +12,7 @@ public class Tmc {
 	private List<State> ends=new ArrayList<State>();
 	private List<Transition> transitions=new ArrayList<Transition>();
 	private String notation;//存放用例级Markov chain 的用例前置条件
-	private double pro;
+	private double pro; //迁移概率
 	private boolean isCombine=false;
 	public Tmc(){}
 	

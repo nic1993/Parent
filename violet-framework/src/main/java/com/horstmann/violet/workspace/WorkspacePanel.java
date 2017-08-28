@@ -5,6 +5,7 @@ import java.awt.Button;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.ComponentOrientation;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -19,14 +20,20 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.ContainerEvent;
 import java.awt.event.ContainerListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.beans.PropertyVetoException;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoundedRangeModel;
 import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
@@ -106,6 +113,56 @@ public class WorkspacePanel extends JPanel
             this.scrollableEditorPart.setBackground(ThemeManager.getInstance().getTheme().getWhiteColor());
             this.scrollableEditorPart.setBorder(new EmptyBorder(0, 0, 0, 0));
             this.scrollableEditorPart.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+            
+            panel.addMouseListener(new MouseAdapter() {
+
+				@Override
+				public void mousePressed(MouseEvent e) {
+					// TODO Auto-generated method stub
+					super.mousePressed(e);
+					
+					oldx=e.getX();
+					oldy=e.getY();
+					
+					panel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				}
+
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					// TODO Auto-generated method stub
+					super.mouseReleased(e);
+					
+					newx=e.getX();
+					newy=e.getY();
+					
+					movex=newx-oldx;
+					movey=newy-oldy;
+					
+					JScrollBar hbar=scrollableEditorPart.getVerticalScrollBar();
+					JScrollBar vbar=scrollableEditorPart.getHorizontalScrollBar();
+
+					hbar.setValue(hbar.getValue()-movey);
+					vbar.setValue(vbar.getValue()-movex);
+					
+				}
+				@Override
+				public void mouseWheelMoved(MouseWheelEvent e) {
+					// TODO Auto-generated method stub
+					if(e.getWheelRotation()==1){ 
+					JScrollBar hbar=scrollableEditorPart.getVerticalScrollBar();
+					JScrollBar vbar=scrollableEditorPart.getHorizontalScrollBar();
+					
+					if(hbar != null)
+					{
+						hbar.setValue(hbar.getMaximum() / 2);  
+					}
+					 if (null != vbar) {  
+						 vbar.setValue(vbar.getMaximum() / 2);  
+				        }  
+					}
+				}
+
+			});
         }
         return this.scrollableEditorPart;
     }
@@ -141,10 +198,25 @@ public class WorkspacePanel extends JPanel
             }
         });
     }
+    
+    
 
-    private IWorkspace workspace;
+    public IWorkspace getWorkspace() {
+		return workspace;
+	}
+
+    
+
+	private IWorkspace workspace;
     private JScrollPane scrollableSideBar;
     private JScrollPane scrollableEditorPart;
     private JScrollPane scrollableStatusBar;
+    
+    int oldx=0;
+	int oldy=0;
+	int newx=0;
+	int newy=0;
+	int movex=0;
+	int movey=0;
 
 }

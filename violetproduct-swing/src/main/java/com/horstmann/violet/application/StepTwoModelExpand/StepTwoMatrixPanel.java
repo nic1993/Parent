@@ -46,12 +46,14 @@ public class StepTwoMatrixPanel extends JPanel{
 		   };
 		   titleLabel = new JLabel();
 		   
-		   titleLabel.setFont(new Font("ËÎÌå", Font.PLAIN, 18));
+		   titleLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 16));
 		   gapPanel = new JPanel();
 		   reduceTabel = new JLabel();
 		   reduceTabel.setFont(new Font("ËÎÌå", Font.PLAIN, 18));
 		   tabelPanel = new JPanel();
 		   tabelPanel.setLayout(new GridLayout(1, 1));
+		   tabelPanel.setVisible(false);
+		   
 		   reduceTabel.setIcon(new ImageIcon("resources/icons/16x16/smallDown.png"));
 		   reduceTabel.addMouseListener(new MouseAdapter() {
 			   @Override
@@ -63,8 +65,8 @@ public class StepTwoMatrixPanel extends JPanel{
 				   }
 				   else {
 					   tabelPanel.setVisible(true);
-				}
-  
+				   }
+                   
 			}
 		});   
 		   titlePanel.setLayout(new GridBagLayout());

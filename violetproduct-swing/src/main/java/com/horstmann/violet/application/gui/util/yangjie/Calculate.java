@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 
-
 public class Calculate {
 
 	public static void getAllTransValues(Markov markov) {
@@ -22,9 +21,13 @@ public class Calculate {
 				List<String> allBorder = new ArrayList<String>();// 存放当前激励上所有参数的边界
 				for (Parameter p : stimulate.getParameters()) {
 					// 收集约束不等式集合inequalities
-					if ((p.getParamType().equals("int") || p.getParamType()
-							.equals("double"))
-							&& p.getDomainType().equals("serial")) {
+					if (/*
+						 * (p.getParamType().trim().equals("int") ||
+						 * p.getParamType().trim().equals("double") ||
+						 * p.getParamType().trim().equals("float") ||
+						 * p.getParamType().trim().equals("float*") || p
+						 * .getParamType().trim().equals("unsigned char")) &&
+						 */p.getDomainType().trim().equals("serial")) {
 						inequalities.add(p.getDomain());
 						for (String b : p.getBorderValue()) {
 							allBorder.add(p.getName() + "==" + b);
@@ -57,16 +60,16 @@ public class Calculate {
 						}
 						inequalities.add(s);
 						// 拼接约束条件成参数形式
-						String param1 = "{"
-								+ inequalities.toString().substring(1,
-										inequalities.toString().length() - 1)
-								+ "}";
+						String param1 = inequalities.toString().substring(1,
+								inequalities.toString().length() - 1);
 						// 拼接参数变量成参数形式
-						String param2 = "{"
-								+ variables.toString().substring(1,
-										variables.toString().length() - 1)
-								+ "}";
-						String solution = Mathematica.getSolution2(param1,
+						String param2 = variables.toString().substring(1,
+								variables.toString().length() - 1);
+						System.out
+								.println("加边界运算处理语句：SetAccuracy[FindInstance[{"
+										+ param1 + "}, {" + param2
+										+ "}, 50], 3]");
+						String solution = Mathematica2.getSolution2(param1,
 								param2);// 通过mathematica工具的调用接口计算不等式组并返回结果
 						if (!solution.equals("{}")) {
 							map = parse(solution);
@@ -75,19 +78,21 @@ public class Calculate {
 						}
 						inequalities.remove(s);
 					}
-
+					// 加边界值运算无结果执行if
 					if (flag) {
 						// 拼接约束条件成参数形式
-						String param1 = "{"
-								+ inequalities.toString().substring(1,
-										inequalities.toString().length() - 1)
-								+ "}";
+						String param1 = inequalities.toString().substring(1,
+								inequalities.toString().length() - 1);
 						// 拼接参数变量成参数形式
-						String param2 = "{"
-								+ variables.toString().substring(1,
-										variables.toString().length() - 1)
-								+ "}";
-						String solution = Mathematica.getSolution2(param1,
+						String param2 = variables.toString().substring(1,
+								variables.toString().length() - 1);
+						System.out
+								.println("不加边界运算处理语句：SetAccuracy[FindInstance[{"
+										+ param1
+										+ "}, {"
+										+ param2
+										+ "}, 50], 3]");
+						String solution = Mathematica2.getSolution2(param1,
 								param2);// 通过mathematica工具的调用接口计算不等式组并返回结果
 						map = parse(solution);
 					}
@@ -107,7 +112,7 @@ public class Calculate {
 						}
 						p.setValues(values);
 						// System.out.println();
-					} else {
+					} else {// 离散型变量值域赋值
 						String[] values = p.getDomain().split(",");
 						List<String> list = new ArrayList<String>();
 						for (String str : values) {
@@ -124,7 +129,7 @@ public class Calculate {
 	}
 
 	private static Map<String, List<String>> parse(String solution) {
-
+		System.out.println("solution---" + solution);
 		Map<String, List<String>> map = new HashMap<String, List<String>>();
 		String[] results = solution.substring(2, solution.length() - 2).split(
 				"\\}, \\{");
@@ -133,6 +138,7 @@ public class Calculate {
 				String[] strs = string.split(",");
 				for (String str : strs) {
 					String[] varAndVal = str.split("->");
+					// System.out.println(varAndVal);
 					if (map.containsKey(varAndVal[0].trim())) {
 						map.get(varAndVal[0].trim()).add(varAndVal[1].trim());
 					} else {

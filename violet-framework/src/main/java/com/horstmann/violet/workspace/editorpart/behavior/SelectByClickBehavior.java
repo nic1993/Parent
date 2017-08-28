@@ -46,6 +46,7 @@ public class SelectByClickBehavior extends AbstractEditorPartBehavior
         if (!GraphTool.SELECTION_TOOL.equals(this.graphToolsBar.getSelectedTool())) {
            return;
         }
+     
         double zoom = editorPart.   getZoomFactor();
         Point2D mousePoint = new Point2D.Double(event.getX() / zoom, event.getY() / zoom);
         boolean isCtrl = (event.getModifiersEx() & InputEvent.CTRL_DOWN_MASK) != 0;
@@ -128,6 +129,7 @@ public class SelectByClickBehavior extends AbstractEditorPartBehavior
     private void processSelection(Point2D mouseLocation, boolean isResetSelectionFirst)
     {
         INode node = this.graph.findNode(mouseLocation);
+        
         IEdge edge = this.graph.findEdge(mouseLocation);               
         if (edge != null)
         {

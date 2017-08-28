@@ -26,13 +26,20 @@ import java.awt.Graphics2D;
 import java.awt.Shape;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.beans.IntrospectionException;
+import java.beans.PropertyDescriptor;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.horstmann.violet.framework.propertyeditor.customeditor.SequenceConstraintEditor;
 import com.horstmann.violet.product.diagram.abstracts.edge.IEdge;
 import com.horstmann.violet.product.diagram.abstracts.node.EllipticalNode;
 import com.horstmann.violet.product.diagram.abstracts.property.Condition;
 import com.horstmann.violet.product.diagram.abstracts.property.SceneConstraint;
+import com.horstmann.violet.product.diagram.abstracts.property.SequenceConstraint;
 import com.horstmann.violet.product.diagram.abstracts.property.UseConstraint;
 import com.horstmann.violet.product.diagram.abstracts.property.MultiLineString;
+import com.horstmann.violet.workspace.editorpart.behavior.EditSelectedBehavior;
 
 /**
  * A use case node in a use case diagram.
@@ -46,8 +53,9 @@ public class UseCaseNode extends EllipticalNode
     {
         name = new MultiLineString();
         useConstraint = new UseConstraint();
-        sceneConstraint = new SceneConstraint();
+        sceneConstraint = new SceneConstraint();      
     }
+    
 
     @Override
     public Rectangle2D getBounds()
@@ -64,7 +72,7 @@ public class UseCaseNode extends EllipticalNode
         double w = Math.max(minWidth, DEFAULT_WIDTH);
         double h = Math.max(minHeight, DEFAULT_HEIGHT);
         Rectangle2D currentBounds = new Rectangle2D.Double(x, y, w, h);
-        Rectangle2D snappedBounds = getGraph().getGridSticker().snap(currentBounds);
+        Rectangle2D snappedBounds = getGraph().getGridSticker().snap(currentBounds);        
         return snappedBounds;
     }
 
@@ -92,7 +100,8 @@ public class UseCaseNode extends EllipticalNode
         Shape shape = getShape();
         g2.setColor(getBackgroundColor());
         g2.fill(shape);
-        g2.setColor(getBorderColor());
+//        g2.setColor(getBorderColor());
+        g2.setColor(Color.black);
         g2.draw(shape);
         g2.setColor(getTextColor());
         name.draw(g2, getBounds());
@@ -148,7 +157,28 @@ public class UseCaseNode extends EllipticalNode
         cloned.sceneConstraint = sceneConstraint.clone();
         return cloned;
     }
-
+//	 public PropertyDescriptor[] getPropertyDescriptors()
+//	    {
+//	        try
+//	        {
+//	            PropertyDescriptor nameDescriptor = new PropertyDescriptor("name", UseCaseNode.class);
+//	            nameDescriptor.setValue("priority", new Integer(1));
+//	            PropertyDescriptor useConstraintDescriptor = new PropertyDescriptor("useConstraint", UseCaseNode.class);
+//	            useConstraintDescriptor.setValue("priority", new Integer(2));
+//	            PropertyDescriptor sceneConstraintDescriptor = new PropertyDescriptor("sceneConstraint", UseCaseNode.class);
+//	            sceneConstraintDescriptor.setValue("priority", new Integer(3));
+//	            return new PropertyDescriptor[]
+//	            {
+//	                    nameDescriptor,
+//	                    useConstraintDescriptor,
+//	                    sceneConstraintDescriptor,
+//	            };
+//	        }
+//	        catch (IntrospectionException exception)
+//	        {
+//	            return null;
+//	        }
+//	    }
     private MultiLineString name;
     
     private static int DEFAULT_WIDTH = 110;
@@ -156,6 +186,5 @@ public class UseCaseNode extends EllipticalNode
 	
     private  UseConstraint useConstraint;
     private  SceneConstraint sceneConstraint;
-
 
 }

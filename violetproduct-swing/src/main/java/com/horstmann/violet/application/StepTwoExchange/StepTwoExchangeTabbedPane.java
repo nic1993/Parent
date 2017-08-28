@@ -14,17 +14,23 @@ import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
+import com.horstmann.violet.application.gui.MainFrame;
 import com.horstmann.violet.workspace.IWorkspace;
 
 public class StepTwoExchangeTabbedPane extends JTabbedPane{
+	private MainFrame mainFrame;
 	private JPanel exchangeResults;
 	private JPanel exchangeResport;
-
-	public StepTwoExchangeTabbedPane()
+   
+	public StepTwoExchangeTabbedPane(MainFrame mainFrame)
 	{
 		init();
+		this.mainFrame = mainFrame;
 		this.add("Markov",exchangeResults);
 		this.add("Markov文件结构",exchangeResport);
 	}
@@ -35,8 +41,19 @@ public class StepTwoExchangeTabbedPane extends JTabbedPane{
 		exchangeResults.setLayout(new GridLayout(1, 1));
 		exchangeResport = new JPanel();
 		exchangeResport.setLayout(new GridLayout(1, 1));
+		listen();
 	}
-
+    public void listen()
+    {
+    	this.addChangeListener(new ChangeListener() {
+			
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				// TODO Auto-generated method stub
+				mainFrame.renewPanel();
+			}
+		});
+    }
 	public JPanel getExchangeResults() {
 		return exchangeResults;
 	}

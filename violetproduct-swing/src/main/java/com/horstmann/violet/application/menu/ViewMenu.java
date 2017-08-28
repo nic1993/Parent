@@ -31,6 +31,8 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
@@ -191,7 +193,19 @@ public class ViewMenu extends JMenu
     {
      //   if (mainFrame.getWorkspaceList().size() == 0) return;
         IWorkspace workspace = mainFrame.getActiveWorkspace();
-        workspace.getEditorPart().changeZoom(-1);
+        workspace.getEditorPart().changeZoom(-1,workspace);
+        
+        JScrollPane scrollableEditorPart = workspace.getAWTComponent().getScrollableEditorPart();
+        JScrollBar hbar=scrollableEditorPart.getVerticalScrollBar();
+		JScrollBar vbar=scrollableEditorPart.getHorizontalScrollBar();
+		
+		if(hbar != null)
+		{
+			hbar.setValue(hbar.getMaximum() / 2);  
+		}
+		 if (null != vbar) {  
+			 vbar.setValue(vbar.getMaximum() / 2);  
+	        } 
     }
 
     /**
@@ -201,7 +215,19 @@ public class ViewMenu extends JMenu
     {
       //  if (mainFrame.getWorkspaceList().size() == 0) return;
         IWorkspace workspace = mainFrame.getActiveWorkspace();
-        workspace.getEditorPart().changeZoom(1);
+        workspace.getEditorPart().changeZoom(1,workspace);
+        
+        JScrollPane scrollableEditorPart = workspace.getAWTComponent().getScrollableEditorPart();
+        JScrollBar hbar=scrollableEditorPart.getVerticalScrollBar();
+		JScrollBar vbar=scrollableEditorPart.getHorizontalScrollBar();
+		
+		if(hbar != null)
+		{
+			hbar.setValue(hbar.getMaximum() / 2);  
+		}
+		 if (null != vbar) {  
+			 vbar.setValue(vbar.getMaximum() / 2);  
+	        } 
     }
 
     /**

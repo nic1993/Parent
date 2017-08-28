@@ -3,8 +3,27 @@ package cn.edu.hdu.lab.dao.uml;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Message {
+public class Message implements Cloneable{
+	@Override
+	public Object clone() {   
+		Message o = null;   
+        try {   
+            o = (Message) super.clone();   
+        } catch (CloneNotSupportedException e) {   
+            e.printStackTrace();   
+        }  
+        o.setConditions(new ArrayList<String>(this.conditions));
+        
+        o.setStimulate((Stimulate)stimulate.clone());
+        return o;   
+    }
+	
 	private String id;
+	/*
+	 * @noteID:平台上ID设置过于混乱，此ID用于映射到消息上的唯一标识id；
+	 * 不在平台上修改引用id的程序（修改过于麻烦）;
+	 */
+	private String noteID;
 	private String name;
 	private String senderID;
 	private String receiverID;
@@ -13,10 +32,11 @@ public class Message {
 	private String receiver;   
 	
 	private Stimulate stimulate;//消息中的激励消息
+	
 	private String returnValue;
 	private String returnValueType;
 	private double prob;
-	private String exectime;
+	
 	private boolean isLast=false;
 	
 	private boolean isInFragment=false; // 消息是否在组合片段的标记
@@ -26,11 +46,15 @@ public class Message {
 	
 	private String fragFlag;  //消息进出组合片段标记   inOperand+outOperand
 
-	private String notation;
+	private String notation=""; //消息执行条件
 	
+	private String exectime;//消息执行时间约束
+	private String fromTimeConstraint;//消息起始状态时间约束
 	//新添加的属性
 	private List<String> conditions=new ArrayList<String>();
 	private boolean isTranslationed=false;
+	
+	private double pointY=0;
 	
 	public Message(){}
 	public void set(String id, String name, String senderID, String receiverID) {
@@ -43,7 +67,6 @@ public class Message {
 	{
 		conditions.add(str);
 	}
-	
 
 	@Override
 	public String toString() {
@@ -66,6 +89,8 @@ public class Message {
 		builder.append(prob);
 		builder.append(", exectime=");
 		builder.append(exectime);
+		builder.append(", fromTimeConstraint=");
+		builder.append(fromTimeConstraint);
 		builder.append(", isLast=");
 		builder.append(isLast);
 		builder.append(", isInFragment=");
@@ -91,16 +116,23 @@ public class Message {
 		System.out.println("Message: id=" + id + "\tname=" + name +"\treturnValue="+returnValue+"\treturnValueType="+returnValueType
 				+"\tstimulate="+stimulate+ "\tsenderID=" + senderID
 				+ "\treceiverID=" + receiverID + "\tsender=" + sender + "\treceiver="+ receiver 
-				+"\tprob="+prob+"\texectime="+exectime+"\tisLast="+isLast
+				+"\tprob="+prob+"\texectime="+exectime+"\tfromTimeConstraint="+fromTimeConstraint+"\tisLast="+isLast
 				
 				+ "\t是否在组合片段中=" + isInFragment + "\t 所属组合片段Id=" + fragmentId+"\t\t 组合片段类型=" + fragType+"\t所属操作ID="+ operandId
-				+ "\t消息进出组合片段标记=" + fragFlag  + "\tnotation=" + notation  );
+				+ "\t消息进出组合片段标记=" + fragFlag  + "\tnotation=" + notation +"\t Y="+pointY );
 	}
 	public String getId() {
 		return id;
 	}
 	public void setId(String id) {
 		this.id = id;
+	}
+	
+	public String getNoteID() {
+		return noteID;
+	}
+	public void setNoteID(String noteID) {
+		this.noteID = noteID;
 	}
 	public String getName() {
 		return name;
@@ -216,6 +248,18 @@ public class Message {
 	public void setReturnValueType(String returnValueType) {
 		this.returnValueType = returnValueType;
 	}
+	public double getPointY() {
+		return pointY;
+	}
+	public void setPointY(double pointY) {
+		this.pointY = pointY;
+	}
+	public String getFromTimeConstraint() {
+		return fromTimeConstraint;
+	}
+	public void setFromTimeConstraint(String fromTimeConstraint) {
+		this.fromTimeConstraint = fromTimeConstraint;
+	}	
 	
 	
 }

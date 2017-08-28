@@ -12,7 +12,6 @@ public class TimeEdge extends TimeConditionEdge{
 	 @Override
 	    public ArrowHead getEndArrowHead()//获取尾部箭头
 	    {
-	       
 	        return ArrowHead.BLACK_TRIANGLE;
 	    }
 	  @Override

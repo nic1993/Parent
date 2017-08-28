@@ -13,6 +13,7 @@ public class NormalMatrixDao {
 		m=num;
 		Initial();
 	};
+	@SuppressWarnings("resource")
 	public void Initial()
 	{
 		

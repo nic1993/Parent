@@ -55,7 +55,6 @@ public class DragTransitionPointBehavior extends AbstractEditorPartBehavior
     @Override
     public void onMouseDragged(MouseEvent event)
     {
-    	
         if (!isReadyForDragging)
         {
             return;

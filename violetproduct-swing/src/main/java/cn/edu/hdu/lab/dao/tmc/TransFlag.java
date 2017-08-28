@@ -4,7 +4,11 @@ import java.util.List;
 
 import cn.edu.hdu.lab.dao.uml.Message;
 import cn.edu.hdu.lab.dao.uml.Stimulate;
-
+/**
+ *转换后和消息对应的转化体。 
+ * @author Terence
+ *
+ */
 public class TransFlag {
 	private String name;
 	private String assignValue;
@@ -12,7 +16,8 @@ public class TransFlag {
 	private String sender;
 	private String receiver;
 	private double prob;
-	
+	private String notation=""; //执行条件
+	private String stateStopTimeCons;
 	private Stimulate stimulate; //消息中含有的激励：多个参数，参数类型，参数的域，参数的约束表达式；
 	
 	private List<String> expressions;
@@ -24,7 +29,9 @@ public class TransFlag {
 	    this.sender=message.getSender();
 	    this.receiver=message.getReceiver();
 	    this.prob=message.getProb();
+	    this.stateStopTimeCons=message.getFromTimeConstraint();
 	    this.stimulate=message.getStimulate();
+	    this.notation=message.getNotation();
 	}
 	public TransFlag( String rv,String rvt,String n,String s,String r,double p,Stimulate st ){
 		this.assignValue=rv;
@@ -84,6 +91,19 @@ public class TransFlag {
 	}
 	public void setAssignType(String assignType) {
 		this.assignType = assignType;
+	}
+	
+	public String getNotation() {
+		return notation;
+	}
+	public void setNotation(String notation) {
+		this.notation = notation;
+	}
+	public String getStateStopTimeCons() {
+		return stateStopTimeCons;
+	}
+	public void setStateStopTimeCons(String stateStopTimeCons) {
+		this.stateStopTimeCons = stateStopTimeCons;
 	}
 	@Override
 	public String toString() {

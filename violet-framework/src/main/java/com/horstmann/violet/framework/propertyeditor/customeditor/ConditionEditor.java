@@ -51,7 +51,6 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.JTextComponent;
 
-import com.horstmann.violet.product.diagram.abstracts.node.CombinedFragmentNode;
 import com.horstmann.violet.product.diagram.abstracts.node.INode;
 import com.horstmann.violet.product.diagram.abstracts.property.Condition;
 import com.horstmann.violet.product.diagram.abstracts.property.FragmentPart;
@@ -172,6 +171,8 @@ public class ConditionEditor extends PropertyEditorSupport
     }
     public void SaveFragmentPartConditionText()
     {
+    	if(conditiontable.getCellEditor() != null)
+    	conditiontable.getCellEditor().stopCellEditing();
     	List<String> ConditionTexts=((StringTableModel)conditiontable.getModel()).getEntries();
     	if(ConditionTexts.size() != 0){
     		fragmentParts = combinedFragmentNode.getFragmentParts();
@@ -200,10 +201,17 @@ public class ConditionEditor extends PropertyEditorSupport
 	private void InitConditions() {
 	
 	List<String> conditionTexts= condition.getConditionTexts();
-	for(String conditionText: conditionTexts)
-		{			
-	     conditionTableModel.addEntry(conditionText);
-	    }
+	if(conditionTexts != null)
+	{
+		if(conditionTexts.size() != 0)
+		{
+			for(String conditionText: conditionTexts)
+			{			
+		     conditionTableModel.addEntry(conditionText);
+		    }
+		}
+	}
+	
 	}	
 	public void insertUpate()
 	{									

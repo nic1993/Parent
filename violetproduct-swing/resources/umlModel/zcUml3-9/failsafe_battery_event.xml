@@ -1,0 +1,761 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<xmi:XMI xmi:version="2.1" xmlns:uml="http://schema.omg.org/spec/UML/2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1">
+	<xmi:Documentation exporter="Enterprise Architect" exporterVersion="6.5"/>
+	<uml:Model xmi:type="uml:Model" name="EA_Model" visibility="public">
+		<packagedElement xmi:type="uml:Package" xmi:id="EAPK_E9DE4506_4F7B_4180_B5D6_4AD481BC4CB3" name="failsafe_battery_event" visibility="public">
+			<packagedElement xmi:type="uml:Collaboration" xmi:id="EAID_CB000000_506_4F7B_4180_B5D6_4AD481BC4CB" name="EA_Collaboration1" visibility="public">
+				<ownedBehavior xmi:type="uml:Interaction" xmi:id="EAID_IN000000_506_4F7B_4180_B5D6_4AD481BC4CB" name="EA_Interaction1" visibility="public">
+					<lifeline xmi:type="uml:Lifeline" xmi:id="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D" name="copter" visibility="public" represents="EAID_AT000000_D7F8_4a61_A903_BBEF8EA6B98D"/>
+					<lifeline xmi:type="uml:Lifeline" xmi:id="EAID_D45F749A_4183_4ab0_A6D7_A41417900595" name="motors" visibility="public" represents="EAID_AT000000_4183_4ab0_A6D7_A41417900595"/>
+					<fragment xmi:type="uml:CombinedFragment" xmi:id="EAID_25680E07_438E_4147_8322_4408ECB372D2" name="check for low voltage or current if the low voltage check hasn't already been triggered" visibility="public" interactionOperator="opt">
+						<covered xmi:idref="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+						<covered xmi:idref="EAID_D45F749A_4183_4ab0_A6D7_A41417900595"/>
+						<operand xmi:type="uml:InteractionOperand" xmi:id="EAID_OP000000_438E_4147_8322_4408ECB372D2">
+							<guard xmi:type="uml:InteractionConstraint" xmi:id="EAID_IC000000_438E_4147_8322_4408ECB372D2">
+								<specification xmi:type="uml:OpaqueExpression" xmi:id="EAID_OE000000_438E_4147_8322_4408ECB372D2" body="ap.usb_connected==0 &amp;&amp; failsafe.battery==0 &amp;&amp; has_exhausted==true,0&lt;=ap.usb_connected&lt;=1,0&lt;=failsafe.battery&lt;=1#failsafe.battery:uint8_t,ap.usb_connected:uint8_t,has_exhausted:bool"/>
+							</guard>
+							<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000008_D7F8_4a61_A903_BBEF8EA6B98D" covered="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+							<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000009_D7F8_4a61_A903_BBEF8EA6B98D" covered="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+							<fragment xmi:type="uml:CombinedFragment" xmi:id="EAID_767D3587_5C56_4bb8_A6DA_C996947BAEDA" name="return immediately if low battery event has already been triggered" visibility="public" interactionOperator="opt">
+								<covered xmi:idref="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+								<covered xmi:idref="EAID_D45F749A_4183_4ab0_A6D7_A41417900595"/>
+								<operand xmi:type="uml:InteractionOperand" xmi:id="EAID_OP000000_5C56_4bb8_A6DA_C996947BAEDA">
+									<guard xmi:type="uml:InteractionConstraint" xmi:id="EAID_IC000000_5C56_4bb8_A6DA_C996947BAEDA">
+										<specification xmi:type="uml:OpaqueExpression" xmi:id="EAID_OE000000_5C56_4bb8_A6DA_C996947BAEDA" body="failsafe.battery==0,0&lt;=failsafe.battery&lt;=1#failsafe.battery:uint8_t"/>
+									</guard>
+									<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000016_D7F8_4a61_A903_BBEF8EA6B98D" covered="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+									<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000000_4183_4ab0_A6D7_A41417900595" covered="EAID_D45F749A_4183_4ab0_A6D7_A41417900595"/>
+									<fragment xmi:type="uml:CombinedFragment" xmi:id="EAID_2BA0E542_762B_413d_9108_A5BC6C85B212" name="failsafe_battery_event failsafe check" visibility="public" interactionOperator="opt">
+										<covered xmi:idref="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+										<covered xmi:idref="EAID_D45F749A_4183_4ab0_A6D7_A41417900595"/>
+										<operand xmi:type="uml:InteractionOperand" xmi:id="EAID_OP000000_762B_413d_9108_A5BC6C85B212">
+											<guard xmi:type="uml:InteractionConstraint" xmi:id="EAID_IC000000_762B_413d_9108_A5BC6C85B212">
+												<specification xmi:type="uml:OpaqueExpression" xmi:id="EAID_OE000000_762B_413d_9108_A5BC6C85B212" body="g.failsafe_battery_enabled != 0 &amp;&amp; has_armed==true#g.failsafe_battery_enabled:int,has_armed:bool"/>
+											</guard>
+											<fragment xmi:type="uml:CombinedFragment" xmi:id="EAID_58B7BB70_6AA5_4a47_9355_16724D3CE512" name="failsafe_battery_event control_mode" visibility="public" interactionOperator="alt">
+												<covered xmi:idref="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+												<covered xmi:idref="EAID_D45F749A_4183_4ab0_A6D7_A41417900595"/>
+												<operand xmi:type="uml:InteractionOperand" xmi:id="EAID_OP000002_6AA5_4a47_9355_16724D3CE512">
+													<guard xmi:type="uml:InteractionConstraint" xmi:id="EAID_IC000002_6AA5_4a47_9355_16724D3CE512">
+														<specification xmi:type="uml:OpaqueExpression" xmi:id="EAID_OE000002_6AA5_4a47_9355_16724D3CE512" body="control_mode==0 || control_mode==1#control_mode:int8_t"/>
+													</guard>
+													<fragment xmi:type="uml:CombinedFragment" xmi:id="EAID_AD2B938B_4D1D_451e_B0E6_B0856243264D" name="failsafe_battery_event if throttle is zero OR vehicle is landed disarm motors" visibility="public" interactionOperator="alt">
+														<covered xmi:idref="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+														<covered xmi:idref="EAID_D45F749A_4183_4ab0_A6D7_A41417900595"/>
+														<operand xmi:type="uml:InteractionOperand" xmi:id="EAID_OP000001_4D1D_451e_B0E6_B0856243264D">
+															<guard xmi:type="uml:InteractionConstraint" xmi:id="EAID_IC000001_4D1D_451e_B0E6_B0856243264D">
+																<specification xmi:type="uml:OpaqueExpression" xmi:id="EAID_OE000001_4D1D_451e_B0E6_B0856243264D" body="ap.throttle_zero==1 || ap.land_complete==1,0&lt;=ap.throttle_zero&lt;=1,0&lt;=ap.land_complete&lt;=1#ap.land_complete:uint8_t,ap.throttle_zero:uint8_t"/>
+															</guard>
+															<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000021_D7F8_4a61_A903_BBEF8EA6B98D" covered="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+															<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000022_D7F8_4a61_A903_BBEF8EA6B98D" covered="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+														</operand>
+														<operand xmi:type="uml:InteractionOperand" xmi:id="EAID_OP000000_4D1D_451e_B0E6_B0856243264D">
+															<guard xmi:type="uml:InteractionConstraint" xmi:id="EAID_IC000000_4D1D_451e_B0E6_B0856243264D">
+																<specification xmi:type="uml:OpaqueExpression" xmi:id="EAID_OE000000_4D1D_451e_B0E6_B0856243264D" body="ap.throttle_zero==0&amp;&amp;ap.land_complete==0,0&lt;=ap.throttle_zero&lt;=1,0&lt;=ap.land_complete&lt;=1#ap.land_complete:uint8_t,ap.throttle_zero:uint8_t"/>
+															</guard>
+															<fragment xmi:type="uml:CombinedFragment" xmi:id="EAID_4657A574_B3E0_4bc4_878C_81BDC14E5B25" name="failsafe_battery_event set mode to RTL or LAND" visibility="public" interactionOperator="alt">
+																<covered xmi:idref="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+																<covered xmi:idref="EAID_D45F749A_4183_4ab0_A6D7_A41417900595"/>
+																<operand xmi:type="uml:InteractionOperand" xmi:id="EAID_OP000001_B3E0_4bc4_878C_81BDC14E5B25">
+																	<guard xmi:type="uml:InteractionConstraint" xmi:id="EAID_IC000001_B3E0_4bc4_878C_81BDC14E5B25">
+																		<specification xmi:type="uml:OpaqueExpression" xmi:id="EAID_OE000001_B3E0_4bc4_878C_81BDC14E5B25" body="g.failsafe_battery_enabled == 2 &amp;&amp; home_distance &gt; 500#g.failsafe_battery_enabled:int,home_distance:int32_t"/>
+																	</guard>
+																	<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000006_D7F8_4a61_A903_BBEF8EA6B98D" covered="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+																	<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000007_D7F8_4a61_A903_BBEF8EA6B98D" covered="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+																</operand>
+																<operand xmi:type="uml:InteractionOperand" xmi:id="EAID_OP000000_B3E0_4bc4_878C_81BDC14E5B25">
+																	<guard xmi:type="uml:InteractionConstraint" xmi:id="EAID_IC000000_B3E0_4bc4_878C_81BDC14E5B25">
+																		<specification xmi:type="uml:OpaqueExpression" xmi:id="EAID_OE000000_B3E0_4bc4_878C_81BDC14E5B25" body="g.failsafe_battery_enabled != 2 || home_distance &lt;= 500#g.failsafe_battery_enabled:int,home_distance:int32_t"/>
+																	</guard>
+																	<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000014_D7F8_4a61_A903_BBEF8EA6B98D" covered="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+																	<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000015_D7F8_4a61_A903_BBEF8EA6B98D" covered="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+																</operand>
+															</fragment>
+														</operand>
+													</fragment>
+												</operand>
+												<operand xmi:type="uml:InteractionOperand" xmi:id="EAID_OP000001_6AA5_4a47_9355_16724D3CE512">
+													<guard xmi:type="uml:InteractionConstraint" xmi:id="EAID_IC000001_6AA5_4a47_9355_16724D3CE512">
+														<specification xmi:type="uml:OpaqueExpression" xmi:id="EAID_OE000001_6AA5_4a47_9355_16724D3CE512" body="control_mode==3#control_mode:int8_t"/>
+													</guard>
+													<fragment xmi:type="uml:CombinedFragment" xmi:id="EAID_3E049EB0_2398_4a96_889F_2E9021C604F4" name="failsafe_battery_event if mission has not started AND vehicle is landed, disarm motors" visibility="public" interactionOperator="alt">
+														<covered xmi:idref="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+														<covered xmi:idref="EAID_D45F749A_4183_4ab0_A6D7_A41417900595"/>
+														<operand xmi:type="uml:InteractionOperand" xmi:id="EAID_OP000002_2398_4a96_889F_2E9021C604F4">
+															<guard xmi:type="uml:InteractionConstraint" xmi:id="EAID_IC000002_2398_4a96_889F_2E9021C604F4">
+																<specification xmi:type="uml:OpaqueExpression" xmi:id="EAID_OE000002_2398_4a96_889F_2E9021C604F4" body="ap.auto_armed==0 &amp;&amp; ap.land_complete==1,0&lt;=ap.auto_armed&lt;=1,0&lt;=ap.land_complete&lt;=1#ap.land_complete:uint8_t,ap.auto_armed:uint8_t"/>
+															</guard>
+															<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000000_D7F8_4a61_A903_BBEF8EA6B98D" covered="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+															<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000001_D7F8_4a61_A903_BBEF8EA6B98D" covered="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+														</operand>
+														<operand xmi:type="uml:InteractionOperand" xmi:id="EAID_OP000001_2398_4a96_889F_2E9021C604F4">
+															<guard xmi:type="uml:InteractionConstraint" xmi:id="EAID_IC000001_2398_4a96_889F_2E9021C604F4">
+																<specification xmi:type="uml:OpaqueExpression" xmi:id="EAID_OE000001_2398_4a96_889F_2E9021C604F4" body="(ap.auto_armed==1 || ap.land_complete==0)&amp;&amp;home_distance&gt;500,0&lt;=ap.auto_armed&lt;=1,0&lt;=ap.land_complete&lt;=1#ap.land_complete:uint8_t,ap.auto_armed:uint8_t,home_distance:int32_t"/>
+															</guard>
+															<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000019_D7F8_4a61_A903_BBEF8EA6B98D" covered="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+															<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000020_D7F8_4a61_A903_BBEF8EA6B98D" covered="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+														</operand>
+														<operand xmi:type="uml:InteractionOperand" xmi:id="EAID_OP000000_2398_4a96_889F_2E9021C604F4">
+															<guard xmi:type="uml:InteractionConstraint" xmi:id="EAID_IC000000_2398_4a96_889F_2E9021C604F4">
+																<specification xmi:type="uml:OpaqueExpression" xmi:id="EAID_OE000000_2398_4a96_889F_2E9021C604F4" body="(ap.auto_armed==1 || ap.land_complete==0)&amp;&amp;home_distance&lt;=500,0&lt;=ap.auto_armed&lt;=1,0&lt;=ap.land_complete&lt;=1#ap.land_complete:uint8_t,ap.auto_armed:uint8_t,home_distance:int32_t"/>
+															</guard>
+															<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000010_D7F8_4a61_A903_BBEF8EA6B98D" covered="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+															<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000011_D7F8_4a61_A903_BBEF8EA6B98D" covered="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+														</operand>
+													</fragment>
+												</operand>
+												<operand xmi:type="uml:InteractionOperand" xmi:id="EAID_OP000000_6AA5_4a47_9355_16724D3CE512">
+													<guard xmi:type="uml:InteractionConstraint" xmi:id="EAID_IC000000_6AA5_4a47_9355_16724D3CE512">
+														<specification xmi:type="uml:OpaqueExpression" xmi:id="EAID_OE000000_6AA5_4a47_9355_16724D3CE512" body="control_mode!=0&amp;&amp;control_mode!=1&amp;&amp;control_mode!=3#control_mode:int8_t"/>
+													</guard>
+													<fragment xmi:type="uml:CombinedFragment" xmi:id="EAID_B0DE2DE5_A516_4707_8323_70D5F28CCD54" name="failsafe_battery_event used for AltHold, Guided, Loiter..." visibility="public" interactionOperator="alt">
+														<covered xmi:idref="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+														<covered xmi:idref="EAID_D45F749A_4183_4ab0_A6D7_A41417900595"/>
+														<operand xmi:type="uml:InteractionOperand" xmi:id="EAID_OP000002_A516_4707_8323_70D5F28CCD54">
+															<guard xmi:type="uml:InteractionConstraint" xmi:id="EAID_IC000002_A516_4707_8323_70D5F28CCD54">
+																<specification xmi:type="uml:OpaqueExpression" xmi:id="EAID_OE000002_A516_4707_8323_70D5F28CCD54" body="ap.land_complete==1,0&lt;=ap.land_complete&lt;=1#ap.land_complete:uint8_t"/>
+															</guard>
+															<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000002_D7F8_4a61_A903_BBEF8EA6B98D" covered="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+															<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000003_D7F8_4a61_A903_BBEF8EA6B98D" covered="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+														</operand>
+														<operand xmi:type="uml:InteractionOperand" xmi:id="EAID_OP000001_A516_4707_8323_70D5F28CCD54">
+															<guard xmi:type="uml:InteractionConstraint" xmi:id="EAID_IC000001_A516_4707_8323_70D5F28CCD54">
+																<specification xmi:type="uml:OpaqueExpression" xmi:id="EAID_OE000001_A516_4707_8323_70D5F28CCD54" body="ap.land_complete==0 &amp;&amp; g.failsafe_battery_enabled==2 &amp;&amp; home_distance &gt; 500,0&lt;=ap.land_complete&lt;=1#ap.land_complete:uint8_t,g.failsafe_battery_enabled:int,home_distance:int32_t"/>
+															</guard>
+															<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000017_D7F8_4a61_A903_BBEF8EA6B98D" covered="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+															<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000018_D7F8_4a61_A903_BBEF8EA6B98D" covered="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+														</operand>
+														<operand xmi:type="uml:InteractionOperand" xmi:id="EAID_OP000000_A516_4707_8323_70D5F28CCD54">
+															<guard xmi:type="uml:InteractionConstraint" xmi:id="EAID_IC000000_A516_4707_8323_70D5F28CCD54">
+																<specification xmi:type="uml:OpaqueExpression" xmi:id="EAID_OE000000_A516_4707_8323_70D5F28CCD54" body="ap.land_complete==0 &amp;&amp; (g.failsafe_battery_enabled!=2 || home_distance &lt;= 500),0&lt;=ap.land_complete&lt;=1#ap.land_complete:uint8_t,g.failsafe_battery_enabled:int,home_distance:int32_t"/>
+															</guard>
+															<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000004_D7F8_4a61_A903_BBEF8EA6B98D" covered="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+															<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000005_D7F8_4a61_A903_BBEF8EA6B98D" covered="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+														</operand>
+													</fragment>
+												</operand>
+											</fragment>
+										</operand>
+									</fragment>
+									<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000012_D7F8_4a61_A903_BBEF8EA6B98D" covered="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+									<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000013_D7F8_4a61_A903_BBEF8EA6B98D" covered="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+								</operand>
+							</fragment>
+						</operand>
+					</fragment>
+					<message xmi:type="uml:Message" xmi:id="EAID_811C0E07_FA96_462c_990A_B4CA6051339E" name="failsafe_battery_event()" messageKind="complete" messageSort="synchCall" sendEvent="EAID_FR000008_D7F8_4a61_A903_BBEF8EA6B98D" receiveEvent="EAID_FR000009_D7F8_4a61_A903_BBEF8EA6B98D"/>
+					<message xmi:type="uml:Message" xmi:id="EAID_C9F69F9A_3550_48b0_B389_8D601B6DBDA3" name="armed()" messageKind="complete" messageSort="synchCall" sendEvent="EAID_FR000016_D7F8_4a61_A903_BBEF8EA6B98D" receiveEvent="EAID_FR000000_4183_4ab0_A6D7_A41417900595"/>
+					<message xmi:type="uml:Message" xmi:id="EAID_E874B2C8_098A_41a3_A393_B715113D4818" name="init_disarm_motors()" messageKind="complete" messageSort="synchCall" sendEvent="EAID_FR000021_D7F8_4a61_A903_BBEF8EA6B98D" receiveEvent="EAID_FR000022_D7F8_4a61_A903_BBEF8EA6B98D"/>
+					<message xmi:type="uml:Message" xmi:id="EAID_53142FCB_87AE_4f8a_90FA_F678319E0A52" name="set_mode_RTL_or_land_with_pause()" messageKind="complete" messageSort="synchCall" sendEvent="EAID_FR000006_D7F8_4a61_A903_BBEF8EA6B98D" receiveEvent="EAID_FR000007_D7F8_4a61_A903_BBEF8EA6B98D"/>
+					<message xmi:type="uml:Message" xmi:id="EAID_BF18DFEE_1D98_4869_ABD9_EAF06B5B322F" name="set_mode_land_with_pause()" messageKind="complete" messageSort="synchCall" sendEvent="EAID_FR000014_D7F8_4a61_A903_BBEF8EA6B98D" receiveEvent="EAID_FR000015_D7F8_4a61_A903_BBEF8EA6B98D"/>
+					<message xmi:type="uml:Message" xmi:id="EAID_197AA909_8C09_4f18_BD21_04B743C831DD" name="init_disarm_motors()" messageKind="complete" messageSort="synchCall" sendEvent="EAID_FR000000_D7F8_4a61_A903_BBEF8EA6B98D" receiveEvent="EAID_FR000001_D7F8_4a61_A903_BBEF8EA6B98D"/>
+					<message xmi:type="uml:Message" xmi:id="EAID_DD7ECDE1_6E61_45e4_A151_EE033A065FB2" name="set_mode_RTL_or_land_with_pause()" messageKind="complete" messageSort="synchCall" sendEvent="EAID_FR000019_D7F8_4a61_A903_BBEF8EA6B98D" receiveEvent="EAID_FR000020_D7F8_4a61_A903_BBEF8EA6B98D"/>
+					<message xmi:type="uml:Message" xmi:id="EAID_9126E612_1FFD_4102_950C_794FD460714C" name="set_mode_land_with_pause()" messageKind="complete" messageSort="synchCall" sendEvent="EAID_FR000010_D7F8_4a61_A903_BBEF8EA6B98D" receiveEvent="EAID_FR000011_D7F8_4a61_A903_BBEF8EA6B98D"/>
+					<message xmi:type="uml:Message" xmi:id="EAID_28805CFA_78AF_436d_87A0_F87F2C28FDD1" name="init_disarm_motors()" messageKind="complete" messageSort="synchCall" sendEvent="EAID_FR000002_D7F8_4a61_A903_BBEF8EA6B98D" receiveEvent="EAID_FR000003_D7F8_4a61_A903_BBEF8EA6B98D"/>
+					<message xmi:type="uml:Message" xmi:id="EAID_CD561B07_5D89_4cbc_837A_86210E209524" name="set_mode_RTL_or_land_with_pause()" messageKind="complete" messageSort="synchCall" sendEvent="EAID_FR000017_D7F8_4a61_A903_BBEF8EA6B98D" receiveEvent="EAID_FR000018_D7F8_4a61_A903_BBEF8EA6B98D"/>
+					<message xmi:type="uml:Message" xmi:id="EAID_4904F4C7_9ABE_49e7_A9C8_53A9A0FBCAF9" name="set_mode_land_with_pause()" messageKind="complete" messageSort="synchCall" sendEvent="EAID_FR000004_D7F8_4a61_A903_BBEF8EA6B98D" receiveEvent="EAID_FR000005_D7F8_4a61_A903_BBEF8EA6B98D"/>
+					<message xmi:type="uml:Message" xmi:id="EAID_AD2526FC_86DD_4078_80B1_E0DD3908D246" name="set_failsafe_battery(bool)" messageKind="complete" messageSort="synchCall" sendEvent="EAID_FR000012_D7F8_4a61_A903_BBEF8EA6B98D" receiveEvent="EAID_FR000013_D7F8_4a61_A903_BBEF8EA6B98D">
+						<argument xmi:type="uml:LiteralString" xmi:id="EAID_AR000000_86DD_4078_80B1_E0DD3908D246" name="b"/>
+					</message>
+				</ownedBehavior>
+				<ownedAttribute xmi:type="uml:Property" xmi:id="EAID_AT000000_D7F8_4a61_A903_BBEF8EA6B98D"/>
+				<ownedAttribute xmi:type="uml:Property" xmi:id="EAID_AT000000_4183_4ab0_A6D7_A41417900595"/>
+			</packagedElement>
+		</packagedElement>
+	</uml:Model>
+	<xmi:Extension extender="Enterprise Architect" extenderID="6.5">
+		<elements>
+			<element xmi:idref="EAPK_E9DE4506_4F7B_4180_B5D6_4AD481BC4CB3" xmi:type="uml:Package" name="failsafe_battery_event" scope="public">
+				<model package2="EAID_E9DE4506_4F7B_4180_B5D6_4AD481BC4CB3" package="EAPK_12D61F71_42AF_4f6e_948D_F7972938140A" tpos="5" ea_localid="100" ea_eleType="package"/>
+				<properties isSpecification="false" sType="Package" nType="0" scope="public"/>
+				<project author="&#24352;&#25104;" version="1.0" phase="1.0" created="2017-02-22 19:47:06" modified="2017-02-21 14:14:39" complexity="1" status="Proposed"/>
+				<code gentype="C++"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="sequences"/>
+				<packageproperties version="1.0" tpos="5"/>
+				<paths/>
+				<times created="2017-02-22 19:47:06" modified="2017-02-21 14:14:39" lastloaddate="2017-02-22 19:47:06" lastsavedate="2017-02-22 19:47:06"/>
+				<flags iscontrolled="FALSE" isprotected="FALSE" batchsave="0" batchload="0" usedtd="FALSE" logxml="FALSE"/>
+			</element>
+			<element xmi:idref="EAID_25680E07_438E_4147_8322_4408ECB372D2" xmi:type="uml:InteractionFragment" name="check for low voltage or current if the low voltage check hasn't already been triggered" scope="public">
+				<model package="EAPK_E9DE4506_4F7B_4180_B5D6_4AD481BC4CB3" tpos="0" ea_localid="542" ea_eleType="element"/>
+				<properties isSpecification="false" sType="InteractionFragment" nType="1" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
+				<project author="&#24352;&#25104;" version="1.0" phase="1.0" created="2017-02-22 19:47:07" modified="2017-02-22 19:47:07" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=3;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs value="$XREFPROP=$XID={83F3CA86-85D9-4466-ACED-03B306F0ACB5}$XID;$NAM=Partitions$NAM;$TYP=element property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@PAR;Name=ap.usb_connected==0 &amp;&amp; failsafe.battery==0 &amp;&amp; has_exhausted==true,0&lt;=ap.usb_connected&lt;=1,0&lt;=failsafe.battery&lt;=1#failsafe.battery:uint8_t,ap.usb_connected:uint8_t,has_exhausted:bool;Size=40;GUID={6FB0A4E5-2146-493f-ADD6-B129C115CB83};@ENDPAR;$DES;$CLT={25680E07-438E-4147-8322-4408ECB372D2}$CLT;$ENDXREF;"/>
+				<extendedProperties tagged="0" package_name="failsafe_battery_event" diagram="EAID_76B3356B_DFA4_4e4f_AAB0_C725F5320014"/>
+			</element>
+			<element xmi:idref="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D" xmi:type="uml:Sequence" name="copter" scope="public">
+				<model package="EAPK_E9DE4506_4F7B_4180_B5D6_4AD481BC4CB3" tpos="0" ea_localid="546" ea_eleType="element"/>
+				<properties isSpecification="false" sType="Sequence" nType="0" scope="public"/>
+				<project author="&#24352;&#25104;" version="1.0" phase="1.0" created="2017-02-22 19:47:07" modified="2017-02-22 19:47:07" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="failsafe_battery_event"/>
+				<links>
+					<Sequence xmi:id="EAID_197AA909_8C09_4f18_BD21_04B743C831DD" start="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D" end="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+					<Sequence xmi:id="EAID_28805CFA_78AF_436d_87A0_F87F2C28FDD1" start="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D" end="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+					<Sequence xmi:id="EAID_4904F4C7_9ABE_49e7_A9C8_53A9A0FBCAF9" start="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D" end="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+					<Sequence xmi:id="EAID_53142FCB_87AE_4f8a_90FA_F678319E0A52" start="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D" end="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+					<Sequence xmi:id="EAID_811C0E07_FA96_462c_990A_B4CA6051339E" start="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D" end="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+					<Sequence xmi:id="EAID_9126E612_1FFD_4102_950C_794FD460714C" start="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D" end="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+					<Sequence xmi:id="EAID_AD2526FC_86DD_4078_80B1_E0DD3908D246" start="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D" end="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+					<Sequence xmi:id="EAID_BF18DFEE_1D98_4869_ABD9_EAF06B5B322F" start="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D" end="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+					<Sequence xmi:id="EAID_C9F69F9A_3550_48b0_B389_8D601B6DBDA3" start="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D" end="EAID_D45F749A_4183_4ab0_A6D7_A41417900595"/>
+					<Sequence xmi:id="EAID_CD561B07_5D89_4cbc_837A_86210E209524" start="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D" end="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+					<Sequence xmi:id="EAID_DD7ECDE1_6E61_45e4_A151_EE033A065FB2" start="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D" end="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+					<Sequence xmi:id="EAID_E874B2C8_098A_41a3_A393_B715113D4818" start="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D" end="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+					<Sequence xmi:id="EAID_197AA909_8C09_4f18_BD21_04B743C831DD" start="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D" end="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+					<Sequence xmi:id="EAID_28805CFA_78AF_436d_87A0_F87F2C28FDD1" start="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D" end="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+					<Sequence xmi:id="EAID_4904F4C7_9ABE_49e7_A9C8_53A9A0FBCAF9" start="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D" end="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+					<Sequence xmi:id="EAID_53142FCB_87AE_4f8a_90FA_F678319E0A52" start="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D" end="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+					<Sequence xmi:id="EAID_811C0E07_FA96_462c_990A_B4CA6051339E" start="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D" end="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+					<Sequence xmi:id="EAID_9126E612_1FFD_4102_950C_794FD460714C" start="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D" end="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+					<Sequence xmi:id="EAID_AD2526FC_86DD_4078_80B1_E0DD3908D246" start="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D" end="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+					<Sequence xmi:id="EAID_BF18DFEE_1D98_4869_ABD9_EAF06B5B322F" start="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D" end="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+					<Sequence xmi:id="EAID_CD561B07_5D89_4cbc_837A_86210E209524" start="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D" end="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+					<Sequence xmi:id="EAID_DD7ECDE1_6E61_45e4_A151_EE033A065FB2" start="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D" end="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+					<Sequence xmi:id="EAID_E874B2C8_098A_41a3_A393_B715113D4818" start="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D" end="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D"/>
+				</links>
+			</element>
+			<element xmi:idref="EAID_58B7BB70_6AA5_4a47_9355_16724D3CE512" xmi:type="uml:InteractionFragment" name="failsafe_battery_event control_mode" scope="public">
+				<model package="EAPK_E9DE4506_4F7B_4180_B5D6_4AD481BC4CB3" tpos="0" ea_localid="541" ea_eleType="element"/>
+				<properties isSpecification="false" sType="InteractionFragment" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
+				<project author="&#24352;&#25104;" version="1.0" phase="1.0" created="2017-02-22 19:47:07" modified="2017-02-22 19:47:07" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=3;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs value="$XREFPROP=$XID={FA56D640-2F14-459c-B002-435976C074B9}$XID;$NAM=Partitions$NAM;$TYP=element property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@PAR;Name=control_mode!=0&amp;&amp;control_mode!=1&amp;&amp;control_mode!=3#control_mode:int8_t;Size=61;GUID={6E3A92A6-E42C-43a6-A7E6-16FEF62AA998};@ENDPAR;@PAR;Name=control_mode==3#control_mode:int8_t;Size=298;GUID={47DF92AC-7C75-4c59-B4C6-3BCA41E2A173};@ENDPAR;@PAR;Name=control_mode==0 || control_mode==1#control_mode:int8_t;Size=503;GUID={F80EB623-1188-4e62-8B59-FF522D0DD7FD};@ENDPAR;$DES;$CLT={58B7BB70-6AA5-4a47-9355-16724D3CE512}$CLT;$ENDXREF;"/>
+				<extendedProperties tagged="0" package_name="failsafe_battery_event" diagram="EAID_76B3356B_DFA4_4e4f_AAB0_C725F5320014"/>
+			</element>
+			<element xmi:idref="EAID_2BA0E542_762B_413d_9108_A5BC6C85B212" xmi:type="uml:InteractionFragment" name="failsafe_battery_event failsafe check" scope="public">
+				<model package="EAPK_E9DE4506_4F7B_4180_B5D6_4AD481BC4CB3" tpos="0" ea_localid="544" ea_eleType="element"/>
+				<properties isSpecification="false" sType="InteractionFragment" nType="1" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
+				<project author="&#24352;&#25104;" version="1.0" phase="1.0" created="2017-02-22 19:47:07" modified="2017-02-22 19:47:07" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=3;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs value="$XREFPROP=$XID={C1504588-1DF7-4bf9-9939-9CAA409EE838}$XID;$NAM=Partitions$NAM;$TYP=element property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@PAR;Name=g.failsafe_battery_enabled != 0 &amp;&amp; has_armed==true#g.failsafe_battery_enabled:int,has_armed:bool;Size=945;GUID={3812F452-3F5D-4477-87DB-DDC80AC4A451};@ENDPAR;$DES;$CLT={2BA0E542-762B-413d-9108-A5BC6C85B212}$CLT;$ENDXREF;"/>
+				<extendedProperties tagged="0" package_name="failsafe_battery_event" diagram="EAID_76B3356B_DFA4_4e4f_AAB0_C725F5320014"/>
+			</element>
+			<element xmi:idref="EAID_3E049EB0_2398_4a96_889F_2E9021C604F4" xmi:type="uml:InteractionFragment" name="failsafe_battery_event if mission has not started AND vehicle is landed, disarm motors" scope="public">
+				<model package="EAPK_E9DE4506_4F7B_4180_B5D6_4AD481BC4CB3" tpos="0" ea_localid="540" ea_eleType="element"/>
+				<properties isSpecification="false" sType="InteractionFragment" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
+				<project author="&#24352;&#25104;" version="1.0" phase="1.0" created="2017-02-22 19:47:07" modified="2017-02-22 19:47:07" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=3;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs value="$XREFPROP=$XID={50AD9D7C-32C6-449e-AEB1-1343FC0F5EBE}$XID;$NAM=Partitions$NAM;$TYP=element property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@PAR;Name=(ap.auto_armed==1 || ap.land_complete==0)&amp;&amp;home_distance&lt;=500,0&lt;=ap.auto_armed&lt;=1,0&lt;=ap.land_complete&lt;=1#ap.land_complete:uint8_t,ap.auto_armed:uint8_t,home_distance:int32_t;Size=62;GUID={B8108DED-DD6C-4469-8E6A-6309279359F3};@ENDPAR;@PAR;Name=(ap.auto_armed==1 || ap.land_complete==0)&amp;&amp;home_distance&gt;500,0&lt;=ap.auto_armed&lt;=1,0&lt;=ap.land_complete&lt;=1#ap.land_complete:uint8_t,ap.auto_armed:uint8_t,home_distance:int32_t;Size=77;GUID={4FE6E2C0-7DEA-4c55-8650-CE6B3C18FB1D};@ENDPAR;@PAR;Name=ap.auto_armed==0 &amp;&amp; ap.land_complete==1,0&lt;=ap.auto_armed&lt;=1,0&lt;=ap.land_complete&lt;=1#ap.land_complete:uint8_t,ap.auto_armed:uint8_t;Size=99;GUID={1FF9AA6A-47AD-472b-9618-A5738B6E2ADB};@ENDPAR;$DES;$CLT={3E049EB0-2398-4a96-889F-2E9021C604F4}$CLT;$ENDXREF;"/>
+				<extendedProperties tagged="0" package_name="failsafe_battery_event" diagram="EAID_76B3356B_DFA4_4e4f_AAB0_C725F5320014"/>
+			</element>
+			<element xmi:idref="EAID_AD2B938B_4D1D_451e_B0E6_B0856243264D" xmi:type="uml:InteractionFragment" name="failsafe_battery_event if throttle is zero OR vehicle is landed disarm motors" scope="public">
+				<model package="EAPK_E9DE4506_4F7B_4180_B5D6_4AD481BC4CB3" tpos="0" ea_localid="539" ea_eleType="element"/>
+				<properties isSpecification="false" sType="InteractionFragment" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
+				<project author="&#24352;&#25104;" version="1.0" phase="1.0" created="2017-02-22 19:47:07" modified="2017-02-22 19:47:07" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=3;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs value="$XREFPROP=$XID={77693DAE-4026-48d6-95E1-BF55982F2CD7}$XID;$NAM=Partitions$NAM;$TYP=element property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@PAR;Name=ap.throttle_zero==0&amp;&amp;ap.land_complete==0,0&lt;=ap.throttle_zero&lt;=1,0&lt;=ap.land_complete&lt;=1#ap.land_complete:uint8_t,ap.throttle_zero:uint8_t;Size=299;GUID={B9DF7918-0F0D-458a-A550-F47CBE2343EA};@ENDPAR;@PAR;Name=ap.throttle_zero==1 || ap.land_complete==1,0&lt;=ap.throttle_zero&lt;=1,0&lt;=ap.land_complete&lt;=1#ap.land_complete:uint8_t,ap.throttle_zero:uint8_t;Size=116;GUID={3A8FD5DB-DA62-4afd-930A-558B56DA99FD};@ENDPAR;$DES;$CLT={AD2B938B-4D1D-451e-B0E6-B0856243264D}$CLT;$ENDXREF;"/>
+				<extendedProperties tagged="0" package_name="failsafe_battery_event" diagram="EAID_76B3356B_DFA4_4e4f_AAB0_C725F5320014"/>
+			</element>
+			<element xmi:idref="EAID_4657A574_B3E0_4bc4_878C_81BDC14E5B25" xmi:type="uml:InteractionFragment" name="failsafe_battery_event set mode to RTL or LAND" scope="public">
+				<model package="EAPK_E9DE4506_4F7B_4180_B5D6_4AD481BC4CB3" tpos="0" ea_localid="537" ea_eleType="element"/>
+				<properties isSpecification="false" sType="InteractionFragment" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
+				<project author="&#24352;&#25104;" version="1.0" phase="1.0" created="2017-02-22 19:47:06" modified="2017-02-22 19:47:06" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=3;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs value="$XREFPROP=$XID={7A0300A8-059B-4ed8-A6CB-ADC3F5677411}$XID;$NAM=Partitions$NAM;$TYP=element property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@PAR;Name=g.failsafe_battery_enabled != 2 || home_distance &lt;= 500#g.failsafe_battery_enabled:int,home_distance:int32_t;Size=122;GUID={A31EEAE0-7B21-4dc8-9112-C9ACBA57967C};@ENDPAR;@PAR;Name=g.failsafe_battery_enabled == 2 &amp;&amp; home_distance &gt; 500#g.failsafe_battery_enabled:int,home_distance:int32_t;Size=121;GUID={83EE29FD-8D38-44a3-87E0-FAC67CBAADE7};@ENDPAR;$DES;$CLT={4657A574-B3E0-4bc4-878C-81BDC14E5B25}$CLT;$ENDXREF;"/>
+				<extendedProperties tagged="0" package_name="failsafe_battery_event" diagram="EAID_76B3356B_DFA4_4e4f_AAB0_C725F5320014"/>
+			</element>
+			<element xmi:idref="EAID_B0DE2DE5_A516_4707_8323_70D5F28CCD54" xmi:type="uml:InteractionFragment" name="failsafe_battery_event used for AltHold, Guided, Loiter..." scope="public">
+				<model package="EAPK_E9DE4506_4F7B_4180_B5D6_4AD481BC4CB3" tpos="0" ea_localid="538" ea_eleType="element"/>
+				<properties isSpecification="false" sType="InteractionFragment" nType="0" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
+				<project author="&#24352;&#25104;" version="1.0" phase="1.0" created="2017-02-22 19:47:06" modified="2017-02-22 19:47:06" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=3;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs value="$XREFPROP=$XID={A94A214A-E716-4331-A1B2-8E685EA4A396}$XID;$NAM=Partitions$NAM;$TYP=element property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@PAR;Name=ap.land_complete==0 &amp;&amp; (g.failsafe_battery_enabled!=2 || home_distance &lt;= 500),0&lt;=ap.land_complete&lt;=1#ap.land_complete:uint8_t,g.failsafe_battery_enabled:int,home_distance:int32_t;Size=118;GUID={2A98E62C-2E99-42eb-A7A3-6A79915C0986};@ENDPAR;@PAR;Name=ap.land_complete==0 &amp;&amp; g.failsafe_battery_enabled==2 &amp;&amp; home_distance &gt; 500,0&lt;=ap.land_complete&lt;=1#ap.land_complete:uint8_t,g.failsafe_battery_enabled:int,home_distance:int32_t;Size=125;GUID={6DEC077D-880B-4538-884D-78FA1928B434};@ENDPAR;@PAR;Name=ap.land_complete==1,0&lt;=ap.land_complete&lt;=1#ap.land_complete:uint8_t;Size=122;GUID={D776C279-656E-438a-B551-579CA2C611BB};@ENDPAR;$DES;$CLT={B0DE2DE5-A516-4707-8323-70D5F28CCD54}$CLT;$ENDXREF;"/>
+				<extendedProperties tagged="0" package_name="failsafe_battery_event" diagram="EAID_76B3356B_DFA4_4e4f_AAB0_C725F5320014"/>
+			</element>
+			<element xmi:idref="EAID_D45F749A_4183_4ab0_A6D7_A41417900595" xmi:type="uml:Sequence" name="motors" scope="public">
+				<model package="EAPK_E9DE4506_4F7B_4180_B5D6_4AD481BC4CB3" tpos="0" ea_localid="545" ea_eleType="element"/>
+				<properties isSpecification="false" sType="Sequence" nType="0" scope="public"/>
+				<project author="&#24352;&#25104;" version="1.0" phase="1.0" created="2017-02-22 19:47:07" modified="2017-02-22 19:47:07" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="failsafe_battery_event"/>
+				<links>
+					<Sequence xmi:id="EAID_C9F69F9A_3550_48b0_B389_8D601B6DBDA3" start="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D" end="EAID_D45F749A_4183_4ab0_A6D7_A41417900595"/>
+				</links>
+			</element>
+			<element xmi:idref="EAID_767D3587_5C56_4bb8_A6DA_C996947BAEDA" xmi:type="uml:InteractionFragment" name="return immediately if low battery event has already been triggered" scope="public">
+				<model package="EAPK_E9DE4506_4F7B_4180_B5D6_4AD481BC4CB3" tpos="0" ea_localid="543" ea_eleType="element"/>
+				<properties isSpecification="false" sType="InteractionFragment" nType="1" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
+				<project author="&#24352;&#25104;" version="1.0" phase="1.0" created="2017-02-22 19:47:07" modified="2017-02-22 19:47:07" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=3;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs value="$XREFPROP=$XID={8FCCEEB9-E248-4e60-B9D5-D1B5C73F2127}$XID;$NAM=Partitions$NAM;$TYP=element property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@PAR;Name=failsafe.battery==0,0&lt;=failsafe.battery&lt;=1#failsafe.battery:uint8_t;Size=40;GUID={F1F17516-164D-4f6e-B3D5-4EFD993B4C90};@ENDPAR;$DES;$CLT={767D3587-5C56-4bb8-A6DA-C996947BAEDA}$CLT;$ENDXREF;"/>
+				<extendedProperties tagged="0" package_name="failsafe_battery_event" diagram="EAID_76B3356B_DFA4_4e4f_AAB0_C725F5320014"/>
+			</element>
+		</elements>
+		<connectors>
+			<connector xmi:idref="EAID_197AA909_8C09_4f18_BD21_04B743C831DD">
+				<source xmi:idref="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D">
+					<model ea_localid="546" type="Sequence" name="copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Non-Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D">
+					<model ea_localid="546" type="Sequence" name="copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="594"/>
+				<properties name="init_disarm_motors()" ea_type="Sequence" direction="Source -&gt; Destination"/>
+				<documentation/>
+				<appearance linemode="1" linecolor="0" linewidth="0" seqno="6" headStyle="0" lineStyle="0"/>
+				<labels mt="init_disarm_motors()"/>
+				<extendedProperties stateflags="StartCoregionHead=0;EndCoregionHead=0;StartCoregionTail=0;EndCoregionTail=0;Activation=0;" virtualInheritance="0" diagram="EAID_76B3356B_DFA4_4e4f_AAB0_C725F5320014" privatedata1="Synchronous" privatedata2="retval=void;" privatedata3="Call" privatedata4="0" privatedata5="SX=0;SY=-171;EX=0;EY=0;$LLB=;LLT=;LMT=CX=95:CY=13:OX=40:OY=15:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMB=;LRT=;LRB=;IRHS=;ILHS=;" sequence_points="PtStartX=193;PtStartY=-889;PtEndX=198;PtEndY=-904;"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_28805CFA_78AF_436d_87A0_F87F2C28FDD1">
+				<source xmi:idref="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D">
+					<model ea_localid="546" type="Sequence" name="copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Non-Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D">
+					<model ea_localid="546" type="Sequence" name="copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="591"/>
+				<properties name="init_disarm_motors()" ea_type="Sequence" direction="Source -&gt; Destination"/>
+				<documentation/>
+				<appearance linemode="1" linecolor="-1" linewidth="0" seqno="9" headStyle="0" lineStyle="0"/>
+				<labels mt="init_disarm_motors()"/>
+				<extendedProperties virtualInheritance="0" diagram="EAID_76B3356B_DFA4_4e4f_AAB0_C725F5320014" privatedata1="Synchronous" privatedata2="retval=void;" privatedata3="Call" privatedata4="0" privatedata5="SX=0;SY=-121;EX=0;EY=0;$LLB=;LLT=;LMT=CX=95:CY=13:OX=40:OY=15:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMB=;LRT=;LRB=;IRHS=;ILHS=;" sequence_points="PtStartX=193;PtStartY=-1197;PtEndX=198;PtEndY=-1212;"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_4904F4C7_9ABE_49e7_A9C8_53A9A0FBCAF9">
+				<source xmi:idref="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D">
+					<model ea_localid="546" type="Sequence" name="copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Non-Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D">
+					<model ea_localid="546" type="Sequence" name="copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="597"/>
+				<properties name="set_mode_land_with_pause()" ea_type="Sequence" direction="Source -&gt; Destination"/>
+				<documentation/>
+				<appearance linemode="1" linecolor="-1" linewidth="0" seqno="11" headStyle="0" lineStyle="0"/>
+				<labels mt="set_mode_land_with_pause()"/>
+				<extendedProperties virtualInheritance="0" diagram="EAID_76B3356B_DFA4_4e4f_AAB0_C725F5320014" privatedata1="Synchronous" privatedata2="retval=void;" privatedata3="Call" privatedata4="0" privatedata5="SX=0;SY=-90;EX=0;EY=0;$LLB=;LLT=;LMT=CX=138:CY=13:OX=40:OY=15:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMB=;LRT=;LRB=;IRHS=;ILHS=;" sequence_points="PtStartX=193;PtStartY=-1436;PtEndX=198;PtEndY=-1451;"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_53142FCB_87AE_4f8a_90FA_F678319E0A52">
+				<source xmi:idref="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D">
+					<model ea_localid="546" type="Sequence" name="copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Non-Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D">
+					<model ea_localid="546" type="Sequence" name="copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="592"/>
+				<properties name="set_mode_RTL_or_land_with_pause()" ea_type="Sequence" direction="Source -&gt; Destination"/>
+				<documentation/>
+				<appearance linemode="1" linecolor="0" linewidth="0" seqno="4" headStyle="0" lineStyle="0"/>
+				<labels mt="set_mode_RTL_or_land_with_pause()"/>
+				<extendedProperties stateflags="StartCoregionHead=0;EndCoregionHead=0;StartCoregionTail=0;EndCoregionTail=0;Activation=0;" virtualInheritance="0" diagram="EAID_76B3356B_DFA4_4e4f_AAB0_C725F5320014" privatedata1="Synchronous" privatedata2="retval=void;" privatedata3="Call" privatedata4="0" privatedata5="SX=0;SY=-140;EX=0;EY=0;$LLB=;LLT=;LMT=CX=179:CY=13:OX=40:OY=15:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMB=;LRT=;LRB=;IRHS=;ILHS=;" sequence_points="PtStartX=193;PtStartY=-581;PtEndX=198;PtEndY=-596;"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_811C0E07_FA96_462c_990A_B4CA6051339E">
+				<source xmi:idref="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D">
+					<model ea_localid="546" type="Sequence" name="copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Non-Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D">
+					<model ea_localid="546" type="Sequence" name="copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="599"/>
+				<properties name="failsafe_battery_event()" ea_type="Sequence" direction="Source -&gt; Destination"/>
+				<documentation/>
+				<appearance linemode="1" linecolor="0" linewidth="0" seqno="1" headStyle="0" lineStyle="0"/>
+				<labels mt="failsafe_battery_event()"/>
+				<extendedProperties stateflags="Activation=0;ExtendActivationUp=0;StartCoregionHead=0;EndCoregionHead=0;StartCoregionTail=0;EndCoregionTail=0;" virtualInheritance="0" diagram="EAID_76B3356B_DFA4_4e4f_AAB0_C725F5320014" privatedata1="Synchronous" privatedata2="retval=void;" privatedata3="Call" privatedata4="0" privatedata5="SX=0;SY=11;EX=0;EY=0;$LLB=;LLT=;LMT=CX=110:CY=13:OX=40:OY=15:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMB=;LRT=;LRB=;IRHS=;ILHS=;" sequence_points="PtStartX=193;PtStartY=-124;PtEndX=198;PtEndY=-139;"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_9126E612_1FFD_4102_950C_794FD460714C">
+				<source xmi:idref="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D">
+					<model ea_localid="546" type="Sequence" name="copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Non-Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D">
+					<model ea_localid="546" type="Sequence" name="copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="598"/>
+				<properties name="set_mode_land_with_pause()" ea_type="Sequence" direction="Source -&gt; Destination"/>
+				<documentation/>
+				<appearance linemode="1" linecolor="-1" linewidth="0" seqno="8" headStyle="0" lineStyle="0"/>
+				<labels mt="set_mode_land_with_pause()"/>
+				<extendedProperties virtualInheritance="0" diagram="EAID_76B3356B_DFA4_4e4f_AAB0_C725F5320014" privatedata1="Synchronous" privatedata2="retval=void;" privatedata3="Call" privatedata4="0" privatedata5="SX=0;SY=-36;EX=0;EY=0;$LLB=;LLT=;LMT=CX=138:CY=13:OX=40:OY=15:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMB=;LRT=;LRB=;IRHS=;ILHS=;" sequence_points="PtStartX=193;PtStartY=-1041;PtEndX=198;PtEndY=-1056;"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_AD2526FC_86DD_4078_80B1_E0DD3908D246">
+				<source xmi:idref="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D">
+					<model ea_localid="546" type="Sequence" name="copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Non-Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D">
+					<model ea_localid="546" type="Sequence" name="copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="601"/>
+				<properties name="set_failsafe_battery(bool)" ea_type="Sequence" direction="Source -&gt; Destination"/>
+				<documentation value="Condition(bool-b[true&amp;amp;false])#"/>
+				<appearance linemode="1" linecolor="-1" linewidth="0" seqno="12" headStyle="0" lineStyle="0"/>
+				<labels mt=" failsafe.battery= set_failsafe_battery(bool) :uin"/>
+				<extendedProperties virtualInheritance="0" diagram="EAID_76B3356B_DFA4_4e4f_AAB0_C725F5320014" privatedata1="Synchronous" privatedata2="retval=uint8_t;params=;paramsDlg=b;retatt=failsafe.battery;" privatedata3="Call" privatedata4="0" privatedata5="SX=0;SY=-101;EX=0;EY=0;$LLB=;LLT=;LMT=CX=235:CY=13:OX=40:OY=15:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMB=;LRT=;LRB=;IRHS=;ILHS=;" sequence_points="PtStartX=193;PtStartY=-1572;PtEndX=198;PtEndY=-1587;"/>
+				<style value="alias=io=out,;"/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_BF18DFEE_1D98_4869_ABD9_EAF06B5B322F">
+				<source xmi:idref="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D">
+					<model ea_localid="546" type="Sequence" name="copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Non-Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D">
+					<model ea_localid="546" type="Sequence" name="copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="600"/>
+				<properties name="set_mode_land_with_pause()" ea_type="Sequence" direction="Source -&gt; Destination"/>
+				<documentation/>
+				<appearance linemode="1" linecolor="0" linewidth="0" seqno="5" headStyle="0" lineStyle="0"/>
+				<labels mt="set_mode_land_with_pause()"/>
+				<extendedProperties stateflags="StartCoregionHead=0;EndCoregionHead=0;StartCoregionTail=0;EndCoregionTail=0;Activation=0;" virtualInheritance="0" diagram="EAID_76B3356B_DFA4_4e4f_AAB0_C725F5320014" privatedata1="Synchronous" privatedata2="retval=void;" privatedata3="Call" privatedata4="0" privatedata5="SX=0;SY=-67;EX=0;EY=0;$LLB=;LLT=;LMT=CX=138:CY=13:OX=40:OY=14:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMB=;LRT=;LRB=;IRHS=;ILHS=;" sequence_points="PtStartX=193;PtStartY=-683;PtEndX=198;PtEndY=-698;"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_C9F69F9A_3550_48b0_B389_8D601B6DBDA3">
+				<source xmi:idref="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D">
+					<model ea_localid="546" type="Sequence" name="copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Non-Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_D45F749A_4183_4ab0_A6D7_A41417900595">
+					<model ea_localid="545" type="Sequence" name="motors"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="602"/>
+				<properties name="armed()" ea_type="Sequence" direction="Source -&gt; Destination"/>
+				<documentation/>
+				<appearance linemode="1" linecolor="-1" linewidth="0" seqno="2" headStyle="0" lineStyle="0"/>
+				<labels mt=" has_armed= armed() :bool"/>
+				<extendedProperties virtualInheritance="0" diagram="EAID_76B3356B_DFA4_4e4f_AAB0_C725F5320014" privatedata1="Synchronous" privatedata2="retval=bool;retatt=has_armed;" privatedata3="Call" privatedata4="0" privatedata5="SX=0;SY=-54;EX=0;EY=0;$LLB=;LLT=;LMT=CX=124:CY=13:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMB=;LRT=;LRB=;IRHS=;ILHS=;" sequence_points="PtStartX=193;PtStartY=-213;PtEndX=582;PtEndY=-213;"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_CD561B07_5D89_4cbc_837A_86210E209524">
+				<source xmi:idref="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D">
+					<model ea_localid="546" type="Sequence" name="copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Non-Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D">
+					<model ea_localid="546" type="Sequence" name="copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="596"/>
+				<properties name="set_mode_RTL_or_land_with_pause()" ea_type="Sequence" direction="Source -&gt; Destination"/>
+				<documentation/>
+				<appearance linemode="1" linecolor="-1" linewidth="0" seqno="10" headStyle="0" lineStyle="0"/>
+				<labels mt="set_mode_RTL_or_land_with_pause()"/>
+				<extendedProperties virtualInheritance="0" diagram="EAID_76B3356B_DFA4_4e4f_AAB0_C725F5320014" privatedata1="Synchronous" privatedata2="retval=void;" privatedata3="Call" privatedata4="0" privatedata5="SX=0;SY=-79;EX=0;EY=0;$LLB=;LLT=;LMT=CX=179:CY=13:OX=39:OY=15:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMB=;LRT=;LRB=;IRHS=;ILHS=;" sequence_points="PtStartX=193;PtStartY=-1311;PtEndX=198;PtEndY=-1326;"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_DD7ECDE1_6E61_45e4_A151_EE033A065FB2">
+				<source xmi:idref="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D">
+					<model ea_localid="546" type="Sequence" name="copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Non-Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D">
+					<model ea_localid="546" type="Sequence" name="copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="593"/>
+				<properties name="set_mode_RTL_or_land_with_pause()" ea_type="Sequence" direction="Source -&gt; Destination"/>
+				<documentation/>
+				<appearance linemode="1" linecolor="0" linewidth="0" seqno="7" headStyle="0" lineStyle="0"/>
+				<labels mt="set_mode_RTL_or_land_with_pause()"/>
+				<extendedProperties stateflags="StartCoregionHead=0;EndCoregionHead=0;StartCoregionTail=0;EndCoregionTail=0;Activation=0;" virtualInheritance="0" diagram="EAID_76B3356B_DFA4_4e4f_AAB0_C725F5320014" privatedata1="Synchronous" privatedata2="retval=void;" privatedata3="Call" privatedata4="0" privatedata5="SX=0;SY=-46;EX=0;EY=0;$LLB=;LLT=;LMT=CX=179:CY=13:OX=40:OY=15:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMB=;LRT=;LRB=;IRHS=;ILHS=;" sequence_points="PtStartX=193;PtStartY=-970;PtEndX=198;PtEndY=-985;"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+			<connector xmi:idref="EAID_E874B2C8_098A_41a3_A393_B715113D4818">
+				<source xmi:idref="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D">
+					<model ea_localid="546" type="Sequence" name="copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Non-Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D">
+					<model ea_localid="546" type="Sequence" name="copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="595"/>
+				<properties name="init_disarm_motors()" ea_type="Sequence" direction="Source -&gt; Destination"/>
+				<documentation/>
+				<appearance linemode="1" linecolor="0" linewidth="0" seqno="3" headStyle="0" lineStyle="0"/>
+				<labels mt="init_disarm_motors()"/>
+				<extendedProperties stateflags="StartCoregionHead=0;EndCoregionHead=0;StartCoregionTail=0;EndCoregionTail=0;Activation=0;" virtualInheritance="0" diagram="EAID_76B3356B_DFA4_4e4f_AAB0_C725F5320014" privatedata1="Synchronous" privatedata2="retval=void;" privatedata3="Call" privatedata4="0" privatedata5="SX=0;SY=-158;EX=0;EY=0;$LLB=;LLT=;LMT=CX=95:CY=13:OX=40:OY=15:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMB=;LRT=;LRB=;IRHS=;ILHS=;" sequence_points="PtStartX=193;PtStartY=-406;PtEndX=198;PtEndY=-421;"/>
+				<style/>
+				<xrefs/>
+				<tags/>
+			</connector>
+		</connectors>
+		<primitivetypes>
+			<packagedElement xmi:type="uml:Package" xmi:id="EAPrimitiveTypesPackage" name="EA_PrimitiveTypes_Package" visibility="public"/>
+		</primitivetypes>
+		<profiles/>
+		<diagrams>
+			<diagram xmi:id="EAID_76B3356B_DFA4_4e4f_AAB0_C725F5320014">
+				<model package="EAPK_E9DE4506_4F7B_4180_B5D6_4AD481BC4CB3" localID="128" owner="EAPK_E9DE4506_4F7B_4180_B5D6_4AD481BC4CB3"/>
+				<properties name="failsafe_battery_event" type="Sequence"/>
+				<project author="&#24352;&#25104;" version="1.0" created="2017-02-22 19:47:07" modified="2017-03-01 10:57:10"/>
+				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=2;PPgs.cy=2;DocSize.cx=827;DocSize.cy=1169;ShowDetails=0;Orientation=P;Zoom=122;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
+				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=0;INT_ARGS=;INT_RET=;INT_ATT=;SeqTopMargin=50;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;SaveTag=6C06F8DF;"/>
+				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=-1;bold=false;fcol=0;;cls=0;"/>
+				<matrixitems value="locked=false;matrixactive=false;swimlanesactive=true;width=1;"/>
+				<extendedProperties/>
+				<elements>
+					<element geometry="Left=132;Top=1126;Right=803;Bottom=1491;" subject="EAID_B0DE2DE5_A516_4707_8323_70D5F28CCD54" seqno="1" style="DUID=D812FA00;"/>
+					<element geometry="Left=131;Top=836;Right=782;Bottom=1074;" subject="EAID_3E049EB0_2398_4a96_889F_2E9021C604F4" seqno="2" style="DUID=D6D477A6;"/>
+					<element geometry="Left=162;Top=500;Right=753;Bottom=743;" subject="EAID_4657A574_B3E0_4bc4_878C_81BDC14E5B25" seqno="3" style="DUID=DDAB1A51;"/>
+					<element geometry="Left=141;Top=345;Right=784;Bottom=760;" subject="EAID_AD2B938B_4D1D_451e_B0E6_B0856243264D" seqno="4" style="DUID=3B8C080B;"/>
+					<element geometry="Left=107;Top=288;Right=873;Bottom=1537;" subject="EAID_58B7BB70_6AA5_4a47_9355_16724D3CE512" seqno="5" style="DUID=A26D4FB6;"/>
+					<element geometry="Left=91;Top=242;Right=907;Bottom=1564;" subject="EAID_2BA0E542_762B_413d_9108_A5BC6C85B212" seqno="6" style="DUID=970F7CE9;"/>
+					<element geometry="Left=44;Top=168;Right=946;Bottom=1639;" subject="EAID_767D3587_5C56_4bb8_A6DA_C996947BAEDA" seqno="7" style="DUID=CA5C39C0;"/>
+					<element geometry="Left=6;Top=8;Right=972;Bottom=1695;" subject="EAID_25680E07_438E_4147_8322_4408ECB372D2" seqno="8" style="DUID=1AB2D847;"/>
+					<element geometry="Left=542;Top=50;Right=633;Bottom=1785;" subject="EAID_D45F749A_4183_4ab0_A6D7_A41417900595" seqno="9" style="DUID=0165FC42;"/>
+					<element geometry="Left=143;Top=50;Right=233;Bottom=1785;" subject="EAID_9AFA6281_D7F8_4a61_A903_BBEF8EA6B98D" seqno="10" style="DUID=5BBE78EB;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;Path=;" subject="EAID_811C0E07_FA96_462c_990A_B4CA6051339E" style=";Hidden=0;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;Path=;" subject="EAID_C9F69F9A_3550_48b0_B389_8D601B6DBDA3" style=";Hidden=0;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;Path=;" subject="EAID_E874B2C8_098A_41a3_A393_B715113D4818" style=";Hidden=0;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;Path=;" subject="EAID_53142FCB_87AE_4f8a_90FA_F678319E0A52" style=";Hidden=0;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;Path=;" subject="EAID_BF18DFEE_1D98_4869_ABD9_EAF06B5B322F" style=";Hidden=0;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;Path=;" subject="EAID_197AA909_8C09_4f18_BD21_04B743C831DD" style=";Hidden=0;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;Path=;" subject="EAID_DD7ECDE1_6E61_45e4_A151_EE033A065FB2" style=";Hidden=0;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;Path=;" subject="EAID_9126E612_1FFD_4102_950C_794FD460714C" style=";Hidden=0;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;Path=;" subject="EAID_28805CFA_78AF_436d_87A0_F87F2C28FDD1" style=";Hidden=0;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;Path=;" subject="EAID_CD561B07_5D89_4cbc_837A_86210E209524" style=";Hidden=0;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;Path=;" subject="EAID_4904F4C7_9ABE_49e7_A9C8_53A9A0FBCAF9" style=";Hidden=0;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;Path=;" subject="EAID_AD2526FC_86DD_4078_80B1_E0DD3908D246" style=";Hidden=0;"/>
+				</elements>
+			</diagram>
+		</diagrams>
+	</xmi:Extension>
+</xmi:XMI>

@@ -19,6 +19,9 @@ public class Transition {
 	private String nextStateName; // 迁移的目标状态名称
 	private State nextState; // 迁移的目标状态
 	private boolean visited = false;// 设置迁移访问标记
+	private String assignValue;// 迁移返回值
+	private String assignType;// 迁移返回值类型
+	private String conditions;// 存放各种测试所需条件
 
 	@Override
 	public String toString() {
@@ -104,6 +107,30 @@ public class Transition {
 
 	public void setVisited(boolean visited) {
 		this.visited = visited;
+	}
+
+	public String getAssignValue() {
+		return assignValue;
+	}
+
+	public void setAssignValue(String assignValue) {
+		this.assignValue = assignValue;
+	}
+
+	public String getAssignType() {
+		return assignType;
+	}
+
+	public void setAssignType(String assignType) {
+		this.assignType = assignType;
+	}
+
+	public String getConditions() {
+		return conditions;
+	}
+
+	public void setConditions(String conditions) {
+		this.conditions = conditions;
 	}
 
 }

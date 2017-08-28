@@ -103,7 +103,7 @@ public class Transition {
 				+"\tto---label="+this.to.getLabel()+"\tto---postSD="+this.to.getNotation()
 				+", messageName="+ this.transFlag.getName()+"\t出入边标记="+this.getNotation()
 				+ "\tsender=" + this.transFlag.getSender()  + "\treceiver=" + this.transFlag.getReceiver() 
-				+ ", prob=" + this.transFlag.getProb() 	+ ", transTime=" + transTime+" "+ this.transFlag.getStimulate()+"]");
+				+ ", prob=" + this.transFlag.getProb() 	+ ", transTime=" + transTime+" "+ this.transFlag.getStimulate()+",执行条件:"+this.transFlag.getNotation()+"]");
 	}
     
 	

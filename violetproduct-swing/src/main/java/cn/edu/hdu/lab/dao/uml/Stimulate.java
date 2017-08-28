@@ -3,28 +3,42 @@ package cn.edu.hdu.lab.dao.uml;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Stimulate {
+public class Stimulate implements Cloneable {
+	
+	@Override
+	public Object clone() {   
+		Stimulate o = null;   
+        try {   
+            o = (Stimulate) super.clone();   
+        } catch (CloneNotSupportedException e) {   
+            e.printStackTrace();   
+        }  
+        o.setParameterNameList(new ArrayList<String>(this.parameterNameList));
+        o.setParameterTypeList(new ArrayList<String>(this.parameterTypeList));
+        o.setConstraintExpresstions(new ArrayList<String>(this.constraintExpresstions));
+        o.setDomains(new ArrayList<String>(this.domains));
+        o.setTimeConstraints(new ArrayList<String>(this.timeConstraints));
+        return o;
+    }
+	
 	List<String> parameterNameList=new ArrayList<String>();
 	List<String> parameterTypeList=new ArrayList<String>();
 	List<String> domains=new ArrayList<String>();
 	List<String> constraintExpresstions=new ArrayList<String>();
+	List<String> timeConstraints=new ArrayList<String>();
 	
 	public Stimulate(){}
+	
+	
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Stimulate [parameterNameList=");
-		builder.append(parameterNameList);
-		builder.append(", parameterTypeList=");
-		builder.append(parameterTypeList);
-		builder.append(", domains=");
-		builder.append(domains);
-		builder.append(", constraintExpresstions=");
-		builder.append(constraintExpresstions);
-		builder.append("]");
-		return builder.toString();
+		return "Stimulate [parameterNameList=" + parameterNameList
+				+ ", parameterTypeList=" + parameterTypeList + ", domains="
+				+ domains + ", constraintExpresstions="
+				+ constraintExpresstions + ", timeConstraints="
+				+ timeConstraints + "]";
 	}
-	
+
 	public List<String> getParameterNameList() {
 		return parameterNameList;
 	}
@@ -66,6 +80,11 @@ public class Stimulate {
 	{
 		constraintExpresstions.add(str);
 	}
-
+	public List<String> getTimeConstraints() {
+		return timeConstraints;
+	}
+	public void setTimeConstraints(List<String> timeConstraints) {
+		this.timeConstraints = timeConstraints;
+	}
 
 }

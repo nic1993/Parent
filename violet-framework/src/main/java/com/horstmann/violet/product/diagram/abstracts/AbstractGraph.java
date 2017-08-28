@@ -22,6 +22,7 @@
 package com.horstmann.violet.product.diagram.abstracts;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
@@ -41,6 +42,7 @@ import com.horstmann.violet.product.diagram.abstracts.edge.ISequenceTimeEdge;
 import com.horstmann.violet.product.diagram.abstracts.edge.SEdge;
 import com.horstmann.violet.product.diagram.abstracts.node.INode;
 import com.horstmann.violet.product.diagram.abstracts.node.RectangularNode;
+import com.horstmann.violet.product.diagram.abstracts.property.FragmentPart;
 import com.horstmann.violet.product.diagram.common.NoteNode;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
@@ -62,9 +64,7 @@ public abstract  class AbstractGraph implements Serializable, Cloneable, IGraph
     public AbstractGraph()
     {
         nodes = new ArrayList<INode>();//定义了图形的抽象节点集合
-        edges = new ArrayList<IEdge>();//定义了图形的抽象边集合
-      
-        
+        edges = new ArrayList<IEdge>();//定义了图形的抽象边集合  
     }
 
     @Override
@@ -72,14 +72,56 @@ public abstract  class AbstractGraph implements Serializable, Cloneable, IGraph
     {
         for (INode n : getAllNodes())
         {
-            Point2D locationOnGraph = n.getLocationOnGraph();//获取绝对位置
-            Rectangle2D bounds = n.getBounds();//获取节点的绘图边界
-            Rectangle2D boundsToCheck = new Rectangle2D.Double(locationOnGraph.getX(), locationOnGraph.getY(), bounds.getWidth(),
-                    bounds.getHeight());//返回绘图边界的矩形
-            if (boundsToCheck.contains(p))
-            {
-                return n;
-            }
+
+        	if(!n.getClass().getSimpleName().equals("CombinedFragment"))
+        	{
+        		Point2D locationOnGraph = n.getLocationOnGraph();//获取绝对位置
+                Rectangle2D bounds = n.getBounds();//获取节点的绘图边界
+                Rectangle2D boundsToCheck = new Rectangle2D.Double(locationOnGraph.getX(), locationOnGraph.getY(), bounds.getWidth(),
+                        bounds.getHeight());//返回绘图边界的矩形
+                if (boundsToCheck.contains(p))
+                {
+                    return n;
+                }
+        	}
+        	else {
+        		 Point2D locationOnGraph = n.getLocationOnGraph();//获取绝对位置
+        		 Rectangle2D bounds = n.getBounds();//获取节点的绘图边界
+        		 Rectangle2D boundsToCheck = new Rectangle2D.Double(locationOnGraph.getX(), locationOnGraph.getY(), 50,
+                         30);//返回绘图边界的矩形
+        		 if (boundsToCheck.contains(p))
+                 {
+                     return n;
+                 }
+        		 else {
+        			 Rectangle2D FragmentBounds = new Rectangle2D.Double(locationOnGraph.getX(), locationOnGraph.getY(), bounds.getWidth(),
+        					 bounds.getHeight());
+        			 if(FragmentBounds.contains(p))
+        			 {
+        				 List<FragmentPart> fragmentparts=n.getFragmentParts(); 
+        				   for(FragmentPart fragmentPart: fragmentparts)
+        			        {    
+        			          Line2D borderline= fragmentPart.getBorderline();
+        			          double locationX=borderline.getP1().getX();
+        			          double locationY=borderline.getP1().getY()-5;
+        			          Rectangle2D borderlinebound=new Rectangle2D.Double(locationX,locationY,n.getWidth(),Default_BorderlineBoundHeight);
+        			          if(borderlinebound.contains(p))
+        			          {
+        			         	borderlineflag=fragmentparts.indexOf(fragmentPart);
+        			         	return n;
+        			          }
+        			        } 
+        				    Line2D lastBorder = new Line2D.Double(locationOnGraph.getX(), locationOnGraph.getY() + bounds.getHeight(),
+        				    		                              locationOnGraph.getX()+bounds.getWidth(), locationOnGraph.getY() + bounds.getHeight());
+        				    Rectangle2D borderlinebound=new Rectangle2D.Double(lastBorder.getX1(),lastBorder.getY1() - 5,n.getWidth(),Default_BorderlineBoundHeight);
+        				    if(borderlinebound.contains(p))
+        				    {
+        				    	return n;
+        				    }
+        			 }	 
+				}   		 
+			}
+            
         }
         return null;
     }
@@ -420,9 +462,11 @@ public abstract  class AbstractGraph implements Serializable, Cloneable, IGraph
 
 	private ArrayList<INode> nodes;
     private ArrayList<IEdge> edges;
-    
-    private transient Rectangle2D 
-    minBounds;
+    @XStreamOmitField
+    private int borderlineflag;
+    private transient Rectangle2D minBounds;
     private transient IGridSticker gridSticker;
     public static BlockingDeque<Integer> lock = new LinkedBlockingDeque<Integer>();
+    
+    private static double Default_BorderlineBoundHeight=10;
 }

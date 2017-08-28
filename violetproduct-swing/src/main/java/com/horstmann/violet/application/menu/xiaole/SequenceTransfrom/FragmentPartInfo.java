@@ -10,6 +10,7 @@ public class FragmentPartInfo {
 	private String size;//这里的size指的是分块区域高度
 	private List<CombinedFragmentInfo> nestingchilds=new ArrayList<CombinedFragmentInfo>();//嵌套的组合片段
 	private List<MessageInfo> concluedmessages=new ArrayList<MessageInfo>();//覆盖的消息
+	private List<String> concluedLifeLine = new ArrayList<String>();
 	public String getConditionText() {
 		return conditionText;
 	}

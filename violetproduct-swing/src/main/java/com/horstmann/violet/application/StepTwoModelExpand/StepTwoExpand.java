@@ -32,8 +32,8 @@ import javax.swing.border.EmptyBorder;
 
 import org.eclipse.draw2d.FlowLayout;
 
-import com.horstmann.violet.application.SteponeBuildModel.StepOneChangePanelUI;
-import com.horstmann.violet.application.SteponeBuildModel.UsecaseTreePanel;
+import com.horstmann.violet.application.StepOneBuildModel.JRadionPanel;
+import com.horstmann.violet.application.StepOneBuildModel.UsecaseTreePanel;
 import com.horstmann.violet.application.gui.GBC;
 import com.horstmann.violet.application.gui.MainFrame;
 import com.horstmann.violet.application.menu.FileMenu;
@@ -53,138 +53,216 @@ public class StepTwoExpand extends JPanel{
 	private static JPanel bottompanel;
 	private MainFrame mainFrame;
 	private boolean usecase;
+	private boolean isSameName;
+	private String model_Name;
 	public StepTwoExpand(MainFrame mainFrame)
 	{
 		this.mainFrame = mainFrame;	
 		init();
-		expandModelPanel.setVisible(false);
-		expandCasePanel.setVisible(false);
-		estimatepPanel.setVisible(false);
-		exchangepPanel.setVisible(true);
 		this.setLayout(new GridBagLayout());
-		this.add(expandModelLabel,new GBC(0, 0).setFill(GBC.BOTH).setWeight(1, 0).setInsets(10, 10, 0, 150));
-		this.add(expandModelPanel,new GBC(0, 1).setFill(GBC.BOTH).setWeight(1, 0).setInsets(5, 10, 0, 150));
 		
-		this.add(expandCaseModel,new GBC(0, 2).setFill(GBC.BOTH).setWeight(1, 0).setInsets(10, 10, 0, 150));
-		this.add(expandCasePanel,new GBC(0, 3).setFill(GBC.BOTH).setWeight(1, 0).setInsets(0, 10, 0, 150));
-		expandCasePanel.setLayout(new GridLayout(1, 1));
-		expandCasePanel.add(mainFrame.getStepTwoCaseExpandTree());
+		this.add(estimateLabel,new GBC(0, 0).setFill(GBC.BOTH).setWeight(1, 0).setInsets(15, 10, 0, 0));
+		this.add(estimatepPanel,new GBC(0, 1).setFill(GBC.BOTH).setWeight(1, 0).setInsets(0, 10, 0, 0));
+		estimatepPanel.setLayout(new GridBagLayout());
+
+		this.add(exchangeLabel,new GBC(0, 2).setFill(GBC.BOTH).setWeight(1, 0).setInsets(15, 10, 0, 0));
+		this.add(exchangepPanel,new GBC(0, 3).setFill(GBC.BOTH).setWeight(1, 0).setInsets(0, 10, 0, 0));
+		exchangepPanel.setLayout(new GridBagLayout());
 		
-		this.add(estimateLabel,new GBC(0, 4).setFill(GBC.BOTH).setWeight(1, 0).setInsets(10, 10, 0, 150));
-		this.add(estimatepPanel,new GBC(0, 5).setFill(GBC.BOTH).setWeight(1, 0).setInsets(0, 10, 0, 150));
-		
-		this.add(exchangeLabel,new GBC(0, 6).setFill(GBC.BOTH).setWeight(1, 0).setInsets(10, 10, 0, 150));
-		this.add(exchangepPanel,new GBC(0, 7).setFill(GBC.BOTH).setWeight(1, 1).setInsets(0, 10, 0, 150));
-		
-		jRadionPanel = mainFrame.getjRadionPanel();
-		expandModelPanel.setLayout(new GridBagLayout());
-		expandModelPanel.add(jRadionPanel, new GBC(0, 0).setFill(GBC.BOTH).setWeight(1, 0).setInsets(0, 25, 0, 0));	
+		this.add(new JPanel(),new GBC(0, 4).setFill(GBC.BOTH).setWeight(1, 1).setInsets(0, 10, 0, 0));		
 	}
 	
-//	private void setupUI()
-//	{
-//		setUI(this.getChangePanelUI());
-//	}
 	public void init()
 	{
 		this.setBackground(new Color(233,233,233));	
-		expandModelLabel = new JLabel("Ä£ÐÍÀ©Õ¹");
-		expandCaseModel = new JLabel("ÓÃÀýÀ©Õ¹");
 		estimateLabel = new JLabel("Ä£ÐÍÆÀ¹À");
 		exchangeLabel = new JLabel("Markov×ª»»");
 		
-		expandModelLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 18));
-		expandCaseModel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 18));
-		estimateLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 18));
+		estimateLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 18));
 		exchangeLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 18));
 
-		expandModelPanel = new JPanel();
-		expandCasePanel = new JPanel();
 		estimatepPanel = new JPanel();
 		exchangepPanel = new JPanel();
 		
-		expandModelPanel.setBackground(new Color(233,233,233));
-		expandCasePanel.setBackground(new Color(233,233,233));
 		estimatepPanel.setBackground(new Color(233,233,233));
 		exchangepPanel.setBackground(new Color(233,233,233));
+		 
+		estimateLabel.setEnabled(true);
+		exchangeLabel.setEnabled(false);
 		
-		mainFrame.getNameList().add("Primary");
+		estimatepPanel.setVisible(true);
+		exchangepPanel.setVisible(false);
+			
 		labelListen();
 	}
 	
 	private void labelListen()
 	{
-		expandModelLabel.addMouseListener(new MouseAdapter(){	
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				expandModelLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 18));
-				expandCaseModel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 18));
-				estimateLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 18));
-				exchangeLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 18));
-				
-				mainFrame.getsteponebottmopanel().getNextbutton().doClick();
-				if(expandModelPanel.isVisible())
-				expandModelPanel.setVisible(false);
-				else {
-					expandModelPanel.setVisible(true);
-				}
-			}
-		});
-		expandCaseModel.addMouseListener(new MouseAdapter(){	
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				expandModelLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 18));
-				expandCaseModel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 18));
-				estimateLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 18));
-				exchangeLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 18));
-				
-				if(expandModelPanel.isVisible())
-					expandCasePanel.setVisible(false);
-					else {
-						expandCasePanel.setVisible(true);
-					}
-				expandCasePanel.updateUI();
-				clearPanel();
-				mainFrame.getpanel().add(mainFrame.getStepTwoCaseOperation());
-				mainFrame.getCenterTabPanel().add(mainFrame.getStepTwoCaseExpandTabbedPane());
-				mainFrame.getpanel().updateUI();
-			}
-		});
+//		expandModelLabel.addMouseListener(new MouseAdapter(){	
+//			@Override
+//			public void mousePressed(MouseEvent e) {
+//				// TODO Auto-generated method stub
+//				if(((JLabel)e.getSource()).isEnabled())
+//				{
+//					expandModelLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 18));
+//					expandCaseModel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 18));
+//					estimateLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 18));
+//					exchangeLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 18));
+//	                mainFrame.getStepTwoExpandBottom().setStep(1);
+//					expandModelPanel.setVisible(true);
+//					expandCasePanel.setVisible(false);
+//					estimatepPanel.setVisible(false);
+//					exchangepPanel.setVisible(false);
+//					mainFrame.getStepTwoCenterRightPanel().getGraphButton().setVisible(false);
+//					mainFrame.getStepTwoCenterRightPanel().getZoominButton().setVisible(false);
+//					mainFrame.getStepTwoCenterRightPanel().getZoomoutButton().setVisible(false);
+//					clearPanel();
+//					mainFrame.getpanel().add(mainFrame.getStepTwoModelOperation());
+//					mainFrame.getCenterTabPanel().add(mainFrame.getStepTwoModelExpandTabbedPane());
+//					mainFrame.renewPanel();
+//				}
+//			}
+//		});
+//		expandCaseModel.addMouseListener(new MouseAdapter(){	
+//			@Override
+//			public void mousePressed(MouseEvent e) {
+//				// TODO Auto-generated method stub
+//				if(((JLabel)e.getSource()).isEnabled())
+//				{
+//					expandModelLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 18));
+//					expandCaseModel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 18));
+//					estimateLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 18));
+//					exchangeLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 18));
+//					mainFrame.getStepTwoExpandBottom().setStep(2);
+//					expandModelPanel.setVisible(false);
+//					expandCasePanel.setVisible(true);
+//					estimatepPanel.setVisible(false);
+//					exchangepPanel.setVisible(false);
+//					mainFrame.getStepTwoCenterRightPanel().getGraphButton().setVisible(false);
+//					mainFrame.getStepTwoCenterRightPanel().getZoominButton().setVisible(false);
+//					mainFrame.getStepTwoCenterRightPanel().getZoomoutButton().setVisible(false);
+//					clearPanel();
+//					mainFrame.getpanel().add(mainFrame.getStepTwoCaseOperation());
+//					isSameName = mainFrame.getStepTwoModelOperation().getIsSameName();
+////					if(!isSameName){
+////						mainFrame.getStepTwoCaseOperation().getToplabel().setText("µ±Ç°Ä£ÐÍÎª:"+model_Name);
+////					}
+//					mainFrame.getCenterTabPanel().add(mainFrame.getStepTwoCaseExpandTabbedPane());
+//					mainFrame.getpanel().updateUI();
+//					mainFrame.renewPanel();
+//				}
+//			}
+//		});
 		estimateLabel.addMouseListener(new MouseAdapter(){	
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-				expandModelLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 18));
-				expandCaseModel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 18));
-				estimateLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 18));
-				exchangeLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 18));
+				if(((JLabel)e.getSource()).isEnabled())
+				{
+					estimateLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 18));
+					exchangeLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 18));
+					mainFrame.getStepTwoExpandBottom().setStep(1);
+					estimatepPanel.setVisible(true);
+					exchangepPanel.setVisible(false);
+					
+					mainFrame.getStepTwoCenterRightPanel().getGraphButton().setVisible(false);
+					mainFrame.getStepTwoCenterRightPanel().getZoominButton().setVisible(false);
+					mainFrame.getStepTwoCenterRightPanel().getZoomoutButton().setVisible(false);
+					clearPanel();
+					mainFrame.getpanel().add(mainFrame.getStepTwoEvaluateOperation());
+//					if(!isSameName)
+//					{
+//						mainFrame.getStepTwoEvaluateOperation().getTopLabel().setText("µ±Ç°Ä£ÐÍÎª:"+model_Name);
+//					}
+					mainFrame.getCenterTabPanel().add(mainFrame.getStepTwoEvaluateTabbedPane());
+					mainFrame.renewPanel();
+				}
 				
-				clearPanel();
-				mainFrame.getpanel().add(mainFrame.getStepTwoEvaluateOperation());
-				mainFrame.getCenterTabPanel().add(mainFrame.getStepTwoEvaluateTabbedPane());
-				mainFrame.getpanel().updateUI();
 			}
 		});
 		exchangeLabel.addMouseListener(new MouseAdapter(){	
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-				expandModelLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 18));
-				expandCaseModel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 18));
-				estimateLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 18));
-				exchangeLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 18));	
-				clearPanel();
-    	        mainFrame.getpanel().add(mainFrame.getStepTwoExchangeOperation());  
-    	        mainFrame.getCenterTabPanel().add(mainFrame.getStepTwoExchangeTabbedPane());
+				if(((JLabel)e.getSource()).isEnabled())
+				{
+//					expandModelLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 18));
+//					expandCaseModel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 18));
+					estimateLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 18));
+					exchangeLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 18));
+					mainFrame.getStepTwoExpandBottom().setStep(2);
+//					expandModelPanel.setVisible(false);
+//					expandCasePanel.setVisible(false);
+					estimatepPanel.setVisible(false);
+					exchangepPanel.setVisible(true);
+					
+					mainFrame.getStepTwoCenterRightPanel().getGraphButton().setVisible(true);
+					mainFrame.getStepTwoCenterRightPanel().getZoominButton().setVisible(true);
+					mainFrame.getStepTwoCenterRightPanel().getZoomoutButton().setVisible(true);
+					clearPanel();
+	    	        mainFrame.getpanel().add(mainFrame.getStepTwoExchangeOperation());  
+//	    	        if(!isSameName)
+//					{
+//	    	        	mainFrame.getStepTwoExchangeOperation().getToplabel().setText("µ±Ç°Ä£ÐÍÎª:"+model_Name);
+//					}
+	    	        mainFrame.getCenterTabPanel().add(mainFrame.getStepTwoExchangeTabbedPane());
+	    	        mainFrame.renewPanel();
+				}
 			}
 		});
 	}
-
+    private void isSanmeName(){
+    	if(model_Name == null){
+    		model_Name = mainFrame.getjRadionPanel().getSelectName();
+    		isSameName = false;
+    	}	
+		else if (mainFrame.getjRadionPanel().getSelectName().equals(model_Name)) {
+			model_Name = mainFrame.getjRadionPanel().getSelectName();
+			isSameName = true;
+		}
+		else {
+			isSameName = false;
+		}
+    }
 	public void clearPanel()
 	{
 		mainFrame.getpanel().removeAll();
 		mainFrame.getCenterTabPanel().removeAll();
 	}
+    
+	public String getModel_Name() {
+		return model_Name;
+	}
+	public JLabel getExpandModelLabel() {
+		return expandModelLabel;
+	}
+
+	public JLabel getExpandCaseModel() {
+		return expandCaseModel;
+	}
+
+	public JLabel getEstimateLabel() {
+		return estimateLabel;
+	}
+
+	public JLabel getExchangeLabel() {
+		return exchangeLabel;
+	}
+
+	public JPanel getExpandModelPanel() {
+		return expandModelPanel;
+	}
+
+	public JPanel getExpandCasePanel() {
+		return expandCasePanel;
+	}
+
+	public JPanel getEstimatepPanel() {
+		return estimatepPanel;
+	}
+
+	public JPanel getExchangepPanel() {
+		return exchangepPanel;
+	}
+	
 }

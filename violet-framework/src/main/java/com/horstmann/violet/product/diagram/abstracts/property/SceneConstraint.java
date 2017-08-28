@@ -5,7 +5,14 @@ import java.util.List;
 
 public class SceneConstraint {
 	private List<SequenceConstraint> constraints = new ArrayList<SequenceConstraint>();
+	private List<String> sequenceName = new ArrayList<String>();
 	
+	public List<String> getSequenceName() {
+		return sequenceName;
+	}
+	public void setSequenceName(List<String> sequenceName) {
+		this.sequenceName = sequenceName;
+	}
 	public List<SequenceConstraint> getConstraints() {
 		return constraints;
 	}

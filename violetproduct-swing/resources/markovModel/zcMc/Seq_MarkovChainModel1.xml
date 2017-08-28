@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Model version="1.0" type="uml:Model" name="Markov_Model" visibility="public" authorNmae="Terence">
+  <ModelType>Seq_Markov</ModelType>
+  <Owned>电源监控</Owned>
+  <name>update_batt_compass</name>
+  <state>
+    <name>S0</name>
+    <arc label="prob" type="common">
+      <name>S0_S1_update_batt_compass()</name>
+      <owned>update_batt_compass</owned>
+      <prob>NaN</prob>
+      <to>S1</to>
+    </arc>
+    <arc label="prob" type="common">
+      <name>S0_S16_set_voltage(float)</name>
+      <owned>set_voltage</owned>
+      <prob>NaN</prob>
+      <stimulate>
+        <parameter>
+          <paramName>volt</paramName>
+          <paramType>float</paramType>
+          <domain type="serial">-32768&lt;volt&lt;32769</domain>
+        </parameter>
+      </stimulate>
+      <to>S16</to>
+    </arc>
+    <arc label="prob" type="common">
+      <name>S0_S17_set_current(float)</name>
+      <owned>set_current</owned>
+      <prob>NaN</prob>
+      <stimulate>
+        <parameter>
+          <paramName>amps</paramName>
+          <paramType>float</paramType>
+          <domain type="serial">-32768&lt;amps&lt;32769</domain>
+        </parameter>
+      </stimulate>
+      <to>S17</to>
+    </arc>
+    <arc label="prob" type="common">
+      <name>S0_S18_set_current(float)</name>
+      <owned>set_current</owned>
+      <prob>NaN</prob>
+      <stimulate>
+        <parameter>
+          <paramName>amps</paramName>
+          <paramType>float</paramType>
+          <domain type="serial">-32768&lt;amps&lt;32769</domain>
+        </parameter>
+      </stimulate>
+      <to>S18</to>
+    </arc>
+  </state>
+  <state>
+    <name>S1</name>
+    <arc label="prob" type="common">
+      <name>S1_S2_read_battery()</name>
+      <owned>read_battery</owned>
+      <prob>NaN</prob>
+      <to>S2</to>
+    </arc>
+  </state>
+  <state>
+    <name>S2</name>
+    <arc label="prob" type="common">
+      <name>S2_S3_read(float,float,int,float,bool)</name>
+      <owned>read</owned>
+      <prob>NaN</prob>
+      <stimulate>
+        <parameter>
+          <paramName>_state.voltage</paramName>
+          <paramType>float</paramType>
+          <domain type="serial">-32768&lt;_state.voltage&lt;32769</domain>
+        </parameter>
+        <parameter>
+          <paramName>_state.current_amps</paramName>
+          <paramType>float</paramType>
+          <domain type="serial">-32768&lt;_state.current_amps&lt;32769</domain>
+        </parameter>
+        <parameter>
+          <paramName>_state.last_time_micros</paramName>
+          <paramType>int</paramType>
+          <domain type="serial">-32768&lt;_state.last_time_micros&lt;32769</domain>
+        </parameter>
+        <parameter>
+          <paramName>state.current_total_mah</paramName>
+          <paramType>float</paramType>
+          <domain type="serial">-32768&lt;state.current_total_mah&lt;32769</domain>
+        </parameter>
+        <parameter>
+          <paramName>_state.healthy</paramName>
+          <paramType>bool</paramType>
+          <domain type="discrete">true,false</domain>
+        </parameter>
+      </stimulate>
+      <to>S3</to>
+    </arc>
+  </state>
+  <state>
+    <name>S3</name>
+    <arc label="prob" type="common">
+      <name>S3_S4_has_current()</name>
+      <owned>has_current</owned>
+      <assignValue>has_current</assignValue>
+      <assignType>bool</assignType>
+      <prob>NaN</prob>
+      <to>S4</to>
+    </arc>
+  </state>
+  <state>
+    <name>S4</name>
+    <arc label="prob" type="common">
+      <name>S4_S5_current_amps()</name>
+      <owned>current_amps</owned>
+      <prob>NaN</prob>
+      <to>S5</to>
+    </arc>
+  </state>
+  <state>
+    <name>S5</name>
+    <arc label="prob" type="common">
+      <name>S5_S6_set_current(float)</name>
+      <owned>set_current</owned>
+      <prob>NaN</prob>
+      <stimulate>
+        <parameter>
+          <paramName>amps</paramName>
+          <paramType>float</paramType>
+          <domain type="serial">-32768&lt;amps&lt;32769</domain>
+        </parameter>
+      </stimulate>
+      <to>S6</to>
+    </arc>
+  </state>
+  <state>
+    <name>S6</name>
+    <arc label="prob" type="void">
+      <name>S6_S7</name>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S7</to>
+    </arc>
+  </state>
+  <state>
+    <name>S7</name>
+    <arc label="prob" type="common">
+      <name>S7_S8_get_type()</name>
+      <owned>get_type</owned>
+      <assignValue>battmonitortype</assignValue>
+      <assignType>int</assignType>
+      <prob>NaN</prob>
+      <to>S8</to>
+    </arc>
+  </state>
+  <state>
+    <name>S8</name>
+    <arc label="prob" type="common">
+      <name>S8_S9_voltage()</name>
+      <owned>voltage</owned>
+      <prob>NaN</prob>
+      <to>S9</to>
+    </arc>
+  </state>
+  <state>
+    <name>S9</name>
+    <arc label="prob" type="common">
+      <name>S9_S10_set_voltage(float)</name>
+      <owned>set_voltage</owned>
+      <prob>NaN</prob>
+      <stimulate>
+        <parameter>
+          <paramName>volt</paramName>
+          <paramType>float</paramType>
+          <domain type="serial">-32768&lt;volt&lt;32769</domain>
+        </parameter>
+      </stimulate>
+      <to>S10</to>
+    </arc>
+  </state>
+  <state>
+    <name>S10</name>
+    <arc label="prob" type="void">
+      <name>S10_S11</name>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S11</to>
+    </arc>
+  </state>
+  <state>
+    <name>S11</name>
+    <arc label="prob" type="common">
+      <name>S11_S12_current_amps()</name>
+      <owned>current_amps</owned>
+      <prob>NaN</prob>
+      <to>S12</to>
+    </arc>
+  </state>
+  <state>
+    <name>S12</name>
+    <arc label="prob" type="common">
+      <name>S12_S13_set_current(float)</name>
+      <owned>set_current</owned>
+      <prob>NaN</prob>
+      <stimulate>
+        <parameter>
+          <paramName>amps</paramName>
+          <paramType>float</paramType>
+          <domain type="serial">-32768&lt;amps&lt;32769</domain>
+        </parameter>
+      </stimulate>
+      <to>S13</to>
+    </arc>
+  </state>
+  <state>
+    <name>S13</name>
+    <arc label="prob" type="void">
+      <name>S13_S14</name>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S14</to>
+    </arc>
+  </state>
+  <state>
+    <name>S14</name>
+    <arc label="prob" type="common">
+      <name>S14_S15_exhausted(float, float)</name>
+      <owned>exhausted</owned>
+      <assignValue>battery_exhausted</assignValue>
+      <assignType>bool</assignType>
+      <prob>NaN</prob>
+      <stimulate>
+        <parameter>
+          <paramName>g.fs_batt_voltage</paramName>
+          <paramType>float</paramType>
+          <domain type="serial">-32768&lt;g.fs_batt_voltage&lt;32769</domain>
+        </parameter>
+        <parameter>
+          <paramName>g.fs_batt_mah</paramName>
+          <paramType>float</paramType>
+          <domain type="serial">-32768&lt;g.fs_batt_mah&lt;32769</domain>
+        </parameter>
+      </stimulate>
+      <to>S15</to>
+    </arc>
+  </state>
+  <state>
+    <name>S15</name>
+  </state>
+  <state>
+    <name>S16</name>
+  </state>
+  <state>
+    <name>S17</name>
+  </state>
+  <state>
+    <name>S18</name>
+  </state>
+</Model>

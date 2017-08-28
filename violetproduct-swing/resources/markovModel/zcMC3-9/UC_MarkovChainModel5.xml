@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Model version="1.0" type="uml:Model" name="Markov_Model" visibility="public" authorNmae="Terence">
+  <ModelType>UC_Markov</ModelType>
+  <Owned>Software</Owned>
+  <name>着陆及碰撞检测</name>
+  <state>
+    <name>S54</name>
+    <arc label="prob" type="common">
+      <name>S54_S55_update_land_and_crash_detectors()</name>
+      <owned>update_land_and_crash_detectors</owned>
+      <prob>1.0</prob>
+      <to>S55</to>
+    </arc>
+  </state>
+  <state>
+    <name>S55</name>
+    <arc label="prob" type="common">
+      <name>S55_S56_update_land_detector()</name>
+      <owned>update_land_detector</owned>
+      <prob>1.0</prob>
+      <to>S56</to>
+    </arc>
+  </state>
+  <state>
+    <name>S56</name>
+    <arc label="prob" type="common">
+      <name>S56_S57_crash_check()</name>
+      <owned>crash_check</owned>
+      <prob>1.0</prob>
+      <to>S57</to>
+    </arc>
+  </state>
+  <state>
+    <name>S57</name>
+  </state>
+</Model>

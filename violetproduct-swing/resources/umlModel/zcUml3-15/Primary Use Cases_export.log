@@ -1,0 +1,40 @@
+Exporting package to 'C:\Users\Terence\Desktop\zcUml3-1\Primary Use Cases.xml'
+Retrieving data for export: diagram elements
+Retrieving data for export: links
+Retrieving data for export: constraints
+Retrieving data for export: attribute tagged values
+Retrieving data for export: operation tagged values
+Retrieving data for export: operation parameter tagged values
+Retrieving data for export: connector tagged values
+Completed data retrieval
+Pre-processing export tree...
+Completed pre-processing
+Processing package: Primary Use Cases
+Diagram: Primary Use Cases
+Diagram: update_batt_compass
+Diagram: failsafe_battery_event
+Diagram: battery_read
+Diagram: init_disarm_motors
+Diagram: update_land_and_crash_detectors
+Diagram: update_land_detector
+Diagram: crash_check
+Element:0: 飞控程序
+Element:1: 着陆及碰撞检测
+Element:2: Interaction
+Element:3: 着陆检测
+Element:4: Interaction
+Element:5: 碰撞检测
+Element:6: Interaction
+Element:7: 读取所有电源实例的电流与电压
+Element:8: Interaction
+Element:9: 电源监控
+Element:10: Interaction
+Element:11: 电源失效保护
+Element:12: Interaction
+Element:13: 电机加锁
+Element:14: Interaction
+Element:15: 硬件交互
+Adding State-Tables
+Sequencing Interaction Diagrams
+Formatting output XML...please wait
+XMI Document Export Complete!

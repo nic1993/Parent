@@ -50,7 +50,7 @@ public class ActivationBarNode extends RectangularNode
             return false;
         }
         n.setParent(this);//将ActivationBarNode置为n点的父节点
-        n.setGraph(getGraph());//
+        n.setGraph(getGraph());
         n.setLocation(p);//将子节点设为传进来的P点的坐标
         addChild(n, getChildren().size());//在child集合最后继续添加子节点
         return true;
@@ -413,16 +413,37 @@ public class ActivationBarNode extends RectangularNode
             {
                 continue;
             }//获取所有的边，判断是否是消息发送的边
+            
             if (edge.getStart() == this)
             {
+            	
                 INode endingNode = edge.getEnd();
+                INode startingnode = edge.getStart();
                 boolean isActivationBarNode = endingNode instanceof ActivationBarNode;
                 //如果另外一个节点是activationBarNode
 				if (isActivationBarNode)
                 {
-					Rectangle2D endingNodeBounds = endingNode.getBounds();//获取结束节点的边界
-					double newHeight = CALL_YGAP / 2 + endingNodeBounds.getHeight() + (endingNode.getLocationOnGraph().getY() - this.getLocationOnGraph().getY()) + CALL_YGAP / 2;
-					height = Math.max(height,  newHeight);
+//					INode endnode = endingNode;
+//
+//					while(!endnode.getParent().getClass().getSimpleName().equals("LifelineNode"))
+//					{
+//						endnode = endnode.getParent();
+//					}
+//					INode startnode = startingnode;
+//					while (!startnode.getParent().getClass().getSimpleName().equals("LifelineNode")) {
+//						startnode = startnode.getParent();
+//					}
+//					
+//					if(startnode.getParent().getId().equals(endnode.getParent().getId()))
+//					{
+//						continue;
+//					}
+//					else{
+						Rectangle2D endingNodeBounds = endingNode.getBounds();//获取结束节点的边界
+						double newHeight = CALL_YGAP / 2 + endingNodeBounds.getHeight() + (endingNode.getLocationOnGraph().getY() - this.getLocationOnGraph().getY()) + CALL_YGAP / 2;
+						height = Math.max(height,  newHeight);
+//					}
+					
                 }
             }
         }
@@ -563,6 +584,7 @@ public class ActivationBarNode extends RectangularNode
     	this.locationCache = null;//初始化位置
     	// Backup current color;
         Color oldColor = g2.getColor();//获取当前的颜色
+//        g2.setColor(Color.black);
         // Translate g2 if node has parent
         Point2D nodeLocationOnGraph = getLocationOnGraph();
         Point2D nodeLocation = getLocation();
@@ -575,7 +597,7 @@ public class ActivationBarNode extends RectangularNode
         super.draw(g2);
         g2.setColor(getBackgroundColor());
         g2.fill(b);
-        g2.setColor(getBorderColor());
+        g2.setColor(Color.black);
         g2.draw(b);
         // Restore g2 original location
         g2.translate(-g2Location.getX(), -g2Location.getY());//得到g2原始的位置
@@ -662,7 +684,6 @@ public class ActivationBarNode extends RectangularNode
         Point2D endingNodePoint = edge.getEndLocation();//endingNodePoint置为边的最后一点
         Class<?> startingNodeClass = (startingNode != null ? startingNode.getClass() : NullType.class);
         Class<?> endingNodeClass = (endingNode != null ? endingNode.getClass() : NullType.class);
-        System.out.println(endingNodeClass);
         // Case 1 : check is call edge doesn't connect already connected nodes
         //情况1：检查消息传递的边是不是连上了已经连在一起的节点
         if (startingNode != null && endingNode != null) {//如果有相连的两个节点
@@ -685,6 +706,23 @@ public class ActivationBarNode extends RectangularNode
         if (startingNodeClass.isAssignableFrom(ActivationBarNode.class)
                 && endingNodeClass.isAssignableFrom(ActivationBarNode.class))
         {
+        	INode endNode = edge.getEnd();
+            INode startNode = edge.getStart();
+			
+			INode endnode = endNode;
+			while(!endNode.getParent().getClass().getSimpleName().equals("LifelineNode"))
+			{
+				endNode = endNode.getParent();
+			}
+			
+			INode startnode = startNode;
+			while (!startnode.getParent().getClass().getSimpleName().equals("LifelineNode")) {
+				startnode = startnode.getParent();
+			}
+			if(startnode.getParent().getID().equals(endnode.getParent().getID()))
+			{
+				return false;
+			}
             return true;
         }
         // Case 3 : an activation bar creates a new class instance
@@ -711,7 +749,6 @@ public class ActivationBarNode extends RectangularNode
             Rectangle2D topRectangle = endingLifeLineNode.getTopRectangle();
             if (startingLifeLineNode != endingLifeLineNode && !topRectangle.contains(endingNodePoint))
             {
-            	System.out.println(111111111);
                 ActivationBarNode newActivationBar = new ActivationBarNode();
                 Point2D edgeStartLocation = edge.getEndLocation();
                 double x = edgeStartLocation.getX();
@@ -751,7 +788,6 @@ public class ActivationBarNode extends RectangularNode
              double x = edgeStartLocation.getX();
              double y = edgeStartLocation.getY() - 80;
              Point2D newActivationBarLocation = new Point2D.Double(x, y);
-             System.out.println(x+"  "+y);
              startingNode.addChild(newActivationBar, newActivationBarLocation);
              edge.setEnd(newActivationBar);
              return true;

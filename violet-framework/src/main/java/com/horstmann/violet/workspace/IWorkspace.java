@@ -28,7 +28,12 @@ public interface IWorkspace
      * @return current diagram's title
      */
     public String getTitle();
-
+    
+    /**
+     * @return current diagram's name cai
+     */
+    public String getName();
+    public void setName(String name);
     /**
      * Gets the fileName property.
      * 

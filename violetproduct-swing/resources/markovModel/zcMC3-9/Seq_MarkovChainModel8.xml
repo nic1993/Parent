@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Model version="1.0" type="uml:Model" name="Markov_Model" visibility="public" authorNmae="Terence">
+  <ModelType>Seq_Markov</ModelType>
+  <Owned>地面站失效保护</Owned>
+  <name>failsafe_gcs_check</name>
+  <state>
+    <name>S74</name>
+    <arc label="prob" type="common">
+      <name>S74_S75_failsafe_gcs_check()</name>
+      <owned>failsafe_gcs_check</owned>
+      <prob>1.0</prob>
+      <to>S75</to>
+    </arc>
+  </state>
+  <state>
+    <name>S75</name>
+    <arc label="prob" type="common">
+      <name>S75_S76_millis()</name>
+      <owned>millis</owned>
+      <assignValue>last_gcs_update_ms</assignValue>
+      <assignType>uint32_t</assignType>
+      <prob>1.0</prob>
+      <to>S76</to>
+    </arc>
+  </state>
+  <state>
+    <name>S76</name>
+    <arc label="prob" type="common">
+      <name>S76_S77_failsafe_gcs_off_event()</name>
+      <owned>failsafe_gcs_off_event</owned>
+      <prob>1.0</prob>
+      <to>S77</to>
+    </arc>
+    <arc label="prob" type="common">
+      <name>S76_S81_armed()</name>
+      <owned>armed</owned>
+      <assignValue>has_armed</assignValue>
+      <assignType>bool</assignType>
+      <prob>1.0</prob>
+      <to>S81</to>
+    </arc>
+  </state>
+  <state>
+    <name>S77</name>
+    <arc label="prob" type="common">
+      <name>S77_S78_set_failsafe_gcs(bool)</name>
+      <owned>set_failsafe_gcs</owned>
+      <prob>1.0</prob>
+      <stimulate>
+        <parameter>
+          <paramName>b</paramName>
+          <paramType>bool</paramType>
+          <domain type="discrete">true,false</domain>
+        </parameter>
+      </stimulate>
+      <to>S78</to>
+    </arc>
+  </state>
+  <state>
+    <name>S78</name>
+    <arc label="prob" type="void">
+      <name>S78_S79</name>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S79</to>
+    </arc>
+  </state>
+  <state>
+    <name>S79</name>
+    <arc label="prob" type="void">
+      <name>S79_S80</name>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S80</to>
+    </arc>
+  </state>
+  <state>
+    <name>S80</name>
+    <arc label="prob" type="void">
+      <name>S80_S98</name>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S98</to>
+    </arc>
+  </state>
+  <state>
+    <name>S81</name>
+    <arc label="prob" type="common">
+      <name>S81_S82_set_failsafe_gcs(bool)</name>
+      <owned>set_failsafe_gcs</owned>
+      <prob>1.0</prob>
+      <stimulate>
+        <parameter>
+          <paramName>b</paramName>
+          <paramType>bool</paramType>
+          <domain type="discrete">true,false</domain>
+        </parameter>
+      </stimulate>
+      <to>S82</to>
+    </arc>
+  </state>
+  <state>
+    <name>S82</name>
+    <arc label="prob" type="common">
+      <name>S82_S83_init_disarm_motors()</name>
+      <owned>init_disarm_motors</owned>
+      <prob>1.0</prob>
+      <to>S83</to>
+    </arc>
+    <arc label="prob" type="common">
+      <name>S82_S85_set_mode_RTL_or_land_with_pause()</name>
+      <owned>set_mode_RTL_or_land_with_pause</owned>
+      <prob>1.0</prob>
+      <to>S85</to>
+    </arc>
+    <arc label="prob" type="common">
+      <name>S82_S86_set_mode_land_with_pause()</name>
+      <owned>set_mode_land_with_pause</owned>
+      <prob>1.0</prob>
+      <to>S86</to>
+    </arc>
+    <arc label="prob" type="common">
+      <name>S82_S88_init_disarm_motors()</name>
+      <owned>init_disarm_motors</owned>
+      <prob>1.0</prob>
+      <to>S88</to>
+    </arc>
+    <arc label="prob" type="common">
+      <name>S82_S90_set_mode_RTL_or_land_with_pause()</name>
+      <owned>set_mode_RTL_or_land_with_pause</owned>
+      <prob>1.0</prob>
+      <to>S90</to>
+    </arc>
+    <arc label="prob" type="common">
+      <name>S82_S92_set_mode_land_with_pause()</name>
+      <owned>set_mode_land_with_pause</owned>
+      <prob>1.0</prob>
+      <to>S92</to>
+    </arc>
+    <arc label="prob" type="common">
+      <name>S82_S93_init_disarm_motors()</name>
+      <owned>init_disarm_motors</owned>
+      <prob>1.0</prob>
+      <to>S93</to>
+    </arc>
+    <arc label="prob" type="common">
+      <name>S82_S95_set_mode_RTL_or_land_with_pause()</name>
+      <owned>set_mode_RTL_or_land_with_pause</owned>
+      <prob>1.0</prob>
+      <to>S95</to>
+    </arc>
+    <arc label="prob" type="common">
+      <name>S82_S96_set_mode_land_with_pause()</name>
+      <owned>set_mode_land_with_pause</owned>
+      <prob>1.0</prob>
+      <to>S96</to>
+    </arc>
+  </state>
+  <state>
+    <name>S83</name>
+    <arc label="prob" type="void">
+      <name>S83_S84</name>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S84</to>
+    </arc>
+  </state>
+  <state>
+    <name>S84</name>
+    <arc label="prob" type="void">
+      <name>S84_S87</name>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S87</to>
+    </arc>
+  </state>
+  <state>
+    <name>S85</name>
+    <arc label="prob" type="void">
+      <name>S85_S84</name>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S84</to>
+    </arc>
+  </state>
+  <state>
+    <name>S86</name>
+    <arc label="prob" type="void">
+      <name>S86_S84</name>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S84</to>
+    </arc>
+  </state>
+  <state>
+    <name>S87</name>
+    <arc label="prob" type="void">
+      <name>S87_S97</name>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S97</to>
+    </arc>
+  </state>
+  <state>
+    <name>S88</name>
+    <arc label="prob" type="void">
+      <name>S88_S89</name>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S89</to>
+    </arc>
+  </state>
+  <state>
+    <name>S89</name>
+    <arc label="prob" type="void">
+      <name>S89_S87</name>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S87</to>
+    </arc>
+  </state>
+  <state>
+    <name>S90</name>
+    <arc label="prob" type="void">
+      <name>S90_S91</name>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S91</to>
+    </arc>
+  </state>
+  <state>
+    <name>S91</name>
+    <arc label="prob" type="void">
+      <name>S91_S89</name>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S89</to>
+    </arc>
+  </state>
+  <state>
+    <name>S92</name>
+    <arc label="prob" type="void">
+      <name>S92_S91</name>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S91</to>
+    </arc>
+  </state>
+  <state>
+    <name>S93</name>
+    <arc label="prob" type="void">
+      <name>S93_S94</name>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S94</to>
+    </arc>
+  </state>
+  <state>
+    <name>S94</name>
+    <arc label="prob" type="void">
+      <name>S94_S87</name>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S87</to>
+    </arc>
+  </state>
+  <state>
+    <name>S95</name>
+    <arc label="prob" type="void">
+      <name>S95_S94</name>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S94</to>
+    </arc>
+  </state>
+  <state>
+    <name>S96</name>
+    <arc label="prob" type="void">
+      <name>S96_S94</name>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S94</to>
+    </arc>
+  </state>
+  <state>
+    <name>S97</name>
+    <arc label="prob" type="void">
+      <name>S97_S80</name>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S80</to>
+    </arc>
+  </state>
+  <state>
+    <name>S98</name>
+  </state>
+</Model>

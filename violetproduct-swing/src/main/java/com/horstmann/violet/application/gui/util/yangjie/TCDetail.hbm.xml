@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.horstmann.violet.application.gui.util.yangjie">
+	
+	<class name="TCDetail" table="tcdetail">
+		
+		<!-- 主键 ，映射-->
+		<id name="id" column="id">
+			<generator class="native"/>
+		</id>
+		
+		<!-- 非主键，映射 -->
+		<property name="testSequence" type="java.lang.String">
+			<column name="testSequence" length="6000" />
+		</property>
+		<property name="stimulateSequence" type="java.lang.String">
+			<column name="stimulateSequence" length="6000" />
+		</property>
+		<property name="testCase" type="java.lang.String">
+			<column name="testCase" length="6000" />
+		</property>
+		<!-- <property name="testSequence" column="testSequence" length="300" ></property>
+		<property name="stimulateSequence" column="stimulateSequence" length="300" ></property>
+		<property name="testCase" column="testCase" length="300" ></property> -->
+	</class>
+
+</hibernate-mapping>

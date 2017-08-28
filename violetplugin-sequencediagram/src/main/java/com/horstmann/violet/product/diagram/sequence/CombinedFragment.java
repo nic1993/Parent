@@ -16,6 +16,7 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.jar.Attributes.Name;
 
 import javax.xml.transform.Templates;
 
@@ -31,18 +32,19 @@ import com.horstmann.violet.workspace.Workspace;
 import com.horstmann.violet.workspace.WorkspacePanel;
 import com.horstmann.violet.workspace.editorpart.EditorPart;
 import com.horstmann.violet.workspace.editorpart.IEditorPart;
+import com.horstmann.violet.workspace.editorpart.behavior.EditSelectedBehavior;
 import com.thoughtworks.xstream.annotations.XStreamImplicit;
 import com.thoughtworks.xstream.annotations.XStreamOmitField;
 
-public class CombinedFragment  extends RectangularNode 
+public class CombinedFragment extends RectangularNode 
 {	   
    public CombinedFragment()
    {	
-       type= new FragmentType().ALT;      
+	   type= new FragmentType().ALT;
+	   fragmentType = "";    
        conditions=new Condition();
        fragmentParts=new ArrayList<FragmentPart>();
-    
- 
+       name = "";
    }
 @Override
 public Condition getCondition() {
@@ -50,6 +52,19 @@ public Condition getCondition() {
 }
 public void setCondition(Condition conditions) {
 	this.conditions = conditions;	
+}
+
+public String getName() {
+	return name;
+}
+public void setName(String name) {
+	this.name = name;
+}
+
+@Override
+public int getZ() {
+	// TODO Auto-generated method stub
+	return INFINITE_Z_LEVEL;
 }
 @Override
    public Rectangle2D getBounds()//改变外部边框
@@ -95,12 +110,17 @@ public void setHeight(double height) {
    {
        return type;
    }
-
 public void setType(FragmentType newValue)
    {  
        type= newValue;   
-        
    } 
+public String getFragmentType() {
+
+	return fragmentType;
+}
+public void setFragmentType(String fragmentType) {
+	this.fragmentType = fragmentType;
+}
 //绘制TimeNode节点
    @Override
    public void draw(Graphics2D g2)    
@@ -121,13 +141,11 @@ public void setType(FragmentType newValue)
     	 double firststartY=fragmentpart.getBorderline().getY1()+Default_FirstConditionTextDistance;
     	 if(index==0)
     	 { 
-    	 g2.drawString(fragmentpart.getConditionText(),(int) startX, (int)firststartY);
+    	     g2.drawString(fragmentpart.getConditionText(),(int) startX, (int)firststartY);
     	 }
     	 else
-    	 {
-    		 
+    	 { 
     		 g2.drawString(fragmentpart.getConditionText(),(int) startX, (int)otherstartY);
-    	
     	 } 
     	 if(index+1<getFragmentParts().size()){
     	 FragmentPart nextfragmentpart=getFragmentParts().get(index+1);
@@ -140,12 +158,25 @@ public void setType(FragmentType newValue)
 		 {
 		  fragmentpart.setBounds(new Rectangle2D.Double(fragmentpart.getBorderline().getX1(),fragmentpart.getBorderline().getY1(),
 		  getWidth(),getBounds().getMaxY()-fragmentpart.getBorderline().getY1()));	 
-		 }
-
-    	 
+		 } 
        }     
        Rectangle2D bounds = getBounds();
-       GeneralPath fold = new GeneralPath();
+       Shape fold = getShape(bounds);
+       Rectangle2D foldBounds = fold.getBounds2D();
+       g2.setColor(DEFAULT_COLOR);
+       g2.fill(foldBounds);
+       g2.setColor(Color.BLACK);
+       g2.draw(fold);
+       type.drawType(g2, bounds);
+       String SplitProperties[]=type.toString().split("\\.");
+	   setFragmentType(SplitProperties[8]);
+       Shape path = getShape();
+       g2.draw(path);
+       conditions.setParentNode(this);
+   }
+   private Shape getShape(Rectangle2D bounds)
+   {
+	   GeneralPath fold = new GeneralPath();
        fold.moveTo((float) (bounds.getX()+5*d), (float) bounds.getY());  //将鼠标放置在某点
        fold.lineTo((float) bounds.getX()+5*d, (float) bounds.getY()+(2*d));
        fold.moveTo((float) bounds.getX()+5*d, (float) bounds.getY()+(2*d));
@@ -153,14 +184,9 @@ public void setType(FragmentType newValue)
        fold.moveTo((float) bounds.getX() +4*d, (float) bounds.getY()+(2.5*d));
        fold.lineTo((float) bounds.getX(), (float) bounds.getY()+(2.5*d));
        fold.closePath();
-       g2.setColor(Color.BLACK);
-       type.drawType(g2, bounds);
-       Shape path = getShape();
-       g2.draw(path);
-       g2.draw(fold);
-       conditions.setParentNode(this);
-    
+       return fold;
    }
+   
    public Condition getConditions() {
 	return conditions;
 }
@@ -214,13 +240,18 @@ public void SetFragmentPartBorderLine()
        cloned.conditions=(Condition)conditions.clone();  
        return cloned;
    }		
+  
    private FragmentType type;
+   private String fragmentType;
    private Condition conditions;//监护条件 
  
    private List<FragmentPart> fragmentParts;//分块
+   
+   private String name;
   
+   private static Color DEFAULT_COLOR = new Color(255, 228, 181); // very pale pink
    private static int d =10;
-   private double width=200,height=100 ;
+   private double width=200,height=100;
    private static double Default_Distance=50;
    private  static Stroke Defelt_STROKE = new BasicStroke(1.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
    private  static Stroke DOTTED_STROKE = new BasicStroke(1.0f, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND, 0.0f, new float[]
@@ -230,4 +261,5 @@ public void SetFragmentPartBorderLine()
 		    }, 0.0f);
    private static double Default_FirstConditionTextDistance=40;
    private static double Default_OtherConditionTextDistance=20;
+   private static int INFINITE_Z_LEVEL = 10002;
 }

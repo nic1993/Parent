@@ -1,6 +1,20 @@
 package cn.edu.hdu.lab.dao.uml;
 
-public class Node {
+
+
+public class Node implements Cloneable{
+	@Override
+	public Object clone() {   
+		Node o = null;   
+        try {   
+            o = (Node) super.clone();   
+        } catch (CloneNotSupportedException e) {   
+            e.printStackTrace();   
+        }  
+        return o;   
+    }
+	
+	
 	private String id;
 	private String coverdID;
 	private String lifeLineName;
@@ -35,6 +49,10 @@ public class Node {
 		this.lifeLineName=lifeLineName;
 	}
 	
+	public String getCoverdID() {
+		return coverdID;
+	}
+
 	public String getLifeLineName() {
 		return lifeLineName;
 	}

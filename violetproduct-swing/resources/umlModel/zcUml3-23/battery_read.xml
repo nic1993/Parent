@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<xmi:XMI xmi:version="2.1" xmlns:uml="http://schema.omg.org/spec/UML/2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1">
+	<xmi:Documentation exporter="Enterprise Architect" exporterVersion="6.5"/>
+	<uml:Model xmi:type="uml:Model" name="EA_Model" visibility="public">
+		<packagedElement xmi:type="uml:Package" xmi:id="EAPK_62605D66_0355_42e8_B2E3_727CD61D1FE4" name="battery_read" visibility="public">
+			<packagedElement xmi:type="uml:Collaboration" xmi:id="EAID_CB000000_D66_0355_42e8_B2E3_727CD61D1FE" name="EA_Collaboration1" visibility="public">
+				<ownedBehavior xmi:type="uml:Interaction" xmi:id="EAID_IN000000_D66_0355_42e8_B2E3_727CD61D1FE" name="EA_Interaction1" visibility="public">
+					<lifeline xmi:type="uml:Lifeline" xmi:id="EAID_LL000000_97E8_4708_A57F_7F699B64DEEC" name="battery" visibility="public" represents="EAID_AT000000_000_97E8_4708_A57F_7F699B64DEE"/>
+					<lifeline xmi:type="uml:Lifeline" xmi:id="EAID_LL000000_9382_43b1_9C4E_8252EBA2A3AF" name="copter" visibility="public" represents="EAID_AT000000_000_9382_43b1_9C4E_8252EBA2A3A"/>
+					<lifeline xmi:type="uml:Lifeline" xmi:id="EAID_LL000000_54FA_4efe_8582_519E041AF3C9" name="drivers[i]" visibility="public" represents="EAID_AT000000_000_54FA_4efe_8582_519E041AF3C"/>
+					<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000000_9382_43b1_9C4E_8252EBA2A3AF" covered="EAID_LL000000_9382_43b1_9C4E_8252EBA2A3AF"/>
+					<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000001_97E8_4708_A57F_7F699B64DEEC" covered="EAID_LL000000_97E8_4708_A57F_7F699B64DEEC"/>
+					<fragment xmi:type="uml:CombinedFragment" xmi:id="EAID_1F5CCE7E_1C0D_4adf_A045_90EBB31B2871" name="exit immediately if no monitors setup" visibility="public" interactionOperator="opt">
+						<covered xmi:idref="EAID_LL000000_97E8_4708_A57F_7F699B64DEEC"/>
+						<covered xmi:idref="EAID_LL000000_54FA_4efe_8582_519E041AF3C9"/>
+						<operand xmi:type="uml:InteractionOperand" xmi:id="EAID_OP000000_1C0D_4adf_A045_90EBB31B2871">
+							<guard xmi:type="uml:InteractionConstraint" xmi:id="EAID_IC000000_1C0D_4adf_A045_90EBB31B2871">
+								<specification xmi:type="uml:OpaqueExpression" xmi:id="EAID_OE000000_1C0D_4adf_A045_90EBB31B2871" body="_num_instances != 0"/>
+							</guard>
+							<fragment xmi:type="uml:CombinedFragment" xmi:id="EAID_8E2E3A0F_8B95_4685_879B_4DACC10F7F30" name="read the battery driver" visibility="public" interactionOperator="loop">
+								<covered xmi:idref="EAID_LL000000_97E8_4708_A57F_7F699B64DEEC"/>
+								<covered xmi:idref="EAID_LL000000_54FA_4efe_8582_519E041AF3C9"/>
+								<operand xmi:type="uml:InteractionOperand" xmi:id="EAID_OP000000_8B95_4685_879B_4DACC10F7F30">
+									<guard xmi:type="uml:InteractionConstraint" xmi:id="EAID_IC000000_8B95_4685_879B_4DACC10F7F30">
+										<specification xmi:type="uml:OpaqueExpression" xmi:id="EAID_OE000000_8B95_4685_879B_4DACC10F7F30" body="i&lt;2"/>
+									</guard>
+									<fragment xmi:type="uml:CombinedFragment" xmi:id="EAID_DA66C80C_310F_4c58_9614_CA6F8F3DCD0B" name="read driver now" visibility="public" interactionOperator="opt">
+										<covered xmi:idref="EAID_LL000000_97E8_4708_A57F_7F699B64DEEC"/>
+										<covered xmi:idref="EAID_LL000000_54FA_4efe_8582_519E041AF3C9"/>
+										<operand xmi:type="uml:InteractionOperand" xmi:id="EAID_OP000000_310F_4c58_9614_CA6F8F3DCD0B">
+											<guard xmi:type="uml:InteractionConstraint" xmi:id="EAID_IC000000_310F_4c58_9614_CA6F8F3DCD0B">
+												<specification xmi:type="uml:OpaqueExpression" xmi:id="EAID_OE000000_310F_4c58_9614_CA6F8F3DCD0B" body="drivers[i] != 0&amp;&amp; _monitoring[i] != 0"/>
+											</guard>
+											<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000000_97E8_4708_A57F_7F699B64DEEC" covered="EAID_LL000000_97E8_4708_A57F_7F699B64DEEC"/>
+											<fragment xmi:type="uml:OccurrenceSpecification" xmi:id="EAID_FR000000_54FA_4efe_8582_519E041AF3C9" covered="EAID_LL000000_54FA_4efe_8582_519E041AF3C9"/>
+										</operand>
+									</fragment>
+								</operand>
+							</fragment>
+						</operand>
+					</fragment>
+					<message xmi:type="uml:Message" xmi:id="EAID_C9AA1B58_A45F_4790_B1E4_08640F1B7601" name="read()" messageKind="complete" messageSort="synchCall" sendEvent="EAID_FR000000_9382_43b1_9C4E_8252EBA2A3AF" receiveEvent="EAID_FR000001_97E8_4708_A57F_7F699B64DEEC" signature="EAID_95C104B1_3A3C_4659_AFA4_E037826E5095"/>
+					<message xmi:type="uml:Message" xmi:id="EAID_706152CF_1631_4bfc_810B_8749A7574EB2" name="read()" messageKind="complete" messageSort="synchCall" sendEvent="EAID_FR000000_97E8_4708_A57F_7F699B64DEEC" receiveEvent="EAID_FR000000_54FA_4efe_8582_519E041AF3C9" signature="EAID_DC71E64D_54A2_4a5f_A496_275C97A09049"/>
+				</ownedBehavior>
+				<ownedAttribute xmi:type="uml:Property" xmi:id="EAID_AT000000_000_97E8_4708_A57F_7F699B64DEE">
+					<type xmi:idref="EAID_DC791FA5_97E8_4708_A57F_7F699B64DEEC"/>
+				</ownedAttribute>
+				<ownedAttribute xmi:type="uml:Property" xmi:id="EAID_AT000000_000_9382_43b1_9C4E_8252EBA2A3A">
+					<type xmi:idref="EAID_9D5D04D0_9382_43b1_9C4E_8252EBA2A3AF"/>
+				</ownedAttribute>
+				<ownedAttribute xmi:type="uml:Property" xmi:id="EAID_AT000000_000_54FA_4efe_8582_519E041AF3C">
+					<type xmi:idref="EAID_9F5C66F2_54FA_4efe_8582_519E041AF3C9"/>
+				</ownedAttribute>
+			</packagedElement>
+			<packagedElement xmi:type="uml:InstanceSpecification" xmi:id="EAID_DC791FA5_97E8_4708_A57F_7F699B64DEEC" name="battery" visibility="public"/>
+			<packagedElement xmi:type="uml:InstanceSpecification" xmi:id="EAID_9D5D04D0_9382_43b1_9C4E_8252EBA2A3AF" name="copter" visibility="public"/>
+			<packagedElement xmi:type="uml:InstanceSpecification" xmi:id="EAID_9F5C66F2_54FA_4efe_8582_519E041AF3C9" name="drivers[i]" visibility="public"/>
+		</packagedElement>
+	</uml:Model>
+	<xmi:Extension extender="Enterprise Architect" extenderID="6.5">
+		<elements>
+			<element xmi:idref="EAPK_62605D66_0355_42e8_B2E3_727CD61D1FE4" xmi:type="uml:Package" name="battery_read" scope="public">
+				<model package2="EAID_62605D66_0355_42e8_B2E3_727CD61D1FE4" package="EAPK_12D61F71_42AF_4f6e_948D_F7972938140A" tpos="8" ea_localid="88" ea_eleType="package"/>
+				<properties isSpecification="false" sType="Package" nType="0" scope="public"/>
+				<project author="&#24352;&#25104;" version="1.0" phase="1.0" created="2017-02-21 14:45:10" modified="2017-02-21 15:04:19" complexity="1" status="Proposed"/>
+				<code gentype="C++"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="sequences"/>
+				<packageproperties version="1.0" tpos="8"/>
+				<paths/>
+				<times created="2017-02-21 14:45:10" modified="2017-02-21 15:04:19" lastloaddate="2017-02-21 14:45:10" lastsavedate="2017-02-21 14:45:10"/>
+				<flags iscontrolled="FALSE" isprotected="FALSE" batchsave="0" batchload="0" usedtd="FALSE" logxml="FALSE" packageFlags="isModel=1;VICON=2;"/>
+			</element>
+			<element xmi:idref="EAID_DC791FA5_97E8_4708_A57F_7F699B64DEEC" xmi:type="uml:Object" name="battery" scope="public">
+				<model package="EAPK_62605D66_0355_42e8_B2E3_727CD61D1FE4" tpos="0" ea_localid="483" ea_eleType="element"/>
+				<properties isSpecification="false" sType="Object" nType="0" scope="public" isAbstract="false"/>
+				<project author="GuoCe" version="1.0" phase="1.0" created="2017-02-21 14:45:10" modified="2017-02-21 14:45:10" complexity="1" status="Proposed"/>
+				<code gentype="C++"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="battery_read"/>
+				<links>
+					<Sequence xmi:id="EAID_706152CF_1631_4bfc_810B_8749A7574EB2" start="EAID_DC791FA5_97E8_4708_A57F_7F699B64DEEC" end="EAID_9F5C66F2_54FA_4efe_8582_519E041AF3C9"/>
+					<Sequence xmi:id="EAID_C9AA1B58_A45F_4790_B1E4_08640F1B7601" start="EAID_9D5D04D0_9382_43b1_9C4E_8252EBA2A3AF" end="EAID_DC791FA5_97E8_4708_A57F_7F699B64DEEC"/>
+				</links>
+			</element>
+			<element xmi:idref="EAID_9D5D04D0_9382_43b1_9C4E_8252EBA2A3AF" xmi:type="uml:Object" name="copter" scope="public">
+				<model package="EAPK_62605D66_0355_42e8_B2E3_727CD61D1FE4" tpos="0" ea_localid="482" ea_eleType="element"/>
+				<properties isSpecification="false" sType="Object" nType="0" scope="public" isAbstract="false"/>
+				<project author="GuoCe" version="1.0" phase="1.0" created="2017-02-21 14:45:10" modified="2017-02-21 14:45:10" complexity="1" status="Proposed"/>
+				<code gentype="C++"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="battery_read"/>
+				<links>
+					<Sequence xmi:id="EAID_C9AA1B58_A45F_4790_B1E4_08640F1B7601" start="EAID_9D5D04D0_9382_43b1_9C4E_8252EBA2A3AF" end="EAID_DC791FA5_97E8_4708_A57F_7F699B64DEEC"/>
+				</links>
+			</element>
+			<element xmi:idref="EAID_9F5C66F2_54FA_4efe_8582_519E041AF3C9" xmi:type="uml:Object" name="drivers[i]" scope="public">
+				<model package="EAPK_62605D66_0355_42e8_B2E3_727CD61D1FE4" tpos="0" ea_localid="484" ea_eleType="element"/>
+				<properties isSpecification="false" sType="Object" nType="0" scope="public" isAbstract="false"/>
+				<project author="GuoCe" version="1.0" phase="1.0" created="2017-02-21 14:45:10" modified="2017-02-21 14:45:10" complexity="1" status="Proposed"/>
+				<code gentype="C++"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=0;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs/>
+				<extendedProperties tagged="0" package_name="battery_read"/>
+				<links>
+					<Sequence xmi:id="EAID_706152CF_1631_4bfc_810B_8749A7574EB2" start="EAID_DC791FA5_97E8_4708_A57F_7F699B64DEEC" end="EAID_9F5C66F2_54FA_4efe_8582_519E041AF3C9"/>
+				</links>
+			</element>
+			<element xmi:idref="EAID_1F5CCE7E_1C0D_4adf_A045_90EBB31B2871" xmi:type="uml:InteractionFragment" name="exit immediately if no monitors setup" scope="public">
+				<model package="EAPK_62605D66_0355_42e8_B2E3_727CD61D1FE4" tpos="0" ea_localid="480" ea_eleType="element"/>
+				<properties isSpecification="false" sType="InteractionFragment" nType="1" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
+				<project author="GuoCe" version="1.0" phase="1.0" created="2017-02-21 14:45:10" modified="2017-02-21 14:45:10" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=3;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs value="$XREFPROP=$XID={177DC1BF-DFC1-441b-8AD7-B3D1108C7436}$XID;$NAM=Partitions$NAM;$TYP=element property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@PAR;Name=_num_instances != 0;Size=402;GUID={DC88CACA-360E-4316-8768-94F131634C1F};@ENDPAR;$DES;$CLT={1F5CCE7E-1C0D-4adf-A045-90EBB31B2871}$CLT;$ENDXREF;"/>
+				<extendedProperties tagged="0" package_name="battery_read" diagram="EAID_84EDEDC2_A4D6_4353_833A_8BC9F72FEDEA"/>
+			</element>
+			<element xmi:idref="EAID_DA66C80C_310F_4c58_9614_CA6F8F3DCD0B" xmi:type="uml:InteractionFragment" name="read driver now" scope="public">
+				<model package="EAPK_62605D66_0355_42e8_B2E3_727CD61D1FE4" tpos="0" ea_localid="481" ea_eleType="element"/>
+				<properties isSpecification="false" sType="InteractionFragment" nType="1" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
+				<project author="GuoCe" version="1.0" phase="1.0" created="2017-02-21 14:45:10" modified="2017-02-21 14:45:10" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=3;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs value="$XREFPROP=$XID={4D15B04D-69A1-45d7-A471-79029B70EC98}$XID;$NAM=Partitions$NAM;$TYP=element property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@PAR;Name=drivers[i] != 0&amp;&amp; _monitoring[i] != 0;Size=233;GUID={B6D1A76E-BF0F-4f12-A792-C43BF7A9A170};@ENDPAR;$DES;$CLT={DA66C80C-310F-4c58-9614-CA6F8F3DCD0B}$CLT;$ENDXREF;"/>
+				<extendedProperties tagged="0" package_name="battery_read" diagram="EAID_84EDEDC2_A4D6_4353_833A_8BC9F72FEDEA"/>
+			</element>
+			<element xmi:idref="EAID_8E2E3A0F_8B95_4685_879B_4DACC10F7F30" xmi:type="uml:InteractionFragment" name="read the battery driver" scope="public">
+				<model package="EAPK_62605D66_0355_42e8_B2E3_727CD61D1FE4" tpos="0" ea_localid="479" ea_eleType="element"/>
+				<properties isSpecification="false" sType="InteractionFragment" nType="4" scope="public" isRoot="false" isLeaf="false" isAbstract="false"/>
+				<project author="GuoCe" version="1.0" phase="1.0" created="2017-02-21 14:45:10" modified="2017-02-21 14:45:10" complexity="1" status="Proposed"/>
+				<code gentype="&lt;none&gt;"/>
+				<style appearance="BackColor=-1;BorderColor=-1;BorderWidth=-1;FontColor=-1;VSwimLanes=1;HSwimLanes=1;BorderStyle=3;"/>
+				<modelDocument/>
+				<tags/>
+				<xrefs value="$XREFPROP=$XID={E3A2A90B-93BC-4f14-9D51-392AF6669114}$XID;$NAM=Partitions$NAM;$TYP=element property$TYP;$VIS=Public$VIS;$PAR=0$PAR;$DES=@PAR;Name=i&lt;2;Size=303;GUID={B649517D-2E29-4c90-849E-34F8292FF08F};@ENDPAR;$DES;$CLT={8E2E3A0F-8B95-4685-879B-4DACC10F7F30}$CLT;$ENDXREF;"/>
+				<extendedProperties tagged="0" package_name="battery_read" diagram="EAID_84EDEDC2_A4D6_4353_833A_8BC9F72FEDEA"/>
+			</element>
+		</elements>
+		<connectors>
+			<connector xmi:idref="EAID_706152CF_1631_4bfc_810B_8749A7574EB2">
+				<source xmi:idref="EAID_DC791FA5_97E8_4708_A57F_7F699B64DEEC">
+					<model ea_localid="483" type="Object" name="battery"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Non-Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_9F5C66F2_54FA_4efe_8582_519E041AF3C9">
+					<model ea_localid="484" type="Object" name="drivers[i]"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="545"/>
+				<properties name="read()" ea_type="Sequence" direction="Source -&gt; Destination"/>
+				<documentation/>
+				<appearance linemode="1" linecolor="-1" linewidth="0" seqno="2" headStyle="0" lineStyle="0"/>
+				<labels mt="read()"/>
+				<extendedProperties stateflags="Activation=0;" virtualInheritance="0" diagram="EAID_84EDEDC2_A4D6_4353_833A_8BC9F72FEDEA" privatedata1="Synchronous" privatedata2="retval=void;" privatedata3="Call" privatedata4="0" privatedata5="SX=0;SY=-230;EX=0;EY=0;$LLB=;LLT=;LMT=CX=27:CY=13:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMB=;LRT=;LRB=;IRHS=;ILHS=;" sequence_points="PtStartX=408;PtStartY=-442;PtEndX=647;PtEndY=-442;"/>
+				<style/>
+				<xrefs/>
+				<tags>
+					<tag xmi:id="EAID_01D76236_634F_43b4_A8E4_2748D620F153" name="operation_guid" value="{DC71E64D-54A2-4a5f-A496-275C97A09049}"/>
+				</tags>
+			</connector>
+			<connector xmi:idref="EAID_C9AA1B58_A45F_4790_B1E4_08640F1B7601">
+				<source xmi:idref="EAID_9D5D04D0_9382_43b1_9C4E_8252EBA2A3AF">
+					<model ea_localid="482" type="Object" name="copter"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="false"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Non-Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</source>
+				<target xmi:idref="EAID_DC791FA5_97E8_4708_A57F_7F699B64DEEC">
+					<model ea_localid="483" type="Object" name="battery"/>
+					<role visibility="Public" targetScope="instance"/>
+					<type aggregation="none" containment="Unspecified"/>
+					<constraints/>
+					<modifiers isOrdered="false" changeable="none" isNavigable="true"/>
+					<style value="Union=0;Derived=0;AllowDuplicates=0;Owned=0;Navigable=Navigable;"/>
+					<documentation/>
+					<xrefs/>
+					<tags/>
+				</target>
+				<model ea_localid="546"/>
+				<properties name="read()" ea_type="Sequence" direction="Source -&gt; Destination"/>
+				<documentation/>
+				<appearance linemode="1" linecolor="-1" linewidth="0" seqno="1" headStyle="0" lineStyle="0"/>
+				<labels mt="read()"/>
+				<extendedProperties stateflags="Activation=0;ExtendActivationUp=0;" virtualInheritance="0" diagram="EAID_84EDEDC2_A4D6_4353_833A_8BC9F72FEDEA" privatedata1="Synchronous" privatedata2="retval=void;" privatedata3="Call" privatedata4="0" privatedata5="SX=0;SY=-42;EX=0;EY=0;$LLB=;LLT=;LMT=CX=27:CY=13:OX=0:OY=0:HDN=0:BLD=0:ITA=0:UND=0:CLR=-1:ALN=1:DIR=0:ROT=0;LMB=;LRT=;LRB=;IRHS=;ILHS=;" sequence_points="PtStartX=145;PtStartY=-177;PtEndX=398;PtEndY=-177;"/>
+				<style/>
+				<xrefs/>
+				<tags>
+					<tag xmi:id="EAID_CBE2CB39_822B_4316_AD78_71127BBFCC6B" name="operation_guid" value="{95C104B1-3A3C-4659-AFA4-E037826E5095}"/>
+				</tags>
+			</connector>
+		</connectors>
+		<primitivetypes>
+			<packagedElement xmi:type="uml:Package" xmi:id="EAPrimitiveTypesPackage" name="EA_PrimitiveTypes_Package" visibility="public"/>
+		</primitivetypes>
+		<profiles/>
+		<diagrams>
+			<diagram xmi:id="EAID_84EDEDC2_A4D6_4353_833A_8BC9F72FEDEA">
+				<model package="EAPK_62605D66_0355_42e8_B2E3_727CD61D1FE4" localID="115" owner="EAPK_62605D66_0355_42e8_B2E3_727CD61D1FE4"/>
+				<properties name="battery_read" type="Sequence"/>
+				<project author="zhangcheng" version="1.0" created="2017-02-21 00:00:00" modified="2017-03-01 10:57:11"/>
+				<style1 value="ShowPrivate=1;ShowProtected=1;ShowPublic=1;HideRelationships=0;Locked=0;Border=1;HighlightForeign=1;PackageContents=1;SequenceNotes=0;ScalePrintImage=0;PPgs.cx=2;PPgs.cy=1;DocSize.cx=780;DocSize.cy=1134;ShowDetails=0;Orientation=P;Zoom=100;ShowTags=0;OpParams=1;VisibleAttributeDetail=0;ShowOpRetType=1;ShowIcons=1;CollabNums=0;HideProps=0;ShowReqs=0;ShowCons=0;PaperSize=9;HideParents=0;UseAlias=0;HideAtts=0;HideOps=0;HideStereo=0;HideElemStereo=0;ShowTests=0;ShowMaint=0;ConnectorNotation=UML 2.1;ExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;ShowNotes=0;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;"/>
+				<style2 value="ExcludeRTF=0;DocAll=0;HideQuals=0;AttPkg=1;ShowTests=0;ShowMaint=0;SuppressFOC=0;INT_ARGS=;INT_RET=;INT_ATT=;SeqTopMargin=50;MatrixActive=0;SwimlanesActive=1;KanbanActive=0;MatrixLineWidth=1;MatrixLocked=0;TConnectorNotation=UML 2.1;TExplicitNavigability=0;AdvancedElementProps=1;AdvancedFeatureProps=1;AdvancedConnectorProps=1;ProfileData=;MDGDgm=;STBLDgm=;ShowNotes=0;VisibleAttributeDetail=0;ShowOpRetType=1;SuppressBrackets=0;SuppConnectorLabels=0;PrintPageHeadFoot=0;ShowAsList=0;SuppressedCompartments=;SaveTag=DB9129B4;"/>
+				<swimlanes value="locked=false;orientation=0;width=0;inbar=false;names=false;color=-1;bold=false;fcol=0;;cls=0;"/>
+				<matrixitems value="locked=false;matrixactive=false;swimlanesactive=true;width=1;"/>
+				<extendedProperties/>
+				<elements>
+					<element geometry="Left=276;Top=316;Right=728;Bottom=549;" subject="EAID_DA66C80C_310F_4c58_9614_CA6F8F3DCD0B" seqno="1" style="DUID=6B9593F1;"/>
+					<element geometry="Left=231;Top=276;Right=782;Bottom=579;" subject="EAID_8E2E3A0F_8B95_4685_879B_4DACC10F7F30" seqno="2" style="DUID=ED643E01;"/>
+					<element geometry="Left=203;Top=226;Right=819;Bottom=628;" subject="EAID_1F5CCE7E_1C0D_4adf_A045_90EBB31B2871" seqno="3" style="DUID=2F8E7898;"/>
+					<element geometry="Left=581;Top=50;Right=723;Bottom=897;" subject="EAID_9F5C66F2_54FA_4efe_8582_519E041AF3C9" seqno="4" style="DUID=1820FE3D;"/>
+					<element geometry="Left=358;Top=50;Right=448;Bottom=897;" subject="EAID_DC791FA5_97E8_4708_A57F_7F699B64DEEC" seqno="5" style="DUID=6C4BF113;"/>
+					<element geometry="Left=95;Top=50;Right=185;Bottom=897;" subject="EAID_9D5D04D0_9382_43b1_9C4E_8252EBA2A3AF" seqno="6" style="DUID=83425563;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;Path=;" subject="EAID_C9AA1B58_A45F_4790_B1E4_08640F1B7601" style=";Hidden=0;"/>
+					<element geometry="SX=0;SY=0;EX=0;EY=0;Path=;" subject="EAID_706152CF_1631_4bfc_810B_8749A7574EB2" style=";Hidden=0;"/>
+				</elements>
+			</diagram>
+		</diagrams>
+	</xmi:Extension>
+</xmi:XMI>

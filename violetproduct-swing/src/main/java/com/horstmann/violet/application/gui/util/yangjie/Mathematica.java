@@ -5,15 +5,27 @@ import com.wolfram.jlink.MathLinkException;
 import com.wolfram.jlink.MathLinkFactory;
 
 public class Mathematica {
+	public static KernelLink ml = null;
+
+	public static final String path = "-linkmode launch -linkname 'D:\\Mathematica\\10.2\\MathKernel.exe'";
 
 	public static String getSolution(String param1, String param2) {
 
-		KernelLink ml = null;
-
-		String path = "-linkmode launch -linkname 'D:\\Program Files\\Wolfram Research\\Mathematica\\10.2\\MathKernel.exe'";
 		try {
+			if (ml == null) {
 
-			ml = MathLinkFactory.createKernelLink(path);
+				ml = MathLinkFactory.createKernelLink(path);
+				ml.discardAnswer();
+
+				ml.evaluate("<<MyPackage.m");
+				ml.discardAnswer();
+
+				ml.putFunction("FindInstance", 3);
+
+				ml.endPacket();
+				ml.waitForAnswer();
+				String result1 = ml.getString();
+			}
 		} catch (MathLinkException e) {
 			System.out.println("Fatal error opening link: " + e.getMessage());
 			return null;
@@ -22,16 +34,6 @@ public class Mathematica {
 		try {
 			// Get rid of the initial InputNamePacket the kernel will send
 			// when it is launched.
-			ml.discardAnswer();
-
-			ml.evaluate("<<MyPackage.m");
-			ml.discardAnswer();
-
-			ml.putFunction("FindInstance", 3);
-
-			ml.endPacket();
-			ml.waitForAnswer();
-			String result1 = ml.getString();
 
 			// If you want the result back as a string, use evaluateToInputForm
 			// or evaluateToOutputForm. The second arg for either is the
@@ -45,10 +47,10 @@ public class Mathematica {
 			// System.out.println(strResult);
 			return strResult;
 
-		} catch (MathLinkException e) {
+		} catch (Exception e) {
 			System.out.println("MathLinkException occurred: " + e.getMessage());
 		} finally {
-			ml.close();
+			// ml.close();
 		}
 		return null;
 
@@ -56,12 +58,25 @@ public class Mathematica {
 
 	public static String getSolution2(String param1, String param2) {
 
-		KernelLink ml = null;
-
-		String path = "-linkmode launch -linkname 'D:\\Program Files\\Wolfram Research\\Mathematica\\10.2\\MathKernel.exe'";
+		// KernelLink ml = null;
+		//
+		// String path =
+		// "-linkmode launch -linkname 'D:\\Program Files\\Wolfram Research\\Mathematica\\10.2\\MathKernel.exe'";
 		try {
+			if (ml == null) {
 
-			ml = MathLinkFactory.createKernelLink(path);
+				ml = MathLinkFactory.createKernelLink(path);
+				ml.discardAnswer();
+
+				ml.evaluate("<<MyPackage.m");
+				ml.discardAnswer();
+
+				ml.putFunction("FindInstance", 3);
+
+				ml.endPacket();
+				ml.waitForAnswer();
+				String result1 = ml.getString();
+			}
 		} catch (MathLinkException e) {
 			System.out.println("Fatal error opening link: " + e.getMessage());
 			return null;
@@ -69,17 +84,17 @@ public class Mathematica {
 
 		try {
 			// Get rid of the initial InputNamePacket the kernel will send
-			// when it is launched.
-			ml.discardAnswer();
-
-			ml.evaluate("<<MyPackage.m");
-			ml.discardAnswer();
-
-			ml.putFunction("FindInstance", 3);
-
-			ml.endPacket();
-			ml.waitForAnswer();
-			String result1 = ml.getString();
+			// // when it is launched.
+			// ml.discardAnswer();
+			//
+			// ml.evaluate("<<MyPackage.m");
+			// ml.discardAnswer();
+			//
+			// ml.putFunction("FindInstance", 3);
+			//
+			// ml.endPacket();
+			// ml.waitForAnswer();
+			// String result1 = ml.getString();
 
 			// If you want the result back as a string, use evaluateToInputForm
 			// or evaluateToOutputForm. The second arg for either is the
@@ -92,10 +107,10 @@ public class Mathematica {
 			// System.out.println(strResult);
 			return strResult;
 
-		} catch (MathLinkException e) {
+		} catch (Exception e) {
 			System.out.println("MathLinkException occurred: " + e.getMessage());
 		} finally {
-			ml.close();
+			// ml.close();
 		}
 		return null;
 	}

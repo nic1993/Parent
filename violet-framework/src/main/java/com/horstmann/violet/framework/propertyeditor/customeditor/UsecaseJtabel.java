@@ -18,8 +18,11 @@ public class UsecaseJtabel extends JTable{
     	   this.setModel(usecaseTableMode);
     	   
            comboBoxVector = new Vector();
-           comboBoxVector.add("post-conditon"); 
-           comboBoxVector.add("pre-conditon"); 
+           comboBoxVector.add("post-condition"); 
+           comboBoxVector.add("pre-condition"); 
+           comboBoxVector.add("Process");
+           comboBoxVector.add("Invariant");
+           comboBoxVector.add("OCL"); 
            jComboBox = new JComboBox(comboBoxVector);
 	   }
 	   public void addcolumn()
@@ -31,7 +34,6 @@ public class UsecaseJtabel extends JTable{
 	   public void deletecolumn()
        {
 		   int selectRow = this.getSelectedRow();
-		   System.out.println("selectRow"+selectRow);
     	   usecaseTableMode.delete(selectRow);
        }
        

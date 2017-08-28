@@ -3,7 +3,7 @@ package cn.edu.hdu.lab.service.consisFunc;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.edu.hdu.lab.service.parser.InvalidTagException;
+import cn.edu.hdu.lab.service.parserEA.InvalidTagException;
 
 public class ConFunc {
 

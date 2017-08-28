@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Model version="1.0" type="uml:Model" name="Markov_Model" visibility="public" authorNmae="Terence">
+  <ModelType>UC_Markov</ModelType>
+  <Owned>Software</Owned>
+  <name>碰撞检测</name>
+  <state>
+    <name>S71</name>
+    <arc label="prob" type="common">
+      <name>S71_S72_init_disarm_motors()</name>
+      <owned>init_disarm_motors</owned>
+      <prob>1.0</prob>
+      <to>S72</to>
+    </arc>
+  </state>
+  <state>
+    <name>S72</name>
+    <arc label="prob" type="void">
+      <name>S72_S73</name>
+      <owned>null</owned>
+      <prob>1.0</prob>
+      <to>S73</to>
+    </arc>
+  </state>
+  <state>
+    <name>S73</name>
+  </state>
+</Model>

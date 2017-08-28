@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Model version="1.0" type="uml:Model" name="Markov_Model" visibility="public" authorNmae="Terence">
+  <ModelType>UC_Markov</ModelType>
+  <Owned>Software</Owned>
+  <name>读取所有电源实例的电流与电压</name>
+  <state>
+    <name>S42</name>
+    <arc label="prob">
+      <name>S42_S43_read()</name>
+      <prob>1.0</prob>
+      <to>S43</to>
+    </arc>
+  </state>
+  <state>
+    <name>S43</name>
+    <arc label="prob">
+      <name>S43_S44_read()</name>
+      <prob>1.0</prob>
+      <to>S44</to>
+    </arc>
+  </state>
+  <state>
+    <name>S44</name>
+    <arc label="prob">
+      <name>S44_S45</name>
+      <prob>1.0</prob>
+      <to>S45</to>
+    </arc>
+  </state>
+  <state>
+    <name>S45</name>
+    <arc label="prob">
+      <name>S45_S46</name>
+      <prob>1.0</prob>
+      <to>S46</to>
+    </arc>
+  </state>
+  <state>
+    <name>S46</name>
+    <arc label="prob">
+      <name>S46_S43</name>
+      <prob>0.5</prob>
+      <to>S43</to>
+    </arc>
+    <arc label="prob">
+      <name>S46_S47</name>
+      <prob>0.5</prob>
+      <to>S47</to>
+    </arc>
+  </state>
+  <state>
+    <name>S47</name>
+  </state>
+</Model>

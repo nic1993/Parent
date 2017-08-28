@@ -19,20 +19,23 @@ public class CombinedFragmentBeanInfo extends SimpleBeanInfo
     {
         try
         {
+        	PropertyDescriptor nameDescriptor = new PropertyDescriptor("name", CombinedFragment.class);
+        	nameDescriptor.setValue("priority", new Integer(1));
             PropertyDescriptor typeDescriptor = new PropertyDescriptor("type", CombinedFragment.class);
-            typeDescriptor.setValue("priority", new Integer(1));
+            typeDescriptor.setValue("priority", new Integer(2));
             PropertyDescriptor conditionDescriptor = new PropertyDescriptor("condition", CombinedFragment.class);
-            conditionDescriptor.setValue("priority", new Integer(2));
+            conditionDescriptor.setValue("priority", new Integer(3));
             PropertyDescriptor widthDescriptor = new PropertyDescriptor("width", CombinedFragment.class);
-            widthDescriptor.setValue("priority", new Integer(3));
+            widthDescriptor.setValue("priority", new Integer(4));
             PropertyDescriptor heightDescriptor = new PropertyDescriptor("height", CombinedFragment.class);
-            heightDescriptor.setValue("priority", new Integer(4));
+            heightDescriptor.setValue("priority", new Integer(5));
             return new PropertyDescriptor[]
             {
+            		nameDescriptor,
                     typeDescriptor,
                     conditionDescriptor,
-                    widthDescriptor,
-                    heightDescriptor,
+//                    widthDescriptor,
+//                    heightDescriptor,
                 
             };
         }

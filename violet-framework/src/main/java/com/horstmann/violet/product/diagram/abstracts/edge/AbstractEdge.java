@@ -29,6 +29,7 @@ import java.lang.reflect.GenericArrayType;
 import javax.swing.plaf.SeparatorUI;
 
 import com.horstmann.violet.product.diagram.abstracts.Direction;
+import com.horstmann.violet.product.diagram.abstracts.IEdgeColorable;
 import com.horstmann.violet.product.diagram.abstracts.IGraph;
 import com.horstmann.violet.product.diagram.abstracts.IGridSticker;
 import com.horstmann.violet.product.diagram.abstracts.Id;
@@ -321,7 +322,7 @@ public abstract class AbstractEdge implements IEdge
     /** The point inside the starting node where this edge begins */
     private Point2D startLocation;
 
-    /** The point inside the ending node where this edge ends */
+    /** The point inside the ending node where this edge  ends */
     private Point2D endLocation;
     
     /** Points for free path */

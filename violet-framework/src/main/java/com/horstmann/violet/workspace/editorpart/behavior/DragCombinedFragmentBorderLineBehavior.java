@@ -69,7 +69,6 @@ public class DragCombinedFragmentBorderLineBehavior extends AbstractEditorPartBe
         List<FragmentPart> fragmentparts=selectedNode.getFragmentParts();
         for(FragmentPart fragmentPart: fragmentparts)
         {
-         
           Line2D borderline= fragmentPart.getBorderline();
           double locationX=borderline.getP1().getX();
           double locationY=borderline.getP1().getY()-5;
@@ -87,8 +86,6 @@ public class DragCombinedFragmentBorderLineBehavior extends AbstractEditorPartBe
     @Override
     public void onMouseDragged(MouseEvent event)
     {
-    	
-    	
         if (!isReadyForDragging)
         {
             return;
@@ -102,7 +99,51 @@ public class DragCombinedFragmentBorderLineBehavior extends AbstractEditorPartBe
         double zoom = editorPart.getZoomFactor();
         Point2D mousePoint = new Point2D.Double(event.getX() / zoom, event.getY() / zoom);      
         List<FragmentPart> fragmentparts=selectedNode.getFragmentParts(); 
+        
+        if(borderlineflag != 0 && borderlineflag !=  fragmentparts.size()-1)
+        {
+        	FragmentPart previous = fragmentparts.get(borderlineflag-1);
+        	FragmentPart next = fragmentparts.get(borderlineflag+1);
+        	if(borderlineflag == 1)
+        	{
+        		if(mousePoint.getY() > next.getBorderline().getY1() - 20
+     	        	   || mousePoint.getY() < previous.getBorderline().getY1() + 46)
+     	        	{
+     	        		return;
+     	        	}
+        	}
+        	else{
+        		if(mousePoint.getY() > next.getBorderline().getY1() - 20
+        	        	   || mousePoint.getY() < previous.getBorderline().getY1() + 20)
+        	        	{
+        	        		return;
+        	        	}
+        	}
+        	
+        }
+        else if (borderlineflag == 0) {
+        		return;
+		}
+        else if (borderlineflag == fragmentparts.size()-1) {
+        	FragmentPart previous = fragmentparts.get(borderlineflag-1);
+        	if(borderlineflag == 1)
+        	{
+        		if(mousePoint.getY() > (selectedNode.getBounds().getY()+selectedNode.getBounds().getHeight()) - 20
+            			|| mousePoint.getY() < previous.getBorderline().getY1() + 40)
+            	{
+            		return;
+            	}
+        	}
+        	else {
+        		if(mousePoint.getY() > (selectedNode.getBounds().getY()+selectedNode.getBounds().getHeight() - 20)
+            			|| mousePoint.getY() < previous.getBorderline().getY1() + 20)
+            	{
+            		return;
+            	}
+			}
+		}
         double dy = mousePoint.getY() - lastMousePoint.getY();  
+        
         Line2D Borderline=fragmentparts.get(borderlineflag).getBorderline();       
         Point2D newBorderLineStartPoint=new Point2D.Double(Borderline.getX1(),Borderline.getY1()+dy);
         Point2D newBorderLineEndPoint=new Point2D.Double(Borderline.getX2(),Borderline.getY2()+dy);

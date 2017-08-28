@@ -265,8 +265,6 @@ public abstract class SegmentedLineEdgeCai extends ShapeEdge
         getEndArrowHead().draw(g2, (Point2D) points.get(points.size() - 2), (Point2D) points.get(points.size() - 1));
 
         drawString(g2, (Point2D) points.get(1), (Point2D) points.get(0), getStartArrowHead(), startLabel, false);
-         System.out.println("第一个："+points.get(0));
-         System.out.println("第二个："+points.get(1));
          
 //        drawString(g2, (Point2D) (points.get(1)), (Point2D) points.get(points.size() / 2 + 1), null, name,
 //                true);
@@ -516,28 +514,20 @@ public abstract class SegmentedLineEdgeCai extends ShapeEdge
         }
         return straightDirection;
     }
-    @XStreamOmitField
-    private LineStyle lineStyle;
-    @XStreamOmitField
-    private ArrowHead startArrowHead;
-    @XStreamOmitField
-    private ArrowHead endArrowHead;
-    @XStreamOmitField
-    private BentStyle bentStyle;
+//  @XStreamOmitField
+  private LineStyle lineStyle;
+//  @XStreamOmitField
+  private ArrowHead startArrowHead;
+//  @XStreamOmitField
+  private ArrowHead endArrowHead;
+  
+  private BentStyle bentStyle;
  
     private String startLabel;
-    private String middleLabel;
-    
+    private String middleLabel;   
     private String endLabel;
- 
-    private String name;
-
-    
+    private String name;  
 	private String time;
-  
-    
-    
-
     private static JLabel label = new JLabel();
 }
 

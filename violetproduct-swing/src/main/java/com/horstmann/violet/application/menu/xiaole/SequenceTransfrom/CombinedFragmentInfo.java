@@ -10,7 +10,6 @@ public class CombinedFragmentInfo {
 	private String name;//组合片段的名字
 	private String Geometry;//位置信息
 	private String ID;
-	
 	public String getID() {
 		return ID;
 	}
@@ -46,9 +45,5 @@ public class CombinedFragmentInfo {
 	}
 	public void setGeometry(String geometry) {
 		Geometry = geometry;
-	}
-	
-	
-	
-	
+	}	
 }

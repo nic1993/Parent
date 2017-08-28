@@ -86,6 +86,6 @@ public interface IGraphFile extends IFile
         /**
          *自己定义的保存行为 
          */
-    public  abstract void dsave();
+    public  abstract void dsave(String sourcePath);
 
 }

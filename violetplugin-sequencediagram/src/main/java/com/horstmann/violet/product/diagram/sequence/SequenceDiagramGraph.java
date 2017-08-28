@@ -91,6 +91,11 @@ public class SequenceDiagramGraph extends AbstractGraph
         timeNode.setToolTip(rs.getString("node3.tooltip"));
         NODE_PROTOTYPES.add(timeNode);
         
+        RefNode refNode = new RefNode();
+        refNode.setToolTip(rs.getString("node4.tooltip"));
+        NODE_PROTOTYPES.add(refNode);
+        
+        
         CallEdge callEdge = new CallEdge();
         callEdge.setToolTip(rs.getString("edge0.tooltip"));
         EDGE_PROTOTYPES.add(callEdge);
@@ -103,9 +108,9 @@ public class SequenceDiagramGraph extends AbstractGraph
         noteEdge.setToolTip(rs.getString("edge2.tooltip"));
         EDGE_PROTOTYPES.add(noteEdge);
         
-        TimeEdge timeEdge= new TimeEdge();      
-        timeEdge.setToolTip(rs.getString("edge3.tooltip"));
-        EDGE_PROTOTYPES.add(timeEdge);
+//        TimeEdge timeEdge= new TimeEdge();      
+//        timeEdge.setToolTip(rs.getString("edge3.tooltip"));
+//        EDGE_PROTOTYPES.add(timeEdge);
     }
 
 }

@@ -24,22 +24,67 @@ public class MarkovTransitionEdge extends ShapeEdge
      * 
      * @param newValue the new value
      */
-    public void setLabel(String newValue)
+	public MarkovTransitionEdge()
+	{
+		pro = "";
+		conditions="";
+		name = "";
+		owned = "";
+		assignType = "";
+		assignValue = "";
+	}
+    public void setPro(String newValue)
     {
-    	probability = newValue;
+    	pro = newValue;
     }
-
     /**
      * Gets the label property value.
      * 
      * @return the current value
      */
-    public String getLabel()
+    public String getPro()
     {
-        return probability;
+        return pro;
     }
+    
+    public String getConditions() {
+		return conditions;
+	}
 
-    public void draw(Graphics2D g2)
+	public void setConditions(String condition) {
+		this.conditions = condition;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getOwned() {
+		return owned;
+	}
+
+	public void setOwned(String owned) {
+		this.owned = owned;
+	}
+
+	
+    public String getAssignValue() {
+		return assignValue;
+	}
+	public void setAssignValue(String assignValue) {
+		this.assignValue = assignValue;
+	}
+	public String getAssignType() {
+		return assignType;
+	}
+	public void setAssignType(String assignType) {
+		this.assignType = assignType;
+	}
+	public void draw(Graphics2D g2)
     {
         g2.draw(getShape());
         drawLabel(g2);
@@ -75,7 +120,7 @@ public class MarkovTransitionEdge extends ShapeEdge
         // measure the size
         Graphics2D g2 = (Graphics2D) dummy.getGraphics();
         
-        label.setText("<html>" + probability + "</html>");
+        label.setText("<html>" + pro + "</html>");
         label.setFont(g2.getFont());
         Dimension d = label.getPreferredSize();
         label.setBounds(0, 0, d.width, d.height);
@@ -150,6 +195,11 @@ public class MarkovTransitionEdge extends ShapeEdge
     }
 @XStreamOmitField
     private double angle;
-    private String probability = "";
+    private String pro;
+    private String conditions;
+    private String name;
+    private String owned;
+    private String assignValue;
+    private String assignType;
     private static JLabel label = new JLabel();
 }

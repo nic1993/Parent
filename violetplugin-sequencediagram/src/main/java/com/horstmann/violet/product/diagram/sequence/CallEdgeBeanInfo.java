@@ -34,11 +34,39 @@ public class CallEdgeBeanInfo extends SimpleBeanInfo
     {
         try
         {
-            return new PropertyDescriptor[]
-            {
-                    new PropertyDescriptor("middleLabel", CallEdge.class),
-                    new PropertyDescriptor("signal", CallEdge.class)
-            };
+            
+            		PropertyDescriptor messageDescriptor =new PropertyDescriptor("message", CallEdge.class);
+            		messageDescriptor.setValue("priority", new Integer(1));
+            		PropertyDescriptor parametersDescriptor = new PropertyDescriptor("parameters", CallEdge.class);
+            		parametersDescriptor.setValue("priority", new Integer(2));
+            		PropertyDescriptor argumentsDescriptor = new PropertyDescriptor("arguments", CallEdge.class);
+            		argumentsDescriptor.setValue("priority", new Integer(3));
+            		PropertyDescriptor returnvalueDescriptor = new PropertyDescriptor("returnvalue", CallEdge.class);
+            		returnvalueDescriptor.setValue("priority", new Integer(4));
+            		PropertyDescriptor assignDescriptor = new PropertyDescriptor("assign", CallEdge.class);
+            		assignDescriptor.setValue("priority", new Integer(5));
+            	    PropertyDescriptor aliasDescriptor = new PropertyDescriptor("alias", CallEdge.class);
+            	    aliasDescriptor.setValue("priority", new Integer(6));
+            		PropertyDescriptor conditionDescriptor = new PropertyDescriptor("condition", CallEdge.class);
+            		conditionDescriptor.setValue("priority", new Integer(7));
+            		PropertyDescriptor constraintDescriptor =new PropertyDescriptor("constraint", CallEdge.class);
+            		constraintDescriptor.setValue("priority", new Integer(8));
+            		PropertyDescriptor timeconstraintDescriptor =new PropertyDescriptor("timeconstraint", CallEdge.class);
+            		constraintDescriptor.setValue("priority", new Integer(9));
+            		return new PropertyDescriptor[]
+            	            {
+            				messageDescriptor,
+            				parametersDescriptor,
+            				argumentsDescriptor,
+            				returnvalueDescriptor,
+            				assignDescriptor,
+            				aliasDescriptor,
+            				conditionDescriptor,
+            				constraintDescriptor,
+            				timeconstraintDescriptor,
+            				
+            	            };
+            
         }
         catch (IntrospectionException exception)
         {

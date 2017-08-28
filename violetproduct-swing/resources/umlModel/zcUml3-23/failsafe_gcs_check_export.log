@@ -1,0 +1,28 @@
+Exporting package to 'C:\Users\Terence\Desktop\zcUml3-1\failsafe_gcs_check.xml'
+Retrieving data for export: diagram elements
+Retrieving data for export: links
+Retrieving data for export: constraints
+Retrieving data for export: attribute tagged values
+Retrieving data for export: operation tagged values
+Retrieving data for export: operation parameter tagged values
+Retrieving data for export: connector tagged values
+Completed data retrieval
+Pre-processing export tree...
+Completed pre-processing
+Processing package: failsafe_gcs_check
+Diagram: failsafe_gcs_check
+Element:0: 
+Element:1: This is how to handle...
+Element:2: check i f all is well
+Element:3: copter
+Element:4: do nothing if gcs ...
+Element:5: if mission..
+Element:6: if throttle..
+Element:7: motors
+Element:8: not return immediately if gcs failsafe...
+Element:9: switch to RTL or it fails ,LAND
+Element:10: used for AltHold, Guided, Loiter...
+Adding State-Tables
+Sequencing Interaction Diagrams
+Formatting output XML...please wait
+XMI Document Export Complete!

@@ -1,5 +1,6 @@
 package com.horstmann.violet.application;
 
+import java.io.File;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,71 @@ public class ApplicationStopper
         boolean ok = isItReadyToExit(mainFrame);
         if (ok)
         {
+        	//É¾³ýÖ´ÐÐÎÄ¼þ
+        	File ucaseEAFile = new File(mainFrame.getBathRoute() + "/UseCaseDiagram/EAXML"); 
+        	if(ucaseEAFile.listFiles() != null){
+        		for(File file : ucaseEAFile.listFiles())
+            	{
+            		file.delete();
+            	}
+        	}
+        	File ucaseVioletFile = new File(mainFrame.getBathRoute() + "/UseCaseDiagram/Violet");
+        	if(ucaseVioletFile.listFiles() != null){
+        		for(File file : ucaseVioletFile.listFiles())
+            	{
+            		file.delete();
+            	}
+        	}
+        	File ucaseVioletXMLFile = new File(mainFrame.getBathRoute() + "/UseCaseDiagram/VioletXML");
+        	if(ucaseVioletXMLFile.listFiles() != null){
+        		for(File file : ucaseVioletXMLFile.listFiles())
+            	{
+            		file.delete();
+            	}
+        	}
+        	
+        	File seqEAFile = new File(mainFrame.getBathRoute() + "/SequenceDiagram/EAXML"); 
+        	if(seqEAFile.listFiles() != null){
+        	for(File file : seqEAFile.listFiles())
+        	{
+        		file.delete();
+        	}
+        	}
+        	File seqVioletFile = new File(mainFrame.getBathRoute() + "/SequenceDiagram/Violet");
+        	if(seqVioletFile.listFiles() != null){
+        	for(File file : seqVioletFile.listFiles())
+        	{
+        		file.delete();
+        	}
+        	}
+        	File seqVioletXMLFile = new File(mainFrame.getBathRoute() + "/SequenceDiagram/VioletXML");
+        	if(seqVioletXMLFile.listFiles() != null){
+        	for(File file : seqVioletXMLFile.listFiles())
+        	{
+        		file.delete();
+        	}
+        	}
+        	File notimeMarkovFile = new File(mainFrame.getBathRoute() + "/NoTimeMarkov");
+        	if(notimeMarkovFile.listFiles() != null){
+        	for(File file : notimeMarkovFile.listFiles())
+        	{
+        		file.delete();
+        	}
+        	}
+        	File timeMarkovFile = new File(mainFrame.getBathRoute() + "/TimeMarkov");
+        	if(timeMarkovFile.listFiles() != null){
+        	for(File file : timeMarkovFile.listFiles())
+        	{
+        		file.delete();
+        	}
+        	}
+        	File testcaseFile = new File(mainFrame.getBathRoute() + "/TestCase");
+        	if(testcaseFile.listFiles() != null){
+        	for(File file : testcaseFile.listFiles())
+        	{
+        		file.delete();
+        	}
+        	}
             System.exit(0);
         }
     }
@@ -87,7 +153,7 @@ public class ApplicationStopper
 
             if (result == JOptionPane.CANCEL_OPTION)
             {
-                return false;
+                return true;
             }
             if (result == JOptionPane.YES_OPTION)
             {
@@ -100,7 +166,8 @@ public class ApplicationStopper
             }
             if (result == JOptionPane.NO_OPTION)
             {
-                this.userPreferencesService.setActiveDiagramFile(activeWorkspace.getGraphFile());
+
+//                this.userPreferencesService.setActiveDiagramFile(activeWorkspace.getGraphFile());
                 return true;
             }
         }

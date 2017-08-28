@@ -19,7 +19,7 @@ public class ConUseCase {
 	public String getUseCaseName() {
 		return useCaseName;
 	}
-	public void setUseCaseName(String useCaseName) {
+	public void setUseCaseName(String useCaseName){
 		this.useCaseName = useCaseName;
 	}
 	public double getProb() {

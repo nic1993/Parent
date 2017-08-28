@@ -267,7 +267,7 @@ public class EditorPartSelectionHandler implements IEditorPartSelectionHandler
     private List<IEdge> selectedEdges = new ArrayList<IEdge>();
     //by xiaole
     private List<IHorizontalChild> selectedLines=new ArrayList<IHorizontalChild >();
-    private List<ISequenceTimeEdge> selectedSequenceTimeEdges=new ArrayList<>();
+    private List<ISequenceTimeEdge> selectedSequenceTimeEdges=new ArrayList<ISequenceTimeEdge>();
     private GraphTool selectedTool;
 	@Override
 	public boolean isElmentAlreadySelected(ISequenceTimeEdge sequenceTimeEdge) {

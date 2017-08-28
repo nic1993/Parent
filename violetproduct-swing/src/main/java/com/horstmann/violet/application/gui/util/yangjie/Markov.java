@@ -18,7 +18,10 @@ public class Markov {
 	private State finalState; // 终止状态节点
 	// 存放整个Markov链上的所有路径集合，每条路径是一个迁移序列集合
 	private List<Route> routeList;
+	private double dbCoverage;// 指标：数据库覆盖率
+	private double deviation;// 指标：测试链与使用链的偏差
 	private int tcNumber;
+	private int actualNum;
 
 	public List<State> getStates() {
 		return states;
@@ -74,6 +77,30 @@ public class Markov {
 
 	public void setTcNumber(int tcNumber) {
 		this.tcNumber = tcNumber;
+	}
+
+	public double getDbCoverage() {
+		return dbCoverage;
+	}
+
+	public void setDbCoverage(double dbCoverage) {
+		this.dbCoverage = dbCoverage;
+	}
+
+	public double getDeviation() {
+		return deviation;
+	}
+
+	public void setDeviation(double deviation) {
+		this.deviation = deviation;
+	}
+
+	public int getActualNum() {
+		return actualNum;
+	}
+
+	public void setActualNum(int actualNum) {
+		this.actualNum = actualNum;
 	}
 
 }

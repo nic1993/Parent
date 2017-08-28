@@ -32,7 +32,7 @@ public class TimingChangeStateBehavior extends AbstractEditorPartBehavior{
 	 	private SEdge s;
 	 	private IEditorPartBehaviorManager behaviorManager;
 	 	private Point2D mousePressPoint=null;
-	 public TimingChangeStateBehavior(IEditorPart editorPart, IGraphToolsBar graphToolsBar)
+	    public TimingChangeStateBehavior(IEditorPart editorPart, IGraphToolsBar graphToolsBar)
 	    {
 	        this.editorPart = editorPart;
 	        this.graph = editorPart.getGraph();
@@ -86,7 +86,7 @@ public class TimingChangeStateBehavior extends AbstractEditorPartBehavior{
 			 {  
 			 horizontalchild=s.gethorizontalChild().get(i);//获取水平子节点
 			 if(s.getChildTopBounds(horizontalchild).contains(mousePressPoint))				
-				  {				
+			 {				
 					  //如果line上有起始边	
 						startUndoRedoCapture();  
 				  s.gethorizontalChild().remove(horizontalchild);

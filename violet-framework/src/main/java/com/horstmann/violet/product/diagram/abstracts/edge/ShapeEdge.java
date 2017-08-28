@@ -22,17 +22,21 @@
 package com.horstmann.violet.product.diagram.abstracts.edge;
 
 import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Shape;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+
+import com.horstmann.violet.product.diagram.abstracts.IEdgeColorable;
+import com.horstmann.violet.workspace.sidebar.edgecoloretools.EdgeColorToolsBarPanel;
 
 /**
  * A class that assumes that an edge can yield its shape and then takes advantage of the fact that containment testing can be done
  * by stroking the shape with a fat stroke. NOTE: Ideally, you should be able to draw the same shape that is used for containment
  * testing. However, in JDK 1.4, BasicStroke.createStrokedShape returns shitty-looking shapes.
  */
-public abstract class ShapeEdge extends AbstractEdge
+public abstract class ShapeEdge extends AbstractEdge implements IEdgeColorable
 {
     /**
      * Returns the path that should be stroked to draw this edge. The path does not include arrow tips or labels.
@@ -61,4 +65,14 @@ public abstract class ShapeEdge extends AbstractEdge
         Shape fatPath = fatStroke.createStrokedShape(p);
         return fatPath.contains(aPoint);
     }
+    //Ä¬ÈÏÊÇºÚÉ«
+    private Color edgeColor=Color.BLACK;
+
+	public Color getEdgeColor() {
+		return edgeColor;
+	}
+
+	public void setEdgeColor(Color edgeColor) {
+		this.edgeColor = edgeColor;
+	}
 }
