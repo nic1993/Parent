@@ -41,33 +41,46 @@ public class JRadionPanel extends JPanel{
 		list.clear();
 		radioList.clear();
 		//读取EA的xml
-				File f = new File(EABathRoute);
-				if(!f.exists())
-					f.mkdirs();
-				
-				File files[] = f.listFiles();
-				for(File file : files)
-				{
-					String FileRoute = file.getName().split("\\.")[0];
-					list.add(FileRoute);
-				}
-				 //读取Violet的XML
-				File VioletFile = new File(VioletBathRoute);
-				if(!VioletFile.exists())
-					VioletFile.mkdirs();
-				File VioletFiles[] = VioletFile.listFiles();
-				for(File file : VioletFiles)
-				{
-					String VioletFileName = file.getName().split("\\.")[0];
-					list.add(VioletFileName);
-				}
-				init(list);
+//				File f = new File(EABathRoute);
+//				if(!f.exists())
+//					f.mkdirs();
+//				
+//				File files[] = f.listFiles();
+//				for(File file : files)
+//				{
+//					String FileRoute = file.getName().split("\\.")[0];
+//					list.add(FileRoute);
+//				}
+//				 //读取Violet的XML
+//				File VioletFile = new File(VioletBathRoute);
+//				if(!VioletFile.exists())
+//					VioletFile.mkdirs();
+//				File VioletFiles[] = VioletFile.listFiles();
+//				for(File file : VioletFiles)
+//				{
+//					String VioletFileName = file.getName().split("\\.")[0];
+//					list.add(VioletFileName);
+//				}
+//				init(list);
+//				this.setLayout(new GridBagLayout());
+//				for(int i = 0;i < radioList.size();i++)
+//				{
+//					this.add(radioList.get(i), new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0).setInsets(5, 0, 0, 0));
+//				}
+//				this.repaint();
+		
+		        for(ModelPanel modelPanel : mainFrame.getModelPanelMap().keySet())
+		        {
+		        	list.add(modelPanel.getTitle().getText());
+		        }	
+		        init(list);
 				this.setLayout(new GridBagLayout());
 				for(int i = 0;i < radioList.size();i++)
 				{
 					this.add(radioList.get(i), new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0).setInsets(5, 0, 0, 0));
 				}
 				this.repaint();
+				
 				initListen();
 	}
     private void init(List<String> list)

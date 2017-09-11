@@ -64,7 +64,9 @@ public class XMLReaderHDU {
 		try
 		{
 			SAXReader reader=new SAXReader();
+			System.out.println("xmlFile: " + xmlFile);
 			Document dom=reader.read(xmlFile);
+			
 			root=dom.getRootElement();
 		}
 		catch(Exception e)

@@ -447,6 +447,10 @@ public class FileMenu extends JMenu
                             if (!graphFile.isSaveRequired())
                             {
                                 mainFrame.removeDiagramPanel(workspace);
+                                
+                                //新加
+                                
+                                
                                 userPreferencesService.removeOpenedFile(graphFile);
                             }
                         }
@@ -465,9 +469,7 @@ public class FileMenu extends JMenu
             }
         });
     }
-    
 
-    
     private List<IFile> openEAXML(IFile selectedFile,IGraphFile graphFile,String url)
     {
     	List<IFile> EAFiles = new ArrayList<IFile>();
@@ -482,7 +484,7 @@ public class FileMenu extends JMenu
 			      try {
 			 			path=mainFrame.getBathRoute()+"/UseCaseDiagram/";
 			 			String aimPath=path+"EAXML";
-			 			XMLUtils.AutoSave(url, aimPath,selectedFile.getFilename());
+			 			
 			 	 		readUseCaseXMLFromEA ru =new readUseCaseXMLFromEA(url,selectedFile,eaDiagram);
 			 	 		CreateUseCaseDiagramVioletXml cu =new CreateUseCaseDiagramVioletXml();
 			 	 		name=selectedFile.getFilename().replaceAll(".xml", ".ucase.violet.xml");		
@@ -575,8 +577,8 @@ public class FileMenu extends JMenu
    						}
    						sequencetree.getSelectionModel().setSelectionPath(new TreePath(node.getPath()));
    						Map<DefaultMutableTreeNode, IWorkspace> hashMap = mainFrame.getActiveModelPanel().getSequenceTreePanel().getHashMap();
-   						int length = mainFrame.getSequenceWorkspaceList().size() - 1;
-   						hashMap.put(node, mainFrame.getSequenceWorkspaceList().get(length));
+   						int length = mainFrame.getActiveModelPanel().getSequencespaceList().size() - 1;
+   						hashMap.put(node, mainFrame.getActiveModelPanel().getSequencespaceList().get(length));
 
    						mainFrame.getStepOperationButton().getPromptLabel().removeAll();
    						mainFrame.getStepOperationButton().getPromptLabel().setText("顺序图是将交互关系表示为一个二维图。纵向是时间轴，时间沿竖线向下延伸。横向轴代表了在协作中各独立对象的类元角色。");
@@ -586,7 +588,6 @@ public class FileMenu extends JMenu
                       if(filename.contains(".ucase.violet.xml")){
                         String name = filename.replace(".ucase.violet.xml", "");
                         graphFile = new GraphFile(eafile);
-                        getPackageRoute().put(name, url);
                         //显示文件图形																																																																															
                         IWorkspace workspace = new Workspace(graphFile);
                         mainFrame.addTabbedPane(workspace,name);
@@ -624,8 +625,8 @@ public class FileMenu extends JMenu
    						}
    						usecasetree.getSelectionModel().setSelectionPath(new TreePath(node.getPath()));
    						Map<DefaultMutableTreeNode, IWorkspace> hashMap = mainFrame.getActiveModelPanel().getUsecaseTreePanel().getHashMap();
-   						int length = mainFrame.getUseCaseWorkspaceList().size()-1;
-   						hashMap.put(node, mainFrame.getUseCaseWorkspaceList().get(length));
+   						int length = mainFrame.getActiveModelPanel().getUseCaseworkspaceList().size()-1;
+   						hashMap.put(node, mainFrame.getActiveModelPanel().getUseCaseworkspaceList().get(length));
 
 						
    						//切换界面
@@ -925,9 +926,8 @@ public class FileMenu extends JMenu
 		}
 	}
 	
-	private boolean NeedOpen(IFile selectedFile,String url,boolean flag)
+   private boolean NeedOpen(IFile selectedFile,String url,boolean flag)
    {
-		
 		String filename = selectedFile.getFilename();
 		DefaultMutableTreeNode ucaseTree = mainFrame.getActiveModelPanel().getUsecaseTreePanel().getUsecasetreerootnode();
 		DefaultMutableTreeNode seqTree = mainFrame.getActiveModelPanel().getSequenceTreePanel().getSequencetreerootnode();
@@ -940,84 +940,53 @@ public class FileMenu extends JMenu
 			{
 				//与平台的XML是否冲突
 				String ucaseName = EADiagrams.get(0).getName().replace(".xml", "");
-//				String VioletRoute = mainFrame.getBathRoute()+"/UseCaseDiagram/VioletXML";
-//				
-//				File[] files = new File(VioletRoute).listFiles();
-//				for (File file : files) {
-//					if(file.getName().replace(".ucase.violet.xml", "").equals(ucaseName))
-//					{
-//						return false;
-//					}
-//				}
-//				//与平台存在的模型是否冲突
-//				for(int i = 0;i < ucaseTree.getChildCount();i++)
-//				{
-//					if(ucaseTree.getChildAt(i).toString().equals(ucaseName))
-//					{
-//						return false;
-//					}
-//				}
-				if(getPackageRoute().get(ucaseName) != null)
+				int count = ucaseTree.getChildCount();	
+				for(int i = 0;i < count;i++)
 				{
-					return false;
+					if(ucaseTree.getChildAt(i).toString().equals(ucaseName))
+					{
+						return false;
+					}
 				}
 			}
 			else {
-				String VioletRoute = mainFrame.getBathRoute()+"/SequenceDiagram/VioletXML";
-				File[] files = new File(VioletRoute).listFiles();
+				int count = seqTree.getChildCount();
 				for (EADiagram eaDiagram : EADiagrams) {
-					for (File file : files) {
+					
+					for(int i = 0;i < count;i++)
+					{
 						String name = eaDiagram.getName();
-//						if(file.getName().replace(".seq.violet.xml", "").equals(eaDiagram.getName().replace(".xml", "")))
-//						{
-//							return false; 
-//						} 
+						if(seqTree.getChildAt(i).toString().equals(eaDiagram.getName().replace(".xml", "")))
+						{
+							return false; 
+						} 
 					}
-					//与平台存在的模型是否冲突
-//					for(int i = 0;i < seqTree.getChildCount();i++)
-//					{
-//						if(seqTree.getChildAt(i).toString().equals(eaDiagram.getName()))
-//						{
-//							return false;
-//						}
-//					}
 				}
 			}
 		}
-		
 		else {
-			if(filename.contains("ucase.violet.xml"))
+			if(filename.contains(".ucase.violet.xml"))
 			{
 				String ucaseName = filename.replace(".ucase.violet.xml", "");
-				//EA的XML信息
-//				String EAtRoute = mainFrame.getBathRoute()+"/UseCaseDiagram/EAXML";
-//				File[] EAfiles = new File(EAtRoute).listFiles();
-//				for (File file : EAfiles) {
-//					if(filename.replace(".ucase.violet.xml", "").equals(file.getName().replace(".xml", "")))
-//					{
-//						return false;
-//					}
-//				}
-//				
-//				for(int i = 0;i < ucaseTree.getChildCount();i++)
-//				{
-//					if(ucaseTree.getChildAt(i).toString().equals(ucaseName))
-//					{
-//						return false;
-//					}
-//				}
+				int count = ucaseTree.getChildCount();	
+				for(int i = 0;i < count;i++)
+				{
+					if(ucaseTree.getChildAt(i).toString().equals(ucaseName))
+					{
+						return false;
+					}
+				}
 			}
-			else {
-				//EA的XML信息
+			else{
+				int count = seqTree.getChildCount();
 				String seqName = filename.replace(".seq.violet.xml", "");
-//				String EAtRoute = mainFrame.getBathRoute()+"/SequenceDiagram/EAXML";
-//				File[] EAfiles = new File(EAtRoute).listFiles();
-//				for (File file : EAfiles) {
-//					if(file.getName().replace(".xml", "").equals(filename.replace(".seq.violet.xml", "")))
-//					{
-//						return false;
-//					}
-//				}
+				for(int i = 0;i < count;i++)
+				{
+					if(seqTree.getChildAt(i).toString().equals(seqName))
+					{
+						return false; 
+					} 
+				}
 			}
 		}
 		return true;
@@ -1027,44 +996,6 @@ public class FileMenu extends JMenu
      */
    public void initFileOpenItem()
     {
-//        this.fileOpenItem.addActionListener(new ActionListener()
-//        {
-//            public void actionPerformed(ActionEvent event)
-//            {           	
-//                IFile selectedFile = null;
-//                try
-//                { 
-//                    ExtensionFilter[] filters = fileNamingService.getFileFilters();                 
-//                    IFileReader fileOpener = fileChooserService.chooseAndGetFileReader(filters);
-//                   
-//                    if (fileOpener == null)
-//                    {
-//                        // Action cancelled by user
-//                        return;
-//                    }
-//                 
-//                    selectedFile = fileOpener.getFileDefinition();
-//                     
-//                    IGraphFile graphFile = new GraphFile(selectedFile);
-//                
-//                    IWorkspace workspace = new Workspace(graphFile);
-//                    
-//                    mainFrame.addTabbedPane(workspace);
-//                  
-//                    userPreferencesService.addOpenedFile(graphFile);
-//                    userPreferencesService.addRecentFile(graphFile);
-//                }
-//                catch (StreamException se)
-//                {
-//                    dialogFactory.showErrorDialog(dialogOpenFileIncompatibilityMessage);
-//                }
-//                catch (Exception e)
-//                {
-//                    dialogFactory.showErrorDialog(dialogOpenFileErrorMessage + " : " + e.getMessage());
-//                }
-//            }
-//        });
-//        if (this.fileChooserService == null) this.fileOpenItem.setEnabled(false);
 	   this.fileOpenItem.addActionListener(new ActionListener()
        {
            public void actionPerformed(ActionEvent event)
@@ -1100,8 +1031,10 @@ public class FileMenu extends JMenu
                      	  //保存selectedFile默认位置
                      	  if(eAFiles.get(0).getFilename().contains(".seq.violet.xml"))
                      	  {
-                     		  String seqName = eAFiles.get(0).getFilename().replace(".seq.violet.xml", "");
-                     		  XMLUtils.AutoSave(url, mainFrame.getBathRoute()+"/SequenceDiagram/EAXML", selectedFile.getFilename());
+                     		  XMLUtils.AutoSave(url, mainFrame.getActiveModelPanel().getTemporarySeqFile(), selectedFile.getFilename());
+                     	  }
+                     	  else{
+                     		 XMLUtils.AutoSave(url, mainFrame.getActiveModelPanel().getTemporaryUcaseFile(),selectedFile.getFilename());
                      	  }
                      	  for(IFile file : eAFiles)
                      	  {
@@ -1114,15 +1047,7 @@ public class FileMenu extends JMenu
                                  IWorkspace workspace = new Workspace(graphFile);
                                  workspace.setName(name);
                                  mainFrame.addTabbedPane(workspace);
-//                          	   if(mainFrame.getListSequenceTabPanel().size() != 0){
-//                             		for(SequenceTabPanel sequenceTabPanel:mainFrame.getListSequenceTabPanel())
-//                             		{
-//                             			sequenceTabPanel.getPanel().setBackground(new Color(246,246,246));
-//                             			sequenceTabPanel.getDeletelabel().setIcon(null);
-//                             		}
-//                             		mainFrame.getListSequenceTabPanel().get(mainFrame.getListSequenceTabPanel().size()-1).getPanel().setBackground(Color.white);
-//                             		mainFrame.getListSequenceTabPanel().get(mainFrame.getListSequenceTabPanel().size()-1).getDeletelabel().setIcon(new ImageIcon("resources\\icons\\22x22\\beforeClose.png"));
-//                             		}
+
                           	    JTree sequencetree = mainFrame.getActiveModelPanel().getSequenceTreePanel().getSequencetree();
                              	DefaultTreeModel sequencetreemodel = mainFrame.getActiveModelPanel().getSequenceTreePanel().getSequencetreemodel();
                              	DefaultMutableTreeNode sequencetreerootnode = mainFrame.getActiveModelPanel().getSequenceTreePanel().getSequencetreerootnode();
@@ -1136,8 +1061,8 @@ public class FileMenu extends JMenu
           						}
           						sequencetree.getSelectionModel().setSelectionPath(new TreePath(node.getPath()));
           						Map<DefaultMutableTreeNode, IWorkspace> hashMap = mainFrame.getActiveModelPanel().getSequenceTreePanel().getHashMap();
-          						int length = mainFrame.getSequenceWorkspaceList().size() - 1;
-          						hashMap.put(node, mainFrame.getSequenceWorkspaceList().get(length));
+          						int length = mainFrame.getActiveModelPanel().getSequencespaceList().size() - 1;
+          						hashMap.put(node, mainFrame.getActiveModelPanel().getSequencespaceList().get(length));
 
           						mainFrame.getStepOperationButton().getPromptLabel().removeAll();
           						mainFrame.getStepOperationButton().getPromptLabel().setText("顺序图是将交互关系表示为一个二维图。纵向是时间轴，时间沿竖线向下延伸。横向轴代表了在协作中各独立对象的类元角色。");
@@ -1147,7 +1072,7 @@ public class FileMenu extends JMenu
                              if(filename.contains(".ucase.violet.xml")){
                                String name = filename.replace(".ucase.violet.xml", "");
                                graphFile = new GraphFile(file);
-                               getPackageRoute().put(name, url);
+                               
                                //显示文件图形																																																																															
                                IWorkspace workspace = new Workspace(graphFile);
                                mainFrame.addTabbedPane(workspace,name);
@@ -1185,8 +1110,8 @@ public class FileMenu extends JMenu
           						}
           						usecasetree.getSelectionModel().setSelectionPath(new TreePath(node.getPath()));
           						Map<DefaultMutableTreeNode, IWorkspace> hashMap = mainFrame.getActiveModelPanel().getUsecaseTreePanel().getHashMap();
-          						int length = mainFrame.getUseCaseWorkspaceList().size()-1;
-          						hashMap.put(node, mainFrame.getUseCaseWorkspaceList().get(length));
+          						int length = mainFrame.getActiveModelPanel().getUseCaseworkspaceList().size()-1;
+          						hashMap.put(node, mainFrame.getActiveModelPanel().getUseCaseworkspaceList().get(length));
 
        						
           						//切换界面
@@ -1209,9 +1134,7 @@ public class FileMenu extends JMenu
                   		 
                         if(filename.contains(".ucase.violet.xml")){
                         	String name = filename.replace(".ucase.violet.xml", "");
-                      		path=mainFrame.getBathRoute()+"/UseCaseDiagram/VioletXML/";
-                      		graphFile.AutoSave(selectedFile, path);
-                      		getPackageRoute().put(name, url);
+                      		graphFile.AutoSave(selectedFile, mainFrame.getActiveModelPanel().getTemporaryUcaseFile());
                       		workspace.setName(name);
                       		mainFrame.addTabbedPane(workspace);
 //                      		readUcaseXMLFormViolet ru =new readUcaseXMLFormViolet(url);
@@ -1264,8 +1187,8 @@ public class FileMenu extends JMenu
       						}
       						usecasetree.getSelectionModel().setSelectionPath(new TreePath(node.getPath()));
       						Map<DefaultMutableTreeNode, IWorkspace> hashMap = mainFrame.getActiveModelPanel().getUsecaseTreePanel().getHashMap();
-      						int length = mainFrame.getUseCaseWorkspaceList().size() - 1;
-      						hashMap.put(node, mainFrame.getUseCaseWorkspaceList().get(length));
+      						int length = mainFrame.getActiveModelPanel().getUseCaseworkspaceList().size() - 1;
+      						hashMap.put(node, mainFrame.getActiveModelPanel().getUseCaseworkspaceList().get(length));
 
       						//切换界面
       						mainFrame.getStepOperationButton().getPromptLabel().setText("用例图是指由参与者（Actor）、用例（Use Case）以及它们之间的关系构成的用于描述系统功能的视图。");
@@ -1284,8 +1207,7 @@ public class FileMenu extends JMenu
                       		
                       	}else if(filename.contains(".seq.violet.xml")){
                       		String name = filename.replace(".seq.violet.xml", "");
-                      		path = mainFrame.getBathRoute() + "/SequenceDiagram/VioletXML/";
-                      		graphFile.AutoSave(selectedFile, path);
+                      		graphFile.AutoSave(selectedFile, mainFrame.getActiveModelPanel().getTemporarySeqFile());
                             mainFrame.addTabbedPane(workspace,name);
 //                     	   if(mainFrame.getListSequenceTabPanel().size() != 0){
 //                        		for(SequenceTabPanel sequenceTabPanel:mainFrame.getListSequenceTabPanel())
@@ -1615,23 +1537,10 @@ public class FileMenu extends JMenu
     public static String getFileName() {
 		return fileName;
 	}
-	
-
-	public Map<String, String> getPackageRoute() {
-		if(this.packageRoute == null)
-		{
-			packageRoute = new HashMap<String, String>();
-		}
-		return packageRoute;
-	}
-
-
 
 	public static String fileName;
 	public static String directory;
-	 
-	/**存放用例图路径*/
-	private Map<String, String> packageRoute;
+
 	
 	/** The file chooser to use with with menu */
     @InjectedBean

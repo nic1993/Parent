@@ -34,6 +34,8 @@ public class ModelPanel extends JPanel{
       private JPanel gappanel;
       private JLabel title;
       
+      private String temporaryUcaseFile;
+      private String temporarySeqFile;
       private List<IWorkspace> UseCaseworkspaceList; //”√¿˝Õº    
       private List<IWorkspace> SequencespaceList;//À≥–ÚÕº
       
@@ -122,15 +124,13 @@ public class ModelPanel extends JPanel{
 								    if(n == 0)
 								    {
 								    	mainFrame.removeModelPanel(selectmodel);
+								    	mainFrame.getModelPanelMap().remove(selectmodel);
 								    }
 								}
 								else {
 									mainFrame.removeModelPanel(selectmodel);
-								}
-								
-							}
-							
-
+								}								
+							}							
 						}
 					});
 					
@@ -154,6 +154,7 @@ public class ModelPanel extends JPanel{
 						}
 					});
 				}
+    			
     			
     			mainFrame.renewPanel();
     		}
@@ -179,6 +180,18 @@ public class ModelPanel extends JPanel{
 	}
 	public void setSave(boolean isSave) {
 		this.isSave = isSave;
+	}
+	public String getTemporaryUcaseFile() {
+		return temporaryUcaseFile;
+	}
+	public void setTemporaryUcaseFile(String temporaryUcaseFile) {
+		this.temporaryUcaseFile = temporaryUcaseFile;
+	}
+	public String getTemporarySeqFile() {
+		return temporarySeqFile;
+	}
+	public void setTemporarySeqFile(String temporarySeqFile) {
+		this.temporarySeqFile = temporarySeqFile;
 	}      
      
 }

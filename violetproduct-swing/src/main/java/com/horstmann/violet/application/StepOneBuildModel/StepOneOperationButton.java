@@ -363,6 +363,15 @@ public class StepOneOperationButton extends JPanel{
                     String path = jFileChooser.getSelectedFile().getAbsolutePath();
                     String name = jFileChooser.getSelectedFile().getName();
                     
+                    for(ModelPanel modelPanel : mainFrame.getModelPanels())
+                    {
+                    	if(modelPanel.getTitle().getText().toString().equals(name))
+                    	{
+                    		JOptionPane.showMessageDialog(null, "模型已经存在!","标题",JOptionPane.WARNING_MESSAGE);
+                        	return;	
+                    	}
+                    }
+                    
                     File ucasefile = new File(path + "/用例图"); 
                     File seqfile = new File(path + "/顺序图");
                     
@@ -378,13 +387,17 @@ public class StepOneOperationButton extends JPanel{
                     //创建新的包
                     ModelPanel modelPanel = new ModelPanel(mainFrame, fileMenu);
 					modelPanel.getTitle().setText(name);
+					modelPanel.setTemporaryUcaseFile(path + "/用例图/");
+					modelPanel.setTemporarySeqFile(path + "/顺序图/");
+					
 					JPanel treePanel = mainFrame.getsteponeButton().getTreePanel();
 					int index = treePanel.getComponentCount();
 					treePanel.add(modelPanel,new GBC(0, index).setFill(GBC.BOTH).setWeight(1, 1));
+					
 					mainFrame.getModelPanels().add(modelPanel);
-					
 					mainFrame.setActiveModelPanel(modelPanel);
-					
+					mainFrame.getModelPanelMap().put(modelPanel, path+"/"+modelPanel.getTitle().getText());
+                   
 					//打开用例图 顺序图
 					try {
 						fileMenu.openFile(ucasefiles);
@@ -393,7 +406,7 @@ public class StepOneOperationButton extends JPanel{
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					
+					 
 					mainFrame.renewPanel();
                     
                     
@@ -547,16 +560,21 @@ public class StepOneOperationButton extends JPanel{
 					if(isExist == false)
 					{
 						ModelPanel modelPanel = new ModelPanel(mainFrame, fileMenu);
+						mainFrame.getCenterTabPanel().removeAll();
 						modelPanel.getTitle().setText(str);
 						JPanel treePanel = mainFrame.getsteponeButton().getTreePanel();
 						int index = treePanel.getComponentCount();
 						treePanel.add(modelPanel,new GBC(0, index).setFill(GBC.BOTH).setWeight(1, 1));
+						
 						mainFrame.getModelPanels().add(modelPanel);
+						mainFrame.saveTemporary(modelPanel);
+						mainFrame.setActiveModelPanel(modelPanel);
+						
 						mainFrame.renewPanel();
 					}
 				}
 				else {
-					
+					return;
 				}
 				
 				

@@ -126,7 +126,6 @@ public class UsecaseTreePanel extends JPanel implements Cloneable{
 				}
 				
 				if(e.getButton()==e.BUTTON3 ){
-					System.out.println(((DefaultMutableTreeNode)usecaseTree.getLastSelectedPathComponent()).equals(usecasetreerootnode));
 					if(((DefaultMutableTreeNode)usecaseTree.getLastSelectedPathComponent()).equals(usecasetreerootnode)){
 					popupMenu = new JPopupMenu();
 					newDiagram = new JMenuItem("新建     ",new ImageIcon("resources/icons/16x16/new.png"));
@@ -248,7 +247,41 @@ public class UsecaseTreePanel extends JPanel implements Cloneable{
 						@Override
 						public void actionPerformed(ActionEvent e) {
 							// TODO Auto-generated method stub
-							fileMenu.getItem(3).doClick();
+//							fileMenu.getItem(3).doClick();
+							String name = ((DefaultMutableTreeNode)usecaseTree.getLastSelectedPathComponent()).toString();
+							IWorkspace removeworkspace = null;
+						    //从保存模型中删除模型
+							for(IWorkspace workspace : modelPanel.getUseCaseworkspaceList())
+							{
+								if(workspace.getName().equals(name))
+								{
+									removeworkspace = workspace;
+									if(mainFrame.getActiveWorkspace() != null)
+									{
+										if(mainFrame.getActiveWorkspace().equals(workspace))
+										{
+											mainFrame.getCenterTabPanel().removeAll();
+										}
+									}
+									
+								}
+							}
+							if(removeworkspace != null)
+							{
+								modelPanel.getUseCaseworkspaceList().remove(removeworkspace);
+							}
+							//从树中删除模型
+							int index = 0;
+							int count = usecasetreerootnode.getChildCount();
+							for(int i = 0;i < count;i++)
+							{
+								if(usecasetreerootnode.getChildAt(i).toString().equals(name))
+								{
+									index = i;
+								}
+							}
+							usecasetreemodel.removeNodeFromParent((MutableTreeNode) usecasetreerootnode.getChildAt(index));
+							usecaseTree.repaint();
 							mainFrame.renewPanel();
 						}
 					});

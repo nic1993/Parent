@@ -533,6 +533,7 @@ public class MainFrame extends JFrame
     	}
         renewPanel();
     }
+    
     public void saveModelPanel(ModelPanel modelPanel)
     {
     	JFileChooser jFileChooser = new JFileChooser();
@@ -540,11 +541,12 @@ public class MainFrame extends JFrame
         int i = jFileChooser.showSaveDialog(null);
         if(i== jFileChooser.APPROVE_OPTION){ //打开文件
         	File file = jFileChooser.getSelectedFile(); 
-            String path = jFileChooser.getSelectedFile().getAbsolutePath();
+            String path = jFileChooser.getSelectedFile().getAbsolutePath() ; 
             String name = jFileChooser.getSelectedFile().getName();
-            getMenuFactory().getFileMenu(this).getPackageRoute().put(modelPanel.getTitle().getText(), path);
             //生成存放用例图的文件夹
             String packagePath = path + "/" +  modelPanel.getTitle().getText();
+            this.getModelPanelMap().put(modelPanel, packagePath);
+            
             File packagefile =  new File(packagePath);
             if(!packagefile.exists())
             {
@@ -564,6 +566,9 @@ public class MainFrame extends JFrame
             {
             	seqfile.mkdirs();
             }
+            
+            modelPanel.setTemporarySeqFile(seqpath);
+            modelPanel.setTemporaryUcaseFile(ucasepath);
             
             XStreamBasedPersistenceService xStreamBasedPersistenceService = new XStreamBasedPersistenceService();
             
@@ -603,6 +608,41 @@ public class MainFrame extends JFrame
         }else{
             System.out.println("没有选中文件");
         }
+    }
+    
+    public void saveTemporary(ModelPanel modelPanel)
+    {
+    	    
+    	    
+            //生成存放用例图的文件夹
+            String packagePath = this.getBathRoute()  +  modelPanel.getTitle().getText();
+            this.getModelPanelMap().put(modelPanel, packagePath);
+            
+            System.out.println(packagePath);
+            File packagefile =  new File(packagePath);
+            if(!packagefile.exists())
+            {
+            	packagefile.mkdirs();
+            }
+            
+            String ucasepath = packagePath + "/用例图/";
+            File ucasefile = new File(ucasepath);
+            if(!ucasefile.exists())
+            {
+            	ucasefile.mkdirs();
+            }
+            //生成存放顺序图的文件夹
+            String seqpath = packagePath + "/顺序图/";
+            File seqfile = new File(seqpath);
+            if(!seqfile.exists())
+            {
+            	seqfile.mkdirs();
+            }
+            
+            modelPanel.setTemporaryUcaseFile(ucasepath);
+            modelPanel.setTemporarySeqFile(seqpath);
+            getPackageRoute().put(modelPanel.getTitle().getText(), packagePath);
+       
     }
     /**
      * @return the tabbed pane that contains diagram panels
@@ -809,31 +849,38 @@ public class MainFrame extends JFrame
     
     public IWorkspace getActiveWorkspace()
     {
-    	if(getCenterTabPanel().getComponent(0).equals(getStepTwoExchangeTabbedPane()))
+    	if(getCenterTabPanel().getComponentCount() != 0)
     	{
-    		if(getStepTwoExchangeTabbedPane().getExchangeResults().getComponentCount() != 0)
-    		{
-    			int index = MarkovpaceList.size() -1;
-    			return MarkovpaceList.get(index);
+    		if(getCenterTabPanel().getComponent(0).equals(getStepTwoExchangeTabbedPane()))
+        	{
+        		if(getStepTwoExchangeTabbedPane().getExchangeResults().getComponentCount() != 0)
+        		{
+        			int index = MarkovpaceList.size() -1;
+        			return MarkovpaceList.get(index);
+        		}
+        		else{
+        			return null;
+        		}
+        	}
+        	else if (getCenterTabPanel().getComponent(0).equals(getTimeExpandTabbedPane())) {
+        		if(getTimeExpandTabbedPane().getExpandResults().getComponentCount() != 0)
+        		{
+        			int index = ExpandMarkovpaceList.size() -1;
+        			return ExpandMarkovpaceList.get(index);
+        		}
+        		else {
+    				return null;
+    			}
     		}
-    		else{
-    			return null;
-    		}
-    	}
-    	else if (getCenterTabPanel().getComponent(0).equals(getTimeExpandTabbedPane())) {
-    		if(getTimeExpandTabbedPane().getExpandResults().getComponentCount() != 0)
-    		{
-    			int index = ExpandMarkovpaceList.size() -1;
-    			return ExpandMarkovpaceList.get(index);
-    		}
-    		else {
-				return null;
-			}
-		}
-    	else if(getCenterTabPanel().getComponentCount() != 0)
-    	{
-    		IWorkspace workspace = ((WorkspacePanel)getCenterTabPanel().getComponent(0)).getWorkspace();//获取当前用例图workspace
-    		return workspace;
+        	else
+        	{
+        		if(getCenterTabPanel().getComponent(0).getClass().getSimpleName().toString().equals("WorkspacePanel"))
+        		{
+            		IWorkspace workspace = ((WorkspacePanel)getCenterTabPanel().getComponent(0)).getWorkspace();//获取当前用例图workspace
+            		return workspace;
+        		}
+
+        	}
     	}
         return null;
     }
@@ -1537,7 +1584,9 @@ public HomePanel getHomePanel()
 		return modelPanels;
 	}
 
-    
+	public Map<ModelPanel, String> getModelPanelMap() {
+		return modelPanelMap;
+	}
 
 	public Map<String, String> getPackageRoute() {
 		if(packageRoute == null)
@@ -1803,6 +1852,7 @@ public HomePanel getHomePanel()
     
     private Map<DefaultMutableTreeNode, UseCaseNode> NodeMap;
     
+    
 	/**
      * All disgram workspaces
      */
@@ -1811,6 +1861,7 @@ public HomePanel getHomePanel()
     private List<IWorkspace> MarkovpaceList=new ArrayList<IWorkspace>();//状态图
     private List<IWorkspace> ExpandMarkovpaceList=new ArrayList<IWorkspace>();//时间自动机
     private List<ModelPanel> modelPanels = new ArrayList<ModelPanel>();
+    private Map<ModelPanel, String> modelPanelMap = new HashMap<ModelPanel, String>();
     private ModelPanel ActiveModelPanel;
     
     //存放工程路径

@@ -25,6 +25,7 @@ import javax.swing.KeyStroke;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreePath;
 
 import com.horstmann.violet.application.gui.GBC;
@@ -75,23 +76,6 @@ public class SequenceTreePanel extends JPanel{
 				// TODO Auto-generated method stub
 				if(e.getButton() == e.BUTTON1)
 				{
-//					mainFrame.getOpreationPart().validate();
-//					wakeupPanel();
-//
-//					mainFrame.getCenterTabPanel().updateUI();
-//					mainFrame.getpanel().removeAll();
-//					mainFrame.getpanel().setLayout(new GridLayout(1, 1));
-//					mainFrame.getpanel().add(mainFrame.getStepOperationButton());
-//					mainFrame.getStepOperationButton().getPromptLabel().removeAll();
-//					mainFrame.getStepOperationButton().getPromptLabel().setText("顺序图是将交互关系表示为一个二维图。纵向是时间轴，时间沿竖线向下延伸。横向轴代表了在协作中各独立对象的类元角色。");
-//					mainFrame.getpanel().updateUI();
-//					mainFrame.getinformationPanel().removeAll();
-//					mainFrame.getinformationPanel().setLayout(new GridLayout(1, 1));
-//					mainFrame.getinformationPanel().add(mainFrame.getOutputinformation());
-//					mainFrame.getReduceOrEnlargePanel().setLayout(new GridLayout(1, 1));
-//					mainFrame.getReduceOrEnlargePanel().add(mainFrame.getstepOneCenterRightPanel());
-//					mainFrame.getOpreationPart().revalidate();
-					
 					mainFrame.renewPanel();
 				}
 				if(e.getButton()==e.BUTTON3){
@@ -144,6 +128,58 @@ public class SequenceTreePanel extends JPanel{
 						});	
 					}
 					mainFrame.renewPanel();
+				}
+				
+				//添加删除标志
+				if(((DefaultMutableTreeNode)sequencetree.getLastSelectedPathComponent()).getLevel() == 1)
+				{
+					popupMenu = new JPopupMenu();
+					newDiagram = new JMenuItem("删除     ",new ImageIcon("resources/icons/16x16/De.png"));
+					newDiagram.setAccelerator(KeyStroke.getKeyStroke('D', InputEvent.CTRL_MASK));
+					popupMenu.add(newDiagram);
+					popupMenu.show(e.getComponent(), e.getX(), e.getY());
+					newDiagram.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							// TODO Auto-generated method stub
+//							fileMenu.getItem(3).doClick();
+							String name = ((DefaultMutableTreeNode)sequencetree.getLastSelectedPathComponent()).toString();
+							IWorkspace removeworkspace = null;
+						    //从保存模型中删除模型
+							for(IWorkspace workspace : modelPanel.getSequencespaceList())
+							{
+								if(workspace.getName().equals(name))
+								{
+									removeworkspace = workspace;
+									if(mainFrame.getActiveWorkspace() != null)
+									{
+										if(mainFrame.getActiveWorkspace().equals(workspace))
+										{
+											mainFrame.getCenterTabPanel().removeAll();
+										}
+									}
+								}
+							}
+							if(removeworkspace != null)
+							{
+								modelPanel.getSequencespaceList().remove(removeworkspace);
+							}
+							//从树中删除模型
+							int index = 0;
+							int count = sequencetreerootnode.getChildCount();
+							for(int i = 0;i < count;i++)
+							{
+								if(sequencetreerootnode.getChildAt(i).toString().equals(name))
+								{
+									index = i;
+								}
+							}
+							sequencetreemodel.removeNodeFromParent((MutableTreeNode) sequencetreerootnode.getChildAt(index));
+							sequencetree.repaint();
+							
+							mainFrame.renewPanel();
+						}
+					});
 				}
 				
 				if(e.getClickCount()==2){

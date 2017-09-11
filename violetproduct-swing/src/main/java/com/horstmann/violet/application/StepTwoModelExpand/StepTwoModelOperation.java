@@ -56,6 +56,7 @@ import cn.edu.hdu.lab.dao.interfacedao.InterfaceUCRelation;
 import cn.edu.hdu.lab.service.interfaces.Work;
 import cn.edu.hdu.lab.service.sd2tmc.WorkImpl;
 
+import com.horstmann.violet.application.StepOneBuildModel.ModelPanel;
 import com.horstmann.violet.application.StepOneBuildModel.Radio;
 import com.horstmann.violet.application.gui.GBC;
 import com.horstmann.violet.application.gui.MainFrame;
@@ -121,6 +122,7 @@ public class StepTwoModelOperation extends JPanel{
 	private File[] EAFiles;
 	private File VioletFile;
 	private File[] VioletFiles;
+	
 	private String currentUcase;
 	private String currentSeq;
 	
@@ -469,37 +471,46 @@ public class StepTwoModelOperation extends JPanel{
 					}
 					else{
 						try {
-							EAFiles = EAFile.listFiles();
-							for(File file : EAFiles)
-							{
-								String FileRoute = file.getName().replaceAll(".xml", "");
-								if(FileRoute.equals(Model_Name))
-								{
-									currentUcase = file.getAbsolutePath();
-								}
-							}
-							 //读取Violet的XML
-							for(File file : VioletFiles)
-							{
-								String VioletFileName = file.getName().replace("ucase.violet.xml", "");
-								if(VioletFileName.contains(Model_Name))
-								{
-									currentUcase = file.getAbsolutePath();
-								}
-							}
-	
+//							EAFiles = EAFile.listFiles();
+//							for(File file : EAFiles)
+//							{
+//								String FileRoute = file.getName().replaceAll(".xml", "");
+//								if(FileRoute.equals(Model_Name))
+//								{
+//									currentUcase = file.getAbsolutePath();
+//								}
+//							}
+//							 //读取Violet的XML
+//							for(File file : VioletFiles)
+//							{
+//								String VioletFileName = file.getName().replace("ucase.violet.xml", "");
+//								if(VioletFileName.contains(Model_Name))
+//								{
+//									currentUcase = file.getAbsolutePath();
+//								}
+//							}
+	                        for(ModelPanel modelPanel : mainFrame.getModelPanelMap().keySet())
+	                        {
+	                        	if(modelPanel.getTitle().getText().equals(Model_Name))
+	                        	{
+	                        		System.out.println(modelPanel.getTemporaryUcaseFile());
+	                        		File file = new File(modelPanel.getTemporaryUcaseFile());
+	                        		System.out.println(file.listFiles()[0].getAbsolutePath());
+	                        		currentUcase = file.listFiles()[0].getAbsolutePath();
+	                        		StaticConfig.umlPathPrefix = modelPanel.getTemporarySeqFile();
+	                        	}
+	                        }
+							
 						    worker=new WorkImpl();
 						    
-						    if(currentUcase.contains("\\UseCaseDiagram\\EAXML"))
+						    if(currentUcase.contains(".ucase.violet.xml"))
 						    {
-						    	StaticConfig.umlPathPrefix = EAsequenceBathRoute;
-						    	currentSeq = EAsequenceBathRoute;
-						    	worker.transInitial(currentUcase);
-						    }
-						    else {
-						    	StaticConfig.umlPathPrefixHDU = VioletsequenceBathRoute;
 						    	currentSeq = EAsequenceBathRoute;
 						    	worker.transInitialHDU(currentUcase);
+						    }
+						    else {
+						    	currentSeq = EAsequenceBathRoute;
+						    	worker.transInitial(currentUcase);
 							}
 
 						}  catch (Exception e2) {
