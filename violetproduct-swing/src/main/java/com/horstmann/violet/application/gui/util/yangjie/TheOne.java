@@ -30,7 +30,7 @@ public class TheOne {
 		// ReadMarkov rm = new ReadMarkov();
 		ReadMarkov2 rm = new ReadMarkov2();
 		try {
-		Markov markov = rm.readMarkov("D:\\ModelDriverProjectFile\\NoTimeMarkov\\Primary Use Cases.xml");
+		Markov markov = rm.readMarkov("D:\\ModelDriverProjectFile\\NoTimeMarkov\\demo.xml");
 		Scanner s = new Scanner(System.in);
 		System.out.println("请选择测试用例生成模式：");
 		System.out.println("			1.根据模型相似度随机生成");

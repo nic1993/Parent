@@ -346,7 +346,6 @@ public class StepTwoCaseExpandOperation extends JPanel{
 						
 						tableDatas.clear();
 						
-//						mainFrame.getStepTwoExpand().get
 					}
 				}
 				return 1;
@@ -446,15 +445,6 @@ public class StepTwoCaseExpandOperation extends JPanel{
                 IISDList=mainFrame.getStepTwoModelOperation().getIISDList();//获取用例场景信息
                 worker = mainFrame.getStepTwoModelOperation().getWorker();
                 
-                System.out.println("场景扩展====================");
-				for(InterfaceIsogenySD interfaceIsogenySD : IISDList)
-				{
-					System.out.println(interfaceIsogenySD.getUcName() + "用例场景个数: " + interfaceIsogenySD.getISDList().size());
-					for(InterfaceSD interfaceSD : interfaceIsogenySD.getISDList())
-					{
-						System.out.println("场景名称： " + interfaceSD.getName());
-					}
-				}
                if(numberTextField.getText().equals(""))
 				{ 
 				   //添加弹出�?

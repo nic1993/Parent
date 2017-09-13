@@ -32,7 +32,6 @@ public class NoTimeSeqNodePanel {
     	   {
     		   for(NoTimeSeqNode NodeLabel :SeqNodeLabels)
     		   {
-    			System.out.println("===: " + NodeLabel.getTitle() + "++++£º "+ noTimeSeqNode.getTitle());
     			if(NodeLabel.getTitle().equals(noTimeSeqNode.getTitle()))
     			{
     				isExist = true;	

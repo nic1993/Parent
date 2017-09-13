@@ -51,10 +51,13 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseWheelListener;
 import java.awt.geom.Point2D;
 import java.beans.BeanInfo;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -118,12 +121,15 @@ import com.horstmann.violet.application.StepThreeTestCase.StepThreeNoTimeCustomT
 import com.horstmann.violet.application.StepThreeTestCase.StepThreeNoTimeSeqTabbedPane;
 import com.horstmann.violet.application.StepThreeTestCase.StepThreeNoTimeCaseTabbedPane;
 import com.horstmann.violet.application.StepThreeTestCase.StepThreeTimeCustomTabbedPane;
+import com.horstmann.violet.application.StepThreeTestCase.StepThreeTimeSeqTabbedPane;
 import com.horstmann.violet.application.StepThreeTestCase.StepThreeTimeTabbedPane;
 import com.horstmann.violet.application.StepThreeTestCase.TimeCaseOperation;
 import com.horstmann.violet.application.StepThreeTestCase.TimeCaseOperation1;
 import com.horstmann.violet.application.StepThreeTestCase.TimeExpandOperation;
 import com.horstmann.violet.application.StepThreeTestCase.TimeExpandTabbedPane;
 import com.horstmann.violet.application.StepThreeTestCase.TimeMarkovFileRadio;
+import com.horstmann.violet.application.StepThreeTestCase.TimeSeqOperation;
+import com.horstmann.violet.application.StepThreeTestCase.TimeSeqOperation1;
 import com.horstmann.violet.application.StepTwoCaseExpand.StepTwoCaseExpandTabbedPane;
 import com.horstmann.violet.application.StepTwoCaseExpand.StepTwoCaseExpandTree;
 import com.horstmann.violet.application.StepTwoCaseExpand.StepTwoCaseExpandOperation;
@@ -553,14 +559,14 @@ public class MainFrame extends JFrame
             	packagefile.mkdirs();
             }
             
-            String ucasepath = packagePath + "/用例图";
+            String ucasepath = packagePath + "/用例图/";
             File ucasefile = new File(ucasepath);
             if(!ucasefile.exists())
             {
             	ucasefile.mkdirs();
             }
             //生成存放顺序图的文件夹
-            String seqpath = packagePath + "/顺序图";
+            String seqpath = packagePath + "/顺序图/";
             File seqfile = new File(seqpath);
             if(!seqfile.exists())
             {
@@ -572,6 +578,7 @@ public class MainFrame extends JFrame
             
             XStreamBasedPersistenceService xStreamBasedPersistenceService = new XStreamBasedPersistenceService();
             
+            
             //保存所有用例图
             for(int j = 0;j < modelPanel.getUseCaseworkspaceList().size();j++)
             {
@@ -580,9 +587,16 @@ public class MainFrame extends JFrame
             File ucaseFile = new File(ucasepath+"/"+workspace.getName()+".ucase.violet.xml");
 			JFileWriter jFileWriter = new JFileWriter(ucaseFile);
             OutputStream out = jFileWriter.getOutputStream();
+            //将输出流写成UTF-8格式 
+			OutputStreamWriter writer = new OutputStreamWriter(out, "UTF-8");
+            ByteArrayOutputStream graphOutputStream = new ByteArrayOutputStream();
             IGraph graph = workspace.getGraphFile().getGraph();
-            xStreamBasedPersistenceService.write(graph, out);
-            } catch (FileNotFoundException e1) {
+            xStreamBasedPersistenceService.write(graph, graphOutputStream);
+            
+            String graphString = graphOutputStream.toString();
+            writer.write(new String(graphString.getBytes()));
+            writer.close();
+            } catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
@@ -596,9 +610,15 @@ public class MainFrame extends JFrame
             File ucaseFile = new File(seqpath+"/"+workspace.getName()+".seq.violet.xml");
 			JFileWriter jFileWriter = new JFileWriter(ucaseFile);
             OutputStream out = jFileWriter.getOutputStream();
+            OutputStreamWriter writer = new OutputStreamWriter(out, "UTF-8");
+            ByteArrayOutputStream graphOutputStream = new ByteArrayOutputStream();
             IGraph graph = workspace.getGraphFile().getGraph();
-            xStreamBasedPersistenceService.write(graph, out);
-            } catch (FileNotFoundException e1) {
+            xStreamBasedPersistenceService.write(graph, graphOutputStream);
+            
+            String graphString = graphOutputStream.toString();
+            writer.write(new String(graphString.getBytes()));
+            writer.close();
+            } catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
@@ -608,6 +628,45 @@ public class MainFrame extends JFrame
         }else{
             System.out.println("没有选中文件");
         }
+    }
+    public void saveOldPlace(ModelPanel modelPanel)
+    {
+    	String ucasepath = modelPanel.getTemporaryUcaseFile();
+    	String seqpath = modelPanel.getTemporarySeqFile();
+    	
+    	XStreamBasedPersistenceService xStreamBasedPersistenceService = new XStreamBasedPersistenceService();
+    	//保存所有用例图
+        for(int j = 0;j < modelPanel.getUseCaseworkspaceList().size();j++)
+        {
+        try {
+        IWorkspace workspace = modelPanel.getUseCaseworkspaceList().get(j);
+        File ucaseFile = new File(ucasepath+"/"+workspace.getName()+".ucase.violet.xml");
+		JFileWriter jFileWriter = new JFileWriter(ucaseFile);
+        OutputStream out = jFileWriter.getOutputStream();
+        IGraph graph = workspace.getGraphFile().getGraph();
+        xStreamBasedPersistenceService.write(graph, out);
+        } catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+        }
+        
+        //保存所有顺序图
+        for(int j = 0;j < modelPanel.getSequencespaceList().size();j++)
+        {
+        try {
+        IWorkspace workspace = modelPanel.getSequencespaceList().get(j);
+        File ucaseFile = new File(seqpath+"/"+workspace.getName()+".seq.violet.xml");
+		JFileWriter jFileWriter = new JFileWriter(ucaseFile);
+        OutputStream out = jFileWriter.getOutputStream();
+        IGraph graph = workspace.getGraphFile().getGraph();
+        xStreamBasedPersistenceService.write(graph, out);
+        } catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+        }
+    	
     }
     
     public void saveTemporary(ModelPanel modelPanel)
@@ -1493,6 +1552,31 @@ public HomePanel getHomePanel()
 		return timeExpandTabbedPane;
 	}
 	
+	
+	public StepThreeTimeSeqTabbedPane getStepThreeTimeSeqTabbedPane() {
+		if(this.stepThreeTimeSeqTabbedPane == null)
+		{
+			stepThreeTimeSeqTabbedPane = new StepThreeTimeSeqTabbedPane(this);
+		}
+		return stepThreeTimeSeqTabbedPane;
+	}
+
+	public TimeSeqOperation getTimeSeqOperation() {
+		if(this.timeSeqOperation == null)
+		{
+			timeSeqOperation = new TimeSeqOperation(this);
+		}
+		return timeSeqOperation;
+	}
+
+	public TimeSeqOperation1 getTimeSeqOperation1() {
+		if(this.timeSeqOperation1 == null)
+		{
+			timeSeqOperation1 = new TimeSeqOperation1(this);
+		}
+		return timeSeqOperation1;
+	}
+
 	public TimeCaseOperation getTimeCaseOperation() {
 		if(this.timeCaseOperation == null)
 		{
@@ -1702,25 +1786,12 @@ public HomePanel getHomePanel()
           }
     };
     private JPanel informationPanel = new JPanel();
-//    {
-//    	public void paint(Graphics g) {
-//            super.paint(g);
-//            java.awt.Rectangle rect = this.getBounds();
-//            int width = (int) rect.getWidth() - 1;
-//            int height = (int) rect.getHeight() - 1;
-//            Graphics2D g2 = (Graphics2D)g;
-//            g2.setStroke(new BasicStroke(3f));
-//            g2.setColor(new Color(188,188,188));
-//            g2.drawLine(0, height, width, height);
-//            g2.drawLine(0, 0, 0, height);
-//          }
-//    };
+
     private Outputinformation outputinformation;
     
     private static JPanel ReduceOrEnlargePanel;
     
     private StepOneCenterRightPanel stepOneCenterRightPanel; //缩放组件
-    
 
 	/**
      * Main panel
@@ -1770,11 +1841,8 @@ public HomePanel getHomePanel()
     private StepTwoModelOperation stepTwoModelOperation;
     
     private StepTwoModelExpandTabbedPane stepTwoModelExpandTabbedPane;
-
 	
    //用例扩展
-    
-    
     private StepTwoCaseExpandTabbedPane stepTwoCaseExpandTabbedPane;
     
     private StepTwoCaseExpandOperation stepTwoCaseExpandOperation;
@@ -1819,9 +1887,15 @@ public HomePanel getHomePanel()
     
     private StepThreeNoTimeCustomTabbedPane stepThreeNoTimeCustomTabbedPane;
     
+    private StepThreeTimeSeqTabbedPane stepThreeTimeSeqTabbedPane;
+    
     private TimeExpandOperation timeExpandOperation;
     
     private TimeExpandTabbedPane timeExpandTabbedPane;
+    
+    private TimeSeqOperation timeSeqOperation;
+    
+    private TimeSeqOperation1 timeSeqOperation1;
     
     private TimeCaseOperation timeCaseOperation;
     

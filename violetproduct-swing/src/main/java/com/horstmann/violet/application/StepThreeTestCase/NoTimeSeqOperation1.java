@@ -164,7 +164,7 @@ public class NoTimeSeqOperation1 extends JPanel{
 				File files = new File(NoTimeMarkovRoute);
 				for(File selectFile : files.listFiles())
 				{
-					if(selectFile.getName().contains(ModelName))
+					if(selectFile.getName().replace(".xml", "").equals(ModelName))
 						route = selectFile.getAbsolutePath();
 				}
 				ReadMarkov2 rm = new ReadMarkov2();
@@ -294,9 +294,13 @@ public class NoTimeSeqOperation1 extends JPanel{
        						Thread.sleep(500);
        					}
        				}
-       				if(task1.isDone())
-       				{
-       					thread2.start();
+       				while(true){
+       					if(task1.isDone())
+       	   				{
+       						System.out.println("thread1 start!");
+       	   					thread2.start();
+       	   					break;
+       	   				}
        				}
     				return 1;
       			}
@@ -392,7 +396,7 @@ public class NoTimeSeqOperation1 extends JPanel{
 							mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().repaint();
 							i++;
 							progressBar.setValue(40 + (int)(((double)i/markov.getRouteList().size())*60));
-							Thread.sleep(100);
+							Thread.sleep(10);
 						}
 						
 						button.setEnabled(true);
@@ -408,7 +412,7 @@ public class NoTimeSeqOperation1 extends JPanel{
 						mainFrame.getStepThreeLeftButton().getNoTimeSeqNode().repaint();
 				    } catch (RuntimeException e) {
 						// TODO: handle exception
-                  	topLabel.removeAll();
+                  	    topLabel.removeAll();
      					topLabel.setText(e.getLocalizedMessage());
      					
      					button.setEnabled(true);
@@ -421,7 +425,7 @@ public class NoTimeSeqOperation1 extends JPanel{
 			task2 = new FutureTask<>(callable2);
 			thread2 = new Thread(task2);
        }
-private static boolean isSufficient(Markov markov) {
+    private static boolean isSufficient(Markov markov) {
 
 	for (State state : markov.getStates()) {
 

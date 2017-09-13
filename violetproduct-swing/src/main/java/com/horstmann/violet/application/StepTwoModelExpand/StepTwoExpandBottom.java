@@ -180,31 +180,6 @@ public class StepTwoExpandBottom extends JPanel{
 				
 			    stepThree = mainFrame.getStepThreeLeftButton().getStepThree();
 				JPanel mainPanel = mainFrame.getMainPanel();
-//				for(int i = 0;i < mainPanel.getComponentCount();i++)
-//				{
-//					if(mainPanel.getComponent(i).equals(mainFrame.getworkpanel()))
-//					{
-//						mainPanel.remove(mainPanel.getComponent(i));
-//						mainPanel.add(mainFrame.getworkpanel(),new GBC(1,2,1,1).setFill(GBC.BOTH).setWeight(1, 0.98).setInsets(10, 15, 20, 15));
-//					}
-//				}
-//				
-////				mainPanel.remove(4);
-////				mainPanel.add(mainFrame.getworkpanel(),new GBC(1,2,1,1).setFill(GBC.BOTH).setWeight(1, 0.98).setInsets(10, 15, 20, 15));
-//				mainFrame.getCenterTabPanel().removeAll();
-//				mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeChoosePattern());
-//				
-//				mainFrame.getconsolepartPanel().
-//				removeAll();
-//				mainFrame.getconsolepartPanel().setLayout(new GridLayout(1, 1));
-//				mainFrame.getconsolepartPanel().add(mainFrame.getStepThreeBottom());
-//				
-//				mainFrame.getpanel().removeAll();
-//				mainFrame.getpanel().setVisible(false);
-//				
-//				mainFrame.getOutputinformation().setVisible(false);
-//				
-//				mainFrame.getReduceOrEnlargePanel().setVisible(false);
 				switch (stepThree) {
 				case 1:
 					for(int i = 0;i < mainPanel.getComponentCount();i++)
@@ -251,48 +226,11 @@ public class StepTwoExpandBottom extends JPanel{
     						mainPanel.add(mainFrame.getworkpanel(),new GBC(1,2,1,1).setFill(GBC.BOTH).setWeight(1, 0.98).setInsets(10, 15, 20, 15));
     					}
     				}
-    				mainFrame.getinformationPanel().setVisible(false);
-    				mainFrame.getReduceOrEnlargePanel().setVisible(false);
-    				if(mainFrame.getStepThreeChoosePattern().getselectString().equals("自定义测试用例个数生成"))
-    				{
-    					if(mainFrame.getStepThreeChoosePattern().getConfidence() == null || 
-    							mainFrame.getStepThreeChoosePattern().getReliabilityIndex() == null)
-    					{
-    						          //后期添加弹出框
-    					}
-    				}
-    				mainFrame.getpanel().setVisible(false);
-    				mainFrame.getTimeMarkovFileRadio().initFile();
-    				mainFrame.getNoTimeMarkovFileRadion().initFile();
+    				mainFrame.getReduceOrEnlargePanel().setVisible(true);
     				
+    				mainFrame.getpanel().add(mainFrame.getNoTimeSeqOperation());
+    				mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeNoTimeSeqTabbedPane());
     				
-    				mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeChooseModelPattern());
-    				String ModelName = mainFrame.getStepThreeLeftButton().getModelName();
-    				if(ModelName != null)
-					{
-						if(mainFrame.getStepThreeChooseModelPattern().getjRadioButton().isSelected())
-						{
-							List<JRadioButton> lists = mainFrame.getNoTimeMarkovFileRadion().getRadioList();
-							for(JRadioButton radio : lists)
-							{
-								if(radio.getText().toString().equals(ModelName))
-								{
-									radio.setSelected(true);
-								}
-							}
-						}
-						else {
-							List<JRadioButton> lists = mainFrame.getTimeMarkovFileRadio().getRadioList();
-							for(JRadioButton radio : lists)
-							{
-								if(radio.getText().equals(ModelName))
-								{
-									System.out.println(44444);
-									radio.setSelected(true);
-								}
-							}
-						}
-					}
     				mainFrame.renewPanel();
     				
     				
@@ -310,15 +248,19 @@ public class StepTwoExpandBottom extends JPanel{
     					}
     				}
     				mainFrame.getReduceOrEnlargePanel().setVisible(true);
-    				mainFrame.getpanel().setVisible(true);
-					mainFrame.getpanel().add(mainFrame.getNoTimeCaseOperation());
-					mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeNoTimeTabbedPane());
+    				
+                    mainFrame.getpanel().add(mainFrame.getNoTimeSeqOperation1());
+					
+					mainFrame.getpanel().updateUI();	
+					mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeNoTimeSeqTabbedPane());
+					mainFrame.getCenterTabPanel().updateUI();
 					mainFrame.renewPanel();
 					break;
                 case 4:
                 	mainFrame.getpanel().removeAll();
             		mainFrame.getCenterTabPanel().removeAll();
                 	
+            		mainFrame.getReduceOrEnlargePanel().setVisible(true);
                 	for(int i = 0;i < mainPanel.getComponentCount();i++)
     				{
     					if(mainPanel.getComponent(i).equals(mainFrame.getworkpanel()))
@@ -327,17 +269,15 @@ public class StepTwoExpandBottom extends JPanel{
     						mainPanel.add(mainFrame.getworkpanel(),new GBC(1,2,1,1).setFill(GBC.BOTH).setWeight(1, 0.98).setInsets(10, 15, 20, 0));
     					}
     				}
-    				mainFrame.getReduceOrEnlargePanel().setVisible(true);
-    				mainFrame.getReduceOrEnlargePanel().setVisible(true);
-    				mainFrame.getpanel().setVisible(true);
-					mainFrame.getpanel().add(mainFrame.getNoTimeCaseOperation1());
-					mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeNoTimeTabbedPane());
+                	mainFrame.getpanel().add(mainFrame.getNoTimeCaseOperation());
+                	mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeNoTimeTabbedPane());
 					mainFrame.renewPanel();
 	                break;
                 case 5:
                 	mainFrame.getpanel().removeAll();
             		mainFrame.getCenterTabPanel().removeAll();
                 	
+            		mainFrame.getReduceOrEnlargePanel().setVisible(true);
                 	for(int i = 0;i < mainPanel.getComponentCount();i++)
     				{
     					if(mainPanel.getComponent(i).equals(mainFrame.getworkpanel()))
@@ -346,10 +286,10 @@ public class StepTwoExpandBottom extends JPanel{
     						mainPanel.add(mainFrame.getworkpanel(),new GBC(1,2,1,1).setFill(GBC.BOTH).setWeight(1, 0.98).setInsets(10, 15, 20, 0));
     					}
     				}
-    				mainFrame.getReduceOrEnlargePanel().setVisible(true);
-    				mainFrame.getpanel().setVisible(true);
-    				mainFrame.getpanel().add(mainFrame.getTimeExpandOperation());
-    				mainFrame.getCenterTabPanel().add(mainFrame.getTimeExpandTabbedPane());
+                	mainFrame.getpanel().add(mainFrame.getNoTimeCaseOperation1());
+					mainFrame.getpanel().updateUI();	
+					mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeNoTimeTabbedPane());
+					mainFrame.getCenterTabPanel().updateUI();
     				mainFrame.renewPanel();
 	                break;
                 case 6:

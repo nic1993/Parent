@@ -120,13 +120,11 @@ public class readUseCaseXMLFromEA{
 				}
 				if(element.attributeValue("type").toString().equals("uml:Interaction"))
 				{
-				    System.out.println(11111);	
 					String id = element.attributeValue("idref");
 					for(Node node : nodeList)
 					{
 						if(node.getId().equals(element.element("model").attributeValue("owner")))
 						{
-							System.out.println(2222222);
 							if(element.element("constraints") != null){	
 								List<Element> constraints = element.element("constraints").elements();
 								for(Element element1 : constraints)

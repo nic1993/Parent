@@ -88,6 +88,8 @@ public class StepThreeLeftButton extends JPanel{
 	
 	private NoTimeSeqNodePanel noTimeSeqNodePanel;
 	private NoTimeCaseNodePanel noTimeCaseNodePanel;
+	
+	private TimeSeqNodePanel timeSeqNodePanel; 
 	private TimeCaseNodePanel timeCaseNodePanel;
 	private TimeExpandNodePanel timeExpandNodePanel;
 	
@@ -105,13 +107,14 @@ public class StepThreeLeftButton extends JPanel{
 		this.add(noTimeModelPanel,new GBC(0, 2).setFill(GBC.BOTH).setWeight(1, 0).setInsets(10, 30, 0, 0));
 		
 		this.add(timeModelLabel,new GBC(0, 3).setFill(GBC.BOTH).setWeight(1, 0).setInsets(15, 10, 0, 80));
-		this.add(timeExpand,new GBC(0, 4).setFill(GBC.BOTH).setWeight(1, 0).setInsets(10, 30, 0, 80));
+		this.add(timeExpand,new GBC(0, 4).setFill(GBC.BOTH).setWeight(1, 0).setInsets(10, 30, 0, 0));
 		
 		this.add(panel,new GBC(0, 5).setFill(GBC.BOTH).setWeight(1, 1));	
 		
 		noTimeCaseNodePanel = new NoTimeCaseNodePanel(mainFrame);
 		noTimeSeqNodePanel = new NoTimeSeqNodePanel(mainFrame);
 		
+		timeSeqNodePanel = new TimeSeqNodePanel(mainFrame);
 		timeCaseNodePanel = new TimeCaseNodePanel(mainFrame);
 		timeExpandNodePanel = new TimeExpandNodePanel(mainFrame);
 	}
@@ -140,6 +143,7 @@ public class StepThreeLeftButton extends JPanel{
 		timeCase.setFont(new Font("微软雅黑", Font.PLAIN, 16));
 		
 		noTimeModelLabel.setEnabled(false);
+		noTimeCase.setEnabled(false);
 		timeModelLabel.setEnabled(false);
 		timeCase.setEnabled(false);
 		
@@ -177,9 +181,9 @@ public class StepThreeLeftButton extends JPanel{
 		timeExpand.add(modelExpand,new GBC(0, 0).setFill(GBC.BOTH).setWeight(1, 0));
 		timeExpand.add(TimeExpandLabel,new GBC(0, 1).setFill(GBC.BOTH).setWeight(1, 0).setInsets(5, 0, 0, 0));
 		
-		timeExpand.add(timeSeq,new GBC(0, 2).setFill(GBC.BOTH).setWeight(1, 0).setInsets(10, 0, 0, 0));
+		timeExpand.add(timeSeq,new GBC(0, 2).setFill(GBC.BOTH).setWeight(1, 0).setInsets(5, 0, 0, 0));
 		timeExpand.add(TimeSeqNode,new GBC(0, 3).setFill(GBC.BOTH).setWeight(1, 0).setInsets(5, 0, 0, 0));
-		timeExpand.add(timeCase,new GBC(0, 4).setFill(GBC.BOTH).setWeight(1, 0).setInsets(10, 0, 0, 0));
+		timeExpand.add(timeCase,new GBC(0, 4).setFill(GBC.BOTH).setWeight(1, 0).setInsets(5, 0, 0, 0));
 		timeExpand.add(TimeNode,new GBC(0, 5).setFill(GBC.BOTH).setWeight(1, 0).setInsets(5, 0, 0, 0));
 		labelListen();
 	}
@@ -223,49 +227,48 @@ public class StepThreeLeftButton extends JPanel{
 			public void mousePressed(MouseEvent e) {
 				if(((JLabel)e.getSource()).isEnabled())
 				{
-						mainFrame.getNoTimeSeqOperation().setModelName(ModelName);
-						mainFrame.getNoTimeSeqOperation1().setModelName(ModelName);
+					mainFrame.getNoTimeSeqOperation().setModelName(ModelName);
+					mainFrame.getNoTimeSeqOperation1().setModelName(ModelName);
 						
-						noTimeSeq.setFont(new Font("微软雅黑", Font.BOLD, 16));
-						noTimeCase.setFont(new Font("微软雅黑", Font.PLAIN, 16));
-						choosePatternLabel.setFont(new Font("微软雅黑", Font.PLAIN, 18));
-						noTimeModelLabel.setFont(new Font("微软雅黑", Font.BOLD, 18));
-						timeModelLabel.setFont(new Font("微软雅黑", Font.PLAIN, 18));
-						noTimeModelPanel.setVisible(true);
-						timeExpand.setVisible(false);
-						clearPanel();
+					noTimeSeq.setFont(new Font("微软雅黑", Font.BOLD, 16));
+					noTimeCase.setFont(new Font("微软雅黑", Font.PLAIN, 16));
+					choosePatternLabel.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+					noTimeModelPanel.setVisible(true);
+					timeExpand.setVisible(false);
+					clearPanel();
 						
-						noTimeSeqNode.setVisible(true);
-						noTimeNode.setVisible(false);
+					noTimeSeqNode.setVisible(true);
+					noTimeNode.setVisible(false);
 						
-						JPanel mainPanel = mainFrame.getMainPanel();
-						for(int i = 0;i < mainPanel.getComponentCount();i++)
+					JPanel mainPanel = mainFrame.getMainPanel();
+					for(int i = 0;i < mainPanel.getComponentCount();i++)
+					{
+						if(mainPanel.getComponent(i).equals(mainFrame.getworkpanel()))
 						{
-							if(mainPanel.getComponent(i).equals(mainFrame.getworkpanel()))
-							{
-								mainPanel.remove(mainPanel.getComponent(i));
-								mainPanel.add(mainFrame.getworkpanel(),new GBC(1,2,1,1).setFill(GBC.BOTH).setWeight(1, 0.98).setInsets(10, 15, 20, 0));
-							}
+							mainPanel.remove(mainPanel.getComponent(i));
+							mainPanel.add(mainFrame.getworkpanel(),new GBC(1,2,1,1).setFill(GBC.BOTH).setWeight(1, 0.98).setInsets(10, 15, 20, 0));
 						}
-						if(mainFrame.getStepThreeChoosePattern().getselectString() == null)
-						{
-							mainFrame.getOutputinformation().setVisible(true);
-							mainFrame.getReduceOrEnlargePanel().setVisible(true);
-							mainFrame.getpanel().setVisible(true);
+					}
+					if(mainFrame.getStepThreeChoosePattern().getselectString() == null)
+					{
+						stepThree = 2;
+						mainFrame.getOutputinformation().setVisible(true);
+						mainFrame.getReduceOrEnlargePanel().setVisible(true);
+						mainFrame.getpanel().setVisible(true);
 							
-							mainFrame.getpanel().add(mainFrame.getNoTimeSeqOperation());
-							mainFrame.getNoTimeSeqOperation().getTopLabel().setText("请选择测试数据生成方式!");
-							mainFrame.getNoTimeSeqOperation().getButton().setEnabled(false);
-							mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeNoTimeSeqTabbedPane());
-							mainFrame.getStepTwoCenterRightPanel().getGraphButton().setVisible(false);
-							mainFrame.getStepTwoCenterRightPanel().getZoominButton().setVisible(false);
-							mainFrame.getStepTwoCenterRightPanel().getZoomoutButton().setVisible(false);
+						mainFrame.getpanel().add(mainFrame.getNoTimeSeqOperation());
+						mainFrame.getNoTimeSeqOperation().getTopLabel().setText("请选择测试数据生成方式!");
+						mainFrame.getNoTimeSeqOperation().getButton().setEnabled(false);
+						mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeNoTimeSeqTabbedPane());
+						mainFrame.getStepTwoCenterRightPanel().getGraphButton().setVisible(false);
+						mainFrame.getStepTwoCenterRightPanel().getZoominButton().setVisible(false);
+						mainFrame.getStepTwoCenterRightPanel().getZoomoutButton().setVisible(false);
 							
-						}
-						
+					}
 						//后期添加选择是否选择了模型
 						else if(mainFrame.getStepThreeChoosePattern().getselectString().equals("根据模型相似度生成"))
 						{
+							stepThree = 2;
 							mainFrame.getOutputinformation().setVisible(true);
 							mainFrame.getReduceOrEnlargePanel().setVisible(true);
 							mainFrame.getpanel().setVisible(true);
@@ -294,6 +297,7 @@ public class StepThreeLeftButton extends JPanel{
 						else if(mainFrame.getStepThreeChoosePattern().getselectString().equals("自定义测试用例个数生成"))
 						{
 							try {
+							stepThree = 3;
 							File files = new File(mainFrame.getBathRoute()+"/NoTimeMarkov/");
 							if(isNew == true  && ModelName != null){
 								mainFrame.getNoTimeSeqOperation1().getTopLabel().removeAll();
@@ -378,14 +382,14 @@ public class StepThreeLeftButton extends JPanel{
 				// TODO Auto-generated method stub				
 				noTimeSeq.setFont(new Font("微软雅黑", Font.BOLD, 16));
 				noTimeCase.setFont(new Font("微软雅黑", Font.PLAIN, 16));
-				choosePatternLabel.setFont(new Font("微软雅黑", Font.PLAIN, 18));
-				timeModelLabel.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+
 				noTimeSeqNode.setVisible(true);
 				noTimeNode.setVisible(false);
 				clearPanel();		
 				
 				if(mainFrame.getStepThreeChoosePattern().getselectString() == null)
 				{
+					stepThree = 2;
 					mainFrame.getOutputinformation().setVisible(true);
 					mainFrame.getReduceOrEnlargePanel().setVisible(true);
 					mainFrame.getpanel().setVisible(true);
@@ -401,18 +405,20 @@ public class StepThreeLeftButton extends JPanel{
 				}
 				else if(mainFrame.getStepThreeChoosePattern().getselectString().equals("根据模型相似度生成"))
 				{
+					stepThree = 2;
 					mainFrame.getOutputinformation().setVisible(true);
 					mainFrame.getReduceOrEnlargePanel().setVisible(true);
 					mainFrame.getpanel().setVisible(true);
 					mainFrame.renewPanel();
 					
 					mainFrame.getpanel().add(mainFrame.getNoTimeSeqOperation());
-					if(isNew == true){
+					if(isNew == true && ModelName != null){
 						mainFrame.getNoTimeSeqOperation().getTopLabel().setText("当前选择的模型为:"+ModelName);
 						mainFrame.getNoTimeSeqOperation().getButton().setEnabled(true);
 					}
 					if(ModelName == null)
 					{
+						mainFrame.getNoTimeSeqOperation().getTopLabel().setText("当前选择的模型为:"+ModelName);
 						mainFrame.getNoTimeSeqOperation().getButton().setEnabled(false);
 					}
 					else {
@@ -425,29 +431,9 @@ public class StepThreeLeftButton extends JPanel{
 					mainFrame.getStepTwoCenterRightPanel().getZoominButton().setVisible(false);
 					mainFrame.getStepTwoCenterRightPanel().getZoomoutButton().setVisible(false);
 				}
-				if(mainFrame.getStepThreeChoosePattern().getselectString().equals("根据模型相似度生成"))
-				{
-					mainFrame.renewPanel();
-					
-					mainFrame.getpanel().add(mainFrame.getNoTimeSeqOperation());
-					
-					if(isNew == true && ModelName != null){
-						mainFrame.getNoTimeSeqOperation1().getTopLabel().setText("当前选择的模型为:"+ModelName);
-						mainFrame.getNoTimeSeqOperation1().getButton().setEnabled(true);
-					}
-					if(ModelName == null)
-					{
-						mainFrame.getNoTimeSeqOperation().getButton().setEnabled(false);
-					}
-					else {
-						mainFrame.getNoTimeSeqOperation().getButton().setEnabled(true);
-					}
-					mainFrame.getpanel().updateUI();
-					
-					mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeNoTimeSeqTabbedPane());
-				}
 				else{
 					try {
+					stepThree = 3;
 					File files = new File(mainFrame.getBathRoute()+"/NoTimeMarkov/");
 					if(isNew == true && ModelName != null){
 						mainFrame.getNoTimeSeqOperation1().getTopLabel().setText("当前选择的模型为:"+ModelName);
@@ -476,6 +462,7 @@ public class StepThreeLeftButton extends JPanel{
 						}
 					}
 					else if(ModelName == null){
+						mainFrame.getNoTimeSeqOperation1().getTopLabel().setText("当前选择的模型为:"+ModelName);
 						mainFrame.getNoTimeSeqOperation1().getButton().setEnabled(false);
 					}
 
@@ -507,7 +494,8 @@ public class StepThreeLeftButton extends JPanel{
 					clearPanel();		
 					
 					if(mainFrame.getStepThreeChoosePattern().getselectString().equals("根据模型相似度生成"))
-					{						
+					{				
+						stepThree = 4;
 						mainFrame.getpanel().add(mainFrame.getNoTimeCaseOperation());
 						if(isNew == true && ModelName != null){
 							mainFrame.getNoTimeCaseOperation().getTopLabel().setText("当前选择的模型为:"+ModelName);
@@ -515,6 +503,7 @@ public class StepThreeLeftButton extends JPanel{
 						}
 						if(ModelName == null)
 						{
+							mainFrame.getNoTimeCaseOperation().getTopLabel().setText("当前选择的模型为:"+ModelName);
 							mainFrame.getNoTimeCaseOperation().getButton().setEnabled(false);
 						}
 						mainFrame.getpanel().updateUI();
@@ -524,12 +513,14 @@ public class StepThreeLeftButton extends JPanel{
 					}
 					else if(mainFrame.getStepThreeChoosePattern().getselectString().equals("自定义测试用例个数生成")){
 						try {
+							stepThree = 5;
 							if(isNew == true && ModelName != null){
 								mainFrame.getNoTimeCaseOperation1().getTopLabel().setText("当前选择的模型为:"+ModelName);
 									mainFrame.getNoTimeCaseOperation1().getButton().setEnabled(true);
 								}
 							
 							else if(ModelName == null){
+								mainFrame.getNoTimeCaseOperation1().getTopLabel().setText("当前选择的模型为:"+ModelName);
 								mainFrame.getNoTimeCaseOperation1().getButton().setEnabled(false);
 							}
 							clearPanel();
@@ -548,17 +539,28 @@ public class StepThreeLeftButton extends JPanel{
 			}
 		});
 		
-		
 		timeModelLabel.addMouseListener(new MouseAdapter(){	
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
 				if(((JLabel)e.getSource()).isEnabled())
 				{
-					stepThree = 5;
 					choosePatternLabel.setFont(new Font("微软雅黑", Font.PLAIN, 18));
-					noTimeModelLabel.setFont(new Font("微软雅黑", Font.PLAIN, 18));
-					timeModelLabel.setFont(new Font("微软雅黑", Font.BOLD, 18));
+					modelExpand.setFont(new Font("微软雅黑", Font.BOLD, 18));
+					timeSeq.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+					timeCase.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+					
+					noTimeModelPanel.setVisible(false);
+					timeExpand.setVisible(true);
+					TimeExpandLabel.setVisible(true);
+					TimeSeqNode.setVisible(false);
+					TimeNode.setVisible(false);
+					
+					mainFrame.getOutputinformation().setVisible(true);
+					mainFrame.getReduceOrEnlargePanel().setVisible(true);
+					mainFrame.getpanel().setVisible(true);
+					
+					
 					JPanel mainPanel = mainFrame.getMainPanel();
 					for(int i = 0;i < mainPanel.getComponentCount();i++)
 					{
@@ -568,27 +570,29 @@ public class StepThreeLeftButton extends JPanel{
 							mainPanel.add(mainFrame.getworkpanel(),new GBC(1,2,1,1).setFill(GBC.BOTH).setWeight(1, 0.98).setInsets(10, 15, 20, 0));
 						}
 					}		
-					mainFrame.getOutputinformation().setVisible(true);
-					mainFrame.getReduceOrEnlargePanel().setVisible(true);
-					
-					timeExpand.setVisible(true);
-					noTimeModelPanel.setVisible(false);	
-				}
+				
+				mainFrame.getTimeExpandOperation().setModelName(ModelName);
 				clearPanel();
-				
-				modelExpand.setFont(new Font("微软雅黑", Font.BOLD, 16));
-				timeCase.setFont(new Font("微软雅黑", Font.PLAIN, 16));
-				
-				if(mainFrame.getTimeMarkovFileRadio().getIsSameName() == false){
+				if(isNew == true && ModelName != null){
 					mainFrame.getTimeExpandOperation().getExpandlabel().setText("当前选择的模型为:"+ModelName);
+					mainFrame.getTimeExpandOperation().getModelExchange().setEnabled(true);
+				}
+				else if(ModelName == null){
+					mainFrame.getTimeExpandOperation().getExpandlabel().setText("当前选择的模型为:"+ModelName);
+					mainFrame.getTimeExpandOperation().getModelExchange().setEnabled(false);
+				}
+				else{
+					mainFrame.getTimeExpandOperation().getModelExchange().setEnabled(true);
 				}
 				mainFrame.getpanel().setVisible(true);
 				mainFrame.getpanel().add(mainFrame.getTimeExpandOperation());
 				mainFrame.getCenterTabPanel().add(mainFrame.getTimeExpandTabbedPane());
+				
 				mainFrame.getStepTwoCenterRightPanel().getGraphButton().setVisible(true);
 				mainFrame.getStepTwoCenterRightPanel().getZoominButton().setVisible(true);
 				mainFrame.getStepTwoCenterRightPanel().getZoomoutButton().setVisible(true);
 				mainFrame.renewPanel();
+				}
 			}  
 		});
 		modelExpand.addMouseListener(new MouseAdapter() {
@@ -596,12 +600,19 @@ public class StepThreeLeftButton extends JPanel{
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
 				clearPanel();
-				modelExpand.setFont(new Font("微软雅黑", Font.BOLD, 16));
-				timeCase.setFont(new Font("微软雅黑", Font.PLAIN, 16));
-				if(mainFrame.getTimeMarkovFileRadio().getIsSameName() == false){
+				modelExpand.setFont(new Font("微软雅黑", Font.BOLD, 18));
+				timeSeq.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+				timeCase.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+				
+				TimeExpandLabel.setVisible(true);
+				TimeSeqNode.setVisible(false);
+				TimeNode.setVisible(false);
+				if(isNew == true && ModelName != null){
 					mainFrame.getTimeExpandOperation().getExpandlabel().setText("当前选择的模型为:"+ModelName);
+					mainFrame.getTimeExpandOperation().getModelExchange().setEnabled(true);
 				}
-				if(ModelName == null){
+				else if(ModelName == null){
+					mainFrame.getTimeExpandOperation().getExpandlabel().setText("当前选择的模型为:"+ModelName);
 					mainFrame.getTimeExpandOperation().getModelExchange().setEnabled(false);
 				}
 				else{
@@ -617,15 +628,125 @@ public class StepThreeLeftButton extends JPanel{
 				mainFrame.renewPanel();
 			}
 		});
+		
+		timeSeq.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub				
+				timeCase.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+				timeSeq.setFont(new Font("微软雅黑", Font.BOLD, 18));
+				modelExpand.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+
+				TimeExpandLabel.setVisible(false);
+				TimeSeqNode.setVisible(true);
+				TimeNode.setVisible(false);
+				
+				mainFrame.getOutputinformation().setVisible(true);
+				mainFrame.getReduceOrEnlargePanel().setVisible(true);
+				mainFrame.getpanel().setVisible(true);
+				clearPanel();		
+				
+				if(mainFrame.getStepThreeChoosePattern().getselectString() == null)
+				{
+					stepThree = 2;
+					
+					mainFrame.getpanel().add(mainFrame.getTimeSeqOperation());
+					mainFrame.getTimeSeqOperation().getTopLabel().setText("请选择测试数据生成方式!");
+					mainFrame.getTimeSeqOperation().getButton().setEnabled(false);
+					mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeTimeSeqTabbedPane());
+					mainFrame.getStepTwoCenterRightPanel().getGraphButton().setVisible(false);
+					mainFrame.getStepTwoCenterRightPanel().getZoominButton().setVisible(false);
+					mainFrame.getStepTwoCenterRightPanel().getZoomoutButton().setVisible(false);
+					
+				}
+				else if(mainFrame.getStepThreeChoosePattern().getselectString().equals("根据模型相似度生成"))
+				{
+					stepThree = 2;
+					
+					mainFrame.getpanel().add(mainFrame.getTimeSeqOperation());
+					if(isNew == true && ModelName != null){
+						mainFrame.getTimeSeqOperation().getTopLabel().setText("当前选择的模型为:"+ModelName);
+						mainFrame.getTimeSeqOperation().getButton().setEnabled(true);
+					}
+					if(ModelName == null)
+					{
+						mainFrame.getTimeSeqOperation().getTopLabel().setText("当前选择的模型为:"+ModelName);
+						mainFrame.getTimeSeqOperation().getButton().setEnabled(false);
+					}
+					else {
+						mainFrame.getTimeSeqOperation().getButton().setEnabled(true);
+					}
+					mainFrame.getpanel().updateUI();
+					
+					mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeTimeSeqTabbedPane());
+					mainFrame.getStepTwoCenterRightPanel().getGraphButton().setVisible(false);
+					mainFrame.getStepTwoCenterRightPanel().getZoominButton().setVisible(false);
+					mainFrame.getStepTwoCenterRightPanel().getZoomoutButton().setVisible(false);
+				}
+				else{
+					try {
+					stepThree = 3;
+					File files = new File(mainFrame.getBathRoute()+"/TimeMarkov/");
+					if(isNew == true && ModelName != null){
+						mainFrame.getTimeSeqOperation1().getTopLabel().setText("当前选择的模型为:"+ModelName);
+						
+						for(File selectFile : files.listFiles())
+						{
+							if(selectFile.getName().contains(ModelName))
+								route = selectFile.getAbsolutePath();
+						}
+						if(mainFrame.getStepThreeChoosePattern().getReliabilityIndex() == null || 
+								mainFrame.getStepThreeChoosePattern().getConfidence() == null)
+						{
+							mainFrame.getTimeSeqOperation1().getLabel2().removeAll();
+						    mainFrame.getTimeSeqOperation1().getLabel2().setText("请在自定义生成测试用例方式中填写置信度与可靠性指标！");
+						    mainFrame.getTimeSeqOperation1().getButton().setEnabled(false);
+						}
+						else {
+							mainFrame.getTimeSeqOperation1().getButton().setEnabled(true);
+							p = mainFrame.getStepThreeChoosePattern().getReliabilityIndex();
+							c = mainFrame.getStepThreeChoosePattern().getConfidence();
+							rm = new ReadMarkov2();
+							markov = rm.readMarkov(route);
+							min = getMinTCNum(markov,p,c);
+							mainFrame.getTimeSeqOperation1().getLabel2().removeAll();
+							mainFrame.getTimeSeqOperation1().getLabel2().setText("(不少于)"+String.valueOf(min)+"条");
+						}
+					}
+					else if(ModelName == null){
+						mainFrame.getTimeSeqOperation1().getButton().setEnabled(false);
+					}
+
+					clearPanel();
+					mainFrame.getpanel().add(mainFrame.getTimeSeqOperation1());
+					
+					mainFrame.getpanel().updateUI();	
+					mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeTimeSeqTabbedPane());
+					mainFrame.getCenterTabPanel().updateUI();
+					mainFrame.renewPanel();
+					} catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}	
+				mainFrame.renewPanel();
+			}
+		});
+		
 		timeCase.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
 				if(((JLabel)e.getSource()).isEnabled())
 				{
+					
 					clearPanel();
-					modelExpand.setFont(new Font("微软雅黑", Font.PLAIN, 16));
-					timeCase.setFont(new Font("微软雅黑", Font.BOLD, 16));
+					modelExpand.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+					timeSeq.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+					timeCase.setFont(new Font("微软雅黑", Font.BOLD, 18));
+					TimeExpandLabel.setVisible(false);
+					TimeSeqNode.setVisible(false);
+					TimeNode.setVisible(true);
 					
 					if(mainFrame.getStepThreeChoosePattern().getselectString().equals("根据模型相似度生成"))
 					{					
@@ -736,6 +857,11 @@ public class StepThreeLeftButton extends JPanel{
 	public JPanel getTimeModelPanel() {
 		return timeExpand;
 	}
+    
+	
+	public JLabel getModelExpand() {
+		return modelExpand;
+	}
 
 	public JLabel getTimeCase() {
 		return timeCase;
@@ -744,7 +870,7 @@ public class StepThreeLeftButton extends JPanel{
 	public JLabel getTimeSeq() {
 		return timeSeq;
 	}
-
+    
 	public int getStepThree() {
 		return stepThree;
 	}
@@ -767,10 +893,15 @@ public class StepThreeLeftButton extends JPanel{
 	public JPanel getTimeExpandLabel() {
 		return TimeExpandLabel;
 	}
+    
+	public JPanel getTimeSeqNode() {
+		return TimeSeqNode;
+	}
 
-	public JPanel getTimeLabel() {
+	public JPanel getTimeNode() {
 		return TimeNode;
 	}
+	
 	public NoTimeSeqNodePanel getNoTimeSeqNodePanel() {
 		return noTimeSeqNodePanel;
 	}
@@ -778,6 +909,11 @@ public class StepThreeLeftButton extends JPanel{
 	public NoTimeCaseNodePanel getNoTimeCaseNodePanel() {
 		return noTimeCaseNodePanel;
 	}
+	
+	public TimeSeqNodePanel getTimeSeqNodePanel() {
+		return timeSeqNodePanel;
+	}
+
 	public TimeCaseNodePanel getTimeCaseNodePanel() {
 		return timeCaseNodePanel;
 	}
@@ -785,7 +921,7 @@ public class StepThreeLeftButton extends JPanel{
 	public TimeExpandNodePanel getTimeExpandNodePanel() {
 		return timeExpandNodePanel;
 	}
-
+  
 	public boolean isNew() {
 		return isNew;
 	}

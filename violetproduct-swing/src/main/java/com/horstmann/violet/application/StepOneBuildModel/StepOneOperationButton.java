@@ -420,7 +420,12 @@ public class StepOneOperationButton extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				fileMenu.getItem(0).doClick();	
+				if(!mainFrame.getActiveModelPanel().isSave()){
+					mainFrame.saveModelPanel(mainFrame.getActiveModelPanel());
+				}
+				else {
+					mainFrame.saveOldPlace(mainFrame.getActiveModelPanel());
+				}
 				mainFrame.renewPanel();
 			}
 		});
@@ -433,71 +438,6 @@ public class StepOneOperationButton extends JPanel{
 				if(mainFrame.getActiveModelPanel() != null)
 				{
 					mainFrame.saveModelPanel(mainFrame.getActiveModelPanel());
-//					JFileChooser jFileChooser = new JFileChooser();
-//					jFileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-//	                int i = jFileChooser.showSaveDialog(null);
-//	                if(i== jFileChooser.APPROVE_OPTION){ //打开文件
-//	                	File file = jFileChooser.getSelectedFile(); 
-//	                    String path = jFileChooser.getSelectedFile().getAbsolutePath();
-//	                    String name = jFileChooser.getSelectedFile().getName();
-//	                    fileMenu.getPackageRoute().put(mainFrame.getActiveModelPanel().getName(), path);
-//	                    //生成存放用例图的文件夹
-//	                    String packagePath = path + "/" +  mainFrame.getActiveModelPanel().getTitle().getText();
-//	                    File packagefile =  new File(packagePath);
-//	                    if(!packagefile.exists())
-//	                    {
-//	                    	packagefile.mkdirs();
-//	                    }
-//	                    
-//	                    String ucasepath = packagePath + "/用例图";
-//	                    File ucasefile = new File(ucasepath);
-//	                    if(!ucasefile.exists())
-//	                    {
-//	                    	ucasefile.mkdirs();
-//	                    }
-//	                    //生成存放顺序图的文件夹
-//	                    String seqpath = packagePath + "/顺序图";
-//	                    File seqfile = new File(seqpath);
-//	                    if(!seqfile.exists())
-//	                    {
-//	                    	seqfile.mkdirs();
-//	                    }
-//	                    
-//	                    XStreamBasedPersistenceService xStreamBasedPersistenceService = new XStreamBasedPersistenceService();
-//	                    
-//	                    //保存所有用例图
-//	                    for(int j = 0;j < mainFrame.getActiveModelPanel().getUseCaseworkspaceList().size();j++)
-//	                    {
-//	                    try {
-//	                    IWorkspace workspace = mainFrame.getActiveModelPanel().getUseCaseworkspaceList().get(j);
-//	                    File ucaseFile = new File(ucasepath+"/"+workspace.getName()+".ucase.violet.xml");
-//						JFileWriter jFileWriter = new JFileWriter(ucaseFile);
-//	                    OutputStream out = jFileWriter.getOutputStream();
-//	                    IGraph graph = workspace.getGraphFile().getGraph();
-//	                    xStreamBasedPersistenceService.write(graph, out);
-//	                    } catch (FileNotFoundException e1) {
-//							// TODO Auto-generated catch block
-//							e1.printStackTrace();
-//						}
-//	                    }
-//	                    
-//	                    for(int j = 0;j < mainFrame.getActiveModelPanel().getSequencespaceList().size();j++)
-//	                    {
-//	                    try {
-//	                    IWorkspace workspace = mainFrame.getActiveModelPanel().getSequencespaceList().get(j);
-//	                    File ucaseFile = new File(seqpath+"/"+workspace.getName()+".seq.violet.xml");
-//						JFileWriter jFileWriter = new JFileWriter(ucaseFile);
-//	                    OutputStream out = jFileWriter.getOutputStream();
-//	                    IGraph graph = workspace.getGraphFile().getGraph();
-//	                    xStreamBasedPersistenceService.write(graph, out);
-//	                    } catch (FileNotFoundException e1) {
-//							// TODO Auto-generated catch block
-//							e1.printStackTrace();
-//						}
-//	                    }
-//	                }else{
-//	                    System.out.println("没有选中文件");
-//	                }
 				}
 				
                 
@@ -546,14 +486,14 @@ public class StepOneOperationButton extends JPanel{
 				// TODO Auto-generated method stub		
 				boolean isExist = false;
 				Icon icon = new ImageIcon("resources/icons/22x22/open.png");
-				String str = (String) JOptionPane.showInputDialog(null,"请输入模型包名称:\n","模型包名称",JOptionPane.PLAIN_MESSAGE,icon,null,"在这输入");
+				String str = (String) JOptionPane.showInputDialog(null,"请输入工程名称:\n","工程名称",JOptionPane.PLAIN_MESSAGE,icon,null,"在这输入");
 				if(str != null && str != "")
 				{
 					for(ModelPanel modelPanel : mainFrame.getModelPanels())
 					{
 						if(modelPanel.getTitle().getText().equals(str))
 						{
-							JOptionPane.showMessageDialog(null, "该模型包与已经存在的模型包冲突!","标题",JOptionPane.WARNING_MESSAGE);
+							JOptionPane.showMessageDialog(null, "该工程与已经存在的工程冲突!","标题",JOptionPane.WARNING_MESSAGE);
 							isExist = true;
 						}
 					}

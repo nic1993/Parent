@@ -99,7 +99,7 @@ public class StepTwoEvaluateOperation extends JPanel{
     	   topLabel.setFont(new Font("宋体", Font.PLAIN, 16));
 //    	   promptLabel.setText("当前模型为:"+Model_Name+"评估验证模型的一致性，即模型的归一性、确定性以及可达性。");
     	   
-    	   evaluateBar = new JProgressBar();
+    	   evaluateBar = new JProgressBar()           ;
     	   evaluateBar.setUI(new ProgressUI(evaluateBar,Color.green));
     	   evaluateBar.setPreferredSize(new Dimension(800,30));
     	   evaluateBar.setUI(new GradientProgressBarUI());

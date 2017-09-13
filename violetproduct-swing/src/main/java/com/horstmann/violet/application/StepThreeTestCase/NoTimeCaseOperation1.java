@@ -228,8 +228,6 @@ public class NoTimeCaseOperation1 extends JPanel{
 			
 					StepThreeTabelPanel stepThreeTabelPanel = new StepThreeTabelPanel(constraintNameString, actualPercentsDoubles,pros, numbers);
 					StepThreeTabelPanel testRoute = new StepThreeTabelPanel(constraintNameString, actualPercentsDoubles,pros, numbers);
-//					mainFrame.getStepThreeNoTimeCustomTabbedPane().getTestRoute().removeAll();
-//					mainFrame.getStepThreeNoTimeCustomTabbedPane().getTestRoute().add(stepThreeTabelPanel);
 					
 					OutputFormat format = OutputFormat.createPrettyPrint();
 					

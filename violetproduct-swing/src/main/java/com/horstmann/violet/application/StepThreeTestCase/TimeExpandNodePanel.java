@@ -42,7 +42,7 @@ public class TimeExpandNodePanel {
     	   {
     		   expandNodeLabels.add(expandNode);
         	   int i = expandNodeLabels.size() - 1;
-        	   mainFrame.getStepThreeLeftButton().getTimeExpandLabel().add(expandNode, new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0).setInsets(5, 5, 0, 0));
+        	   mainFrame.getStepThreeLeftButton().getTimeExpandLabel().add(expandNode, new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0).setInsets(5, 10, 0, 0));
         	   expandLabelPanel.repaint();
     	   }
     	   

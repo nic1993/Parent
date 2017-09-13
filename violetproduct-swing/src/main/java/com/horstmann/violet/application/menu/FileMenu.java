@@ -539,11 +539,11 @@ public class FileMenu extends JMenu
                 {
               	  List<IFile> eAFiles = openEAXML(selectedFile, graphFile, url);
               	  //保存selectedFile默认位置
-              	  if(eAFiles.get(0).getFilename().contains(".seq.violet.xml"))
-              	  {
-              		  String seqName = eAFiles.get(0).getFilename().replace(".seq.violet.xml", "");
-              		  XMLUtils.AutoSave(url, mainFrame.getBathRoute()+"/SequenceDiagram/EAXML", selectedFile.getFilename());
-              	  }
+//              	  if(eAFiles.get(0).getFilename().contains(".seq.violet.xml"))
+//              	  {
+//              		  String seqName = eAFiles.get(0).getFilename().replace(".seq.violet.xml", "");
+//              		  XMLUtils.AutoSave(url, mainFrame.getBathRoute()+"/SequenceDiagram/EAXML", selectedFile.getFilename());
+//              	  }
               	  for(IFile eafile : eAFiles)
               	  {
                       String filename=eafile.getFilename(); //导入名字
@@ -636,14 +636,13 @@ public class FileMenu extends JMenu
    						mainFrame.getOutputinformation().geTextArea().append("打开用例图: "+name+"\n");
                       }
                       
-                      userPreferencesService.addOpenedFile(graphFile);
-                      userPreferencesService.addRecentFile(graphFile);
+//                      userPreferencesService.addOpenedFile(graphFile);
+//                      userPreferencesService.addRecentFile(graphFile);
               	  }
               	  
                 }
                 else {
              	 String filename=selectedFile.getFilename(); //导入名字
-             	 System.out.println("name: " + filename);
              	 String path = null;
              	 graphFile = new GraphFile(selectedFile);
              	 IWorkspace workspace = new Workspace(graphFile);

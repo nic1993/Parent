@@ -82,7 +82,7 @@ public class NoTimeSeqOperation extends JPanel{
        private Element root;
        private Document dom;
        private List<Transition> transitions;
-
+       
        private int progressBarIndex = 0;
        private Callable<Integer> maincallable;
        private FutureTask<Integer> maintask;
@@ -160,93 +160,6 @@ public class NoTimeSeqOperation extends JPanel{
    			@Override
    			public Integer call() throws Exception {
    				// TODO Auto-generated method stub
-//   				try {
-//   				button.setEnabled(false);
-//   				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(false);
-//   				mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(false);
-//   				mainFrame.getStepThreeLeftButton().getNoTimeCase().setEnabled(false);
-//   				progressBarIndex = 0;
-//   				
-//   				mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().removeAll();
-//				File files = new File(NoTimeMarkovRoute);
-//				for(File selectFile : files.listFiles())
-//				{
-//					if(selectFile.getName().replace(".xml", "").equals(ModelName))
-//						route = selectFile.getAbsolutePath();
-//				}
-//				
-//				
-//   				ReadMarkov2 rm = new ReadMarkov2();
-//				markov = rm.readMarkov(route);
-//				
-//				dom = DocumentHelper.createDocument();
-//				root = dom.addElement("TCS");
-//				
-//				double[] PI = CalculateDistribution.stationaryDistribution(markov);
-//				
-//				double similarity = 999991;
-//				boolean sufficiency = false;
-//				gc = new GenerateCases();
-//				boolean flag = true;
-//
-//				do {
-//					int numberOfTestCases = gc.generate(markov, root);
-//					// System.out.println(numberOfTestCases);
-//					if (flag) {
-//
-//						sufficiency = isSufficient(markov);
-//					}
-//					// 迁移或者状态覆盖百分百
-//
-//					if (!sufficiency) {
-//						continue;
-//					}
-//
-//					flag = false;
-//					similarity = CalculateSimilarity.statistic(markov, PI);
-//					markov.setDeviation(similarity);
-//					markov.setActualNum(numberOfTestCases);
-//                    
-//				} while (similarity > 0.1);
-//				
-//				JPanel seqPanel = new JPanel();
-//				seqPanel.setLayout(new GridBagLayout());
-//				
-//				mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().removeAll();
-//				mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().setLayout(new GridBagLayout());
-//				int i = 0;
-//				for(String seq : gc.abstractTS)
-//				{
-//					StepThreeTabelPanel testTabelPanel1 = new StepThreeTabelPanel(seq, 1,mainFrame);
-//					seqPanel.add(testTabelPanel1, new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
-//					
-//					StepThreeTabelPanel testTabelPanel = new StepThreeTabelPanel(seq, 1,mainFrame);
-//					mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().add(testTabelPanel, new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
-//					mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().repaint();
-//					i++;
-//					Thread.sleep(100);
-//				}
-//                
-//				button.setEnabled(true);
-//   				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
-//   				mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(true);
-//   				mainFrame.getStepThreeLeftButton().getNoTimeCase().setEnabled(true);
-//				mainFrame.getNoTimeCaseOperation().setModelName(ModelName);
-//				
-//				NoTimeSeqNode noTimeSeqNode = new NoTimeSeqNode(ModelName+"_相似度", mainFrame);
-//				noTimeSeqNode.setAbstractSequencePanel(seqPanel);
-//				
-//				mainFrame.getStepThreeLeftButton().getNoTimeSeqNodePanel().insertNodeLabel(noTimeSeqNode, seqPanel);
-//				mainFrame.getStepThreeLeftButton().getNoTimeSeqNode().repaint();
-//				} catch (RuntimeException e) {
-//					// TODO: handle exception
-//					topLabel.removeAll();
-//   					topLabel.setText(e.getLocalizedMessage());
-//					
-//					button.setEnabled(true);
-//	   				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
-//	   				mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(true);
-//				}
    				progressBarIndex = 0;
    				progressBar.setValue(0);
    				progressBar.setValue(progressBarIndex);
@@ -263,9 +176,13 @@ public class NoTimeSeqOperation extends JPanel{
    						Thread.sleep(500);
    					}
    				}
-   				if(task1.isDone())
-   				{
-   					thread2.start();
+   			    
+   				while(true){
+   					if(task1.isDone())
+   	   				{
+   	   					thread2.start();
+   	   					break;
+   	   				}
    				}
    				return 1;
    			}
@@ -293,7 +210,6 @@ public class NoTimeSeqOperation extends JPanel{
 						route = selectFile.getAbsolutePath();
 				}
 				
-				
    				ReadMarkov2 rm = new ReadMarkov2();
 				markov = rm.readMarkov(route);
 				
@@ -319,7 +235,7 @@ public class NoTimeSeqOperation extends JPanel{
 					if (!sufficiency) {
 						continue;
 					}
-
+                    
 					flag = false;
 					similarity = CalculateSimilarity.statistic(markov, PI);
 					markov.setDeviation(similarity);
@@ -347,6 +263,7 @@ public class NoTimeSeqOperation extends JPanel{
 			public Integer call() throws Exception {
 				// TODO Auto-generated method stub
 				try {
+
 					JPanel seqPanel = new JPanel();
 					seqPanel.setLayout(new GridBagLayout());
 					
@@ -364,7 +281,7 @@ public class NoTimeSeqOperation extends JPanel{
 						progressBar.setValue(40 + (int)(((double)i/gc.abstractTS.size())*60));
 						mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().repaint();
 						mainFrame.renewPanel();
-						Thread.sleep(100);
+						Thread.sleep(10);
 					}
 	                
 					
@@ -393,8 +310,6 @@ public class NoTimeSeqOperation extends JPanel{
 		};
 		task2 = new FutureTask<>(callable2);
    		thread2 = new Thread(task2);
-   		
-   		
        }
 private static boolean isSufficient(Markov markov) {
 

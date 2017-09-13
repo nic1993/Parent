@@ -385,7 +385,6 @@ public class TimeExpandOperation extends JPanel{
 				expandlabel.removeAll();
 			    expandlabel.setText("正在生成转换XML信息.....");
 			    Thread.sleep(500);
-                System.out.println("modelName:  "  + modelName);
 			    XMLPanel = XMLToTree.getTree(ExtendRoute+modelName+"_TimeExtend.markov.violet.xml");
 			    expandNode.setXMLPanel(XMLPanel);
 			    mainFrame.getTimeExpandTabbedPane().getExpandResport().add(XMLPanel);
@@ -396,7 +395,9 @@ public class TimeExpandOperation extends JPanel{
 			    ModelExchange.setEnabled(true);
 			    restartExchange.setEnabled(false);
    				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
-   				mainFrame.getStepThreeLeftButton().getTimeCase().setEnabled(true);
+   				mainFrame.getStepThreeLeftButton().getTimeSeq().setEnabled(true);
+   				mainFrame.getTimeSeqOperation().setModelName(modelName);
+   				mainFrame.getTimeSeqOperation1().setModelName(modelName);
 			    restartExchange.setText("停止扩展");
 				return 1;
 			}

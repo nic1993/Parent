@@ -13,7 +13,7 @@ import com.horstmann.violet.application.gui.MainFrame;
 
 public class TimeCaseNodePanel {
 	   private MainFrame mainFrame;
-       private List<NoTimeTestCaseNode> TestCaseNodeLabels;
+       private List<TimeTestCaseNode> TestCaseNodeLabels;
        private boolean isExist = false;
        public TimeCaseNodePanel(MainFrame mainFrame)
        {
@@ -22,15 +22,15 @@ public class TimeCaseNodePanel {
        }
        public void init()
        {
-    	   TestCaseNodeLabels = new ArrayList<NoTimeTestCaseNode>();
+    	   TestCaseNodeLabels = new ArrayList<TimeTestCaseNode>();
        }
-       public void insertNodeLabel(NoTimeTestCaseNode noTimeTestCaseLabel,JPanel TestDataPanel,String quota)
+       public void insertNodeLabel(TimeTestCaseNode TimeTestCaseLabel,JPanel TestDataPanel,String quota)
        {
     	   if(TestCaseNodeLabels.size() != 0)
     	   {
-    		   for(NoTimeTestCaseNode NodeLabel :TestCaseNodeLabels)
+    		   for(TimeTestCaseNode NodeLabel :TestCaseNodeLabels)
     		   {
-    			if(NodeLabel.getText().equals(noTimeTestCaseLabel.getText()))
+    			if(NodeLabel.getText().equals(TimeTestCaseLabel.getText()))
     			{
     				isExist = true;	
     				NodeLabel.setTestDataPanel(TestDataPanel);
@@ -40,21 +40,21 @@ public class TimeCaseNodePanel {
     	   }
     	   if(isExist == false)
     	   {
-    		   TestCaseNodeLabels.add(noTimeTestCaseLabel);
+    		   TestCaseNodeLabels.add(TimeTestCaseLabel);
         	   int i = TestCaseNodeLabels.size() - 1;
-        	   mainFrame.getStepThreeLeftButton().getTimeLabel().add(noTimeTestCaseLabel, new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0).setInsets(5, 10, 0, 0));
-        	   mainFrame.getStepThreeLeftButton().getTimeLabel().repaint();
+        	   mainFrame.getStepThreeLeftButton().getTimeNode().add(TimeTestCaseLabel, new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0).setInsets(5, 10, 0, 0));
+        	   mainFrame.getStepThreeLeftButton().getTimeNode().repaint();
     	   }
        }
        
-       public void insertCustomNodeLabel(NoTimeTestCaseNode noTimeTestCaseLabel,JPanel TestDataPanel,JPanel TestRoute,String quota)
+       public void insertCustomNodeLabel(TimeTestCaseNode TimeTestCaseLabel,JPanel TestDataPanel,JPanel TestRoute,String quota)
        {
     	   if(TestCaseNodeLabels.size() != 0)
     	   {
-    		   for(NoTimeTestCaseNode NodeLabel :TestCaseNodeLabels)
+    		   for(TimeTestCaseNode NodeLabel :TestCaseNodeLabels)
     		   {
     			   
-    			if(NodeLabel.getText().equals(noTimeTestCaseLabel.getText()))
+    			if(NodeLabel.getText().equals(TimeTestCaseLabel.getText()))
     			{
     				isExist = true;	
     				NodeLabel.setTestDataPanel(TestDataPanel);
@@ -65,14 +65,14 @@ public class TimeCaseNodePanel {
     	   }
     	   if(isExist == false)
     	   {
-    		   TestCaseNodeLabels.add(noTimeTestCaseLabel);
+    		   TestCaseNodeLabels.add(TimeTestCaseLabel);
         	   int i = TestCaseNodeLabels.size() - 1;
-        	   mainFrame.getStepThreeLeftButton().getNoTimeNode().add(noTimeTestCaseLabel, new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0).setInsets(5, 10, 0, 0));
-        	   mainFrame.getStepThreeLeftButton().getNoTimeNode().repaint();
+        	   mainFrame.getStepThreeLeftButton().getTimeNode().add(TimeTestCaseLabel, new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0).setInsets(5, 10, 0, 0));
+        	   mainFrame.getStepThreeLeftButton().getTimeNode().repaint();
     	   }
     	   
        }
-	public List<NoTimeTestCaseNode> getTestCaseNodeLabels() {
+	public List<TimeTestCaseNode> getTestCaseNodeLabels() {
 		return TestCaseNodeLabels;
 	}
 }

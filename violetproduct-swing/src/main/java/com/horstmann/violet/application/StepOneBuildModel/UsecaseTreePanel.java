@@ -79,14 +79,8 @@ public class UsecaseTreePanel extends JPanel implements Cloneable{
 		this.modelPanel = modelPanel;
 		this.setBackground(new Color(233,233,233));
 		init();
-//		usecaseTree.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		this.setLayout(new GridLayout());
 		this.add(usecaseTree);
-		
-//		this.setMinimumSize(new Dimension(200,200));
-//		this.setMaximumSize(new Dimension(200,200));
-//		this.setPreferredSize(new Dimension(200,200));
-		
 	}
 
 	private void init() {
@@ -177,8 +171,6 @@ public class UsecaseTreePanel extends JPanel implements Cloneable{
 				}
 				if(((DefaultMutableTreeNode)usecaseTree.getLastSelectedPathComponent()).getLevel() == 2)
 				{
-					
-		
 					if(((DefaultMutableTreeNode)usecaseTree.getLastSelectedPathComponent()).getParent().getParent().equals(usecasetreerootnode))
 					{
 						DefaultMutableTreeNode UseCaseNode =(DefaultMutableTreeNode)(usecaseTree.getLastSelectedPathComponent());
@@ -240,8 +232,11 @@ public class UsecaseTreePanel extends JPanel implements Cloneable{
 				{
 					popupMenu = new JPopupMenu();
 					newDiagram = new JMenuItem("É¾³ý     ",new ImageIcon("resources/icons/16x16/De.png"));
+					
+					
 					newDiagram.setAccelerator(KeyStroke.getKeyStroke('D', InputEvent.CTRL_MASK));
 					popupMenu.add(newDiagram);
+					
 					popupMenu.show(e.getComponent(), e.getX(), e.getY());
 					newDiagram.addActionListener(new ActionListener() {
 						@Override
@@ -285,6 +280,8 @@ public class UsecaseTreePanel extends JPanel implements Cloneable{
 							mainFrame.renewPanel();
 						}
 					});
+					
+				
 				}
 				
 				mainFrame.renewPanel();

@@ -127,60 +127,72 @@ public class SequenceTreePanel extends JPanel{
 							}
 						});	
 					}
-					mainFrame.renewPanel();
-				}
-				
-				//添加删除标志
-				if(((DefaultMutableTreeNode)sequencetree.getLastSelectedPathComponent()).getLevel() == 1)
-				{
-					popupMenu = new JPopupMenu();
-					newDiagram = new JMenuItem("删除     ",new ImageIcon("resources/icons/16x16/De.png"));
-					newDiagram.setAccelerator(KeyStroke.getKeyStroke('D', InputEvent.CTRL_MASK));
-					popupMenu.add(newDiagram);
-					popupMenu.show(e.getComponent(), e.getX(), e.getY());
-					newDiagram.addActionListener(new ActionListener() {
-						@Override
-						public void actionPerformed(ActionEvent e) {
-							// TODO Auto-generated method stub
-//							fileMenu.getItem(3).doClick();
-							String name = ((DefaultMutableTreeNode)sequencetree.getLastSelectedPathComponent()).toString();
-							IWorkspace removeworkspace = null;
-						    //从保存模型中删除模型
-							for(IWorkspace workspace : modelPanel.getSequencespaceList())
-							{
-								if(workspace.getName().equals(name))
+					
+					//添加删除标志
+					if(((DefaultMutableTreeNode)sequencetree.getLastSelectedPathComponent()).getLevel() == 1)
+					{
+						popupMenu = new JPopupMenu();
+						newDiagram = new JMenuItem("删除     ",new ImageIcon("resources/icons/16x16/De.png"));
+						JMenuItem saveDiagram = new JMenuItem("保存     ",new ImageIcon("resources/icons/16x16/De.png"));
+						newDiagram.setAccelerator(KeyStroke.getKeyStroke('D', InputEvent.CTRL_MASK));
+						popupMenu.add(newDiagram);
+						popupMenu.add(saveDiagram);
+						popupMenu.show(e.getComponent(), e.getX(), e.getY());
+						newDiagram.addActionListener(new ActionListener() {
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								// TODO Auto-generated method stub
+//								fileMenu.getItem(3).doClick();
+								String name = ((DefaultMutableTreeNode)sequencetree.getLastSelectedPathComponent()).toString();
+								IWorkspace removeworkspace = null;
+							    //从保存模型中删除模型
+								for(IWorkspace workspace : modelPanel.getSequencespaceList())
 								{
-									removeworkspace = workspace;
-									if(mainFrame.getActiveWorkspace() != null)
+									if(workspace.getName().equals(name))
 									{
-										if(mainFrame.getActiveWorkspace().equals(workspace))
+										removeworkspace = workspace;
+										if(mainFrame.getActiveWorkspace() != null)
 										{
-											mainFrame.getCenterTabPanel().removeAll();
+											if(mainFrame.getActiveWorkspace().equals(workspace))
+											{
+												mainFrame.getCenterTabPanel().removeAll();
+											}
 										}
 									}
 								}
-							}
-							if(removeworkspace != null)
-							{
-								modelPanel.getSequencespaceList().remove(removeworkspace);
-							}
-							//从树中删除模型
-							int index = 0;
-							int count = sequencetreerootnode.getChildCount();
-							for(int i = 0;i < count;i++)
-							{
-								if(sequencetreerootnode.getChildAt(i).toString().equals(name))
+								if(removeworkspace != null)
 								{
-									index = i;
+									modelPanel.getSequencespaceList().remove(removeworkspace);
 								}
+								//从树中删除模型
+								int index = 0;
+								int count = sequencetreerootnode.getChildCount();
+								for(int i = 0;i < count;i++)
+								{
+									if(sequencetreerootnode.getChildAt(i).toString().equals(name))
+									{
+										index = i;
+									}
+								}
+								sequencetreemodel.removeNodeFromParent((MutableTreeNode) sequencetreerootnode.getChildAt(index));
+								sequencetree.repaint();
+								
+								mainFrame.renewPanel();
 							}
-							sequencetreemodel.removeNodeFromParent((MutableTreeNode) sequencetreerootnode.getChildAt(index));
-							sequencetree.repaint();
+						});
+						saveDiagram.addActionListener(new ActionListener() {
 							
-							mainFrame.renewPanel();
-						}
-					});
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								// TODO Auto-generated method stub
+								fileMenu.getItem(5).doClick();
+							}
+						});
+					}
+					mainFrame.renewPanel();
 				}
+				
+				
 				
 				if(e.getClickCount()==2){
 					 DefaultMutableTreeNode node = (DefaultMutableTreeNode) sequencetree

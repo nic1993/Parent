@@ -73,7 +73,11 @@ public class TimeCaseOperation extends JPanel{
        
        private ReadMarkov2 rm;
        private Markov markov;
+       private GenerateCases gc;
+       private Element root;
+       private Document dom;
        private List<Transition> transitions;
+       
        private int progressBarIndex;
        private Callable<Integer> maincallable;
        private FutureTask<Integer> maintask;
@@ -92,7 +96,6 @@ public class TimeCaseOperation extends JPanel{
        public TimeCaseOperation(MainFrame mainFrame)
        {
     	   this.mainFrame = mainFrame;
-    	    
     	   init();
     	   this.setBackground(new Color(233,233,233));
     	   this.setLayout(new GridBagLayout());
@@ -107,7 +110,6 @@ public class TimeCaseOperation extends JPanel{
        {
     	   topLabel = new JLabel("测试用例生成完成");
     	   label1 = new JLabel("终止条件阈值:");
-
     	   
     	   progressBar = new JProgressBar();
     	   
@@ -251,7 +253,8 @@ public class TimeCaseOperation extends JPanel{
    				// TODO Auto-generated method stub
                 button.setEnabled(false);
    				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(false);
-   				mainFrame.getStepThreeLeftButton().getTimeExpandLabel().setEnabled(false);
+   				mainFrame.getStepThreeLeftButton().getModelExpand().setEnabled(false);
+   				mainFrame.getStepThreeLeftButton().getTimeSeq().setEnabled(false);
    				
    				JPanel mainPanel = new JPanel();
    				mainPanel.setLayout(new GridBagLayout());
@@ -259,7 +262,6 @@ public class TimeCaseOperation extends JPanel{
    				mainFrame.getStepThreeTimeTabbedPane().getAbstractSequence().removeAll();
 				mainFrame.getStepThreeTimeTabbedPane().getTestData().removeAll();
 				
-				System.out.println("modelname: " + ModelName);
 				File files = new File(TimeMarkovRoute);
 				for(File selectFile : files.listFiles())
 				{
@@ -269,8 +271,10 @@ public class TimeCaseOperation extends JPanel{
 
    				progressBarIndex = 0;
    				
-   				ReadMarkov2 rm = new ReadMarkov2();
-				Markov markov = rm.readMarkov(route);
+   				markov = mainFrame.getTimeSeqOperation().getMarkov();
+				gc = mainFrame.getTimeSeqOperation().getGc();
+				root = mainFrame.getTimeSeqOperation().getRoot();
+				dom = mainFrame.getTimeSeqOperation().getDom();
 				
 				topLabel.removeAll();
 				topLabel.setText("正在读取:"+ModelName+"文件..........");
@@ -331,37 +335,6 @@ public class TimeCaseOperation extends JPanel{
 			writer.write(dom);
 			writer.close();
 			
-//			topLabel.removeAll();
-//			topLabel.setText("正在生成测试用例中的激励信息........");
-//			while (progressBarIndex < 45) {
-//				progressBar.setValue(progressBarIndex++);
-//				Thread.sleep(100);
-//			}
-//			transitions = markov.getTransitions();
-//			for(Transition transition : transitions)
-//			{
-//				Stimulate stimulate = transition.getStimulate();
-//				List<Parameter> parameters = stimulate.getParameters();
-//				for(Parameter parameter: parameters)
-//				{
-//					paramterNameList.add(transition.getName());
-//					List<String> values = parameter.getValues();
-//					String lastValue = parameter.getName()+"=[";
-//					for(int i = 0;i < values.size();i++)
-//					{
-//						if(i == 0)
-//						    lastValue += values.get(i).toString();
-//						else {
-//							lastValue += ","+values.get(i).toString();
-//							}
-//						}
-//						lastValue += "]";
-//						paramterValueList.add(lastValue);
-//					}
-//				}
-//				StepThreeTabelPanel stepThreeTabelPanel = new StepThreeTabelPanel(paramterNameList, paramterValueList);
-//				mainFrame.getStepThreeTimeTabbedPane().getAbstractSequence().removeAll();
-//				mainFrame.getStepThreeTimeTabbedPane().getAbstractSequence().add(stepThreeTabelPanel);
 				
 		    topLabel.removeAll();
 		    topLabel.setText("正在生成抽象测试序列信息........");
@@ -370,10 +343,10 @@ public class TimeCaseOperation extends JPanel{
 			//生成测试数据
 			topLabel.removeAll();
 			topLabel.setText("正在生成测试数据信息........");
-			mainFrame.getStepThreeNoTimeTabbedPane().getTestData().removeAll();
-			mainFrame.getStepThreeNoTimeTabbedPane().getTestData().setLayout(new GridBagLayout());
+			mainFrame.getStepThreeTimeTabbedPane().getTestData().removeAll();
+			mainFrame.getStepThreeTimeTabbedPane().getTestData().setLayout(new GridBagLayout());
 			CaseTableHeaderPanel caseTableHeaderPanel2 = new CaseTableHeaderPanel();
-			mainFrame.getStepThreeNoTimeTabbedPane().getTestData().add(caseTableHeaderPanel2,new GBC(0, 0).setFill(GBC.BOTH).setWeight(1, 0));
+			mainFrame.getStepThreeTimeTabbedPane().getTestData().add(caseTableHeaderPanel2,new GBC(0, 0).setFill(GBC.BOTH).setWeight(1, 0));
 			
 			JPanel TestDataPanel = new JPanel();
 			TestDataPanel.setLayout(new GridBagLayout());
@@ -383,29 +356,22 @@ public class TimeCaseOperation extends JPanel{
 			for(TCDetail tcDetail : lists)
 			{
 				StepThreeTabelPanel testTabelPanel = new StepThreeTabelPanel(tcDetail.getTestCase(),2,mainFrame);
-//				StepTwoMatrixPanel stepTwoMatrixPanel = new StepTwoMatrixPanel();
-//				stepTwoMatrixPanel.getTitleLabel().setText("测试用例信息");
-//				stepTwoMatrixPanel.getTabelPanel().add(testTabelPanel);
 				
 				StepThreeTabelPanel testTabelPanel2 = new StepThreeTabelPanel(tcDetail.getTestCase(),2,mainFrame);
-//				StepTwoMatrixPanel stepTwoMatrixPanel2 = new StepTwoMatrixPanel();
-//				stepTwoMatrixPanel2.getTitleLabel().setText("测试用例信息");
-//				stepTwoMatrixPanel2.getTabelPanel().add(testTabelPanel2);
 				
 				TestDataPanel.add(testTabelPanel, new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
 				
-				mainFrame.getStepThreeNoTimeTabbedPane().getTestData().add(testTabelPanel2, new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
-				mainFrame.getStepThreeNoTimeTabbedPane().getTestData().updateUI();
-				mainFrame.getStepThreeNoTimeTabbedPane().getTestDataScroll().getVerticalScrollBar().setValue(
-				mainFrame.getStepThreeNoTimeTabbedPane().getTestDataScroll().getVerticalScrollBar().getMaximum());
+				mainFrame.getStepThreeTimeTabbedPane().getTestData().add(testTabelPanel2, new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
+				mainFrame.getStepThreeTimeTabbedPane().getTestData().updateUI();
+				mainFrame.getStepThreeTimeTabbedPane().getTestDataScroll().getVerticalScrollBar().setValue(
+				mainFrame.getStepThreeTimeTabbedPane().getTestDataScroll().getVerticalScrollBar().getMaximum());
 				i++;
 				progressBar.setValue(60 + (int)(((double)i/lists.size())*40));
 				mainFrame.renewPanel();
 			}
 		    
-			mainFrame.getStepThreeNoTimeTabbedPane().getTestData().add(new JPanel(), new GBC(0, i+1).setFill(GBC.BOTH).setWeight(1, 1));		
-//			mainFrame.getStepThreeNoTimeTabbedPane().getCaseInformation().add(mainPanel);
-			mainFrame.getStepThreeNoTimeTabbedPane().getTestData().updateUI();
+			mainFrame.getStepThreeTimeTabbedPane().getTestData().add(new JPanel(), new GBC(0, i+1).setFill(GBC.BOTH).setWeight(1, 1));		
+			mainFrame.getStepThreeTimeTabbedPane().getTestData().updateUI();
 			mainFrame.renewPanel();
 				
 				
@@ -416,16 +382,17 @@ public class TimeCaseOperation extends JPanel{
 				topLabel.setText("测试用例信息生成完成,共生成"+lists.size() + "条测试用例。"+"  可靠性测试用例生成比率与使用模型实际使用概率平均偏差:"+df.format(d));
                 mainFrame.getStepThreeTimeTabbedPane().setSelectedIndex(1);
 				
-				NoTimeTestCaseNode noTimeTestCaseLabel = new NoTimeTestCaseNode(ModelName+"_相似度", mainFrame);
+				TimeTestCaseNode timeTestCaseLabel = new TimeTestCaseNode(ModelName+"_相似度", mainFrame);
 				quota = "测试用例信息生成完成,共生成"+lists.size() + "条测试用例。"+"  可靠性测试用例生成比率与使用模型实际使用概率平均偏差:"+df.format(d);
-				noTimeTestCaseLabel.setQuota(quota);
-				noTimeTestCaseLabel.setTestDataPanel(TestDataPanel);
+				timeTestCaseLabel.setQuota(quota);
+				timeTestCaseLabel.setTestDataPanel(TestDataPanel);
 				
-				mainFrame.getStepThreeLeftButton().getTimeCaseNodePanel().insertNodeLabel(noTimeTestCaseLabel,TestDataPanel, quota);
+				mainFrame.getStepThreeLeftButton().getTimeCaseNodePanel().insertNodeLabel(timeTestCaseLabel,TestDataPanel, quota);
 				
 				button.setEnabled(true);
    				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
-   				mainFrame.getStepThreeLeftButton().getTimeExpandLabel().setEnabled(true);
+   				mainFrame.getStepThreeLeftButton().getModelExpand().setEnabled(true);
+   				mainFrame.getStepThreeLeftButton().getTimeSeq().setEnabled(true);
    				return 1;
    			}
    		};

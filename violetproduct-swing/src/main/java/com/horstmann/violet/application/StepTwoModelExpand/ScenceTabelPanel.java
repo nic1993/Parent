@@ -127,9 +127,7 @@ public class ScenceTabelPanel extends JPanel implements Cloneable{
 						}
    					}
    				}
-   				if ((row != -1) && (cloumn != -1)) { //判断是否存在单元格
-   					
-   	            }
+   				
    				//对输入的数据进行格式化
    				if(isDouble((String) table.getValueAt(table.getSelectedRow(), table.getSelectedColumn())))
    				{
