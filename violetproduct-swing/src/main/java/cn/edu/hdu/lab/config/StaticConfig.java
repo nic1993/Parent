@@ -1,5 +1,7 @@
 package cn.edu.hdu.lab.config;
 
+import com.horstmann.violet.application.gui.MainFrame;
+
 /**
  * 静态变量配置类
  * @author Terence
@@ -48,5 +50,5 @@ public class StaticConfig {
 	
 	public static String[] fragmentsTypes={"loop","opt","alt","par"};//顺序不可改变 {"loop"}{"opt"}{"alt","par"}
 
-	
+	public static MainFrame mainFrame;
 }

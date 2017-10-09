@@ -11,7 +11,7 @@ public class SearchConditions {
 	private static int count = 0;
 
 	public static int findConditionNum() throws Exception {
-		File directory = new File("C:\\Users\\ccc\\Desktop\\·É¿ØÔ´Âë\\ardupilot-master");
+		File directory = new File("E:/Markov/·É¿ØÔ´Âë/ardupilot-master");
 		search(directory);
 		return count;
 	}

@@ -78,7 +78,7 @@ public class ResultService {
 		int size = list.size();
 		// 遍历看看成功或者失败的个数统计
 		for(TestCase info:list){
-			  String str=info.getState();
+			  String str=info.getResult().getResultDetail();
 			  if(str.contains("成功")){
 				  i++;
 			  }
@@ -96,7 +96,8 @@ public class ResultService {
 		List<TestCase> failelist = new ArrayList<TestCase>();
 		// 遍历看看成功或者失败的个数统计
 		for(TestCase info:list){
-			  String str=info.getState();
+			 String str=info.getResult().getResultDetail();
+			  System.out.println(str);
 			  if(str.contains("成功")){
 			  }
 			  else{

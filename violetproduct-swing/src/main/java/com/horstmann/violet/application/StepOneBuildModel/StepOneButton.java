@@ -37,6 +37,7 @@ import org.eclipse.draw2d.FlowLayout;
 import com.horstmann.violet.application.gui.GBC;
 import com.horstmann.violet.application.gui.MainFrame;
 import com.horstmann.violet.application.menu.FileMenu;
+import com.horstmann.violet.workspace.IWorkspace;
 
 public class StepOneButton extends JPanel{
 	private JLabel bulitModel;
@@ -198,9 +199,6 @@ public class StepOneButton extends JPanel{
 					expandCasePanel.setVisible(true);
 					treePanel.setVisible(false);
 					
-//					mainFrame.getStepTwoCenterRightPanel().getGraphButton().setVisible(false);
-//					mainFrame.getStepTwoCenterRightPanel().getZoominButton().setVisible(false);
-//					mainFrame.getStepTwoCenterRightPanel().getZoomoutButton().setVisible(false);
 					clearPanel();
 					mainFrame.getpanel().add(mainFrame.getStepTwoCaseOperation());
 					mainFrame.getCenterTabPanel().add(mainFrame.getStepTwoCaseExpandTabbedPane());
@@ -226,9 +224,10 @@ public class StepOneButton extends JPanel{
 			}
 	    }
 	public void clearPanel()
-	{
+	{	
 		mainFrame.getpanel().removeAll();
 		mainFrame.getCenterTabPanel().removeAll();
+		
 	}
 //	public SequenceTreePanel getSequenceJtree() {
 //		return mainFrame.getsequencetree();

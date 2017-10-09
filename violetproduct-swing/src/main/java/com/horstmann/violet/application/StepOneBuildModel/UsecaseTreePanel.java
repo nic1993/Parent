@@ -394,23 +394,29 @@ public class UsecaseTreePanel extends JPanel implements Cloneable{
 				// TODO Auto-generated method stub
 				while (true) {
 					try {
+						DefaultMutableTreeNode removeTreeNode = null;
+						INode removeNode = null;
 						AbstractGraph.lock.take();
 						    Map<DefaultMutableTreeNode, UseCaseNode> INodeMap = mainFrame.getNodeMap();
 							currentUsecaseWorkspace = ((WorkspacePanel)mainFrame.getCenterTabPanel().getComponent(0)).getWorkspace();//获取当前用例图workspace
 							currentUsecaseNode = getKey(getHashMap(), currentUsecaseWorkspace); //获取当前用例图树节点
-							nodes = usecaseWorkspace.getGraphFile().getGraph().getAllNodes();
-							
-							Iterator iter = INodeMap.entrySet().iterator();
+							nodes = mainFrame.getActiveWorkspace().getGraphFile().getGraph().getAllNodes();
+							Iterator iter = INodeMap.entrySet().iterator();	
 							while (iter.hasNext()) {
 								Map.Entry entry = (Map.Entry) iter.next();
 								DefaultMutableTreeNode useceseTreeNode = (DefaultMutableTreeNode) entry.getKey();
 								UseCaseNode useceseNode = (UseCaseNode) entry.getValue();
                                 if(!nodes.contains(useceseNode))
                                 {
-                                	usecasetreemodel.removeNodeFromParent(useceseTreeNode);
-                                	INodeMap.remove(useceseTreeNode);
+                                	removeTreeNode = useceseTreeNode;
+                                	removeNode = useceseNode;
+                                	
                                 }
 								usecaseTree.repaint();
+							}
+							if(removeTreeNode != null && removeNode!= null){
+								usecasetreemodel.removeNodeFromParent(removeTreeNode);
+	                        	INodeMap.remove(removeTreeNode);
 							}
 							mainFrame.renewPanel();
 						}

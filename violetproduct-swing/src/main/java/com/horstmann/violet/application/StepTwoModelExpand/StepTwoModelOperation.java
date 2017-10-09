@@ -128,7 +128,6 @@ public class StepTwoModelOperation extends JPanel{
 	private File[] VioletFiles;
 	
 	private String currentUcase;
-	private String currentSeq;
 	
 	private Map<String, String> UcaseRoute;
 	private Map<String, String> SeqRoute;
@@ -233,6 +232,7 @@ public class StepTwoModelOperation extends JPanel{
 		progressBarIndex = 0;
 		verificationProgressBar.setValue(0);
 		step = 0;
+		StaticConfig.mainFrame = mainFrame;
 		maincallable = new Callable<Integer>() {
   			@Override
   			public Integer call() throws Exception {
@@ -309,6 +309,7 @@ public class StepTwoModelOperation extends JPanel{
 					for(InterfaceUCRelation interfaceUCRelation:interfaceUCRelations)
 					{
 						relations.add(interfaceUCRelation.getUCRelation());
+						System.out.println("用例执行关系: "+ interfaceUCRelation.getUCRelation());
 					}
 				   	 for(int i = 0;i <number;i++)
 				   	 {
@@ -343,7 +344,7 @@ public class StepTwoModelOperation extends JPanel{
 				   		 }
 				   	 }
 				}
-				if(tableDatas.size() > 0 && !thread1.isInterrupted())
+				if(tableDatas.size() > 0)
 				{
 					List list=worker.calculateProb(tableDatas); //带入界面填写的矩阵数组集合，返回计算结果
 					double[] datas = (double[]) list.get(1);
@@ -367,6 +368,7 @@ public class StepTwoModelOperation extends JPanel{
 					stepTwoMatrixPanel1.getTabelPanel().add(scenceTabelPanel1);
 					EvaluateMatrixPanels.add(stepTwoMatrixPanel1);
 				}
+				
 			}
 		return 1;
 	    }
@@ -407,16 +409,28 @@ public class StepTwoModelOperation extends JPanel{
 				stepTwoModelExpandTabbedPane.getValidationResults().add(panel);
 				stepTwoModelExpandTabbedPane.getValidationResults().updateUI();
 				stepTwoModelExpandTabbedPane.setSelectedIndex(1);
-						
+									
 				
-				for(Radio radio : mainFrame.getjRadionPanel().getRadioList())
+				for(String string : mainFrame.getjRadionPanel().getRadios().keySet())
 				{
-					if(radio.getText().equals(Model_Name))
+					
+					if(string.equals(Model_Name))
 					{
-						radio.setScenceTabelPanel(panel);
+						mainFrame.getjRadionPanel().getRadios().get(string).setScenceTabelPanel(panel);
 					}
 				}
-
+				
+				for(String key : ucMap.keySet()) //求解 生成
+					{
+						List<InterfaceUCRelation> interfaceUCRelations = ucMap.get(key);
+						for(InterfaceUCRelation interfaceUCRelation : interfaceUCRelations){	
+//	    					System.out.println(key+"用例: " + "关系: " + interfaceUCRelation.getUCRelation() + "概率: " + interfaceUCRelation.getUCRelProb());
+	    					
+	    					mainFrame.getOutputinformation().geTextArea().append(key+"用例: " + "关系: " + interfaceUCRelation.getUCRelation() + "概率: " + interfaceUCRelation.getUCRelProb() + "\n");
+	    					int length = mainFrame.getOutputinformation().geTextArea().getText().length(); 
+			                mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
+	    					}
+					}
 			}	
 		  
 		    isFinish = true;
@@ -467,12 +481,14 @@ public class StepTwoModelOperation extends JPanel{
 				if(((JButton)e.getSource()).isEnabled())
 				{
 					try {
+					isNeedExpand = false;
 					isSanmeName();
 					Model_Name = mainFrame.getjRadionPanel().getSelectName();
 					
 					mainFrame.getStepTwoCaseOperation().setModel_Name(Model_Name);
 					mainFrame.getStepTwoEvaluateOperation().setModel_Name(Model_Name);
 					mainFrame.getStepTwoExchangeOperation().setModel_Name(Model_Name);
+					
 					if(Model_Name == null){
 						label.removeAll();
 						label.setText("请在左侧用例列表中选择用例模型或在第一步中建立用例模型!");
@@ -511,28 +527,31 @@ public class StepTwoModelOperation extends JPanel{
 	                        	{
 	                        		File file = new File(modelPanel.getTemporaryUcaseFile());
 	                        		currentUcase = file.listFiles()[0].getAbsolutePath();
-	                        		StaticConfig.umlPathPrefix = modelPanel.getTemporarySeqFile();
+	                        		if(currentUcase.contains(".ucase.violet.xml"))
+	    						    {
+	                        		StaticConfig.umlPathPrefixHDU = modelPanel.getTemporarySeqFile();
+	    						    }
+	                        		else {
+	                        			StaticConfig.umlPathPrefix = modelPanel.getTemporarySeqFile();
+									}
 	                        	}
 	                        }
-							
+	                        
 						    worker=new WorkImpl();
 						    
 						    if(currentUcase.contains(".ucase.violet.xml"))
 						    {
-						    	currentSeq = EAsequenceBathRoute;
 						    	worker.transInitialHDU(currentUcase);
 						    }
 						    else {
-						    	currentSeq = EAsequenceBathRoute;
 						    	worker.transInitial(currentUcase);
 							}
 
 						}  
-						
 						relations.clear();
 						//瑙ｆ瀽UML妯�?��?�鐨刋ML鏂囦�?
 		                ucMap=worker.provideUCRelation(); //鑾峰彇鐢ㄤ緥鎵ц椤哄簭鍏崇郴
-						IISDList=worker.provideIsogencySD();//鑾峰彇鐢ㄤ緥鍦烘櫙淇℃伅
+						IISDList=worker.provideIsogencySD();//鑾峰彇鐢ㄤ緥鍦烘櫙淇℃伅	
 						
 						stepTwoModelExpandTabbedPane.getmodelExpandPanel().removeAll();
 						number = Integer.parseInt(numberTextField.getText());
@@ -595,8 +614,23 @@ public class StepTwoModelOperation extends JPanel{
 						mainFrame.getsteponeButton().getExpandCaseModel().setEnabled(false);
 					}catch (Throwable e1) {
 							// TODO Auto-generated catch block
+						if(Model_Name == null){
+							label.removeAll();
+							label.setText("请在左侧用例列表中选择用例模型或在第一步中建立用例模型!");
+							mainFrame.getStepTwoModelOperation().updateUI();
+						}
+						else if(numberTextField.getText().equals(""))
+						{ 
+						   //添加弹出�?
+							label.removeAll();
+							label.setText("请填写正确的用户数量!");
+							mainFrame.getStepTwoModelOperation().updateUI();
+						}
+						else {
 							label.removeAll();
 							label.setText("请检查模型是否绘制正确或模型是否存在!");
+						}
+							
 						}
 				}	
 			}
@@ -801,9 +835,7 @@ public class StepTwoModelOperation extends JPanel{
 	public String getCurrentUcase() {
 		return currentUcase;
 	}
-	public String getCurrentSeq() {
-		return currentSeq;
-	}
+
 
 	class TextFieldInputListener implements CaretListener {
 		 

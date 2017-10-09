@@ -94,15 +94,19 @@ public class HandelService implements Callable {
             dis = new DataInputStream(socket.getInputStream());
             while ( dis.read(buf) != -1) {
                 data = new String(buf, "UTF-8").trim();
+                
+                System.out.println("----"+data);
+                
                 Arrays.fill(buf, (byte) 0);
-//                logger.debug("receive data:" + data);
+                logger.debug("@@@@@@receive data:" + data);
                 //get index of result file and convert
                 if (data.contains("index")) {
-                    String index = data.split("#")[1];
+                    String index = data.split("#")[1].replace("exit", "");
                     fIndex++;
                     receiveService.submit(new RecvTransService(node,index));
 //                  logger.debug(receiveService.take().get());
-                } else if ("exit".equals(data)) {
+                }
+                if ("exit".equals(data)) {
                     //finish work
                     Constants.ISFINISH.set(true);
                     logger.debug("success receive all files");

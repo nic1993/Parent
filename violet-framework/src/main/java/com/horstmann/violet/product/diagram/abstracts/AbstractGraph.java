@@ -333,7 +333,8 @@ public abstract  class AbstractGraph implements Serializable, Cloneable, IGraph
         {
             if (this.nodes.contains(aNodeToRemove))
             {
-            	if(aNodeToRemove.getToolTip().equals("Use case"))
+            	
+            	if(aNodeToRemove.getClass().getSimpleName().equals("UseCaseNode"))
             	{
             	lock.push(1);
             	}

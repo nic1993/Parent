@@ -1,12 +1,11 @@
 package com.horstmann.violet.application.gui.util.yangjie;
 
-import java.util.List;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.junit.Test;
+
 
 
 public class HibernateUtils {
@@ -33,28 +32,6 @@ public class HibernateUtils {
 		Transaction tx = session.beginTransaction();
 		// -----执行操作-----
 		session.save(detail);
-
-		// 提交事务/ 关闭
-		tx.commit();
-		session.close();
-	}
-	public static void saveTCDetails(List<TCDetail> details) {
-		// 对象
-
-		// 根据session的工厂，创建session对象
-		Session session = sf.openSession();
-		// 开启事务
-		Transaction tx = session.beginTransaction();
-		// -----执行操作-----
-		for(int i = 0;i < details.size();i++)
-		{
-			session.save(details.get(i));
-			if(i % 100 == 0 )
-			{
-				session.flush();
-				session.clear(); 
-			}
-		}
 		// 提交事务/ 关闭
 		tx.commit();
 		session.close();

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 
+
 /**
  * 此类专门用来求解激励序列中每个激励的约束集并得到每个参数的合法值 以此来生成测试用例
  * 

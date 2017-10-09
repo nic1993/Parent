@@ -43,6 +43,11 @@ public class MarkovNode extends EllipticalNode {
 	        g2.fill(circle);  
 	        // Restore first color
 	        g2.setColor(oldColor);
+	        
+	        if(name == null) 
+	        {
+	        	setName(" ");
+	        }
 	        g2.drawString(name,(int)getBounds().getX(),(int)getBounds().getY());
 	    }
 
@@ -71,8 +76,6 @@ public class MarkovNode extends EllipticalNode {
 	    /** default node diameter */
 	    private String name;
 	    private static int DEFAULT_DIAMETER = 34;
-	
-
 	}
 
 

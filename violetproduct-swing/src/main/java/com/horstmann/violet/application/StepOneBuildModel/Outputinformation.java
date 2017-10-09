@@ -1,7 +1,9 @@
 package com.horstmann.violet.application.StepOneBuildModel;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -22,6 +24,8 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import org.omg.CORBA.Current;
+
 import com.horstmann.violet.application.gui.GBC;
 import com.horstmann.violet.application.gui.MainFrame;
 
@@ -30,13 +34,18 @@ import antlr.debug.NewLineEvent;
 public class Outputinformation extends JPanel{
      private JTextArea textField;
      private JPanel consolePanel;   
-	 private JPanel jtreePanel;
      private JPanel gapPanel;
      private JPanel panel;
      private JPanel reducePanel;
      private JPanel enlargePanel;
+     private JPanel clearPanel;
      private JScrollPane scrollPane;
+     
+     private JLabel reduceLabel;
+     private JLabel enlargeLabel;
+     private JLabel clearLabel;
      private MainFrame mainFrame;
+     
      
      public Outputinformation(MainFrame mainFrame) {
 		// TODO Auto-generated constructor stub
@@ -54,90 +63,23 @@ public class Outputinformation extends JPanel{
     	 scrollPane = new JScrollPane();
     	 scrollPane.setBorder(null);
     	 textField = new JTextArea();
+    	 textField.setEditable(false);
     	 panel = new JPanel();	 
-    	 jtreePanel = new JPanel();
     	 consolePanel = new JPanel();
     	 gapPanel = new JPanel();
     	 consolePanel.setBackground(Color.white);
     	 gapPanel.setBackground(new Color(222,222,222));
-    	 jtreePanel.setBackground(new Color(222,222,222));
     	 JLabel label = new JLabel();
     	 label.setText("Console");
          label.setIcon(new ImageIcon("resources/icons/22x22/console.png"));
     	 consolePanel.add(label);
     	 scrollPane.add(textField);
-    	 consolePanel.addMouseListener(new MouseListener() {
-			
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				consolePanel.setBackground(Color.white);
-				jtreePanel.setBackground(new Color(222,222,222));
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-    	 
-    	 JLabel label2 = new JLabel();
-    	 label2.setText("uml tree");
-    	 jtreePanel.add(label2);
-    	 jtreePanel.addMouseListener(new MouseListener() {
-			
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				jtreePanel.setBackground(Color.white);
-				consolePanel.setBackground(new Color(222,222,222));
-				
-			}
-			
-			@Override
-			public void mouseExited(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
-    	 reducePanel = new ImagePanel("resources/icons/22x22/reduce.png", 0 , 5);
+
+    	 reducePanel = new JPanel();
+    	 reduceLabel = new JLabel();
+    	 reduceLabel.setIcon(new ImageIcon("resources/icons/22x22/reduce.png"));
+    	 reducePanel.add(reduceLabel);
+    	 reducePanel.setPreferredSize(new Dimension(25, 18));
     	 reducePanel.addMouseListener(new MouseListener() {
 			
 			@Override
@@ -157,13 +99,15 @@ public class Outputinformation extends JPanel{
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+				reducePanel.setBackground(new Color(222, 222, 222));
+				reducePanel.repaint();
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+				reducePanel.setBackground(new Color(211, 211, 211));
+				reducePanel.repaint();
 			}
 			
 			@Override
@@ -172,7 +116,13 @@ public class Outputinformation extends JPanel{
 				
 			}
 		});
-    	 enlargePanel = new ImagePanel("resources/icons/22x22/enlarge.png", 0, 0);
+//    	 enlargePanel = new ImagePanel("resources/icons/22x22/enlarge.png", 0, 0);
+    	 enlargePanel = new JPanel();
+    	 enlargeLabel = new JLabel();
+    	 enlargeLabel.setIcon(new ImageIcon("resources/icons/22x22/enlarge.png"));
+    	 enlargeLabel.setVerticalTextPosition(JLabel.BOTTOM);
+    	 enlargePanel.add(enlargeLabel);
+    	 enlargePanel.setPreferredSize(new Dimension(25, 18));
     	 enlargePanel.addMouseListener(new MouseListener() {
 			
 			@Override
@@ -191,11 +141,15 @@ public class Outputinformation extends JPanel{
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
+				enlargePanel.setBackground(new Color(222, 222, 222));
+				enlargePanel.repaint();
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
+				enlargePanel.setBackground(new Color(211, 211, 211));
+				enlargePanel.repaint();
 			}
 			
 			@Override
@@ -204,6 +158,48 @@ public class Outputinformation extends JPanel{
 				
 			}
 		});
+    	 clearLabel = new JLabel();
+    	 clearLabel.setIcon(new ImageIcon("resources/icons/22x22/deleteInformation.png"));
+    	 clearLabel.setVerticalTextPosition(JLabel.BOTTOM);
+    	 clearPanel = new JPanel();
+    	 clearPanel.setLayout(new BorderLayout());
+    	 clearPanel.add(clearLabel, BorderLayout.CENTER);
+    	 clearPanel.setBackground(new Color(222, 222, 222));
+    	 clearLabel.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				clearPanel.setBackground(new Color(222, 222, 222));
+				clearPanel.repaint();
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				clearPanel.setBackground(new Color(211, 211, 211));
+				clearPanel.repaint();
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				geTextArea().setText("");
+			}
+		});
+    	 
     	 panel.setBackground(new Color(222,222,222));
     	 reducePanel.setBackground(new Color(222,222,222));
     	 enlargePanel.setBackground(new Color(222,222,222)); 
@@ -211,8 +207,11 @@ public class Outputinformation extends JPanel{
     	 panel.add(consolePanel, new GBC(0, 0).setFill(GBC.NONE).setWeight(0, 0).setInsets(1));
 //    	 panel.add(jtreePanel, new GBC(1, 0).setFill(GBC.NONE).setWeight(0, 0).setInsets(1));
     	 panel.add(gapPanel, new GBC(1, 0).setFill(GBC.BOTH).setWeight(1, 0));
-    	 panel.add(reducePanel, new GBC(2, 0).setFill(GBC.NONE).setWeight(0, 0).setInsets(5,15,5,15));
-    	 panel.add(enlargePanel, new GBC(3, 0).setFill(GBC.NONE).setWeight(0, 0).setInsets(5,0,5,15));
+    	 panel.add(clearPanel, new GBC(2, 0).setFill(GBC.NONE).setWeight(0, 0).setInsets(0,0,8,8));
+    	 panel.add(reducePanel, new GBC(3, 0).setFill(GBC.NONE).setWeight(0, 0).setInsets(3,0,8,0));
+    	 panel.add(enlargePanel, new GBC(4, 0).setFill(GBC.NONE).setWeight(0, 0).setInsets(0,0,8,8));
+    	 
+    	 
     	 scrollPane.setViewportView(textField);
      }
      

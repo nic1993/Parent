@@ -6,7 +6,6 @@ import java.util.Random;
 import org.dom4j.Element;
 
 
-
 public class RandomCase {
 
 	public static void getCase(List<Stimulate> oneCaseExtend, Element root) {
@@ -112,7 +111,7 @@ public class RandomCase {
 		if (testCase.endsWith("→→")) {
 			testCase = testCase.substring(0, testCase.length() - 2);
 		}
-		System.out.println(testCase);
+//		System.out.println(testCase);
 		TCDetail.getInstance().setTestCase(testCase);
 		// 此处插入mysql，插入对象为TCDetail.getinstance
 		HibernateUtils.saveTCDetail(TCDetail.getInstance());

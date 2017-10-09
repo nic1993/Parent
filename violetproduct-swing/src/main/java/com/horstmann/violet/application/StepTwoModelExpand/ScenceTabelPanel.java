@@ -173,6 +173,7 @@ public class ScenceTabelPanel extends JPanel implements Cloneable{
       				table.repaint();
     		}
 		});
+    	   
     	   table.setFont(new Font("ËÎÌå",Font.PLAIN,15));
     	   int rowCount = table.getRowCount();
     	   for(int i = 0;i < rowCount;i++)
@@ -257,7 +258,6 @@ public class ScenceTabelPanel extends JPanel implements Cloneable{
                     	setForeground(Color.black);  
                         setText((value == null) ? "" : value.toString());  
                     }
-                    
                }   
         		   };
            render.setHorizontalAlignment(SwingConstants.CENTER);  //ÎÄ×Ö¾ÓÖĞ

@@ -100,6 +100,10 @@ public class StepThreeLeftButton extends JPanel{
 		init();
 		noTimeModelPanel.setVisible(false);
 		timeExpand.setVisible(false);
+		
+		noTimeModelLabel.setEnabled(false);
+		timeModelLabel.setEnabled(false);
+		
 		this.setLayout(new GridBagLayout());
 		this.add(choosePatternLabel,new GBC(0, 0).setFill(GBC.BOTH).setWeight(1, 0).setInsets(15, 10, 0, 80));	
 
@@ -144,7 +148,10 @@ public class StepThreeLeftButton extends JPanel{
 		
 		noTimeModelLabel.setEnabled(false);
 		noTimeCase.setEnabled(false);
+		
 		timeModelLabel.setEnabled(false);
+		modelExpand.setEnabled(false);
+		timeSeq.setEnabled(false);
 		timeCase.setEnabled(false);
 		
 		noTimeModelPanel = new JPanel();
@@ -171,18 +178,20 @@ public class StepThreeLeftButton extends JPanel{
 		noTimeModelPanel.add(noTimeSeqNode,new GBC(0, 1).setFill(GBC.BOTH).setWeight(1, 0).setInsets(5,0,0,0));
 		noTimeModelPanel.add(noTimeCase,new GBC(0, 2).setFill(GBC.BOTH).setWeight(1, 0).setInsets(5,0,0,0));
 		noTimeModelPanel.add(noTimeNode,new GBC(0, 3).setFill(GBC.BOTH).setWeight(1, 0).setInsets(5,0,0,0));
-		
-		timeExpand.setLayout(new GridBagLayout());
+
 		noTimeSeqNode.setLayout(new GridBagLayout());
 		noTimeNode.setLayout(new GridBagLayout());
+		timeExpand.setLayout(new GridBagLayout());
 		TimeExpandLabel.setLayout(new GridBagLayout());
+		TimeSeqNode.setLayout(new GridBagLayout());
 		TimeNode.setLayout(new GridBagLayout());
 		
-		timeExpand.add(modelExpand,new GBC(0, 0).setFill(GBC.BOTH).setWeight(1, 0));
+		timeExpand.add(modelExpand,new GBC(0, 0).setFill(GBC.BOTH).setWeight(1, 0).setInsets(5, 0, 0, 0));
 		timeExpand.add(TimeExpandLabel,new GBC(0, 1).setFill(GBC.BOTH).setWeight(1, 0).setInsets(5, 0, 0, 0));
 		
 		timeExpand.add(timeSeq,new GBC(0, 2).setFill(GBC.BOTH).setWeight(1, 0).setInsets(5, 0, 0, 0));
 		timeExpand.add(TimeSeqNode,new GBC(0, 3).setFill(GBC.BOTH).setWeight(1, 0).setInsets(5, 0, 0, 0));
+		
 		timeExpand.add(timeCase,new GBC(0, 4).setFill(GBC.BOTH).setWeight(1, 0).setInsets(5, 0, 0, 0));
 		timeExpand.add(TimeNode,new GBC(0, 5).setFill(GBC.BOTH).setWeight(1, 0).setInsets(5, 0, 0, 0));
 		labelListen();
@@ -278,6 +287,7 @@ public class StepThreeLeftButton extends JPanel{
 							if(isNew == true && ModelName != null){
 								mainFrame.getNoTimeSeqOperation().getTopLabel().setText("当前选择的模型为:"+ModelName);
 								mainFrame.getNoTimeSeqOperation().getButton().setEnabled(true);
+								
 							}
 							if(ModelName == null)
 							{
@@ -305,7 +315,7 @@ public class StepThreeLeftButton extends JPanel{
 								
 								for(File selectFile : files.listFiles())
 								{
-									if(selectFile.getName().contains(ModelName))
+									if(selectFile.getName().equals(ModelName+".xml"))
 										route = selectFile.getAbsolutePath();
 								}
 								if(mainFrame.getStepThreeChoosePattern().getReliabilityIndex() == null || 
@@ -321,7 +331,7 @@ public class StepThreeLeftButton extends JPanel{
 									c = mainFrame.getStepThreeChoosePattern().getConfidence();
 									try {
 									rm = new ReadMarkov2();
-									markov = rm.readMarkov(route);
+									markov = rm.readMarkov(route,mainFrame);
 									min = getMinTCNum(markov,p,c);
 									} catch (RuntimeException e2) {
 										// 处理异常
@@ -372,7 +382,6 @@ public class StepThreeLeftButton extends JPanel{
 						else {
 							return;
 						}
-					
 				}
 			}
 		});
@@ -455,7 +464,7 @@ public class StepThreeLeftButton extends JPanel{
 							p = mainFrame.getStepThreeChoosePattern().getReliabilityIndex();
 							c = mainFrame.getStepThreeChoosePattern().getConfidence();
 							rm = new ReadMarkov2();
-							markov = rm.readMarkov(route);
+							markov = rm.readMarkov(route,mainFrame);
 							min = getMinTCNum(markov,p,c);
 							mainFrame.getNoTimeSeqOperation1().getLabel2().removeAll();
 							mainFrame.getNoTimeSeqOperation1().getLabel2().setText("(不少于)"+String.valueOf(min)+"条");
@@ -534,7 +543,6 @@ public class StepThreeLeftButton extends JPanel{
 								e1.printStackTrace();
 							}
 					}
-					
 				}
 			}
 		});
@@ -545,16 +553,19 @@ public class StepThreeLeftButton extends JPanel{
 				// TODO Auto-generated method stub
 				if(((JLabel)e.getSource()).isEnabled())
 				{
+					stepThree = 6;
 					choosePatternLabel.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 					modelExpand.setFont(new Font("微软雅黑", Font.BOLD, 18));
 					timeSeq.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 					timeCase.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 					
 					noTimeModelPanel.setVisible(false);
+					
 					timeExpand.setVisible(true);
 					TimeExpandLabel.setVisible(true);
 					TimeSeqNode.setVisible(false);
 					TimeNode.setVisible(false);
+					modelExpand.setEnabled(true);
 					
 					mainFrame.getOutputinformation().setVisible(true);
 					mainFrame.getReduceOrEnlargePanel().setVisible(true);
@@ -576,10 +587,12 @@ public class StepThreeLeftButton extends JPanel{
 				if(isNew == true && ModelName != null){
 					mainFrame.getTimeExpandOperation().getExpandlabel().setText("当前选择的模型为:"+ModelName);
 					mainFrame.getTimeExpandOperation().getModelExchange().setEnabled(true);
+					
 				}
 				else if(ModelName == null){
 					mainFrame.getTimeExpandOperation().getExpandlabel().setText("当前选择的模型为:"+ModelName);
 					mainFrame.getTimeExpandOperation().getModelExchange().setEnabled(false);
+					
 				}
 				else{
 					mainFrame.getTimeExpandOperation().getModelExchange().setEnabled(true);
@@ -599,6 +612,7 @@ public class StepThreeLeftButton extends JPanel{
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
+				stepThree = 6;
 				clearPanel();
 				modelExpand.setFont(new Font("微软雅黑", Font.BOLD, 18));
 				timeSeq.setFont(new Font("微软雅黑", Font.PLAIN, 18));
@@ -648,7 +662,7 @@ public class StepThreeLeftButton extends JPanel{
 				
 				if(mainFrame.getStepThreeChoosePattern().getselectString() == null)
 				{
-					stepThree = 2;
+					stepThree = 7;
 					
 					mainFrame.getpanel().add(mainFrame.getTimeSeqOperation());
 					mainFrame.getTimeSeqOperation().getTopLabel().setText("请选择测试数据生成方式!");
@@ -661,7 +675,7 @@ public class StepThreeLeftButton extends JPanel{
 				}
 				else if(mainFrame.getStepThreeChoosePattern().getselectString().equals("根据模型相似度生成"))
 				{
-					stepThree = 2;
+					stepThree = 7;
 					
 					mainFrame.getpanel().add(mainFrame.getTimeSeqOperation());
 					if(isNew == true && ModelName != null){
@@ -676,7 +690,6 @@ public class StepThreeLeftButton extends JPanel{
 					else {
 						mainFrame.getTimeSeqOperation().getButton().setEnabled(true);
 					}
-					mainFrame.getpanel().updateUI();
 					
 					mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeTimeSeqTabbedPane());
 					mainFrame.getStepTwoCenterRightPanel().getGraphButton().setVisible(false);
@@ -685,14 +698,14 @@ public class StepThreeLeftButton extends JPanel{
 				}
 				else{
 					try {
-					stepThree = 3;
+					stepThree = 8;
 					File files = new File(mainFrame.getBathRoute()+"/TimeMarkov/");
 					if(isNew == true && ModelName != null){
 						mainFrame.getTimeSeqOperation1().getTopLabel().setText("当前选择的模型为:"+ModelName);
 						
 						for(File selectFile : files.listFiles())
 						{
-							if(selectFile.getName().contains(ModelName))
+							if(selectFile.getName().replaceAll(".xml", "").equals(ModelName))
 								route = selectFile.getAbsolutePath();
 						}
 						if(mainFrame.getStepThreeChoosePattern().getReliabilityIndex() == null || 
@@ -707,7 +720,7 @@ public class StepThreeLeftButton extends JPanel{
 							p = mainFrame.getStepThreeChoosePattern().getReliabilityIndex();
 							c = mainFrame.getStepThreeChoosePattern().getConfidence();
 							rm = new ReadMarkov2();
-							markov = rm.readMarkov(route);
+							markov = rm.readMarkov(route,mainFrame);
 							min = getMinTCNum(markov,p,c);
 							mainFrame.getTimeSeqOperation1().getLabel2().removeAll();
 							mainFrame.getTimeSeqOperation1().getLabel2().setText("(不少于)"+String.valueOf(min)+"条");
@@ -750,7 +763,7 @@ public class StepThreeLeftButton extends JPanel{
 					
 					if(mainFrame.getStepThreeChoosePattern().getselectString().equals("根据模型相似度生成"))
 					{					
-						stepThree = 6;
+						stepThree = 9;
 						mainFrame.getOutputinformation().setVisible(true);
 						mainFrame.getReduceOrEnlargePanel().setVisible(true);
 						mainFrame.getpanel().setVisible(true);
@@ -767,7 +780,7 @@ public class StepThreeLeftButton extends JPanel{
 					}
 					else if(mainFrame.getStepThreeChoosePattern().getselectString().equals("自定义测试用例个数生成"))
 					{
-						stepThree = 7;
+						stepThree = 10;
 						mainFrame.getOutputinformation().setVisible(true);
 						mainFrame.getReduceOrEnlargePanel().setVisible(true);
 						mainFrame.getpanel().setVisible(true);
@@ -778,7 +791,7 @@ public class StepThreeLeftButton extends JPanel{
 							mainFrame.getTimeCaseOperation1().getTopLabel().setText("当前选择的模型为:"+ModelName);
 						}
 						mainFrame.getpanel().updateUI();	
-						mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeTimeCustomTabbedPane());
+						mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeTimeTabbedPane());
 						mainFrame.getStepTwoCenterRightPanel().getGraphButton().setVisible(false);
 						mainFrame.getStepTwoCenterRightPanel().getZoominButton().setVisible(false);
 						mainFrame.getStepTwoCenterRightPanel().getZoomoutButton().setVisible(false);

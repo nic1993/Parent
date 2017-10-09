@@ -64,9 +64,7 @@ public class XMLReaderHDU {
 		try
 		{
 			SAXReader reader=new SAXReader();
-			System.out.println("xmlFile: " + xmlFile);
-			Document dom=reader.read(xmlFile);
-			
+			Document dom=reader.read(new File(xmlFile));
 			root=dom.getRootElement();
 		}
 		catch(Exception e)
@@ -274,7 +272,7 @@ public class XMLReaderHDU {
 		DiagramsData dd=new DiagramsData();
 		//识别不了别的文件，只能识别xml文件
 		SAXReader reader=new SAXReader();
-		Document dom=reader.read(sequenceFileName);
+		Document dom=reader.read(new File(sequenceFileName));
 		Element sdRoot=dom.getRootElement();
 		if(sdRoot==null)
 		{
@@ -474,10 +472,10 @@ public class XMLReaderHDU {
 				message.setPointY(Double.parseDouble(e.element("startLocation").attributeValue("y")));
 				
 				//message.setProb(sd.getProb());
-				/*if(e.equals(messageElementList.get(messageElementList.size()-1)))
+				if(e.equals(messageElementList.get(messageElementList.size()-1)))
 				{
 					message.setLast(true);
-				}*/
+				}
 				
 				//消息是否在组合片段中，消息所属组合片段类型，所属组合片段ID，所属组合片段操作ID，进出组合片段的标记
 				
@@ -904,16 +902,11 @@ public class XMLReaderHDU {
 				diagramData.getMessageArray().get(diagramData.getMessageArray().size()-1).setLast(true);
 				//消息指针重定向
 				redirectMessage(diagramData);
-				//尾消息标志设置
-				diagramData.getMessageArray().get(diagramData.getMessageArray().size()-1).setLast(true);
-				
-				//tagLastMessage(diagramData)
 				//收集消息的所有执行条件
 				UMLReader.searchOperConditionOfMess(diagramData);
 				//赋给主顺序图的保留变量
 				sd.setLifeLines(diagramData.getLifelineArray());
 				sd.setMessages(diagramData.getMessageArray());
-				
 				sd.setFragments(diagramData.getFragmentArray());
 				sd.setNodes(diagramData.getNodes());
 				break;

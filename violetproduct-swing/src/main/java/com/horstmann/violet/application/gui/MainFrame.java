@@ -1692,16 +1692,16 @@ public HomePanel getHomePanel()
     private WelcomePanel welcomePanel;
     private HomePanel homepanel;
     private JPanel stepJLabel=new JPanel(){
-    	public void paint(Graphics g) {
-            super.paint(g);
-            java.awt.Rectangle rect = this.getBounds();
-            int width = (int) rect.getWidth() - 1;
-            int height = (int) rect.getHeight() - 1;
-            Graphics2D g2 = (Graphics2D)g;
-            g2.setStroke(new BasicStroke(3f));
-            g2.setColor(new Color(188,188,188));
-            g2.drawLine(this.getX(), this.getY()+height, this.getX()+width, this.getY()+height);
-          }
+//    	public void paint(Graphics g) {
+//            super.paint(g);
+//            java.awt.Rectangle rect = this.getBounds();
+//            int width = (int) rect.getWidth() - 1;
+//            int height = (int) rect.getHeight() - 1;
+//            Graphics2D g2 = (Graphics2D)g;
+//            g2.setStroke(new BasicStroke(3f));
+//            g2.setColor(new Color(188,188,188));
+//            g2.drawLine(this.getX(), this.getY()+height, this.getX()+width, this.getY()+height);
+//          }
     };
     
     private StepTwoCenterTabbedPane stepTwoCenterTabbedPane;

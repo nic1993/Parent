@@ -133,6 +133,10 @@ public class NoTimeSeqOperation extends JPanel{
     	   topLabel.setFont(new Font("宋体", Font.PLAIN, 16));
     	   label1.setFont(new Font("宋体", Font.PLAIN, 16));
     	   
+    	   
+    	   textField.setText("0.1");
+    	   textField.setEditable(false);
+    	   
     	   progressBar.setPreferredSize(new Dimension(800, 30));
     	   progressBar.setUI(new GradientProgressBarUI());
     	   progressBar.setValue(0);
@@ -210,14 +214,25 @@ public class NoTimeSeqOperation extends JPanel{
 						route = selectFile.getAbsolutePath();
 				}
 				
+				topLabel.removeAll();
+				topLabel.setText("正在读取生成的markov链信息........");
+				Thread.sleep(200);
+				
    				ReadMarkov2 rm = new ReadMarkov2();
-				markov = rm.readMarkov(route);
+				markov = rm.readMarkov(route,mainFrame);
 				
 				dom = DocumentHelper.createDocument();
 				root = dom.addElement("TCS");
 				
 				double[] PI = CalculateDistribution.stationaryDistribution(markov);
 				
+				for(int i = 0;i < PI.length;i++)
+				{
+					topLabel.removeAll();
+					topLabel.setText("markov链的平稳分布:" + PI[i]);
+					Thread.sleep(100);
+				}
+
 				double similarity = 999991;
 				boolean sufficiency = false;
 				gc = new GenerateCases();
@@ -238,6 +253,10 @@ public class NoTimeSeqOperation extends JPanel{
                     
 					flag = false;
 					similarity = CalculateSimilarity.statistic(markov, PI);
+					topLabel.removeAll();
+					topLabel.setText("markov链的使用链和测试链的相似度:" + similarity);
+					Thread.sleep(200);
+					
 					markov.setDeviation(similarity);
 					markov.setActualNum(numberOfTestCases);
                     
@@ -268,23 +287,71 @@ public class NoTimeSeqOperation extends JPanel{
 					seqPanel.setLayout(new GridBagLayout());
 					
 					mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().removeAll();
-					mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().setLayout(new GridBagLayout());
+//					mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().setLayout(new GridBagLayout());
+					
+					AbstractPagePanel abstractPagePanel = new AbstractPagePanel(gc.abstractTS, mainFrame);
+					mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().add(abstractPagePanel);
+					
 					int i = 0;
-					for(String seq : gc.abstractTS)
+					topLabel.removeAll();
+					topLabel.setText("正在生成抽象测试序列.....");
+
+					int index = 0;
+					if(gc.abstractTS.size() < 500)
 					{
-						StepThreeTabelPanel testTabelPanel1 = new StepThreeTabelPanel(seq, 1,mainFrame);
+						index = gc.abstractTS.size();
+					}
+					else {
+						index = 500;
+					}
+					
+					for(int j = 0; j < index;j++)
+					{
+						StepThreeTabelPanel testTabelPanel1 = new StepThreeTabelPanel(gc.abstractTS.get(j), 1,mainFrame);
 						seqPanel.add(testTabelPanel1, new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
 						
-						StepThreeTabelPanel testTabelPanel = new StepThreeTabelPanel(seq, 1,mainFrame);
-						mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().add(testTabelPanel, new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
+						StepThreeTabelPanel testTabelPanel = new StepThreeTabelPanel(gc.abstractTS.get(j), 1,mainFrame);
+						
+						abstractPagePanel.getAbstractPanel().add(testTabelPanel, new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
+						seqPanel.add(testTabelPanel1, new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
+						
 						i++;
-						progressBar.setValue(40 + (int)(((double)i/gc.abstractTS.size())*60));
+						gc.testCasesExtend.get(j);
+						//输出激励序列
+						String stimulateSequence = "";
+						if (j != gc.testCasesExtend.size() - 1) {
+							stimulateSequence = stimulateSequence
+									+ gc.testCasesExtend.get(j).toString() + "-->>";
+							// System.out.print(oneCaseExtend.get(i).toString() + "-->>");
+						} else {
+							stimulateSequence = stimulateSequence
+									+ gc.testCasesExtend.get(j).toString();
+							// System.out.println(oneCaseExtend.get(i).toString());
+						}
+						mainFrame.getOutputinformation().geTextArea().append("激励序列 " + stimulateSequence + "\n");
+						int length = mainFrame.getOutputinformation().geTextArea().getText().length(); 
+		                mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
+						
+						//输出测试路径
+						String  testPath = "";
+						if (j != gc.testPaths.size() - 1) {
+							testPath = gc.testPaths.get(j) + "-->>";
+						} else {
+							testPath = gc.testPaths.get(j) + ""; 
+						}
+						mainFrame.getOutputinformation().geTextArea().append("测试路径: " + testPath + "\n\n");
+		                int length2 = mainFrame.getOutputinformation().geTextArea().getText().length(); 
+		                mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
+						progressBar.setValue(40 + (int)(((double)i/index)*60));
+						
+						Thread.sleep(10);
 						mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().repaint();
 						mainFrame.renewPanel();
-						Thread.sleep(10);
+						Thread.sleep(2);
 					}
-	                
+					abstractPagePanel.getPageTestField().setText("1");
 					
+
 					button.setEnabled(true);
 	   				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
 	   				mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(true);
@@ -294,8 +361,12 @@ public class NoTimeSeqOperation extends JPanel{
 					NoTimeSeqNode noTimeSeqNode = new NoTimeSeqNode(ModelName+"_相似度", mainFrame);
 					noTimeSeqNode.setAbstractSequencePanel(seqPanel);
 					
+					
 					mainFrame.getStepThreeLeftButton().getNoTimeSeqNodePanel().insertNodeLabel(noTimeSeqNode, seqPanel);
 					mainFrame.getStepThreeLeftButton().getNoTimeSeqNode().repaint();
+					
+					topLabel.removeAll();
+					topLabel.setText("抽象测试序列生成完成，共生成" + gc.abstractTS.size()+"条抽象测试序列");
 				}catch (RuntimeException e) {
 					// TODO: handle exception
 					topLabel.removeAll();
@@ -303,7 +374,7 @@ public class NoTimeSeqOperation extends JPanel{
 					
 					button.setEnabled(true);
 	   				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
-	   				mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(true);
+	   				mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(true);				
 				}
 				return 1;
 			}

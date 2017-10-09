@@ -7,6 +7,7 @@ import com.horstmann.violet.application.StepTwoModelExpand.ScenceTabelPanel;
 
 public class Radio extends JRadioButton{
 
+	
 	private JPanel scenceTabelPanel = null;
 
 	public JPanel getScenceTabelPanel() {

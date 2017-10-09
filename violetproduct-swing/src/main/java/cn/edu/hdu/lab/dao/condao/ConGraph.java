@@ -152,20 +152,48 @@ public class ConGraph {
 	public void printGraph()
 	{
 		System.out.println("用例执行关系用邻接矩阵表示如下：");
+		
+		StaticConfig.mainFrame.getOutputinformation().geTextArea().append("用例执行关系用邻接矩阵表示如下：" + "\n");
+		int length = StaticConfig.mainFrame.getOutputinformation().geTextArea().getText().length(); 
+		StaticConfig.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
+		
 		System.out.print(" ");
+		StaticConfig.mainFrame.getOutputinformation().geTextArea().append(" ");
+		int length2 = StaticConfig.mainFrame.getOutputinformation().geTextArea().getText().length(); 
+		StaticConfig.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length2);
+		
 		for(int i=0;i<num;i++)
 		{
 			System.out.print(" "+i);
+			
+			System.out.print(" ");
+			StaticConfig.mainFrame.getOutputinformation().geTextArea().append(" " + i);
+			int length3 = StaticConfig.mainFrame.getOutputinformation().geTextArea().getText().length(); 
+			StaticConfig.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length3);
 		}
-		System.out.println(); 
+		
+		StaticConfig.mainFrame.getOutputinformation().geTextArea().append("\n");
+		int length4 = StaticConfig.mainFrame.getOutputinformation().geTextArea().getText().length(); 
+		StaticConfig.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length4);
 		for(int i=0;i<num;i++)
 		{
 			System.out.print(i+" ");
+			StaticConfig.mainFrame.getOutputinformation().geTextArea().append(i+" ");
+			int length5 = StaticConfig.mainFrame.getOutputinformation().geTextArea().getText().length(); 
+			StaticConfig.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length5);
+			
 			for(int j=0;j<num;j++)
 			{
 				System.out.print(adjoinMatrix[i][j]+" ");
+				
+				StaticConfig.mainFrame.getOutputinformation().geTextArea().append(adjoinMatrix[i][j]+" ");
+				int length6 = StaticConfig.mainFrame.getOutputinformation().geTextArea().getText().length(); 
+				StaticConfig.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length6);
 			}
 			System.out.println();
+			StaticConfig.mainFrame.getOutputinformation().geTextArea().append("\n");
+			int length7 = StaticConfig.mainFrame.getOutputinformation().geTextArea().getText().length(); 
+			StaticConfig.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length7);
 		}
 		
 	}

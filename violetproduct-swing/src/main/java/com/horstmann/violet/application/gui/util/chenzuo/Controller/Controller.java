@@ -22,7 +22,7 @@ public class Controller {
 
     private static Logger logger = Logger.getLogger(Controller.class);
 
-    private static long MAX_FILE_SIZE = 20 * 1024 * 1024;
+    private static long MAX_FILE_SIZE = 60 * 1024 * 1024;
     // deploy
     private static IPDeploy IP_TYPE_DEPLOY = new IPDeploy();
     // thread pool

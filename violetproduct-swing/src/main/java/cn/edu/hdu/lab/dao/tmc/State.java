@@ -1,5 +1,7 @@
 package cn.edu.hdu.lab.dao.tmc;
 
+import cn.edu.hdu.lab.config.StaticConfig;
+
 public class State {
 	private String TmcID;
 	private String name;
@@ -55,6 +57,11 @@ public class State {
 	public void print_state() {
 		System.out.println("State [TmcID=" + TmcID + ", name=" + name + ", "
 				+"label="+label+"---delayTime="+stopTimeConstraint+",notation="+ notation  + "]");
+		
+		StaticConfig.mainFrame.getOutputinformation().geTextArea().append("State [TmcID=" + TmcID + ", name=" + name + ", "
+				+"label="+label+"---delayTime="+stopTimeConstraint+",notation="+ notation  + "]" + "\n");
+		int length = StaticConfig.mainFrame.getOutputinformation().geTextArea().getText().length(); 
+		StaticConfig.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
 	}
 	public String getStopTimeConstraint() {
 		return stopTimeConstraint;

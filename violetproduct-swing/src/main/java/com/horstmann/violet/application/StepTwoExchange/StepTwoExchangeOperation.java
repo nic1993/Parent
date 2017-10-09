@@ -87,9 +87,11 @@ public class StepTwoExchangeOperation extends JPanel{
        private FutureTask<Integer> task2;
    	   private Thread thread2;
    	   private boolean isAlive = true;
-   	   private boolean isTime = false;
+   	   private boolean isTime;
    	   private List<FutureTask<Integer>> futuretasklist;
    	   private List<Thread> threadlist;
+   	   
+   	   
    	   
    	   private String currentUcase;
 	   private String currentSeq;
@@ -376,34 +378,9 @@ public class StepTwoExchangeOperation extends JPanel{
      					mainFrame.getStepTwoExchangeTabbedPane().updateUI();
      					
      					currentUcase = mainFrame.getStepTwoModelOperation().getCurrentUcase();
-     					currentSeq = mainFrame.getStepTwoModelOperation().getCurrentSeq();
      					
      					mainFrame.renewPanel();
-     					
-//     					Work worker=mainFrame.getStepTwoModelOperation().getNewWorker();
-//     					if(currentUcase.contains("\\UseCaseDiagram\\EAXML"))
-//     				    {
-//     				    	StaticConfig.umlPathPrefix = currentSeq;
-//     				    	try {
-//     							worker.transInitial(currentUcase);
-//     						} catch (Exception e1) {
-//     							// TODO Auto-generated catch block
-//     							e1.printStackTrace();
-//     						}
-//     				    }
-//     				    else {
-//     				    	StaticConfig.umlPathPrefix = currentSeq;
-//     				    	try {
-//     							worker.transInitialHDU(currentUcase);
-//     						} catch (Throwable e1) {
-//     							// TODO Auto-generated catch block
-//     							e1.printStackTrace();
-//     						}
-//     					}
-
-
-   					    
-     					mainFrame.renewPanel();
+ 					    
      					Work worker = mainFrame.getStepTwoModelOperation().getWorker();
      					UCRMap = mainFrame.getStepTwoModelOperation().getUcMap();
      					IISDList = mainFrame.getStepTwoModelOperation().getIISDList();
@@ -455,19 +432,11 @@ public class StepTwoExchangeOperation extends JPanel{
      						ExchangeProgressBar.setValue(progressBarIndex);
      						Thread.sleep(200);
 						}
-     					try {
+
     						worker.transToMarckov(UCRMap);
-    					} catch (Exception e1) {
-    						// TODO Auto-generated catch block
-    						e1.printStackTrace();
-    					}     						
-     					mainFrame.renewPanel();
-     					try {
+
     						worker.probabilityAndReachableTest();
-    					} catch (Exception e1) {
-    						// TODO Auto-generated catch block
-    						e1.printStackTrace();
-    					}
+
      					mainFrame.renewPanel();
      					
      					toplabel.removeAll();
@@ -477,17 +446,12 @@ public class StepTwoExchangeOperation extends JPanel{
      						ExchangeProgressBar.setValue(progressBarIndex);
      						Thread.sleep(200);
 						}
-
      					
-     					try {
-    						worker.writeMarkov(Model_Name,mainFrame);
-    					} catch (IOException e1) {
-    						// TODO Auto-generated catch block
-    						e1.printStackTrace();
-    					} catch (Exception e1) {
-    						// TODO Auto-generated catch block
-    						e1.printStackTrace();
-    					} 
+     					List<String> seqNames = new ArrayList<String>();
+     					List<String> ucNames = new ArrayList<String>();
+     					
+    					worker.writeMarkov(Model_Name,mainFrame,seqNames,ucNames);
+ 
      					if(isTime == false){
      						MarkovRoute = mainFrame.getBathRoute()+"/NoTimeMarkov/";
      						 File file = new File(MarkovRoute);
@@ -506,6 +470,44 @@ public class StepTwoExchangeOperation extends JPanel{
     					}
      					mainFrame.renewPanel();
      					
+     					toplabel.removeAll();
+     					toplabel.setText("正在生成场景集Markov链.....");
+     					for(String seqName : seqNames){
+     						seqName = seqName.replace(".xml", "");
+     						TianWriteToVioletMarkov tian=new TianWriteToVioletMarkov();
+         					tian.find(MarkovRoute+seqName+".xml");
+         					tian.writeVioletMarkov(MarkovRoute+seqName+".markov.violet.xml");
+         					GraphFile fileGraphFile=MarkovXML2GraphFile.toGraphFile(MarkovRoute,seqName+".markov.violet.xml");
+         					LayoutMarkov.layout(MarkovRoute,MarkovRoute+seqName+".markov.violet.xml",seqName+"layout.markov.violet.xml");
+         					GraphFile graphFile=MarkovXML2GraphFile.toGraphFile(MarkovRoute,seqName+"layout.markov.violet.xml");
+         					IWorkspace workspace=new Workspace(graphFile);
+         					mainFrame.addTabbedPane(workspace,"step2");
+         					workspace.getAWTComponent().updateUI();	
+         					
+         					Thread.sleep(1000);
+         					mainFrame.renewPanel();
+     					}
+     					
+     					toplabel.removeAll();
+     					toplabel.setText("正在生成用例集Markov链.....");
+     					for(String ucName : ucNames){
+     					    ucName = ucName.replace(".xml", "");
+     						TianWriteToVioletMarkov tian=new TianWriteToVioletMarkov();
+         					tian.find(MarkovRoute+ucName+".xml");
+         					tian.writeVioletMarkov(MarkovRoute+ucName+".markov.violet.xml");
+         					GraphFile fileGraphFile=MarkovXML2GraphFile.toGraphFile(MarkovRoute,ucName+".markov.violet.xml");
+         					LayoutMarkov.layout(MarkovRoute,MarkovRoute+ucName+".markov.violet.xml",ucName+"layout.markov.violet.xml");
+         					GraphFile graphFile=MarkovXML2GraphFile.toGraphFile(MarkovRoute,ucName+"layout.markov.violet.xml");
+         					
+         					IWorkspace workspace=new Workspace(graphFile);
+         					mainFrame.addTabbedPane(workspace,"step2");
+         					workspace.getAWTComponent().updateUI();	
+         					
+         					Thread.sleep(1000);
+         					mainFrame.renewPanel();
+     					}
+     					
+     					
      					TianWriteToVioletMarkov tian=new TianWriteToVioletMarkov();
      					tian.find(MarkovRoute+Model_Name+".xml");
      					tian.writeVioletMarkov(MarkovRoute+Model_Name+".markov.violet.xml");
@@ -513,11 +515,23 @@ public class StepTwoExchangeOperation extends JPanel{
      					LayoutMarkov.layout(MarkovRoute,MarkovRoute+Model_Name+".markov.violet.xml",Model_Name+"layout.markov.violet.xml");
      					GraphFile graphFile=MarkovXML2GraphFile.toGraphFile(MarkovRoute,Model_Name+"layout.markov.violet.xml");
      					XMLPanel = XMLToTree.getTree(MarkovRoute+Model_Name+"layout.markov.violet.xml");
-     					mainFrame.getStepTwoExchangeTabbedPane().getExchangeResport().removeAll();
-     					mainFrame.getStepTwoExchangeTabbedPane().getExchangeResport().add(XMLToTree.getTree(MarkovRoute+Model_Name+"layout.markov.violet.xml"));
-     					mainFrame.getStepTwoExchangeTabbedPane().setSelectedIndex(1);
-     					mainFrame.renewPanel();
      					
+     					
+     					toplabel.removeAll();
+     					toplabel.setText("正在生成Markov图形.....");
+     					while (progressBarIndex <= 90) {
+     						progressBarIndex++;
+     						ExchangeProgressBar.setValue(progressBarIndex);
+     						Thread.sleep(10);
+						}
+     					
+     					IWorkspace workspace=new Workspace(graphFile);
+     					mainFrame.addTabbedPane(workspace,"step2");
+     					
+     					workspace.getAWTComponent().getScrollableSideBar().setVisible(false);
+     					workspace.getAWTComponent().updateUI();	
+     					mainFrame.getStepTwoExchangeTabbedPane().setSelectedIndex(0);
+     					mainFrame.renewPanel();
      					
      					toplabel.removeAll();
      					toplabel.setText("正在获取Markov节点信息.....");
@@ -535,11 +549,23 @@ public class StepTwoExchangeOperation extends JPanel{
      					{
      						if(node.getClass().getSimpleName().equals("MarkovNode"))
      						{
-     							nodeTextMap.put(node.hashCode(), ((MarkovNode)node).getName());
+     							if(((MarkovNode)node).getName().toString() == null)
+     							{
+     								nodeTextMap.put(node.hashCode(), " ");
+     							}
+     							else {
+     								nodeTextMap.put(node.hashCode(), ((MarkovNode)node).getName());
+								}
      							((MarkovNode)node).setName("");
      						}
      						if(node.getClass().getSimpleName().equals("MarkovStartNode")) {
-     							nodeTextMap.put(node.hashCode(), ((MarkovStartNode)node).getName());
+     							if(((MarkovStartNode)node).getName().toString() == null)
+     							{
+     								nodeTextMap.put(node.hashCode(), " ");
+     							}
+     							else {
+     								nodeTextMap.put(node.hashCode(), ((MarkovStartNode)node).getName());
+								}
      							((MarkovStartNode)node).setName("");
      						}
      					}	
@@ -560,31 +586,35 @@ public class StepTwoExchangeOperation extends JPanel{
      					{
      						if(edge.getClass().getSimpleName().equals("MarkovTransitionEdge"))
      						{
-     							edgeTextMap.put(edge.hashCode(), ((MarkovTransitionEdge)edge).getPro().toString());
+     							if(((MarkovTransitionEdge)edge).getPro().toString() == null)
+     							{
+     								edgeTextMap.put(edge.hashCode(), " ");
+     							}
+     							else {
+     								edgeTextMap.put(edge.hashCode(), ((MarkovTransitionEdge)edge).getPro().toString());
+								}
      							((MarkovTransitionEdge)edge).setPro("");
      						}
      					}	
      					
      					toplabel.removeAll();
-     					toplabel.setText("正在生成Markov图形.....");
-     					while (progressBarIndex <= 90) {
-     						progressBarIndex++;
-     						ExchangeProgressBar.setValue(progressBarIndex);
-     						Thread.sleep(100);
-						}
-     					
-     					IWorkspace workspace=new Workspace(graphFile);
-     					mainFrame.addTabbedPane(workspace,"step2");
-     					
-     					workspace.getAWTComponent().getScrollableSideBar().setVisible(false);
-     					workspace.getAWTComponent().updateUI();	
-     					mainFrame.getStepTwoExchangeTabbedPane().setSelectedIndex(0);
+     					toplabel.setText("正在获取Markov链XML信息.....");
+     					mainFrame.getStepTwoExchangeTabbedPane().getExchangeResport().removeAll();
+     					mainFrame.getStepTwoExchangeTabbedPane().getExchangeResport().add(XMLToTree.getTree(MarkovRoute+Model_Name+"layout.markov.violet.xml"));
+     					mainFrame.getStepTwoExchangeTabbedPane().setSelectedIndex(1);
      					mainFrame.renewPanel();
+     					
+     					for(File file : new File(MarkovRoute).listFiles())
+     					{
+     						if(file.getName().contains(".markov.violet.xml")){
+     							file.delete();
+     						}
+     					}
      					
 //     					清除布局XML
      					for(File file : new File(MarkovRoute).listFiles())
      					{
-     						if(file.getName().contains(".markov.violet.xml")){
+     						if(file.getName().contains("MarkovChainModel")){
      							file.delete();
      						}
      					}
@@ -618,10 +648,12 @@ public class StepTwoExchangeOperation extends JPanel{
  						ExchangeProgressBar.setValue(progressBarIndex);
  						Thread.sleep(100);
 					}
-
-     					} catch (DocumentException e2) {
+     					} catch (Exception e2) {
      						// TODO Auto-generated catch block
      						e2.printStackTrace();
+
+     						toplabel.removeAll();
+         					toplabel.setText(e2.getMessage());
      					}
      				return 1;
      			}

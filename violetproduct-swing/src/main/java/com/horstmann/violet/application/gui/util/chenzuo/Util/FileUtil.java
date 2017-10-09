@@ -8,8 +8,8 @@ import java.io.File;
 
 public class FileUtil {
 
-    public static String REMOTE_TC_PATH ="/home/8_13_Finall/Test/testcase/";
-    public static String REMOTE_RS_PATH ="/home/8_13_Finall/Test/result/";
+    public static String REMOTE_TC_PATH ="/home/KKXFINAL/Test/testcase/";
+    public static String REMOTE_RS_PATH ="/home/KKXFINAL/Test/result/";
     public static String LOCAL_TARGET_PATH =System.getProperty("user.dir")+"\\src\\main\\java\\com\\horstmann\\violet\\application\\gui\\util\\chenzuo\\File\\";
 
     public void SetLocalPath(String path){

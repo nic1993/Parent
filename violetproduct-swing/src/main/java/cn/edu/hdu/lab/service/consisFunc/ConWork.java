@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import cn.edu.hdu.lab.config.StaticConfig;
 import cn.edu.hdu.lab.dao.condao.ConGraph;
 import cn.edu.hdu.lab.dao.condao.ConSD;
 import cn.edu.hdu.lab.dao.condao.ConUseCase;
@@ -40,7 +41,12 @@ public class ConWork {
 		 * */	
 		//软件必然执行结束
 		ConGraph tempGraph=new ConGraph(conUseCases);
+		
 		System.out.println("邻接矩阵节点数："+tempGraph.getNum());
+		StaticConfig.mainFrame.getOutputinformation().geTextArea().append("邻接矩阵节点数："+tempGraph.getNum() + "\n");
+		int length = StaticConfig.mainFrame.getOutputinformation().geTextArea().getText().length(); 
+		StaticConfig.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
+		
 		tempGraph.printGraph();
 		boolean isOver=false;
 		for(int i=0;i<tempGraph.getNum();i++)

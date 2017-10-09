@@ -47,7 +47,7 @@ public class StepThreeNoTimeSeqTabbedPane extends JTabbedPane{
 		caseTableHeaderPanel = new CaseTableHeaderPanel();
 		
 		abstractSequence = new JPanel();
-		abstractSequence.setLayout(new GridBagLayout());
+		abstractSequence.setLayout(new GridLayout());
 		abstractScroll = new JScrollPane(abstractSequence);
 		
 		totalPanel = new JPanel();

@@ -189,12 +189,14 @@ public class TimeExpandOperation extends JPanel{
      			public Integer call() throws Exception {
      				// TODO Auto-generated method stub
      				while (progressBarIndex < 100) {
-     					if(progressBarIndex == (int)((double)100/stepSum)*step)
+     					
+     					if(progressBarIndex == (int)(25*step))
      					{
-     						if(futuretasklist.get(step-1).isDone()){
+     						if(futuretasklist.get(step - 1).isDone()){
    							step++;
+   							System.out.println("step: " + step);
    							progressBarIndex++;
-   							ExpandProgressBar.setValue(ExpandProgressBar.getValue()+1);
+   							ExpandProgressBar.setValue(progressBarIndex);
    							threadlist.get(step - 1).start();
    						}		
      					}
@@ -219,6 +221,7 @@ public class TimeExpandOperation extends JPanel{
 				ModelExchange.setEnabled(false);
 				restartExchange.setEnabled(true);
    				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(false);
+   				mainFrame.getStepThreeLeftButton().getTimeSeq().setEnabled(false);
    				mainFrame.getStepThreeLeftButton().getTimeCase().setEnabled(false);
 				
 				progressBarIndex = 0;
@@ -229,7 +232,7 @@ public class TimeExpandOperation extends JPanel{
 				File files[] = RootFile.listFiles();
 				for(File file : files)
 				{
-					if(file.getName().contains(modelName))
+					if(file.getName().equals(modelName + ".xml"))
 					{
 						currentFile = file;
 					}		
@@ -268,10 +271,11 @@ public class TimeExpandOperation extends JPanel{
 				
 				TianWriteToVioletMarkov tian=new TianWriteToVioletMarkov();
 				tian.find(ExtendRoute+modelName + "_TimeExtend.xml");
-				tian.writeVioletMarkov(ExtendRoute+modelName+".markov.violet.xml");
-				GraphFile fileGraphFile=MarkovXML2GraphFile.toGraphFile(ExtendRoute,modelName+".markov.violet.xml");
-				LayoutMarkov.layout(ExtendRoute,ExtendRoute+modelName+".markov.violet.xml",modelName+"_TimeExtend.markov.violet.xml");
-				graphFile=MarkovXML2GraphFile.toGraphFile(ExtendRoute,modelName+"_TimeExtend.markov.violet.xml");
+				tian.writeVioletMarkov(ExtendRoute+modelName+"_TimeExtend.markov.violet.xml");
+				GraphFile fileGraphFile=MarkovXML2GraphFile.toGraphFile(ExtendRoute,modelName+"_TimeExtend.markov.violet.xml");
+                LayoutMarkov.layout(ExtendRoute,ExtendRoute+modelName+"_TimeExtend.markov.violet.xml",modelName+"_TimeExtendLayout.markov.violet.xml");
+				
+				graphFile=MarkovXML2GraphFile.toGraphFile(ExtendRoute,modelName+"_TimeExtendLayout.markov.violet.xml");
 				return 1;
 			}
 		};
@@ -279,10 +283,10 @@ public class TimeExpandOperation extends JPanel{
    		thread2 = new Thread(task2);
    		
    		callable3 = new Callable<Integer>() {
-
 			@Override
 			public Integer call() throws Exception {
 				// TODO Auto-generated method stub
+				 
 				    expandlabel.removeAll();
 				    expandlabel.setText("正在获取扩展的"+modelName+"模型信息.....");
 				    Thread.sleep(500);
@@ -290,6 +294,10 @@ public class TimeExpandOperation extends JPanel{
 					
 					Collection<IEdge> edges = workspace.getGraphFile().getGraph().getAllEdges();
 					Collection<INode> nodes = workspace.getGraphFile().getGraph().getAllNodes();
+					
+					System.out.println("before edges size : " + edges.size());
+					System.out.println("node edges size : " + nodes.size());
+					
 					timeStateList = model.getTimeStateList();
 					timeArcList = model.getTimeArcList();
 					
@@ -305,6 +313,7 @@ public class TimeExpandOperation extends JPanel{
 						    	edgeColorable.setEdgeColor(Color.red);
 						    }
 	 					}
+						
 						for(State state : timeStateList)
 						{
 							for(Arc arc : state.getArcList())
@@ -317,13 +326,22 @@ public class TimeExpandOperation extends JPanel{
 							}
 						}
 					}
+					int i = 0;
 					for(IEdge edge : edges){
 						 if(edge.getClass().getSimpleName().equals("MarkovTransitionEdge"))
 	 						{
-	 							edgeTextMap.put(edge.hashCode(), ((MarkovTransitionEdge)edge).getPro().toString());
+							 if(((MarkovTransitionEdge)edge).getPro().toString() == null){
+								 edgeTextMap.put(edge.hashCode(), " ");
+							 }
+	 							else {
+	 								i++;
+	 								System.out.println("++++++++: " + ((MarkovTransitionEdge)edge).getPro().toString());
+	 								edgeTextMap.put(edge.hashCode(), ((MarkovTransitionEdge)edge).getPro().toString());
+								}
 	 							((MarkovTransitionEdge)edge).setPro("");
 	 						}
 					}
+					System.out.println("edge size: " + i);
 					
 					mainFrame.getStepTwoCenterRightPanel().getNodeTextMap().clear(); //首先清除map
  				    Map<Object, String> nodeTextMap = new HashMap<Object,String>();
@@ -343,24 +361,47 @@ public class TimeExpandOperation extends JPanel{
 						    }
 						}
 					}
+					
+					i = 0;
 					for(INode node : nodes){
 						if(node.getClass().getSimpleName().equals("MarkovNode"))
  						{
- 							nodeTextMap.put(node.hashCode(), ((MarkovNode)node).getName());
+							if(((MarkovNode)node).getName().toString() == null)
+							{
+								
+								nodeTextMap.put(node.hashCode(), " ");
+							}
+							else {
+								i++;
+								System.out.println("====: " + ((MarkovNode)node).getName());
+								nodeTextMap.put(node.hashCode(), ((MarkovNode)node).getName());
+							}
  							((MarkovNode)node).setName("");
  						}
  						if(node.getClass().getSimpleName().equals("MarkovStartNode")) {
- 							nodeTextMap.put(node.hashCode(), ((MarkovStartNode)node).getName());
+ 							if(((MarkovStartNode)node).getName().toString() == null)
+ 							{
+ 								System.out.println("node  name is null");
+ 								nodeTextMap.put(node.hashCode(), " ");
+ 							}
+ 							else {
+ 								i++;
+ 								System.out.println("====: "+((MarkovStartNode)node).getName());
+ 								nodeTextMap.put(node.hashCode(), ((MarkovStartNode)node).getName());
+							}
  							((MarkovStartNode)node).setName("");
  						}
 					}
-					
+					System.out.println("node size: " + i);
 					
 					expandlabel.removeAll();
 				    expandlabel.setText("正在生成扩展"+modelName+"Markov图形.....");
 					mainFrame.addTabbedPane(workspace);
 					workspace.getAWTComponent().getScrollableSideBar().setVisible(false);
 					workspace.getAWTComponent().updateUI();
+					
+					mainFrame.getStepTwoCenterRightPanel().setNodeTextMap(nodeTextMap);
+ 					mainFrame.getStepTwoCenterRightPanel().setEdgeTextMap(edgeTextMap);
 					
 					expandNode = new ExpandNode(modelName, mainFrame);
 				    expandNode.setWorkspace(workspace);
@@ -369,8 +410,7 @@ public class TimeExpandOperation extends JPanel{
 				    
 				    mainFrame.getStepThreeLeftButton().getTimeExpandNodePanel().insertNodeLabel(expandNode);
 				    
-				    mainFrame.getStepTwoCenterRightPanel().setNodeTextMap(nodeTextMap);
- 					mainFrame.getStepTwoCenterRightPanel().setEdgeTextMap(edgeTextMap);
+				    
 				return 1;
 			}
 		};
@@ -385,10 +425,19 @@ public class TimeExpandOperation extends JPanel{
 				expandlabel.removeAll();
 			    expandlabel.setText("正在生成转换XML信息.....");
 			    Thread.sleep(500);
-			    XMLPanel = XMLToTree.getTree(ExtendRoute+modelName+"_TimeExtend.markov.violet.xml");
+			    XMLPanel = XMLToTree.getTree(ExtendRoute+modelName+"_TimeExtendLayout.markov.violet.xml");
 			    expandNode.setXMLPanel(XMLPanel);
 			    mainFrame.getTimeExpandTabbedPane().getExpandResport().add(XMLPanel);
-               
+			    
+//					清除布局XML
+					for(File file : new File(ExtendRoute).listFiles())
+					{
+						if(file.getName().contains(".markov.violet.xml")){
+							file.delete();
+						}
+					}
+			    
+			    
 				mainFrame.getStepThreeLeftButton().getTimeCase().setEnabled(true);
 				expandlabel.removeAll();
 			    expandlabel.setText(modelName+"模型扩展完成，可以对扩展生成的Markov模型生成测试用例!");

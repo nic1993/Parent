@@ -84,13 +84,13 @@ public class StepOneOperationButton extends JPanel{
 		this.add(saveasButton);
 		this.add(rightpanel);
 		this.add(otherPanel);
-		this.add(closeButton);
+//		this.add(closeButton);
 		
-		layout.setConstraints(newButton, new GBC(0, 0, 1, 1).setFill(GBC.BOTH).setWeight(0, 1).setInsets(10, 15, 10, 10));
-		layout.setConstraints(openButton, new GBC(1, 0, 1, 1).setFill(GBC.BOTH).setWeight(0, 1).setInsets(10));
-		layout.setConstraints(saveButton, new GBC(2, 0, 1, 1).setFill(GBC.BOTH).setWeight(0, 1).setInsets(10));
-		layout.setConstraints(saveasButton, new GBC(3, 0, 1, 1).setFill(GBC.BOTH).setWeight(0, 1).setInsets(13, 10, 10, 10));
-		layout.setConstraints(closeButton, new GBC(4, 0, 1, 1).setFill(GBC.BOTH).setWeight(0, 1).setInsets(10));
+		layout.setConstraints(newButton, new GBC(0, 0, 1, 1).setFill(GBC.BOTH).setWeight(0, 1).setInsets(20, 15, 20, 10));
+		layout.setConstraints(openButton, new GBC(1, 0, 1, 1).setFill(GBC.BOTH).setWeight(0, 1).setInsets(20,10,20,10));
+		layout.setConstraints(saveButton, new GBC(2, 0, 1, 1).setFill(GBC.BOTH).setWeight(0, 1).setInsets(20,10,20,10));
+		layout.setConstraints(saveasButton, new GBC(3, 0, 1, 1).setFill(GBC.BOTH).setWeight(0, 1).setInsets(23, 10, 20, 10));
+//		layout.setConstraints(closeButton, new GBC(4, 0, 1, 1).setFill(GBC.BOTH).setWeight(0, 1).setInsets(20,10,20,10));
 		layout.setConstraints(rightpanel, new GBC(5, 0, 1, 1).setFill(GBC.BOTH).setWeight(1, 0));
 		layout.setConstraints(otherPanel, new GBC(0, 1, 6, 1).setFill(GBC.BOTH).setWeight(1, 1).setInsets(0));
 		buttonListen();
@@ -137,6 +137,8 @@ public class StepOneOperationButton extends JPanel{
 	    openButton.setContentAreaFilled(false);	
 	    openButton.setFocusable(true);
 	    openButton.setToolTipText("打开");
+	    openButton.setBorderPainted(false);
+	    openButton.setPreferredSize(new Dimension(30, 30));
 	    openButton.addMouseListener(new MouseListener() {
 			
 			@Override
@@ -154,12 +156,13 @@ public class StepOneOperationButton extends JPanel{
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+				openButton.setBorderPainted(false);
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
+				openButton.setBorderPainted(true);
 				openButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 			}
 			
@@ -182,6 +185,7 @@ public class StepOneOperationButton extends JPanel{
 		saveButton.setContentAreaFilled(false);
 		saveButton.setFocusable(true);
 		saveButton.setToolTipText("保存");
+		saveButton.setPreferredSize(new Dimension(30, 30));
 		saveButton.addMouseListener(new MouseListener() {
 			
 			@Override
@@ -199,11 +203,13 @@ public class StepOneOperationButton extends JPanel{
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
+				saveButton.setBorderPainted(false);
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				// TODO Auto-generated method stub
+				// TODO Auto-generated method stub.
+				saveButton.setBorderPainted(true);
 				saveButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 			}
 			
@@ -227,6 +233,7 @@ public class StepOneOperationButton extends JPanel{
 		newButton.setContentAreaFilled(false);
 		newButton.setFocusable(true);
 		newButton.setToolTipText("新建");
+		newButton.setPreferredSize(new Dimension(30, 30));
 		newButton.addMouseListener(new MouseListener() {	
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -243,11 +250,13 @@ public class StepOneOperationButton extends JPanel{
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
+				newButton.setBorderPainted(false);
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
+				newButton.setBorderPainted(true);
 				newButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 			}
 			
@@ -258,6 +267,7 @@ public class StepOneOperationButton extends JPanel{
 			}
 		});
 
+		saveasButton.setToolTipText("另存");
 	    Icon saveasIcon = new ImageIcon("resources/icons/22x22/save_as.png");
 	    saveasButton.setIcon(saveasIcon);
 	    saveasButton.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -266,6 +276,8 @@ public class StepOneOperationButton extends JPanel{
 	    saveasButton.setMargin(new Insets(0, 0, 0, 0));
 	    saveasButton.setContentAreaFilled(false);
 	    saveasButton.setFocusable(true);		
+	    saveasButton.setBorderPainted(false);
+	    saveasButton.setPreferredSize(new Dimension(30, 30));
 	    saveasButton.addMouseListener(new MouseListener() {
 			
 			@Override
@@ -283,12 +295,13 @@ public class StepOneOperationButton extends JPanel{
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+				saveasButton.setBorderPainted(false);
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
+				saveasButton.setBorderPainted(true);
 				saveasButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 			}
 			
@@ -307,6 +320,7 @@ public class StepOneOperationButton extends JPanel{
 	    closeButton.setMargin(new Insets(0, 0, 0, 0));
 	    closeButton.setContentAreaFilled(false);
 	    closeButton.setFocusable(true);		
+	    closeButton.setPreferredSize(new Dimension(30, 30));
 	    closeButton.addMouseListener(new MouseListener() {
 			
 			@Override
@@ -324,13 +338,14 @@ public class StepOneOperationButton extends JPanel{
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+				closeButton.setBorderPainted(false);
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
-				saveasButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				closeButton.setBorderPainted(true);
+				closeButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 			}
 			
 			@Override
@@ -339,10 +354,7 @@ public class StepOneOperationButton extends JPanel{
 				
 			}
 		});
-		openButton.setBorderPainted(false);
-		saveButton.setBorderPainted(false);
-		saveasButton.setBorderPainted(false);
-        closeButton.setBorderPainted(false);
+
         
 	
 	}
@@ -392,6 +404,7 @@ public class StepOneOperationButton extends JPanel{
 					
 					JPanel treePanel = mainFrame.getsteponeButton().getTreePanel();
 					int index = treePanel.getComponentCount();
+					System.out.println("index: " + index);
 					treePanel.add(modelPanel,new GBC(0, index).setFill(GBC.BOTH).setWeight(1, 1));
 					
 					mainFrame.getModelPanels().add(modelPanel);
@@ -439,8 +452,6 @@ public class StepOneOperationButton extends JPanel{
 				{
 					mainFrame.saveModelPanel(mainFrame.getActiveModelPanel());
 				}
-				
-                
 				mainFrame.renewPanel();
 			}
 		});

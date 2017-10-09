@@ -23,7 +23,7 @@ public class BestAssign {
 			TCDetail.getInstance().setStimulateSequence(stimulateSequence);
 
 			for (int i = 0; i < route.getNumber(); i++) {
-				System.out.print("²âÊÔÓÃÀý£º");
+//				System.out.print("²âÊÔÓÃÀý£º");
 				RandomCase.getCase(stimulateList, root);
 			}
 		}

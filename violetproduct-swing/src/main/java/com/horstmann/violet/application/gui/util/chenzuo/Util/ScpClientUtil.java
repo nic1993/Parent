@@ -13,6 +13,7 @@ public class ScpClientUtil {
     private Connection conn;
     private String ip;
     private String username = "root";
+//    private String username = "lab603-1";
     private String password = "1";
     boolean flg=false;
 
@@ -34,7 +35,7 @@ public class ScpClientUtil {
     }
 
     public String preCon(){
-        return execute("sh /home/8_13_Finall/start.sh");
+        return execute("sh /home/KKXFINAL/start.sh");
     }
 
     public void close(){

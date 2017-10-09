@@ -235,6 +235,7 @@ public class UpdateXml {
 				
 				B[M][N]=B[N][M]=0;
 			}	
+			System.out.println("=====: " + route+newFileName);
 		    XMLWriter writer = new XMLWriter(new FileOutputStream(route+newFileName),//("stabilize_run.xml"),
 		    OutputFormat.createPrettyPrint());	
 		    writer.write(dom);

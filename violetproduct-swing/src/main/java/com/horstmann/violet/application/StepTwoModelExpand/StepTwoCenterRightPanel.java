@@ -271,6 +271,7 @@ public class StepTwoCenterRightPanel extends JPanel{
 					{
 						if(node.getClass().getSimpleName().equals("MarkovNode"))
 						{
+							System.out.println(nodeTextMap.get(node.hashCode()));
 							((MarkovNode)node).setName(nodeTextMap.get(node.hashCode()));
 						}
 						if(node.getClass().getSimpleName().equals("MarkovStartNode")) {
@@ -285,6 +286,7 @@ public class StepTwoCenterRightPanel extends JPanel{
 						}
 					}
 				}
+				
 				else {
 					for(INode node : nodes)
 					{

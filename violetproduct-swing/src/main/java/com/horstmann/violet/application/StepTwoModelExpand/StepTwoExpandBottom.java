@@ -179,7 +179,32 @@ public class StepTwoExpandBottom extends JPanel{
 				
 				
 			    stepThree = mainFrame.getStepThreeLeftButton().getStepThree();
+			    
+			    if(mainFrame.getStepTwoExchangeOperation().getModel_Name() != null){
+					if(mainFrame.getStepTwoExchangeOperation().isTime())
+					{
+						mainFrame.getStepThreeLeftButton().getTimeModelLabel().setEnabled(true);
+						mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(false);
+						
+						if(stepThree == 2 || stepThree == 3 ||stepThree == 4 ||stepThree == 5){
+							stepThree = 1;
+						}
+					}
+					else if(!mainFrame.getStepTwoExchangeOperation().isTime()){
+						mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(true);
+						mainFrame.getStepThreeLeftButton().getTimeModelLabel().setEnabled(false);
+						
+						if(stepThree == 6 || stepThree == 7 ||stepThree == 8 ||stepThree == 9){
+							stepThree = 1;
+						}
+					}
+				}
+				else {
+					mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(false);
+					mainFrame.getStepThreeLeftButton().getTimeModelLabel().setEnabled(false);
+				}
 				JPanel mainPanel = mainFrame.getMainPanel();
+				
 				switch (stepThree) {
 				case 1:
 					for(int i = 0;i < mainPanel.getComponentCount();i++)
@@ -193,13 +218,8 @@ public class StepTwoExpandBottom extends JPanel{
 					
 					mainFrame.getCenterTabPanel().removeAll();
 					mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeChoosePattern());
-					if(mainFrame.getStepTwoExchangeOperation().isTime())
-					{
-						mainFrame.getStepThreeLeftButton().getTimeModelLabel().setEnabled(true);
-					}
-					else {
-						mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(true);
-					}
+					
+					
 					
 					mainFrame.getconsolepartPanel().
 					removeAll();
@@ -306,8 +326,8 @@ public class StepTwoExpandBottom extends JPanel{
     				}
     				mainFrame.getReduceOrEnlargePanel().setVisible(true);
     				mainFrame.getpanel().setVisible(true);
-					mainFrame.getpanel().add(mainFrame.getTimeCaseOperation());
-					mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeNoTimeTabbedPane());
+					mainFrame.getpanel().add(mainFrame.getTimeExpandOperation());
+					mainFrame.getCenterTabPanel().add(mainFrame.getTimeExpandTabbedPane());
 					mainFrame.renewPanel();
 	                break;
                 case 7:
@@ -324,9 +344,65 @@ public class StepTwoExpandBottom extends JPanel{
     				}
     				mainFrame.getReduceOrEnlargePanel().setVisible(true);
     				mainFrame.getpanel().setVisible(true);
-					mainFrame.getpanel().add(mainFrame.getTimeCaseOperation1());
-					mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeNoTimeTabbedPane());
+					mainFrame.getpanel().add(mainFrame.getTimeSeqOperation());
+					mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeTimeSeqTabbedPane());
 					mainFrame.renewPanel();
+					break;
+                case 8:
+                	mainFrame.getpanel().removeAll();
+            		mainFrame.getCenterTabPanel().removeAll();
+                	
+                	for(int i = 0;i < mainPanel.getComponentCount();i++)
+    				{
+    					if(mainPanel.getComponent(i).equals(mainFrame.getworkpanel()))
+    					{
+    						mainPanel.remove(mainPanel.getComponent(i));
+    						mainPanel.add(mainFrame.getworkpanel(),new GBC(1,2,1,1).setFill(GBC.BOTH).setWeight(1, 0.98).setInsets(10, 15, 20, 0));
+    					}
+    				}
+    				mainFrame.getReduceOrEnlargePanel().setVisible(true);
+    				mainFrame.getpanel().setVisible(true);
+					mainFrame.getpanel().add(mainFrame.getTimeSeqOperation1());
+					mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeTimeSeqTabbedPane());
+					mainFrame.renewPanel();
+					break;
+                case 9:
+                	mainFrame.getpanel().removeAll();
+            		mainFrame.getCenterTabPanel().removeAll();
+                	
+                	for(int i = 0;i < mainPanel.getComponentCount();i++)
+    				{
+    					if(mainPanel.getComponent(i).equals(mainFrame.getworkpanel()))
+    					{
+    						mainPanel.remove(mainPanel.getComponent(i));
+    						mainPanel.add(mainFrame.getworkpanel(),new GBC(1,2,1,1).setFill(GBC.BOTH).setWeight(1, 0.98).setInsets(10, 15, 20, 0));
+    					}
+    				}
+    				mainFrame.getReduceOrEnlargePanel().setVisible(true);
+    				mainFrame.getpanel().setVisible(true);
+					mainFrame.getpanel().add(mainFrame.getTimeCaseOperation());
+					mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeTimeTabbedPane());
+					mainFrame.renewPanel();
+					break;
+					
+                case 10:
+                	mainFrame.getpanel().removeAll();
+            		mainFrame.getCenterTabPanel().removeAll();
+                	
+                	for(int i = 0;i < mainPanel.getComponentCount();i++)
+    				{
+    					if(mainPanel.getComponent(i).equals(mainFrame.getworkpanel()))
+    					{
+    						mainPanel.remove(mainPanel.getComponent(i));
+    						mainPanel.add(mainFrame.getworkpanel(),new GBC(1,2,1,1).setFill(GBC.BOTH).setWeight(1, 0.98).setInsets(10, 15, 20, 0));
+    					}
+    				}
+    				mainFrame.getReduceOrEnlargePanel().setVisible(true);
+    				mainFrame.getpanel().setVisible(true);
+					mainFrame.getpanel().add(mainFrame.getTimeCaseOperation1());
+					mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeTimeSeqTabbedPane());
+					mainFrame.renewPanel();
+					break;
 				default:
 					break;
 				}

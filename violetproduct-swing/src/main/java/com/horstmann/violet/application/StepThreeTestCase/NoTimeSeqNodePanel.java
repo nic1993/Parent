@@ -27,7 +27,6 @@ public class NoTimeSeqNodePanel {
        public void insertNodeLabel(NoTimeSeqNode noTimeSeqNode,JPanel AbstractSequencePanel)
        {
     	   isExist = false;
-    	   System.out.println("isExist: " + isExist);
     	   if(SeqNodeLabels.size() != 0)
     	   {
     		   for(NoTimeSeqNode NodeLabel :SeqNodeLabels)

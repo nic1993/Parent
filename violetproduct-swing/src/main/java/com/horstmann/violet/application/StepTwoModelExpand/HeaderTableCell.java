@@ -8,6 +8,7 @@ import java.awt.Font;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.border.LineBorder;
 import javax.swing.table.TableCellRenderer;
 
 
@@ -20,16 +21,17 @@ import javax.swing.table.TableCellRenderer;
 			this.setPreferredSize(new Dimension(120,55));
 			this.setFont(new Font("ËÎÌו",Font.PLAIN,15));
 			this.setBackground(Color.white);
+			this.setBorder(BorderFactory.createMatteBorder(0, 1, 1, 0, Color.gray));
 			if(((String)value).contains("-"))
 			{
 				String splitValue[] = ((String)value).split("\\-");
-//				this.setBorder(BorderFactory.createMatteBorder(0, 1, 1, 0, Color.gray));
 				setText("<html><body>"+splitValue[0]+"<br>&nbsp&nbsp -<br>"+splitValue[1]+"</body></html>");
 			}
 			else {
 				this.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray));
 				setText("<html><body>"+((String)value)+"</body></html>");
 			}
+			
 			
 			return this;
 		}

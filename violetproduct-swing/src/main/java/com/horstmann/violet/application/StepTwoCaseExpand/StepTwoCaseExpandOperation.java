@@ -414,6 +414,18 @@ public class StepTwoCaseExpandOperation extends JPanel{
 
 						caseExpandNodePanel.insertNodeLabel(expandNodeLabel,panel);
 						mainFrame.getStepTwoCaseExpandTabbedPane().setSelectedIndex(1);
+						
+						for(InterfaceIsogenySD interfaceIsogenySD : IISDList)
+    					{
+    						for(InterfaceSD interfaceSD : interfaceIsogenySD.getISDList())
+    						{
+    							System.out.println(interfaceSD + "场景概率: " + interfaceSD.getPro());
+    							
+    							mainFrame.getOutputinformation().geTextArea().append(interfaceSD.getName() + "场景概率: " + interfaceSD.getPro() + "\n");
+    	    					int length = mainFrame.getOutputinformation().geTextArea().getText().length(); 
+    			                mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
+    						}
+    					}
 					}		
 				}
 				startExpandButton.setEnabled(true);

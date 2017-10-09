@@ -63,8 +63,7 @@ public class StepThreeBottom extends JPanel{
 	}
 	public void buttonlisten()
 	{
-		backButton.addActionListener(new ActionListener() {
-			
+		backButton.addActionListener(new ActionListener() {	
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
@@ -106,25 +105,6 @@ public class StepThreeBottom extends JPanel{
 				stepTwo = mainFrame.getStepTwoExpandBottom().getStep();
 				
 				switch (stepTwo) {
-//				case 1:
-//					mainFrame.getpanel().add(mainFrame.getStepTwoModelOperation());
-//					mainFrame.getpanel().setVisible(true);
-//					mainFrame.getpanel().updateUI();
-//					mainFrame.getCenterTabPanel().add(mainFrame.getStepTwoModelExpandTabbedPane());
-//					
-//					mainFrame.getStepTwoCenterRightPanel().getGraphButton().setVisible(false);
-//					mainFrame.getStepTwoCenterRightPanel().getZoominButton().setVisible(false);
-//					mainFrame.getStepTwoCenterRightPanel().getZoomoutButton().setVisible(false);
-//					break;
-//                case 2:
-//                	mainFrame.getpanel().add(mainFrame.getStepTwoCaseOperation());
-//					mainFrame.getpanel().setVisible(true);
-//					mainFrame.getpanel().updateUI();
-//					mainFrame.getCenterTabPanel().add(mainFrame.getStepTwoCaseExpandTabbedPane());
-//					mainFrame.getStepTwoCenterRightPanel().getGraphButton().setVisible(false);
-//					mainFrame.getStepTwoCenterRightPanel().getZoominButton().setVisible(false);
-//					mainFrame.getStepTwoCenterRightPanel().getZoomoutButton().setVisible(false);
-//					break;
                 case 1:
                 	mainFrame.getpanel().add(mainFrame.getStepTwoEvaluateOperation());
 					mainFrame.getpanel().setVisible(true);
@@ -156,10 +136,6 @@ public class StepThreeBottom extends JPanel{
 				mainFrame.getReduceOrEnlargePanel().add(mainFrame.getStepTwoCenterRightPanel());
 				mainFrame.getReduceOrEnlargePanel().updateUI();
 				mainFrame.getReduceOrEnlargePanel().setVisible(true);
-				
-				
-				
-				
 			}
 		});
 		nextbutton.addActionListener(new ActionListener() {

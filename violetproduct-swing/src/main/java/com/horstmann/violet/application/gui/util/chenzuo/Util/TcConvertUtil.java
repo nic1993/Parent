@@ -276,7 +276,7 @@ public class TcConvertUtil {
 						exeState = "测试耗时:" + r[1];
 						break;
 					}
-					if (type != "Function") {
+					if (type != "Coptermaster") {
 						testCaseResult.setExeTime(Double.valueOf(r[1]));
 						testCaseResult.setTakeoff_alt(Double.valueOf(r[2].substring("takeoff_alt".length())));
 						testCaseResult
@@ -297,15 +297,15 @@ public class TcConvertUtil {
 			 */
 			String result = "";
 			// 时间约束
-			if (type == "Time") {
-				result = stringRegEx(s, "resultStatus:([\\s|\\S]*?)]").get(0).split(":")[1];
-				if (result == "3") {
-					result = "程序出现出现死循环或者抛出异常!";
-				} else {
-					testCaseResult.setTimeLimit(timeStatistics(result));
-				}
-
-			} else {
+//			if (type == "Time") {
+//				result = stringRegEx(s, "resultStatus:([\\s|\\S]*?)]").get(0).split(":")[1];
+//				if (result == "3") {
+//					result = "程序出现出现死循环或者抛出异常!";
+//				} else {
+//					testCaseResult.setTimeLimit(timeStatistics(result));
+//				}
+//
+//			} else {
 				// 功能性能
 				t = stringRegEx(s, "resultStatus:([\\s|\\S]*?)]").get(0);
 				if (!t.contains(":")) {
@@ -320,7 +320,7 @@ public class TcConvertUtil {
 				} else {
 					result = "测试执行成功!耗时:" + t.split(":")[1];
 				}
-			}
+//			}
 
 			testCaseResult.setResultDetail(result);
 			testCase.setResult(testCaseResult);

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 
+
 public class Calculate {
 
 	public static void getAllTransValues(Markov markov) {
@@ -65,6 +66,8 @@ public class Calculate {
 						// 拼接参数变量成参数形式
 						String param2 = variables.toString().substring(1,
 								variables.toString().length() - 1);
+						
+//						DisplayForm.mainFrame.getOutputinformation().get
 						System.out
 								.println("加边界运算处理语句：SetAccuracy[FindInstance[{"
 										+ param1 + "}, {" + param2

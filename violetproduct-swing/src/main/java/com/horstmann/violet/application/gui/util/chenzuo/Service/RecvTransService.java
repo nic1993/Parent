@@ -27,7 +27,7 @@ public class RecvTransService implements Callable {
 
     private void recvRSFile() {
         String fileName = "result_" + node.getType() + "_" + id + ".txt";
-
+System.out.println("---filename"+fileName);
         long l = System.currentTimeMillis();
         scpclient.getFile(FileUtil.REMOTE_RS_PATH + fileName, FileUtil.LOCAL_TARGET_PATH);
         logger.debug("file " + id + " get ok,cost time is:" + (System.currentTimeMillis() - l) + " ms");

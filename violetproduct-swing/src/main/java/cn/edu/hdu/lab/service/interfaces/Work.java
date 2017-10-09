@@ -34,6 +34,6 @@ public interface Work {
 	public List<Object> transVerify() throws InvalidTagException;
 	public void transToMarckov(Map<String, List<InterfaceUCRelation>> UCRMap) throws Exception;
 	public void probabilityAndReachableTest() throws Exception;
-	public void writeMarkov(String mcXMLFileName,MainFrame mainFrame) throws IOException, Exception;
+	public void writeMarkov(String mcXMLFileName,MainFrame mainFrame,List<String> seqName,List<String> ucName) throws IOException, Exception;
 
 }

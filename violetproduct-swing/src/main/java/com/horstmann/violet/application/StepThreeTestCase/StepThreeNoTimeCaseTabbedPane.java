@@ -45,14 +45,14 @@ public class StepThreeNoTimeCaseTabbedPane extends JTabbedPane{
 	{
 		caseTableHeaderPanel = new CaseTableHeaderPanel();
 		testData = new JPanel();
-		
+		testData.setLayout(new GridLayout());
 		testDataScroll = new JScrollPane(testData);
 		testDataScroll.getVerticalScrollBar().setValue(testDataScroll.getVerticalScrollBar().getMaximum());
 		
 		totalPanel = new JPanel();
 		totalPanel.setLayout(new BorderLayout());
 		totalPanel.add(caseTableHeaderPanel, BorderLayout.NORTH);
-		totalPanel.add(testDataScroll,BorderLayout.CENTER);
+		totalPanel.add(testData,BorderLayout.CENTER);
 		listen();
           
 	}

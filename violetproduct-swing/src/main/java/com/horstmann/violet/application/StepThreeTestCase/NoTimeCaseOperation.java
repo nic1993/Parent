@@ -86,10 +86,15 @@ public class NoTimeCaseOperation extends JPanel{
        private List<Transition> transitions;
 
        private int progressBarIndex = 0;
-     
        private Callable<Integer> maincallable;
        private FutureTask<Integer> maintask;
    	   private Thread mainthread; 
+       private Callable<Integer> callable1;
+	   private FutureTask<Integer> task1;
+	   private Thread thread1;
+	   private Callable<Integer> callable2;
+	   private FutureTask<Integer> task2;
+	   private Thread thread2;
    	   
    	   private BigDecimal bigDecimal;
    	   private DecimalFormat  df = new DecimalFormat();
@@ -148,7 +153,8 @@ public class NoTimeCaseOperation extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				initThread();
-				mainthread.start();		
+				mainthread.start();	
+				thread1.start();
 			}
 		});
        }
@@ -158,62 +164,216 @@ public class NoTimeCaseOperation extends JPanel{
    			@Override
    			public Integer call() throws Exception {
    				// TODO Auto-generated method stub
-   				try {
-   				button.setEnabled(false);
-   				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(false);
-   				mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(false);
-   				mainFrame.getStepThreeLeftButton().getNoTimeSeq().setEnabled(false);
+//   				try {
+//   				button.setEnabled(false);
+//   				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(false);
+//   				mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(false);
+//   				mainFrame.getStepThreeLeftButton().getNoTimeSeq().setEnabled(false);
+//   				
+//				mainFrame.getStepThreeNoTimeTabbedPane().getTestData().removeAll();
+//				
+//				markov = mainFrame.getNoTimeSeqOperation().getMarkov();
+//				gc = mainFrame.getNoTimeSeqOperation().getGc();
+//				root = mainFrame.getNoTimeSeqOperation().getRoot();
+//				dom = mainFrame.getNoTimeSeqOperation().getDom();
+//				
+//   				progressBarIndex = 0;
+//				
+//				topLabel.removeAll();
+//				topLabel.setText("正在获取生成的抽象测试用例.....");
+//				Thread.sleep(100);
+//				
+//				Calculate.getAllTransValues(markov);
+//				
+//			    OutputFormat format = OutputFormat.createPrettyPrint();
+//			    XMLWriter writer = new XMLWriter(new FileOutputStream(
+//					mainFrame.getBathRoute()+"\\TestCase\\"+ModelName+"_相似度.xml"), format);
+//			    writer.write(dom);
+//			    writer.close();		
+//
+//			    
+//				List<TCDetail> lists = DataBaseUtil.showTCDetailAll("select * from tcdetail");
+//				i = 0;
+//				
+//				//生成测试数据
+//				mainFrame.getStepThreeNoTimeTabbedPane().getTestData().removeAll();
+//				
+//				CasePagePanel casePagePanel = new CasePagePanel(lists,mainFrame);
+//				mainFrame.getStepThreeNoTimeTabbedPane().getTestData().add(casePagePanel);
+//				
+//				JPanel TestDataPanel = new JPanel();
+//			
+//				for(TCDetail tcDetail : lists)
+//				{
+//					StepThreeTabelPanel testTabelPanel = new StepThreeTabelPanel(tcDetail.getTestCase(),2,mainFrame);
+//					
+////					mainFrame.getStepThreeNoTimeTabbedPane().getTestData().add(testTabelPanel2, new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
+//					
+//					casePagePanel.getCasePanel().add(testTabelPanel,
+//							new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
+//					
+//					mainFrame.getStepThreeNoTimeTabbedPane().getTestData().updateUI();
+//					mainFrame.getStepThreeNoTimeTabbedPane().getTestDataScroll().getVerticalScrollBar().setValue(
+//					mainFrame.getStepThreeNoTimeTabbedPane().getTestDataScroll().getVerticalScrollBar().getMaximum());
+//					i++;
+//					progressBar.setValue(60 + (int)(((double)i/lists.size())*40));
+//					
+//					topLabel.removeAll();
+//					topLabel.setText("正在生成第"+i+"条测试数据信息........");
+//					Thread.sleep(10);
+//					mainFrame.renewPanel();
+//				}
+//			    
+//				mainFrame.getStepThreeNoTimeTabbedPane().getTestData().add(new JPanel(), new GBC(0, i+1).setFill(GBC.BOTH).setWeight(1, 1));		
+//				mainFrame.getStepThreeNoTimeTabbedPane().getTestData().updateUI();
+//				mainFrame.renewPanel();
+//				
+//				button.setEnabled(true);
+//   				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
+//   				mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(true);
+//   				mainFrame.getStepThreeLeftButton().getNoTimeSeq().setEnabled(true);
+//				
+//				bigDecimal = new BigDecimal(markov.getDeviation());
+//				String ii = bigDecimal.toPlainString();
+//				double d = Double.valueOf(ii);
+//				topLabel.removeAll();
+//				topLabel.setText("测试用例信息生成完成,共生成"+lists.size() + "条测试用例。"+"  可靠性测试用例生成比率与使用模型实际使用概率平均偏差:"+df.format(d));
+//				
+//				NoTimeTestCaseNode noTimeTestCaseLabel = new NoTimeTestCaseNode(ModelName+"_相似度", mainFrame);
+//				quota = "测试用例信息生成完成,共生成"+lists.size() + "条测试用例。"+"  可靠性测试用例生成比率与使用模型实际使用概率平均偏差:"+df.format(d);
+//				noTimeTestCaseLabel.setQuota(quota);
+//				noTimeTestCaseLabel.setTestDataPanel(TestDataPanel);
+//				mainFrame.getStepThreeLeftButton().getNoTimeCaseNodePanel().insertNodeLabel(noTimeTestCaseLabel,TestDataPanel,quota);
+//   				} catch (RuntimeException e) {
+//					// TODO: handle exception
+//   					topLabel.removeAll();
+//   					topLabel.setText(e.getLocalizedMessage());
+//   					
+//   					button.setEnabled(true);
+//   	   				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
+//   	   				mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(true);
+//   	   				mainFrame.getStepThreeLeftButton().getNoTimeSeq().setEnabled(true);
+//				}
    				
+   				progressBarIndex = 0;
+   				progressBar.setValue(0);
+   				while (progressBarIndex < 40) {
+   					if(task1.isDone())
+   					{
+   						progressBarIndex++;
+   						progressBar.setValue(progressBarIndex);
+   						Thread.sleep(100);
+   					}
+   					else{
+   						progressBarIndex++;
+   						progressBar.setValue(progressBarIndex);
+   						Thread.sleep(1000);
+   					}
+   				}
+   				while(true){
+   					if(task1.isDone())
+   	   				{
+   	   					thread2.start();
+   	   					break;
+   	   				}
+   				}
+   				return 1;
+   			}
+   		};
+   		maintask = new FutureTask<>(maincallable);
+   		mainthread = new Thread(maintask);
+   		
+   		callable1 = new Callable<Integer>() {
+
+			@Override
+			public Integer call() throws Exception {
+				// TODO Auto-generated method stub
+				try {
+	   				button.setEnabled(false);
+	   				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(false);
+	   				mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(false);
+	   				mainFrame.getStepThreeLeftButton().getNoTimeSeq().setEnabled(false);
+					
+					markov = mainFrame.getNoTimeSeqOperation().getMarkov();
+					gc = mainFrame.getNoTimeSeqOperation().getGc();
+					root = mainFrame.getNoTimeSeqOperation().getRoot();
+					dom = mainFrame.getNoTimeSeqOperation().getDom();
+					
+	   				progressBarIndex = 0;
+					
+	   				topLabel.removeAll();
+					topLabel.setText("正在生成测试数据信息........");
+					
+					Calculate.getAllTransValues(markov);
+					for (int i = 0; i < gc.testCasesExtend.size(); i++) {
+						TCDetail.getInstance().setTestSequence(gc.abstractTS.get(i));
+						String stimulateSequence = getStimulateSeq(gc.testCasesExtend
+								.get(i));
+						TCDetail.getInstance().setStimulateSequence(stimulateSequence);
+						RandomCase.getCase(gc.testCasesExtend.get(i), root);
+					}
+					
+				    OutputFormat format = OutputFormat.createPrettyPrint();
+				    XMLWriter writer = new XMLWriter(new FileOutputStream(
+					mainFrame.getBathRoute()+"\\TestCase\\"+ModelName+"_相似度#1.xml"), format);
+				    writer.write(dom);
+				    writer.close();	
+				}catch (RuntimeException e) {
+						// TODO: handle exception
+	   					topLabel.removeAll();
+	   					topLabel.setText(e.getLocalizedMessage());
+	   					
+	   					button.setEnabled(true);
+	   	   				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
+	   	   				mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(true);
+	   	   				mainFrame.getStepThreeLeftButton().getNoTimeSeq().setEnabled(true);
+	   	   				
+					}
+				return 1;
+			}
+		};
+		task1 = new FutureTask<>(callable1);
+		thread1 = new Thread(task1);
+		
+		callable2 = new Callable<Integer>() {
+
+			@Override
+			public Integer call() throws Exception {
+				// TODO Auto-generated method stub
+				List<TCDetail> lists = DataBaseUtil.showTCDetailAll("select * from tcdetail");
+				
 				mainFrame.getStepThreeNoTimeTabbedPane().getTestData().removeAll();
 				
-				markov = mainFrame.getNoTimeSeqOperation().getMarkov();
-				gc = mainFrame.getNoTimeSeqOperation().getGc();
-				root = mainFrame.getNoTimeSeqOperation().getRoot();
-				dom = mainFrame.getNoTimeSeqOperation().getDom();
-				
-   				progressBarIndex = 0;
-				
-				topLabel.removeAll();
-
-				Calculate.getAllTransValues(markov);
-				
-			    OutputFormat format = OutputFormat.createPrettyPrint();
-			    XMLWriter writer = new XMLWriter(new FileOutputStream(
-					mainFrame.getBathRoute()+"\\TestCase\\"+ModelName+"_相似度.xml"), format);
-			    writer.write(dom);
-			    writer.close();		
-
-			    
-				List<TCDetail> lists = DataBaseUtil.showTCDetailAll("select * from tcdetail");
-				i = 0;
+				CasePagePanel casePagePanel = new CasePagePanel(lists,mainFrame);
+				mainFrame.getStepThreeNoTimeTabbedPane().getTestData().add(casePagePanel);
 				
 				//生成测试数据
 				topLabel.removeAll();
 				topLabel.setText("正在生成测试数据信息........");
-				mainFrame.getStepThreeNoTimeTabbedPane().getTestData().removeAll();
-				mainFrame.getStepThreeNoTimeTabbedPane().getTestData().setLayout(new GridBagLayout());
+				
 				JPanel TestDataPanel = new JPanel();
 				TestDataPanel.setLayout(new GridBagLayout());
-			
-				for(TCDetail tcDetail : lists)
-				{
-					StepThreeTabelPanel testTabelPanel = new StepThreeTabelPanel(tcDetail.getTestCase(),2,mainFrame);
+
+				int index = 500;
+					if(lists.size() < 500)
+					{
+						index = lists.size();
+					}
+
+						for(int j = 0;j < index;j++){
+                    		StepThreeTabelPanel testTabelPanel = new StepThreeTabelPanel(lists.get(j).getTestCase(), 2,
+            						mainFrame);
+                    		casePagePanel.getCasePanel().add(testTabelPanel,
+								new GBC(0, j).setFill(GBC.BOTH).setWeight(1, 0));
+                    		
+                    		mainFrame.getStepThreeNoTimeTabbedPane().getTestData().updateUI();
+                    		
+                    		progressBar.setValue(60 + (int) (((double) j / 500) * 60));
+                    		Thread.sleep(10);
+                    		mainFrame.renewPanel();
+                    	}
+                    	casePagePanel.getPageTestField().setText("1");
 					
-					StepThreeTabelPanel testTabelPanel2 = new StepThreeTabelPanel(tcDetail.getTestCase(),2,mainFrame);
-					
-					TestDataPanel.add(testTabelPanel, new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
-					
-					mainFrame.getStepThreeNoTimeTabbedPane().getTestData().add(testTabelPanel2, new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
-					mainFrame.getStepThreeNoTimeTabbedPane().getTestData().updateUI();
-					mainFrame.getStepThreeNoTimeTabbedPane().getTestDataScroll().getVerticalScrollBar().setValue(
-					mainFrame.getStepThreeNoTimeTabbedPane().getTestDataScroll().getVerticalScrollBar().getMaximum());
-					i++;
-					progressBar.setValue(60 + (int)(((double)i/lists.size())*40));
-					mainFrame.renewPanel();
-				}
-			    
-				mainFrame.getStepThreeNoTimeTabbedPane().getTestData().add(new JPanel(), new GBC(0, i+1).setFill(GBC.BOTH).setWeight(1, 1));		
-				mainFrame.getStepThreeNoTimeTabbedPane().getTestData().updateUI();
 				mainFrame.renewPanel();
 				
 				button.setEnabled(true);
@@ -232,21 +392,11 @@ public class NoTimeCaseOperation extends JPanel{
 				noTimeTestCaseLabel.setQuota(quota);
 				noTimeTestCaseLabel.setTestDataPanel(TestDataPanel);
 				mainFrame.getStepThreeLeftButton().getNoTimeCaseNodePanel().insertNodeLabel(noTimeTestCaseLabel,TestDataPanel,quota);
-   				} catch (RuntimeException e) {
-					// TODO: handle exception
-   					topLabel.removeAll();
-   					topLabel.setText(e.getLocalizedMessage());
-   					
-   					button.setEnabled(true);
-   	   				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
-   	   				mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(true);
-   	   				mainFrame.getStepThreeLeftButton().getNoTimeSeq().setEnabled(true);
-				}
-   				return 1;
-   			}
-   		};
-   		maintask = new FutureTask<>(maincallable);
-   		mainthread = new Thread(maintask);
+				return 1;
+			}
+		};
+		task2 = new FutureTask<>(callable2);
+		thread2 = new Thread(task2);
        }
    	private static String getStimulateSeq(List<Stimulate> oneCaseExtend) {
 		String stimulateSequence = "";

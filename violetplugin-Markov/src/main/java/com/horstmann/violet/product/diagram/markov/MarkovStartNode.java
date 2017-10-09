@@ -56,6 +56,11 @@ public class MarkovStartNode extends EllipticalNode{
 
 	        // Restore first color
 	        g2.setColor(oldColor);
+
+	        if(name == null) 
+	        {
+	        	setName("");
+	        }
 	        g2.drawString(name,(int)getBounds().getX(),(int)getBounds().getY());
 	    }
 	    public void setName(String newValue)

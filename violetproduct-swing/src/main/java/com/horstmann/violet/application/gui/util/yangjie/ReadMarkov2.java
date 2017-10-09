@@ -7,6 +7,8 @@ import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
+import com.horstmann.violet.application.gui.MainFrame;
+
 
 /**
  * 建立一个用于读取存放markov链的XML文件,在内存中构成markov链的邻接表表示结构
@@ -41,7 +43,8 @@ public class ReadMarkov2 {
 	 * 
 	 * @return 返回邻接表结构的markov链对象
 	 * */
-	public Markov readMarkov(String route) throws Exception {
+	public Markov readMarkov(String route,MainFrame mainFrame) throws Exception {
+		DisplayForm.mainFrame = mainFrame;
 		Document dom = getDom(route);
 		Element root = dom.getRootElement();
 		List stateList = root.selectNodes("//state"); // xpath语法
@@ -97,6 +100,13 @@ public class ReadMarkov2 {
 				}
 				t.setProbability(Double.parseDouble(probability.getText()));
 				// 打印每条迁移的概率
+				mainFrame.getOutputinformation().geTextArea().append("状态" + headState.getStateName() + "的迁移"
+						+ t.getName() + "的概率为：" + t.getProbability() + "\n");
+
+                int length = mainFrame.getOutputinformation().geTextArea().getText().length(); 
+                mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
+				
+				
 				System.out.println("状态" + headState.getStateName() + "的迁移"
 						+ t.getName() + "的概率为：" + t.getProbability());
 				outTransProb += t.getProbability();// 出迁移总概率
@@ -137,11 +147,19 @@ public class ReadMarkov2 {
 						Parameter parameter = new Parameter();
 						Element parameterElement = (Element) parameterNode;
 
+						mainFrame.getOutputinformation().geTextArea().append("当前读到的状态名："
+								+ headState.getStateName()
+								+ "当前读到的激励参数名："
+								+ parameterElement.element("paramName")
+										.getText()+"\n");
+						int length2 = mainFrame.getOutputinformation().geTextArea().getText().length(); 
+		                mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
+						
 						System.out.println("当前读到的状态名："
 								+ headState.getStateName()
 								+ "当前读到的激励参数名："
 								+ parameterElement.element("paramName")
-										.getText());
+										.getText()+"\n");
 
 						Element paramName = parameterElement
 								.element("paramName");

@@ -31,8 +31,8 @@ public class demo extends JFrame {
         PropertyConfigurator.configure("src/log4j.properties");
 
 
-        File file = new File(System.getProperty("user.dir")+"//src//xx#1.xml");
-        Controller.Run(new Pair<String, File>("Function", file));
+        File file = new File(System.getProperty("user.dir")+"//src//EATimeDemo#3.xml");
+        Controller.Run(new Pair<String, File>("Time", file));
 //        while(true){
 //            try {
 //                if(Constants.ISFINISH.get()){

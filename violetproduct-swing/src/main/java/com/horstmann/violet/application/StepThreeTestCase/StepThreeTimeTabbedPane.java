@@ -1,6 +1,7 @@
 package com.horstmann.violet.application.StepThreeTestCase;
 
 import java.awt.BasicStroke;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -27,30 +28,31 @@ import com.horstmann.violet.application.gui.MainFrame;
 import com.horstmann.violet.workspace.IWorkspace;
 
 public class StepThreeTimeTabbedPane extends JTabbedPane{
-	private JPanel abstractSequence;
+	private JPanel totalPanel;
+	private CaseTableHeaderPanel caseTableHeaderPanel;
 	private JPanel testData;
     private List<ScenceTabelPanel> CaseValidationList;
     private JScrollPane testDataScroll;
-    private  JScrollPane abstractScroll;
-//    private JScrollPane 
     private MainFrame mainFrame;
 	public StepThreeTimeTabbedPane(MainFrame mainFrame)
 	{
 		this.mainFrame = mainFrame;
 		init();
-		this.add("测试用例生成报告",abstractScroll);
-		this.add("测试用例生成信息",testDataScroll);
+		this.add("测试用例生成信息",totalPanel);
 	}
 
 	private void init()
 	{
-		abstractSequence = new JPanel();
-		abstractSequence.setLayout(new GridLayout(1, 1));
-		testData = new JPanel();
-		testData.setLayout(new GridBagLayout());
-		testDataScroll = new JScrollPane(testData);
+		caseTableHeaderPanel = new CaseTableHeaderPanel();
 		
-		abstractScroll = new JScrollPane(abstractSequence);
+		testData = new JPanel();
+		testData.setLayout(new GridLayout());
+		testDataScroll = new JScrollPane(testData);
+
+		totalPanel = new JPanel();
+		totalPanel.setLayout(new BorderLayout());
+		totalPanel.add(caseTableHeaderPanel,BorderLayout.NORTH);
+		totalPanel.add(testData, BorderLayout.CENTER);
 		listen();
 	}
 	public void listen()
@@ -81,36 +83,12 @@ public class StepThreeTimeTabbedPane extends JTabbedPane{
 				mainFrame.renewPanel();
 			}
 		});
-		
-		abstractScroll.setBorder(null);
-		JScrollBar HorizontalBar1 = abstractScroll.getHorizontalScrollBar();
-		JScrollBar VerticalBar1 = abstractScroll.getVerticalScrollBar();
-		HorizontalBar1.addAdjustmentListener(new AdjustmentListener() {
-			@Override
-			public void adjustmentValueChanged(AdjustmentEvent e) {
-				// TODO Auto-generated method stub
-				mainFrame.renewPanel();
-			}
-		});
-		VerticalBar1.addAdjustmentListener(new AdjustmentListener() {			
-			@Override
-			public void adjustmentValueChanged(AdjustmentEvent e) {
-				// TODO Auto-generated method stub
-				mainFrame.renewPanel();
-			}
-		});
+
     }
 	public JScrollPane getTestDataScroll() {
 		return testDataScroll;
 	}
-	
-	public JScrollPane getAbstractScroll() {
-		return abstractScroll;
-	}
 
-	public JPanel getAbstractSequence() {
-		return abstractSequence;
-	}
 	public JPanel getTestData() {
 		return testData;
 	}

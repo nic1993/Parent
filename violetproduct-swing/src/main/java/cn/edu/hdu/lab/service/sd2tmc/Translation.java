@@ -157,6 +157,10 @@ public class Translation {
 					}
 					
 					System.out.println("\n~~~~~~~~~MC~~~~~~~~~~~~~~");
+					StaticConfig.mainFrame.getOutputinformation().geTextArea().append("~~~~~~~~~MC~~~~~~~~~~~~~~" + "\n");
+					int length = StaticConfig.mainFrame.getOutputinformation().geTextArea().getText().length(); 
+					StaticConfig.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
+					
 					Tmc seqTmc=new Tmc();
 					this.assignmentTmc(seqTmc, tmc);
 					
@@ -198,8 +202,13 @@ public class Translation {
 	//将剩下的顺序图添加到马尔科夫链上
 	public void sdSetsMergeMarkov() throws Exception
 	{
-		if(sdSets.size()<2)
+		if(sdSets.size()<2){
 			System.out.println("用例只有一个顺序图");
+		
+		StaticConfig.mainFrame.getOutputinformation().geTextArea().append("用例只有一个顺序图"+"\n");
+		int length = StaticConfig.mainFrame.getOutputinformation().geTextArea().getText().length(); 
+		StaticConfig.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
+		}
 		else
 		{
 			for(int i=1;i<sdSets.size();i++)
@@ -1879,6 +1888,11 @@ public class Translation {
 		if(currentState.getStopTimeConstraint()!=null&&currentState.getStopTimeConstraint().length()>0)
 		{
 			System.out.println(currentState.getStopTimeConstraint());
+			
+			StaticConfig.mainFrame.getOutputinformation().geTextArea().append(currentState.getStopTimeConstraint()+ "\n");
+			int length = StaticConfig.mainFrame.getOutputinformation().geTextArea().getText().length(); 
+			StaticConfig.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
+			
 			if(currentState.getLabel()!=null)
 			{
 				currentState.setLabel(state.getLabel()+";timeDelay");

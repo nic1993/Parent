@@ -7,6 +7,7 @@ import org.hibernate.cfg.Configuration;
 import org.junit.Test;
 
 
+
 public class App2 {
 
 	private static SessionFactory sf;

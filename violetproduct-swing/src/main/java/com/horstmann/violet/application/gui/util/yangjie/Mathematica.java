@@ -7,7 +7,7 @@ import com.wolfram.jlink.MathLinkFactory;
 public class Mathematica {
 	public static KernelLink ml = null;
 
-	public static final String path = "-linkmode launch -linkname 'D:\\Mathematica\\10.2\\MathKernel.exe'";
+	public static final String path = "-linkmode launch -linkname 'D:\\Program Files\\Wolfram Research\\Mathematica\\10.2\\MathKernel.exe'";
 
 	public static String getSolution(String param1, String param2) {
 

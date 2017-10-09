@@ -300,6 +300,7 @@ public class StepTwoEvaluateOperation extends JPanel{
 						nameList.add(interfaceIsogenySD.getUcName());
 					}
 					nameList.add("Exit");
+					
 					reachableTabel = new ScenceTabelPanel(nameList, (int[][])list.get(2));
 					StepTwoMatrixPanel reachableMatrixPanel = new StepTwoMatrixPanel();
 					reachableMatrixPanel.getTabelPanel().add(reachableTabel);
