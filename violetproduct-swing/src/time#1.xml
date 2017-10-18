@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<TCS>
+  <testcase>
+    <process>
+      <operation>peopleComing</operation>
+      <input>null</input>
+    </process>
+    <process>
+      <operation>newPeople</operation>
+      <input>null</input>
+    </process>
+    <process>
+      <operation>pushCallUp</operation>
+      <input>floor=2</input>
+    </process>
+    <process>
+      <operation>response</operation>
+      <input>State=idle,Floor=1</input>
+    </process>
+    <process>
+      <operation>controller</operation>
+      <input>null</input>
+    </process>
+  </testcase>
+</TCS>
