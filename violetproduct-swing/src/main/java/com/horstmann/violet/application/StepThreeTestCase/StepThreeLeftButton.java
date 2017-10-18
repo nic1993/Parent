@@ -331,7 +331,7 @@ public class StepThreeLeftButton extends JPanel{
 									c = mainFrame.getStepThreeChoosePattern().getConfidence();
 									try {
 									rm = new ReadMarkov2();
-									markov = rm.readMarkov(route,mainFrame);
+									markov = rm.readMarkov(route);
 									min = getMinTCNum(markov,p,c);
 									} catch (RuntimeException e2) {
 										// 处理异常
@@ -464,7 +464,7 @@ public class StepThreeLeftButton extends JPanel{
 							p = mainFrame.getStepThreeChoosePattern().getReliabilityIndex();
 							c = mainFrame.getStepThreeChoosePattern().getConfidence();
 							rm = new ReadMarkov2();
-							markov = rm.readMarkov(route,mainFrame);
+							markov = rm.readMarkov(route);
 							min = getMinTCNum(markov,p,c);
 							mainFrame.getNoTimeSeqOperation1().getLabel2().removeAll();
 							mainFrame.getNoTimeSeqOperation1().getLabel2().setText("(不少于)"+String.valueOf(min)+"条");
@@ -720,7 +720,7 @@ public class StepThreeLeftButton extends JPanel{
 							p = mainFrame.getStepThreeChoosePattern().getReliabilityIndex();
 							c = mainFrame.getStepThreeChoosePattern().getConfidence();
 							rm = new ReadMarkov2();
-							markov = rm.readMarkov(route,mainFrame);
+							markov = rm.readMarkov(route);
 							min = getMinTCNum(markov,p,c);
 							mainFrame.getTimeSeqOperation1().getLabel2().removeAll();
 							mainFrame.getTimeSeqOperation1().getLabel2().setText("(不少于)"+String.valueOf(min)+"条");

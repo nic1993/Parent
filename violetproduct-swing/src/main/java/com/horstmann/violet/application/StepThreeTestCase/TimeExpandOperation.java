@@ -117,6 +117,9 @@ public class TimeExpandOperation extends JPanel{
 	   private TimeExpandNodePanel timeExpandNodePanel;
 	   private ExpandNode expandNode;
 	   private boolean isAlive = true;
+	   
+	   private Map<Object, String> nodeTextMap;
+	   private Map<Object, String> edgeTextMap;
 //       private List<Stimulate> stimuates = new ArrayList<Stimulate>();
        public TimeExpandOperation(MainFrame mainFrame)
        {
@@ -194,7 +197,6 @@ public class TimeExpandOperation extends JPanel{
      					{
      						if(futuretasklist.get(step - 1).isDone()){
    							step++;
-   							System.out.println("step: " + step);
    							progressBarIndex++;
    							ExpandProgressBar.setValue(progressBarIndex);
    							threadlist.get(step - 1).start();
@@ -266,8 +268,6 @@ public class TimeExpandOperation extends JPanel{
 				expandlabel.setText("正在生成扩展后的"+modelName+"模型.....");
 				WriteToXML wtXML = new WriteToXML();
 				wtXML.writeMarkov2XML(model, ExtendRoute+modelName + "_TimeExtend.xml");
-				mainFrame.getTimeCaseOperation().setModelName(modelName + "_TimeExtend.xml");
-				mainFrame.getTimeCaseOperation1().setModelName(modelName+ "_TimeExtend.xml");
 				
 				TianWriteToVioletMarkov tian=new TianWriteToVioletMarkov();
 				tian.find(ExtendRoute+modelName + "_TimeExtend.xml");
@@ -295,14 +295,12 @@ public class TimeExpandOperation extends JPanel{
 					Collection<IEdge> edges = workspace.getGraphFile().getGraph().getAllEdges();
 					Collection<INode> nodes = workspace.getGraphFile().getGraph().getAllNodes();
 					
-					System.out.println("before edges size : " + edges.size());
-					System.out.println("node edges size : " + nodes.size());
 					
 					timeStateList = model.getTimeStateList();
 					timeArcList = model.getTimeArcList();
 					
 					mainFrame.getStepTwoCenterRightPanel().getEdgeTextMap().clear();
- 					Map<Object, String> edgeTextMap = new HashMap<Object,String>();
+ 					edgeTextMap = new HashMap<Object,String>();
 					for(IEdge edge : edges)
 					{
 						for(Arc arc : timeArcList)
@@ -326,7 +324,6 @@ public class TimeExpandOperation extends JPanel{
 							}
 						}
 					}
-					int i = 0;
 					for(IEdge edge : edges){
 						 if(edge.getClass().getSimpleName().equals("MarkovTransitionEdge"))
 	 						{
@@ -334,17 +331,14 @@ public class TimeExpandOperation extends JPanel{
 								 edgeTextMap.put(edge.hashCode(), " ");
 							 }
 	 							else {
-	 								i++;
-	 								System.out.println("++++++++: " + ((MarkovTransitionEdge)edge).getPro().toString());
 	 								edgeTextMap.put(edge.hashCode(), ((MarkovTransitionEdge)edge).getPro().toString());
 								}
 	 							((MarkovTransitionEdge)edge).setPro("");
 	 						}
 					}
-					System.out.println("edge size: " + i);
 					
 					mainFrame.getStepTwoCenterRightPanel().getNodeTextMap().clear(); //首先清除map
- 				    Map<Object, String> nodeTextMap = new HashMap<Object,String>();
+ 				    nodeTextMap = new HashMap<Object,String>();
 					for(INode node : nodes)
 					{
 						for(State state : timeStateList)
@@ -361,19 +355,15 @@ public class TimeExpandOperation extends JPanel{
 						    }
 						}
 					}
-					
-					i = 0;
+				
 					for(INode node : nodes){
 						if(node.getClass().getSimpleName().equals("MarkovNode"))
  						{
 							if(((MarkovNode)node).getName().toString() == null)
 							{
-								
 								nodeTextMap.put(node.hashCode(), " ");
 							}
 							else {
-								i++;
-								System.out.println("====: " + ((MarkovNode)node).getName());
 								nodeTextMap.put(node.hashCode(), ((MarkovNode)node).getName());
 							}
  							((MarkovNode)node).setName("");
@@ -381,18 +371,14 @@ public class TimeExpandOperation extends JPanel{
  						if(node.getClass().getSimpleName().equals("MarkovStartNode")) {
  							if(((MarkovStartNode)node).getName().toString() == null)
  							{
- 								System.out.println("node  name is null");
  								nodeTextMap.put(node.hashCode(), " ");
  							}
  							else {
- 								i++;
- 								System.out.println("====: "+((MarkovStartNode)node).getName());
  								nodeTextMap.put(node.hashCode(), ((MarkovStartNode)node).getName());
 							}
  							((MarkovStartNode)node).setName("");
  						}
 					}
-					System.out.println("node size: " + i);
 					
 					expandlabel.removeAll();
 				    expandlabel.setText("正在生成扩展"+modelName+"Markov图形.....");
@@ -402,6 +388,7 @@ public class TimeExpandOperation extends JPanel{
 					
 					mainFrame.getStepTwoCenterRightPanel().setNodeTextMap(nodeTextMap);
  					mainFrame.getStepTwoCenterRightPanel().setEdgeTextMap(edgeTextMap);
+
 					
 					expandNode = new ExpandNode(modelName, mainFrame);
 				    expandNode.setWorkspace(workspace);
@@ -481,4 +468,17 @@ public class TimeExpandOperation extends JPanel{
 	public JButton getModelExchange() {
 		return ModelExchange;
 	}
+	public Map<Object, String> getEdgeTextMap() {
+		return edgeTextMap;
+	}
+	public Map<Object, String> getNodeTextMap() {
+		return nodeTextMap;
+	}
+	public void setEdgeTextMap(Map<Object, String> edgeTextMap) {
+		this.edgeTextMap = edgeTextMap;
+	}
+	public void setNodeTextMap(Map<Object, String> nodeTextMap) {
+		this.nodeTextMap = nodeTextMap;
+	}
+	
 }

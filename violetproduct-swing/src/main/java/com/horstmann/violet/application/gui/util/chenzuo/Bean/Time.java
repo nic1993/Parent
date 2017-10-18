@@ -97,11 +97,13 @@ public class Time  implements Serializable{
             keys[0] = str;
         }
         for (String key : keys) {
-            v = (double) mapping.get(key).getSecond();
-            if (v == 300d)
-                flag = false;
-            result += key + "=" + v + " ";
-            value += v;
+        	if(mapping.get(key)!=null){
+        		v = (double) mapping.get(key).getSecond();
+                if (v == 300d)
+                    flag = false;
+                result += key + "=" + v + " ";
+                value += v;
+        	}
         }
         if (flag)
             r = charge(symbol, value, Double.parseDouble(pV));

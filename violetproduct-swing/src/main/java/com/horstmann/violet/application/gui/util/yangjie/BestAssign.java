@@ -84,7 +84,8 @@ public class BestAssign {
 	 * 
 	 * @param routeList
 	 */
-	private void printBaseTestSequence(List<Route> routeList) {
+	private void printBaseTestSequence(List<Route> routeList
+			 ) {
 		System.out.println("\nMarkov链的基础测试序列集包括如下" + routeList.size() + "个：");
 
 		for (Route route : routeList) {
@@ -101,7 +102,6 @@ public class BestAssign {
 					+ "):   " + route.getRouteProbability() + "	此类用例包含"
 					+ route.getNumber() + "个");
 		}
-
 	}
 
 	/**

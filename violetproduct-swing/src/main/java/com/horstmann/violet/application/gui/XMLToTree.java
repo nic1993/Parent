@@ -1,6 +1,7 @@
 package com.horstmann.violet.application.gui;
 
 import java.awt.GridLayout;
+import java.io.File;
 import java.util.Iterator;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
+import javax.swing.tree.TreeSelectionModel;
 
 import org.dom4j.Attribute;
 import org.dom4j.Document;
@@ -23,7 +25,7 @@ public class XMLToTree {
     static DefaultMutableTreeNode rootTree ;
     static DefaultMutableTreeNode root1;
     static DefaultMutableTreeNode root2;
-    static DefaultTreeCellRenderer demoRenderer;
+    static NodeRenderer demoRenderer;
     private static JScrollPane jScrollPane;
     public static JScrollPane  getTree(String path) {
     	JPanel jp=new JPanel();
@@ -31,7 +33,9 @@ public class XMLToTree {
         	//获得SAXReader对象
             SAXReader saxReader=new SAXReader();
             //获得domcument的对象
-            doc=saxReader.read(path);     
+            File file = new File(path);
+            
+            doc=saxReader.read(file);     
             //获得根节点
             root = doc.getRootElement();//使用dom4j提供的API获得XML的根节点
             //创建Jtree数据模型的根节点
@@ -51,8 +55,12 @@ public class XMLToTree {
         rootTree.add(root2);
         //生成树(包含了一个容器)
         JTree jTree=new JTree(rootTree);
+        
+        jTree.getSelectionModel().setSelectionMode(
+        	     TreeSelectionModel.SINGLE_TREE_SELECTION);
+        jTree.setExpandsSelectedPaths(true);
         //将树中默认操作时显示的图片改成我们想要的图片
-        demoRenderer = new DefaultTreeCellRenderer();
+        demoRenderer = new NodeRenderer();
         demoRenderer.setClosedIcon(new ImageIcon("resources/icons/22x22/collapsed.png"));
         demoRenderer.setOpenIcon(new ImageIcon("resources/icons/22x22/expanded.png"));
         demoRenderer.setLeafIcon(null);

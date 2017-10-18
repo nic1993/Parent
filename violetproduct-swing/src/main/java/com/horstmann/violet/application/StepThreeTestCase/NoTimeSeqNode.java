@@ -16,7 +16,7 @@ import com.horstmann.violet.application.gui.MainFrame;
 public class NoTimeSeqNode extends JLabel{
        private Icon icon;
        private String title;
-       private JPanel AbstractSequencePanel;
+       private AbstractPagePanel abstractPagePanel;
        private MainFrame mainFrame;
        public NoTimeSeqNode(String name,MainFrame mainFrame)
        {
@@ -42,7 +42,7 @@ public class NoTimeSeqNode extends JLabel{
     			
                 mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().removeAll();
                 mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().setLayout(new GridLayout());
-                mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().add(AbstractSequencePanel);
+                mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().add(abstractPagePanel);
                 mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().repaint();
                 
                 for(NoTimeSeqNode noTimeSeqNode : mainFrame.getStepThreeLeftButton().getNoTimeSeqNodePanel().getTestCaseNodeLabels())
@@ -56,11 +56,13 @@ public class NoTimeSeqNode extends JLabel{
 		});
     }
 
-	public JPanel getAbstractSequencePanel() {
-		return AbstractSequencePanel;
+	
+	
+	public AbstractPagePanel getAbstractPagePanel() {
+		return abstractPagePanel;
 	}
-	public void setAbstractSequencePanel(JPanel abstractSequencePanel) {
-		AbstractSequencePanel = abstractSequencePanel;
+	public void setAbstractPagePanel(AbstractPagePanel abstractPagePanel) {
+		this.abstractPagePanel = abstractPagePanel;
 	}
 	public String getTitle() {
 		return title;

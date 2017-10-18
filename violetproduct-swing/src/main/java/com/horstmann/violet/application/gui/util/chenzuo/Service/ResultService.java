@@ -1,11 +1,15 @@
 package com.horstmann.violet.application.gui.util.chenzuo.Service;
 
-import com.horstmann.violet.application.gui.util.chenzuo.Bean.Constants;
-import com.horstmann.violet.application.gui.util.chenzuo.Bean.TestCase;
-import com.horstmann.violet.application.gui.util.chenzuo.Util.FileUtil;
-import com.horstmann.violet.application.gui.util.chenzuo.Util.TcConvertUtil;
+
+
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+
+import com.horstmann.violet.application.gui.util.chenzuo.Bean.Constants;
+import com.horstmann.violet.application.gui.util.chenzuo.Bean.TestCase;
+import com.horstmann.violet.application.gui.util.chenzuo.Controller.Controller;
+import com.horstmann.violet.application.gui.util.chenzuo.Util.FileUtil;
+import com.horstmann.violet.application.gui.util.chenzuo.Util.TcConvertUtil;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -49,94 +53,106 @@ public class ResultService {
             File file = new File(FileUtil.LOCAL_TARGET_PATH);
             if (file.isDirectory()) {
                 String[] filelist = file.list();
+                
+//            	String[] filelist=OrderWrapperTool.SortFileNameList(file.list());
+                System.out.println("readfile()+++++++++++++++++++++"+filelist.length);
                 for (int i = 0; i < filelist.length; i++) {
+                	System.out.println(filelist[i]);
+                }
+                System.out.println("readfile()-----------------------");
+                
+                for (int i = 0; i < filelist.length; i++) {
+                	
+                	if(!filelist[i].contains("89")&&!filelist[i].contains("93")){
+                		continue;
+                	}
+                	
                     String fileName = FileUtil.LOCAL_TARGET_PATH + filelist[i];
                         try {
-                            list.addAll(TcConvertUtil.buildTestCaseList(type, fileName));
+                        	
+                        	List<TestCase> testcaselist=TcConvertUtil.buildTestCaseList(type, fileName);
+                        	
+                        	//IDƫ��
+                        	if(Controller.offsetIP!=null&&filelist[i].contains(Controller.offsetIP)){
+                        		for(TestCase testCase:testcaselist){
+                        			testCase.setTestCaseID(String.valueOf(Integer.parseInt(testCase.getTestCaseID())+Controller.offsetTestCaseId));
+                        		}
+                        	}
+                        	
+                            list.addAll(testcaselist);
                             FileUtil.delete(fileName);
                             logger.debug("list size:"+list.size());
-                            if(Constants.ISFINISH.get()){
-                                logger.debug("scheduledService close");
-                                scheduledService.shutdown();
-                            }
+//                            if(Constants.ISFINISH.get()){
+//                                logger.debug("scheduledService close");
+//                                scheduledService.shutdown();
+//                            }
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                 }
+                
+            	if(Constants.ISFINISH.get()){
+					logger.debug("scheduledService close");
+					scheduledService.shutdown();
+				}
             }
 
         }
     }
-    /**
-	 * 统计测试用例执行情况
-	 */
-	public static List<Integer> getResults(List<TestCase> list) {
-		// 用于记录成功和失败
-		List<Integer> totallist = new ArrayList<Integer>();
-		int i = 0;
-		int j = 0;
-		int size = list.size();
-		// 遍历看看成功或者失败的个数统计
-		for(TestCase info:list){
-			  String str=info.getResult().getResultDetail();
-			  if(str.contains("成功")){
-				  i++;
-			  }
-			  else{
-				  j++;
-			  }
-		  }
-		totallist.add(i);
-		totallist.add(j);
-		totallist.add(size);
-		return totallist;
-	}
-	public static List<TestCase> getFail(List<TestCase> list)
-	{
-		List<TestCase> failelist = new ArrayList<TestCase>();
-		// 遍历看看成功或者失败的个数统计
-		for(TestCase info:list){
-			 String str=info.getResult().getResultDetail();
-			  System.out.println(str);
-			  if(str.contains("成功")){
-			  }
-			  else{
-				  failelist.add(info);
-			  }
-		  }
-		return failelist;
-	}
-	public  static List<Integer> getFailType(List<TestCase> list) {
-		List<TestCase> faillist = getFail(list);
-		List<Integer> countList = new ArrayList<Integer>();
-		if(faillist.size() > 0)
-		{
-			int i = faillist.size();
-			int count = 0;
-			for(int j = 0;j < i;j++)
-			{
-				if(faillist.get(j).getResult().getResultDetail().contains("程序执行过程中出现死循环或者抛出异常!"))
-				{
-					count++;
-				}
-			}
-			countList.add(count);
-			countList.add(i);
-			return countList;
-		}
-		else {
-			countList.add(0);
-			countList.add(0);
-			return countList;
-		}
-		
-	}
 
+    public static List<Integer> getResults(List<TestCase> testcaselist)
+    {
+    	List<Integer> lists = new ArrayList<Integer>();
+    	
+    	int fail = 0;
+    	int success = 0;
+    	
+    	for(int i = 0;i < testcaselist.size();i++)
+    	{
+    		if(testcaselist.get(i).getState().contains("成功"))
+    		{
+    			success++;
+    		}
+    		else {
+				fail++;
+			}
+    	}
+    	lists.add(success);
+    	lists.add(fail);
+    	lists.add(lists.size());
+    	
+    	return lists;
+    }
+    
+    
+    public static List<Integer> getFailType(List<TestCase> testcaselist)
+    {
+    	List<Integer> lists = new ArrayList<Integer>();
+    	
+    	int fail = 0;
+    	int failtype = 0;
+    	for(int i = 0;i < testcaselist.size();i++)
+    	{
+    		if(testcaselist.get(i).getState().contains("成功"))
+    		{
+    			
+    		}
+    		else {
+    			fail++;
+    			if(testcaselist.get(i).getResult().getResultDetail().contains(""))
+    			{
+    				
+    			}
+			}
+    	}
+    	
+    	return lists;
+    }
     public static List<TestCase> getResult() {
         return list;
     }
 
-    public static void main(String[] args) {
+	public static void main(String[] args) {
         PropertyConfigurator.configure("src/log4j.properties");
         ResultService s = new ResultService("Function");
     }

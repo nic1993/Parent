@@ -55,7 +55,7 @@ public class TypeFailReportTableHeaderPanel extends JPanel{
 	private void initAttributePanel() {
 		// TODO Auto-generated method stub
 
-		String[] columnNames = { "","测试用例有误","程序出现死循环或抛出异常","失败测试用例总数"};
+		String[] columnNames = { "","测试用例有误","程序执行过程中出现死循环或者抛出异常!","失败测试用例总数"};
 		String[][] tabelValues = {};
 
 		attributetablemodel = new DefaultTableModel(tabelValues, columnNames) {

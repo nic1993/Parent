@@ -1,5 +1,6 @@
 package com.horstmann.violet.application.gui.util.tanchao;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,7 +37,8 @@ public class TianWriteToVioletMarkov {
     * @throws DocumentException
     */
    public void find(String path) throws DocumentException{
-	   Document dom=reader.read(path);
+	   File file = new File(path);
+	   Document dom=reader.read(file);
 	   Element root= dom.getRootElement();
 	   List<Element> states=root.elements("state");
 	   int length=states.size();
@@ -371,25 +373,27 @@ public class TianWriteToVioletMarkov {
 	public void outputXML(Document doc,String fileName){
 		try {
 			FileWriter fw=new FileWriter(fileName);
-			OutputFormat format=OutputFormat.createPrettyPrint();
+			OutputFormat format=new OutputFormat("  ",true); 
 			XMLWriter xmlWriter=new XMLWriter(fw,format);
 			xmlWriter.write(doc);
 			xmlWriter.close();
+			
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
    
 	
-//	public static void main(String[] args) {
-//		TianWriteToVioletMarkov t=new TianWriteToVioletMarkov();
-//		try {
-//			t.find("C:\\Users\\Admin\\Desktop\\Primary Use Cases.xml");
-////			t.find("C:\\Users\\Admin\\Desktop\\markov\\Seq_MarkovChainModel2.xml");
-//			t.writeVioletMarkov("C:\\Users\\Admin\\Desktop\\123456.markov.violet.xml");
-//		} catch (DocumentException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
+	public static void main(String[] args) {
+		TianWriteToVioletMarkov t=new TianWriteToVioletMarkov();
+		try {
+			t.find("D:\\ModelDriverProjectFile\\NoTimeMarkov\\EADemo2Seq_MarkovChainModel1.xml");
+//			t.find("C:\\Users\\Admin\\Desktop\\markov\\Seq_MarkovChainModel2.xml");
+			t.writeVioletMarkov("D:\\ModelDriverProjectFile\\NoTimeMarkov\\EADemo2Seq_MarkovChainModel1.markov.violet.xml");
+		} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }

@@ -1,11 +1,19 @@
 package com.horstmann.violet.application.gui.util.chenzuo.Util;
 
-import com.horstmann.violet.application.gui.util.chenzuo.Bean.*;
+
 
 import java.io.*;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import com.horstmann.violet.application.gui.util.chenzuo.Bean.Pair;
+import com.horstmann.violet.application.gui.util.chenzuo.Bean.TestCase;
+import com.horstmann.violet.application.gui.util.chenzuo.Bean.TestCaseResult;
+import com.horstmann.violet.application.gui.util.chenzuo.Bean.Time;
+import com.horstmann.violet.application.gui.util.chenzuo.Bean.myProcess;
+
+
 
 /**
  * 测试用例 操作工具类
@@ -47,13 +55,29 @@ public class TcConvertUtil {
 		List<Pair> hs = new ArrayList(), ts = new ArrayList();
 		Map<String, List<Pair>> hb = new TreeMap(comp), ht = new TreeMap(comp);
 		List<Pair> tmp, tmp2;
-		for (TestCase testCase : testCases) {
-			String speed = testCase.getResult().getWind_speed(), high = testCase.getResult().getTakeoff_alt(),
-					battery = testCase.getResult().getBattery_remaining(), time = testCase.getResult().getTime();
-			if ("0%".equals(battery)) {
+		
+		for(int i=0;i<testCases.size();i++){
+			TestCase testCase=testCases.get(i);
+			String speed = testCase.getResult().getWind_speed(), high = testCase.getResult().getTakeoff_alt(), time = testCase.getResult().getTime();
+			if(i==testCases.size()-1){
 				hs.add(new Pair(speed, high));
 				ts.add(new Pair(speed, time));
 			}
+			else{
+				if(!speed.equals(testCases.get(i+1).getResult().getWind_speed())){
+					hs.add(new Pair(speed, high));
+					ts.add(new Pair(speed, time));
+				}
+			}
+		}
+		
+		for (TestCase testCase : testCases) {
+			String speed = testCase.getResult().getWind_speed(), high = testCase.getResult().getTakeoff_alt(),
+					battery = testCase.getResult().getBattery_remaining(), time = testCase.getResult().getTime();
+//			if ("0%".equals(battery)) {
+//				hs.add(new Pair(speed, high));
+//				ts.add(new Pair(speed, time));
+//			}
 
 			if (!hb.containsKey(speed) || !ht.containsKey(speed)) {
 				tmp = new ArrayList();
@@ -267,23 +291,23 @@ public class TcConvertUtil {
 					}
 					exeState = tStatus + ",且" + eStatus;
 				} else {
-					// 鍔熻兘銆佹?ц兘
+					// 功能、性能
 					switch (Integer.valueOf(r[0])) {
 					case 1:
-						exeState = "测试用例有误,无法对应到执行程序，且测试耗时:" + r[1] + "[不准确]";
+						exeState = "测试用例有误,无法对应到执行程序，且测试耗时:" + r[1] + " ms [不准确]";
 						break;
 					case 2:
-						exeState = "测试耗时:" + r[1];
+						exeState = "测试耗时:" + r[1] +" ms";
 						break;
 					}
-					if (type != "Coptermaster") {
-						testCaseResult.setExeTime(Double.valueOf(r[1]));
-						testCaseResult.setTakeoff_alt(Double.valueOf(r[2].substring("takeoff_alt".length())));
-						testCaseResult
-								.setBattery_remaining(Double.valueOf(r[3].substring("battery_remaining".length())));
-						testCaseResult.setTime(Double.valueOf(r[4].substring("time".length())));
-						testCaseResult.setWind_speed(Double.valueOf(r[5].substring("wind_speed".length())));
-					}
+//					if (type != "Function") {
+//						testCaseResult.setExeTime(Double.valueOf(r[1]));
+//						testCaseResult.setTakeoff_alt(Double.valueOf(r[2].substring("takeoff_alt".length())));
+//						testCaseResult
+//								.setBattery_remaining(Double.valueOf(r[3].substring("battery_remaining".length())));
+//						testCaseResult.setTime(Double.valueOf(r[4].substring("time".length())));
+//						testCaseResult.setWind_speed(Double.valueOf(r[5].substring("wind_speed".length())));
+//					}
 
 				}
 			} else {
@@ -297,15 +321,15 @@ public class TcConvertUtil {
 			 */
 			String result = "";
 			// 时间约束
-//			if (type == "Time") {
-//				result = stringRegEx(s, "resultStatus:([\\s|\\S]*?)]").get(0).split(":")[1];
-//				if (result == "3") {
-//					result = "程序出现出现死循环或者抛出异常!";
-//				} else {
-//					testCaseResult.setTimeLimit(timeStatistics(result));
-//				}
-//
-//			} else {
+			if (type == "Time") {
+				result = stringRegEx(s, "resultStatus:([\\s|\\S]*?)]").get(0).split(":")[1];
+				if (result == "3") {
+					result = "程序出现出现死循环或者抛出异常!";
+				} else {
+					testCaseResult.setTimeLimit(timeStatistics(result));
+				}
+
+			} else {
 				// 功能性能
 				t = stringRegEx(s, "resultStatus:([\\s|\\S]*?)]").get(0);
 				if (!t.contains(":")) {
@@ -318,9 +342,9 @@ public class TcConvertUtil {
 						break;
 					}
 				} else {
-					result = "测试执行成功!耗时:" + t.split(":")[1];
+					result = "测试执行成功!耗时:" + t.split(":")[1]+" ms";
 				}
-//			}
+			}
 
 			testCaseResult.setResultDetail(result);
 			testCase.setResult(testCaseResult);
@@ -332,16 +356,27 @@ public class TcConvertUtil {
 
 		// 性能测试除去多个0%
 		if (type == "Performance") {
-			// 处理多个0%
-			for (int i = 0; i < list.size(); i++) {
-				if (i + 1 < list.size()) {
-					if (list.get(i).getResult().getBattery_remaining().equals("0%")
-							&& list.get(i + 1).getResult().getBattery_remaining().equals("0%")) {
-						list.remove(i);
-					}
+			//处理越界数据
+			for(int i=0;i<list.size();i++){
+				double battery=list.get(i).getResult().getBattery_remainingDouble();
+				if(battery>100){
+					list.get(i).getResult().setBattery_remaining(100);
+				}
+				else if(battery<0){
+					list.get(i).getResult().setBattery_remaining(0);
 				}
 			}
+			
+			// 处理多个0%
+			for (int i = 0; i < list.size() - 1; i++) {
+				if (list.get(i).getResult().getBattery_remaining().equals("0%")
+						&& list.get(i + 1).getResult().getBattery_remaining().equals("0%")) {
+					list.get(i).getResult().setBattery_remaining(1);
+				}
+
+			}
 		}
+		
 		return list;
 	}
 

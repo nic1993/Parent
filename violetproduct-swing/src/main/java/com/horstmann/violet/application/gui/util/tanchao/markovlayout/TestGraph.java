@@ -70,19 +70,19 @@ public class TestGraph {
 //	   System.out.println("list---"+list.size());
 //	   //888888
 //	   int num=0; int c=0,r=0;
-	   for(I=0;I<vertexNum;I++){
-		   for(J=0;J<vertexNum;J++){
-//			   System.out.print(A[I][J]+" ");
-			   if(A[I][J]==1&&A[I][J]!=A[J][I]&&J!=I)
-			   {
-     			   System.out.print("  i  "+I+"----"+"j  "+J+"  ");
-     			   System.out.println("list--i"+list.get(I)+"  list--j"+list.get(J)+" ");
-			   }    
-//				   num++;
-			   
-		   }
-		   System.out.println();
-	   }
+//	   for(I=0;I<vertexNum;I++){
+//		   for(J=0;J<vertexNum;J++){
+////			   System.out.print(A[I][J]+" ");
+//			   if(A[I][J]==1&&A[I][J]!=A[J][I]&&J!=I)
+//			   {
+//     			   System.out.print("  i  "+I+"----"+"j  "+J+"  ");
+//     			   System.out.println("list--i"+list.get(I)+"  list--j"+list.get(J)+" ");
+//			   }    
+////				   num++;
+//			   
+//		   }
+//		   System.out.println();
+//	   }
 //	   System.out.println("num----*"+num);
 	   //888888
 	   for(I=0;I<vertexNum;I++){
@@ -107,7 +107,7 @@ public class TestGraph {
 //	        	  System.out.print(B[k]+"  ");
 //	          }
 //	           System.out.println();
-			   System.out.println("List"+List.size()+"  flag--"+flag+"  Flag"+Flag);
+//			   System.out.println("List"+List.size()+"  flag--"+flag+"  Flag"+Flag);
 			   for(int k=0;k<edgeNum-flag-Flag-1;k++){
 				   if(List.size()!=0){
 					   List.get(k);

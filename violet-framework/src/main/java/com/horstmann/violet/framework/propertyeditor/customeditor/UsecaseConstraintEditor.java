@@ -158,6 +158,9 @@ public class UsecaseConstraintEditor extends PropertyEditorSupport{
 	    }
 	    public void saveConstraint()
 	    {
+	    	if(constrainttable.isEditing())
+	    		constrainttable.getCellEditor().stopCellEditing();
+	    	
 	    	int count = constrainttable.getRowCount();
 	    	useConstraint.getConstraints().clear();
 	    	if(count != 0)

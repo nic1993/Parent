@@ -11,4 +11,5 @@ public class Constants {
     public static int PEROID = 5;
     public static int PORT = 5555;
     public static TimeUnit TIME_TYPE = TimeUnit.SECONDS;
+    public static Object lock=new Object();
 }

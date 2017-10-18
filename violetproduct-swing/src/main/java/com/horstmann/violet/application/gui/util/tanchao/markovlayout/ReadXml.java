@@ -1,5 +1,6 @@
 package com.horstmann.violet.application.gui.util.tanchao.markovlayout;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -32,7 +33,8 @@ public class ReadXml {
    */
   public int[][] find(String fileName)  {
 	  try {
-		dom=reader.read(fileName);
+		  File file = new File(fileName);
+		dom=reader.read(file);
 	} catch (DocumentException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
@@ -76,7 +78,8 @@ public class ReadXml {
    */
   public String[] getIdValue(String filename) {
 	  try {
-		dom=reader.read(filename);
+		  File file = new File(filename);
+		dom=reader.read(file);
 	} catch (DocumentException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
@@ -107,7 +110,8 @@ public class ReadXml {
    */
   public int getNodeNum(String filename){
 	  try {
-		dom=reader.read(filename);
+		File file = new File(filename);
+		dom=reader.read(file);
 	} catch (DocumentException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
@@ -132,7 +136,8 @@ public class ReadXml {
    */
   public int getEdgeNum(String filename){
 	  try {
-		dom=reader.read(filename);
+		  File file = new File(filename);
+		dom=reader.read(file);
 	} catch (DocumentException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();

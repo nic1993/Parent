@@ -3,6 +3,8 @@ package com.horstmann.violet.application.gui.util.chenzuo.Util;
 import ch.ethz.ssh2.*;
 import org.apache.commons.lang3.StringUtils;
 
+
+
 import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,28 +33,36 @@ public class ScpClientUtil {
         } catch (IOException e) {
             e.printStackTrace();
         }
+//        System.out.println("+++++++++++++++++");
         return flg;
     }
 
     public String preCon(){
+    	execute("rm -rf "+FileUtil.REMOTE_RS_PATH +"*");
         return execute("sh /home/KKXFINAL/start.sh");
+//        return execute("sh /home/KKXFINAL/start.sh");
+//    	return execute("sudo sh /home/8_13_Finall/start.sh");
     }
 
     public void close(){
         conn.close();
     }
 
-    public String execute(String cmd){
+    public String execute(String cmd){ 
         String result="";
         try {
             if(login()){
+//            	System.out.println("-----------");
                 Session session= conn.openSession();
                 session.execCommand(cmd);
+//                session.execCommand("ifconfig");
                 result=processStdout(session.getStdout(),DEFAULTCHART);
+//                System.out.println("-------++++++++"+result);
                 if(StringUtils.isBlank(result)){
                     result=processStdout(session.getStderr(),DEFAULTCHART);
                 }
                 session.close();
+                System.out.println(cmd+" end");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -106,9 +116,11 @@ public class ScpClientUtil {
     }
 
     public static void main(String[] args) {
-        ScpClientUtil rec = new ScpClientUtil("10.1.16.89");
+        ScpClientUtil rec = new ScpClientUtil("10.1.16.93");
+        
         //执行命令
-        System.out.println(rec.execute("ifconfig"));
+//        System.out.println("1"+rec.preCon());
+        System.out.println("2"+rec.execute("ifconfig"));
 
 //        String remoteFile = "/home/8_11_Finall/Test/result/testaa.txt";
 //        String LOCAL_TARGET_PATH = "E:\\项目\\虚拟仿真平台进度\\MyLab603\\src\\main\\java\\com.horstmann.violet.application.gui.util.chenzuo\\Util\\ssh";

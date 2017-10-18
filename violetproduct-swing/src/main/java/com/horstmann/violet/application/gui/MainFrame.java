@@ -525,6 +525,7 @@ public class MainFrame extends JFrame
     
     public void removeModelPanel(ModelPanel modelPanel)
     {
+    	int index = modelPanel.getIndex();
     	//如果当为当前活动的modelPanel
     	if(getActiveModelPanel() == modelPanel)
     	{
@@ -532,11 +533,28 @@ public class MainFrame extends JFrame
     		setActiveModelPanel(null);
     	}
     	this.modelPanels.remove(modelPanel);
-    	this.getsteponeButton().getTreePanel().remove(modelPanel);
+    	
     	if(this.getPackageRoute().get(modelPanel.getTitle().getText()) != null)
     	{
     		this.getPackageRoute().remove(modelPanel.getTitle().getText());
     	}
+    	
+    	for(int i = 0;i < modelPanels.size();i++)
+    	{
+    		int currentIndex = modelPanels.get(i).getIndex();
+    		if(currentIndex > index)
+    		{
+    			modelPanels.get(i).setIndex(currentIndex - 1);
+    		}
+    	}
+    	
+    	this.getsteponeButton().getTreePanel().removeAll();
+    	for(int i = 0;i < modelPanels.size();i++)
+    	{
+    		this.getsteponeButton().getTreePanel().add(modelPanels.get(i),new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 1));
+    	}
+    	
+    	
         renewPanel();
     }
     
@@ -677,7 +695,7 @@ public class MainFrame extends JFrame
             String packagePath = this.getBathRoute()  +  modelPanel.getTitle().getText();
             this.getModelPanelMap().put(modelPanel, packagePath);
             
-            System.out.println(packagePath);
+            
             File packagefile =  new File(packagePath);
             if(!packagefile.exists())
             {

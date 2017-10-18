@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.horstmann.violet.application.gui.DisplayForm;
+
 
 
 public class Calculate {
@@ -67,7 +69,13 @@ public class Calculate {
 						String param2 = variables.toString().substring(1,
 								variables.toString().length() - 1);
 						
-//						DisplayForm.mainFrame.getOutputinformation().get
+						DisplayForm.mainFrame.getOutputinformation().geTextArea().append("加边界运算处理语句：SetAccuracy[FindInstance[{"
+								+ param1 + "}, {" + param2
+								+ "}, 50], 3]" + "\n");
+
+		                int length = DisplayForm.mainFrame.getOutputinformation().geTextArea().getText().length(); 
+		                DisplayForm.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
+		                
 						System.out
 								.println("加边界运算处理语句：SetAccuracy[FindInstance[{"
 										+ param1 + "}, {" + param2
@@ -89,6 +97,16 @@ public class Calculate {
 						// 拼接参数变量成参数形式
 						String param2 = variables.toString().substring(1,
 								variables.toString().length() - 1);
+						
+						DisplayForm.mainFrame.getOutputinformation().geTextArea().append("不加边界运算处理语句：SetAccuracy[FindInstance[{"
+								+ param1
+								+ "}, {"
+								+ param2
+								+ "}, 50], 3]" + "\n");
+
+		                int length = DisplayForm.mainFrame.getOutputinformation().geTextArea().getText().length(); 
+		                DisplayForm.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
+						
 						System.out
 								.println("不加边界运算处理语句：SetAccuracy[FindInstance[{"
 										+ param1

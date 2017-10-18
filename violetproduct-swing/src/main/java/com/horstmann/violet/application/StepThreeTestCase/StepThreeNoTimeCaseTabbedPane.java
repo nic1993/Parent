@@ -34,11 +34,15 @@ public class StepThreeNoTimeCaseTabbedPane extends JTabbedPane{
     private List<ScenceTabelPanel> CaseValidationList;
     private JScrollPane testDataScroll;
     private MainFrame mainFrame;
+    
+  //杨杰界面
+    private JPanel routePanel;
 	public StepThreeNoTimeCaseTabbedPane(MainFrame mainFrame)
 	{   
 		this.mainFrame = mainFrame;
 		init();
 		this.add("测试数据",totalPanel);
+		this.addTab("测试信息", routePanel);
 	}
 
 	private void init()
@@ -53,6 +57,9 @@ public class StepThreeNoTimeCaseTabbedPane extends JTabbedPane{
 		totalPanel.setLayout(new BorderLayout());
 		totalPanel.add(caseTableHeaderPanel, BorderLayout.NORTH);
 		totalPanel.add(testData,BorderLayout.CENTER);
+		
+		routePanel = new JPanel();
+		routePanel.setLayout(new GridLayout());
 		listen();
           
 	}
@@ -95,6 +102,10 @@ public class StepThreeNoTimeCaseTabbedPane extends JTabbedPane{
 	}
 	public List<ScenceTabelPanel> getCaseValidationList() {
 		return CaseValidationList;
+	}
+
+	public JPanel getRoutePanel() {
+		return routePanel;
 	}
 	
 }

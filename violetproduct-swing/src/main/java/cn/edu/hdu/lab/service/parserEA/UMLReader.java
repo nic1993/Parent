@@ -954,9 +954,11 @@ public class UMLReader {
 			{
 				//System.out.println("\n主图："+diagramData.getName());
 				DFSDiagramByREF(diagramData);				
-				diagramData.getMessageArray().get(diagramData.getMessageArray().size()-1).setLast(true);
 				//消息指针重定向
 				redirectMessage(diagramData);
+				//尾消息标志设置
+				diagramData.getMessageArray().get(diagramData.getMessageArray().size()-1).setLast(true);
+				
 				//确定消息的所有执行条件
 				searchOperConditionOfMess(diagramData);
 				//赋给主顺序图的保留变量
@@ -964,7 +966,7 @@ public class UMLReader {
 				break;
 			}
 		}
-		/*System.out.println("\n*******************完全图信息*********************");		
+		System.out.println("\n*******************完全图信息*********************");		
 		for(DiagramsData diagramData : umlAllDiagramData) {
 			if(diagramData.getName().equals(sdName))
 			{
@@ -987,7 +989,7 @@ public class UMLReader {
 				}				
 				break;
 			}
-		}*/
+		}
 	}	
 	
 	public static void searchOperConditionOfMess(DiagramsData d) throws Exception

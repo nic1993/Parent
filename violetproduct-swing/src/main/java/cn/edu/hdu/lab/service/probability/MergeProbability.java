@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Jama.Matrix;
-import cn.edu.hdu.lab.config.StaticConfig;
 public class MergeProbability {
 
 	private int number;
@@ -28,19 +27,16 @@ public class MergeProbability {
 		
 		//显示判断矩阵
 		m.print(4, 3);
-
 		System.out.println("特征值矩阵：");
 		m.eig().getD().print(4, 3);
 		System.out.println("对应特征向量矩阵：");
 		m.eig().getV().print(4, 3);
 		System.out.println("分量维数："+m.getColumnDimension());
-		StaticConfig.mainFrame.getOutputinformation().geTextArea().append("分量维数："+m.getColumnDimension()+"\n");
 		//验证矩阵一致性
 		ProMatrix M=new ProMatrix(m);
 		if(M.getCR()>0.1)//CR不达标则添加CR提示和概率为0的
 		{
 			resultList.add("判断矩阵一致性指标CR="+f.format(M.getCR())+">0.1,超标！");
-			StaticConfig.mainFrame.getOutputinformation().geTextArea().append("判断矩阵一致性指标CR="+f.format(M.getCR())+">0.1,超标！"+"\n");
 			for(int i=0;i<proArray.length;i++)
 			{
 				proArray[i]=0;
@@ -52,8 +48,6 @@ public class MergeProbability {
 			proArray=M.getProList();
 			resultList.add("计算结果正常,CR="+M.getCR()+",概率值为一维数组结果：");
 			resultList.add(proArray);
-			
-			StaticConfig.mainFrame.getOutputinformation().geTextArea().append("计算结果正常,CR="+M.getCR()+"\n");
 		}
 		return resultList;//计算结果提示+结算概率
 

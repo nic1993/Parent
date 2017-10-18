@@ -56,8 +56,8 @@ public class ExchangeNodeLabel extends JLabel{
    				mainFrame.getStepTwoExchangeTabbedPane().getExchangeResults().removeAll();
    				mainFrame.addTabbedPane(workspace);
    				
-   				mainFrame.getStepTwoCenterRightPanel().setNodeTextMap(nodeTextMap);
-				mainFrame.getStepTwoCenterRightPanel().setEdgeTextMap(edgeTextMap);
+   				mainFrame.getStepTwoExchangeOperation().setNodeTextMap(nodeTextMap);
+   				mainFrame.getStepTwoExchangeOperation().setEdgeTextMap(edgeTextMap);
    				
    				mainFrame.getStepTwoExchangeTabbedPane().setSelectedIndex(0);
    				for(ExchangeNodeLabel exchangeNodeLabel : mainFrame.getStepTwoExchangeOperation().getExchangeNodePanel().getExchangeNodeLabels())

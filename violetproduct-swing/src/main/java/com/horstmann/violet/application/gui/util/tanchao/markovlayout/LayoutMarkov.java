@@ -19,8 +19,9 @@ public class LayoutMarkov {
 		e.printStackTrace();
 	}
   }
-//  public static void main(String[] args) {
-//	LayoutMarkov.layout("C:\\Users\\Admin\\Desktop\\markov\\Seq_MarkovChainModel2_(601).markov.violet.xml");
-//    System.out.println("hello");
-//  }
+  public static void main(String[] args) {
+	LayoutMarkov.layout("E:\\markov", "D:\\ModelDriverProjectFile\\NoTimeMarkov\\EADemo2Seq_MarkovChainModel2.markov.violet.xml", 
+			"D:\\ModelDriverProjectFile\\NoTimeMarkov\\EADemo2Seq_MarkovChainModel2layout.markov.violet.xml");
+    System.out.println("hello");
+  }
 }

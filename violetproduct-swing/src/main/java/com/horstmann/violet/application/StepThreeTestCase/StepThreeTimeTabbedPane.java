@@ -32,7 +32,9 @@ public class StepThreeTimeTabbedPane extends JTabbedPane{
 	private CaseTableHeaderPanel caseTableHeaderPanel;
 	private JPanel testData;
     private List<ScenceTabelPanel> CaseValidationList;
-    private JScrollPane testDataScroll;
+    
+    
+    
     private MainFrame mainFrame;
 	public StepThreeTimeTabbedPane(MainFrame mainFrame)
 	{
@@ -47,7 +49,6 @@ public class StepThreeTimeTabbedPane extends JTabbedPane{
 		
 		testData = new JPanel();
 		testData.setLayout(new GridLayout());
-		testDataScroll = new JScrollPane(testData);
 
 		totalPanel = new JPanel();
 		totalPanel.setLayout(new BorderLayout());
@@ -65,29 +66,7 @@ public class StepThreeTimeTabbedPane extends JTabbedPane{
 				mainFrame.renewPanel();
 			}
 		});
-    	
-    	testDataScroll.setBorder(null);
-		JScrollBar HorizontalBar = testDataScroll.getHorizontalScrollBar();
-		JScrollBar VerticalBar = testDataScroll.getVerticalScrollBar();
-		HorizontalBar.addAdjustmentListener(new AdjustmentListener() {
-			@Override
-			public void adjustmentValueChanged(AdjustmentEvent e) {
-				// TODO Auto-generated method stub
-				mainFrame.renewPanel();
-			}
-		});
-		VerticalBar.addAdjustmentListener(new AdjustmentListener() {			
-			@Override
-			public void adjustmentValueChanged(AdjustmentEvent e) {
-				// TODO Auto-generated method stub
-				mainFrame.renewPanel();
-			}
-		});
-
     }
-	public JScrollPane getTestDataScroll() {
-		return testDataScroll;
-	}
 
 	public JPanel getTestData() {
 		return testData;
@@ -95,6 +74,7 @@ public class StepThreeTimeTabbedPane extends JTabbedPane{
 	public List<ScenceTabelPanel> getCaseValidationList() {
 		return CaseValidationList;
 	}
+
 	
 }
 

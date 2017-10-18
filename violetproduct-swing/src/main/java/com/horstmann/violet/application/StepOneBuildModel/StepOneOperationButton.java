@@ -404,8 +404,9 @@ public class StepOneOperationButton extends JPanel{
 					
 					JPanel treePanel = mainFrame.getsteponeButton().getTreePanel();
 					int index = treePanel.getComponentCount();
-					System.out.println("index: " + index);
+					
 					treePanel.add(modelPanel,new GBC(0, index).setFill(GBC.BOTH).setWeight(1, 1));
+					modelPanel.setIndex(index);
 					
 					mainFrame.getModelPanels().add(modelPanel);
 					mainFrame.setActiveModelPanel(modelPanel);
@@ -418,11 +419,8 @@ public class StepOneOperationButton extends JPanel{
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
-					}
-					 
+					} 
 					mainFrame.renewPanel();
-                    
-                    
                 }
 				mainFrame.renewPanel();
 			}
@@ -516,6 +514,8 @@ public class StepOneOperationButton extends JPanel{
 						JPanel treePanel = mainFrame.getsteponeButton().getTreePanel();
 						int index = treePanel.getComponentCount();
 						treePanel.add(modelPanel,new GBC(0, index).setFill(GBC.BOTH).setWeight(1, 1));
+
+						modelPanel.setIndex(index);			
 						
 						mainFrame.getModelPanels().add(modelPanel);
 						mainFrame.saveTemporary(modelPanel);

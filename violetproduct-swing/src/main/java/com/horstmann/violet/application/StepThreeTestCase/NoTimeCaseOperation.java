@@ -133,6 +133,8 @@ public class NoTimeCaseOperation extends JPanel{
     	   paramterNameList = new ArrayList<String>();
     	   paramterValueList = new ArrayList<String>();
     	   
+    	   textField.setText("0.1");
+    	   textField.setEditable(false);
     	   textField.setPreferredSize(new Dimension(40,30));
     	   topLabel.setFont(new Font("宋体", Font.PLAIN, 16));
     	   label1.setFont(new Font("宋体", Font.PLAIN, 16));
@@ -267,7 +269,7 @@ public class NoTimeCaseOperation extends JPanel{
    					else{
    						progressBarIndex++;
    						progressBar.setValue(progressBarIndex);
-   						Thread.sleep(1000);
+   						Thread.sleep(5000);
    					}
    				}
    				while(true){
@@ -328,6 +330,8 @@ public class NoTimeCaseOperation extends JPanel{
 	   	   				mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(true);
 	   	   				mainFrame.getStepThreeLeftButton().getNoTimeSeq().setEnabled(true);
 	   	   				
+	   	   			    mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
+	   	   				
 					}
 				return 1;
 			}
@@ -340,6 +344,7 @@ public class NoTimeCaseOperation extends JPanel{
 			@Override
 			public Integer call() throws Exception {
 				// TODO Auto-generated method stub
+				try{
 				List<TCDetail> lists = DataBaseUtil.showTCDetailAll("select * from tcdetail");
 				
 				mainFrame.getStepThreeNoTimeTabbedPane().getTestData().removeAll();
@@ -360,6 +365,9 @@ public class NoTimeCaseOperation extends JPanel{
 						index = lists.size();
 					}
 
+					casePagePanel.getCasePanel().add(new JPanel(),
+							new GBC(0, index).setFill(GBC.BOTH).setWeight(1, 1));
+					
 						for(int j = 0;j < index;j++){
                     		StepThreeTabelPanel testTabelPanel = new StepThreeTabelPanel(lists.get(j).getTestCase(), 2,
             						mainFrame);
@@ -390,8 +398,21 @@ public class NoTimeCaseOperation extends JPanel{
 				NoTimeTestCaseNode noTimeTestCaseLabel = new NoTimeTestCaseNode(ModelName+"_相似度", mainFrame);
 				quota = "测试用例信息生成完成,共生成"+lists.size() + "条测试用例。"+"  可靠性测试用例生成比率与使用模型实际使用概率平均偏差:"+df.format(d);
 				noTimeTestCaseLabel.setQuota(quota);
-				noTimeTestCaseLabel.setTestDataPanel(TestDataPanel);
-				mainFrame.getStepThreeLeftButton().getNoTimeCaseNodePanel().insertNodeLabel(noTimeTestCaseLabel,TestDataPanel,quota);
+				noTimeTestCaseLabel.setCasePagePanel(casePagePanel);
+				mainFrame.getStepThreeLeftButton().getNoTimeCaseNodePanel().insertNodeLabel(noTimeTestCaseLabel,casePagePanel,quota);
+				}catch (Exception e) {
+					// TODO: handle exception
+					topLabel.removeAll();
+   					topLabel.setText(e.getLocalizedMessage());
+   					
+   					button.setEnabled(true);
+   	   				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
+   	   				mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(true);
+   	   				mainFrame.getStepThreeLeftButton().getNoTimeSeq().setEnabled(true);
+   	   				
+   	   			    mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
+				}
+				
 				return 1;
 			}
 		};

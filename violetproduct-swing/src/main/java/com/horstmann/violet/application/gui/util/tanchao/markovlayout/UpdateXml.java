@@ -76,7 +76,7 @@ public class UpdateXml {
 		    	j++;//j代表着每个Template有几条边
 		    }
          A=new TestGraph(filename).init();
-         System.out.println("A"+A.length);
+//         System.out.println("A"+A.length);
          for (int I = 0; I < 2 * i; I+=2) {
     		 A[I] += 200;//这里面是把每个点的X坐标下移100像素
     		 A[I+1]+=100;
@@ -88,7 +88,7 @@ public class UpdateXml {
 			while (n < i) {
 //				Template  = List.get(n);
 				midElement=List.get(n);
-				System.out.println(midElement.getClass().toString()+"88888");
+//				System.out.println(midElement.getClass().toString()+"88888");
 				String xx = String.valueOf((int) A[m]);
 				String yy = String.valueOf((int) A[m + 1] );
 				String XX = String.valueOf((int) A[m]-30);
@@ -103,7 +103,7 @@ public class UpdateXml {
 //				Template.element("name").attribute("x").setText(YY);
 //				midElement.element("name").attribute("y").setText(xx);
 //				midElement.element("name").attribute("x").setText(yy);
-				System.out.println("节点名设置成功！！！");
+//				System.out.println("节点名设置成功！！！");
             }                                    	
 			//Template 代表着点List，template1代表着边list				
 			n = 0;
@@ -157,7 +157,7 @@ public class UpdateXml {
 //				nail2.addAttribute("x").setText(yyyyyy);
 //				nail2.addAttribute("y").setText(xxxxxxx);
 				
-				System.out.println("到自己有边的点的标签设置成功！！！");
+//				System.out.println("到自己有边的点的标签设置成功！！！");
 				k++;
 				}	   
 				else 
@@ -166,7 +166,7 @@ public class UpdateXml {
 				yyyy = (Integer.valueOf(yyy[k]) + Integer.valueOf(YYY[k])) / 2-20;//标签有长度
 				String xxxxx = String.valueOf(xxxx);
 				String yyyyy = String.valueOf(yyyy);
-				System.out.println("标签设置成功！！！"+xxxxx+"  "+yyyyy);
+//				System.out.println("标签设置成功！！！"+xxxxx+"  "+yyyyy);
 				if(xxxxx!=null||yyyyy!=null){
 					
 				//midElement1.element("location").attribute("y").setText(yyyyy);//这段如果出现空指针错误，是因为边上没有标签
@@ -235,7 +235,7 @@ public class UpdateXml {
 				
 				B[M][N]=B[N][M]=0;
 			}	
-			System.out.println("=====: " + route+newFileName);
+//			System.out.println("=====: " + route+newFileName);
 		    XMLWriter writer = new XMLWriter(new FileOutputStream(route+newFileName),//("stabilize_run.xml"),
 		    OutputFormat.createPrettyPrint());	
 		    writer.write(dom);

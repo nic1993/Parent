@@ -19,7 +19,7 @@ import org.dom4j.io.SAXReader;
 
 public class XMLUtils {
 	/**
-	 * 绫诲浘鏃剁�?瀹氭秷鎭笌鑺傜偣浣嶇疆
+	 * 绫诲浘鏃剁�?瀹氭秷鎭笌鑺傜偣浣嶇疆
 	 */
 	public static List<Point> getEdgePontionList(Edge edge,List<Node> list){
 		List<Point> staticList =new ArrayList<Point>();
@@ -35,7 +35,7 @@ public class XMLUtils {
 			staticList.add(new Point((int)starRight.getX(),(int)(0.5*(starLeft.getY()+starRight.getY()))));
 			staticList.add(new Point((int)endLeft.getX(),(int)(0.5*(endLeft.getY()+endRight.getY()))));
 			return staticList;
-		//瀵拷顫愰懞鍌滃仯閸︺劎绮ㄩ弶鐔诲Ν閻愬湱娈戦崣�?犵珶
+		//瀵拷顫愰懞鍌滃仯閸︺劎绮ㄩ弶鐔诲Ν閻愬湱娈戦崣�?犵珶
 		}else if(starLeft.getX()<endRight.getX()
 				&&endLeft.getY()<0.5*(starLeft.getY()+starRight.getY())
 				&&0.5*(starLeft.getY()+starRight.getY())<endRight.getY()){
@@ -49,7 +49,7 @@ public class XMLUtils {
 			staticList.add(new Point((int)(0.5*(starRight.getX()+starLeft.getX())), (int)starRight.getY()));
 			staticList.add(new Point((int)(0.5*(endLeft.getX()+endRight.getX())),(int)endLeft.getY()));
 			return staticList;
-		//瀵拷顫愰懞鍌滃仯閸︺劎绮ㄩ弶鐔诲Ν閻愬湱娈戞稉�?煙
+		//瀵拷顫愰懞鍌滃仯閸︺劎绮ㄩ弶鐔诲Ν閻愬湱娈戞稉�?煙
 		}else{
 			staticList.removeAll(staticList);
 			staticList.add(new Point((int)(0.5*(starRight.getX()+starLeft.getX())), (int)starLeft.getY()));
@@ -92,7 +92,7 @@ public class XMLUtils {
 		return null;
 	} 
 	/**
-	 * 鏍规�?id鑾峰彇璇ヨ妭鐐圭殑绫诲�?
+	 * 鏍规�?id鑾峰彇璇ヨ妭鐐圭殑绫诲�?
 	 * @param name
 	 * @return
 	 */
@@ -112,7 +112,7 @@ public class XMLUtils {
 	
 	/**
 	 * 閬嶅巻edgeMap锛屽綋map閲岄潰鏈塱d淇℃伅鍒欒繑鍥炲搴旂殑EA鐨刬d
-	 * 鍚﹀垯娣诲姞涓�釜閿�瀵�?俊鎭�?	 * @param nodeId
+	 * 鍚﹀垯娣诲姞涓�釜閿�瀵�?俊鎭�?	 * @param nodeId
 	 * @return 杩斿洖EA鏍煎紡鐨処d
 	 */
 	private static  String  getEdgeIdByNodeId(String edgeId ,Map<String,String> edgeMap) {
@@ -131,7 +131,7 @@ public class XMLUtils {
 	}
 	
 	/**
-	 * 璇昏祫婧愭枃浠剁殑鏃跺�鍔犺浇璧勬簮鏂囦�?
+	 * 璇昏祫婧愭枃浠剁殑鏃跺�鍔犺浇璧勬簮鏂囦�?
 	 * @param name
 	 * @return
 	 */
@@ -148,7 +148,7 @@ public class XMLUtils {
 	}
 	
 	/**
-	 * 澶勭悊EA鐨刋ML鏂囦欢閲岄潰鐨勫潗鏍�?	 * @param str
+	 * 澶勭悊EA鐨刋ML鏂囦欢閲岄潰鐨勫潗鏍�?	 * @param str
 	 * @return
 	 */
 	public static String getIndex(String str){
@@ -161,7 +161,7 @@ public class XMLUtils {
 	}
 	
 	/**
-	 * 澶勭悊EA鐨刬d瀛楃涓�?	 * @param str
+	 * 澶勭悊EA鐨刬d瀛楃涓�?	 * @param str
 	 * @return
 	 */
 	public static String dealEAID(String str){

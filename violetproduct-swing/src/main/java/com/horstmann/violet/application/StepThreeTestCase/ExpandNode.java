@@ -61,10 +61,10 @@ public class ExpandNode extends JLabel{
        			mainFrame.getTimeExpandTabbedPane().getExpandResults().removeAll();
        			mainFrame.addTabbedPane(workspace);
        			mainFrame.getTimeExpandTabbedPane().getExpandResport().removeAll();
-       			mainFrame.getTimeExpandTabbedPane().add(XMLPanel);
+       			mainFrame.getTimeExpandTabbedPane().getExpandResport().add(XMLPanel);
        			
-       			mainFrame.getStepTwoCenterRightPanel().setNodeTextMap(nodeTextMap);
-				mainFrame.getStepTwoCenterRightPanel().setEdgeTextMap(edgeTextMap);
+       			mainFrame.getTimeExpandOperation().setNodeTextMap(nodeTextMap);
+       			mainFrame.getTimeExpandOperation().setEdgeTextMap(edgeTextMap);
 				
    				for(ExpandNode expandNodeLabel : mainFrame.getTimeExpandOperation().getExpandNodePanel().getExpandNodeLabels())
    				{

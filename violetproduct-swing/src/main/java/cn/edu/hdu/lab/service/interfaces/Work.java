@@ -1,10 +1,12 @@
 package cn.edu.hdu.lab.service.interfaces;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import com.horstmann.violet.application.gui.MainFrame;
+import com.l2fprod.common.demo.Main;
 
 import cn.edu.hdu.lab.dao.interfacedao.InterfaceIsogenySD;
 import cn.edu.hdu.lab.dao.interfacedao.InterfaceUCRelation;
@@ -34,6 +36,6 @@ public interface Work {
 	public List<Object> transVerify() throws InvalidTagException;
 	public void transToMarckov(Map<String, List<InterfaceUCRelation>> UCRMap) throws Exception;
 	public void probabilityAndReachableTest() throws Exception;
-	public void writeMarkov(String mcXMLFileName,MainFrame mainFrame,List<String> seqName,List<String> ucName) throws IOException, Exception;
+	public void writeMarkov(String mcXMLFileName,MainFrame mainFrame,List<String> seqNames,List<String> ucNames) throws IOException, Exception;
 
 }

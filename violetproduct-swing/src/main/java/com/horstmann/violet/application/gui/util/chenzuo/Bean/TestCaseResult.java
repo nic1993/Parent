@@ -75,6 +75,13 @@ public class TestCaseResult implements Serializable{
 			tmp = "0";
 		return tmp + "%";
 	}
+	
+	public double getBattery_remainingDouble(){
+		if(battery_remaining==-0){
+			return 0;
+		}
+		return battery_remaining;
+	}
 
 	public void setBattery_remaining(double battery_remaining) {
 		this.battery_remaining = battery_remaining;
@@ -109,7 +116,7 @@ public class TestCaseResult implements Serializable{
 		if(exeTime == 0d && wind_speed == 0d && takeoff_alt== 0d&&battery_remaining== 0d&&time == 0d)
 			return resultDetail;
 		else
-			return "测试结果: [执行时间=" + decimalFormat.format(exeTime) 
+			return "测试结果: [执行时间=" + decimalFormat.format(exeTime) +" ms"
 				+ ", 风速=" + decimalFormat.format(wind_speed) 
 				+ ", 起飞高度=" + decimalFormat.format(takeoff_alt) 
 				+ ", 剩余电量="+ decimalFormat.format(battery_remaining) 

@@ -95,7 +95,6 @@ public class JRadionPanel extends JPanel {
 		this.setLayout(new GridBagLayout());
 		int i = 0;
 		for(String title : radios.keySet()){
-			System.out.println(title);
 			this.add(radios.get(title), new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0).setInsets(5, 0, 0, 0));
 			i++;
 		}

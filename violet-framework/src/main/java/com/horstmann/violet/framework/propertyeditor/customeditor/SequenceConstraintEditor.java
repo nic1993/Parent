@@ -137,6 +137,10 @@ public class SequenceConstraintEditor extends PropertyEditorSupport{
 	    }
 	    public void initconstraint()
 	    {
+	    	
+	    	if(constrainttable.isEditing())
+	    		constrainttable.getCellEditor().stopCellEditing();
+	    	
 	    	int count = scenceConstraint.getConstraints().size();
 	    	List<SequenceConstraint> constraints = scenceConstraint.getConstraints();
 	    	for(int i = 0; i < count; i++)

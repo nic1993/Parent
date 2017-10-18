@@ -62,6 +62,7 @@ import cn.edu.hdu.lab.service.sd2tmc.WorkImpl;
 
 import com.horstmann.violet.application.StepOneBuildModel.ModelPanel;
 import com.horstmann.violet.application.StepOneBuildModel.Radio;
+import com.horstmann.violet.application.gui.DisplayForm;
 import com.horstmann.violet.application.gui.GBC;
 import com.horstmann.violet.application.gui.MainFrame;
 import com.horstmann.violet.application.menu.FileMenu;
@@ -309,7 +310,6 @@ public class StepTwoModelOperation extends JPanel{
 					for(InterfaceUCRelation interfaceUCRelation:interfaceUCRelations)
 					{
 						relations.add(interfaceUCRelation.getUCRelation());
-						System.out.println("用例执行关系: "+ interfaceUCRelation.getUCRelation());
 					}
 				   	 for(int i = 0;i <number;i++)
 				   	 {
@@ -439,7 +439,7 @@ public class StepTwoModelOperation extends JPanel{
 		    	if(data <= 0.0 || data > 1.0)
 		    		isFinish = false;
 		    }
-		    if(isFinish == false)
+		    if(isFinish == false) 
 		    {
 		    	label.removeAll();
 				label.setText(Model_Name+"用例模型进行扩展验证不通过，请重新填写扩展矩阵!");
@@ -455,6 +455,7 @@ public class StepTwoModelOperation extends JPanel{
 				stepTwoModelExpandTabbedPane.getValidationResults().updateUI();
 				stepTwoModelExpandTabbedPane.setSelectedIndex(1);
 				mainFrame.getsteponeButton().getExpandCaseModel().setEnabled(true);
+				mainFrame.getStepTwoCaseOperation().getStartExpandButton().setEnabled(true);
 				startExpandButton.setEnabled(true);
 				startVerificationButton.setEnabled(false);
 			}
@@ -481,6 +482,8 @@ public class StepTwoModelOperation extends JPanel{
 				if(((JButton)e.getSource()).isEnabled())
 				{
 					try {
+					DisplayForm.mainFrame = mainFrame;	
+						
 					isNeedExpand = false;
 					isSanmeName();
 					Model_Name = mainFrame.getjRadionPanel().getSelectName();
@@ -488,6 +491,10 @@ public class StepTwoModelOperation extends JPanel{
 					mainFrame.getStepTwoCaseOperation().setModel_Name(Model_Name);
 					mainFrame.getStepTwoEvaluateOperation().setModel_Name(Model_Name);
 					mainFrame.getStepTwoExchangeOperation().setModel_Name(Model_Name);
+					
+					mainFrame.getStepTwoCaseOperation().getStartExpandButton().setEnabled(false);
+					mainFrame.getStepTwoEvaluateOperation().getEvaluateButton().setEnabled(false);
+					mainFrame.getStepTwoExchangeOperation().getStartExchange().setEnabled(false);
 					
 					if(Model_Name == null){
 						label.removeAll();

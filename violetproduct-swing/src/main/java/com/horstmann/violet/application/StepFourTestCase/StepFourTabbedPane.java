@@ -74,9 +74,9 @@ public class StepFourTabbedPane extends JTabbedPane{
 		
 		tableHeaderPanel = new TestCaseReportTableHeaderPanel();
 		results = new JPanel();
-		results.setLayout(new GridBagLayout());
-		results.add(tableHeaderPanel,new GBC(0, 0).setFill(GBC.BOTH).setWeight(1, 0));
-		results.add(jScrollPane, new GBC(0, 1).setFill(GBC.BOTH).setWeight(1, 1));
+		results.setLayout(new BorderLayout());
+		results.add(tableHeaderPanel,BorderLayout.NORTH);
+		results.add(jScrollPane,BorderLayout.CENTER);
 
 		//¥ÌŒÛµƒ≤‚ ‘”√¿˝
 		JPanel gapPanel1 = new JPanel();
@@ -86,9 +86,9 @@ public class StepFourTabbedPane extends JTabbedPane{
 		
 		wrongtableHeaderPanel = new TestCaseReportTableHeaderPanel();
 		wrongResults = new JPanel();
-		wrongResults.setLayout(new GridBagLayout());
-		wrongResults.add(wrongtableHeaderPanel,new GBC(0, 0).setFill(GBC.BOTH).setWeight(1, 0));
-		wrongResults.add(jScrollPane3, new GBC(0, 1).setFill(GBC.BOTH).setWeight(1, 1));
+		wrongResults.setLayout(new BorderLayout());
+		wrongResults.add(wrongtableHeaderPanel,BorderLayout.NORTH);
+		wrongResults.add(jScrollPane3, BorderLayout.CENTER);
 		
 		listen();
 	}

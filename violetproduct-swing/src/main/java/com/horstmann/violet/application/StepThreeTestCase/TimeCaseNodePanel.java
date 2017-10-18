@@ -24,7 +24,7 @@ public class TimeCaseNodePanel {
        {
     	   TestCaseNodeLabels = new ArrayList<TimeTestCaseNode>();
        }
-       public void insertNodeLabel(TimeTestCaseNode TimeTestCaseLabel,JPanel TestDataPanel,String quota)
+       public void insertNodeLabel(TimeTestCaseNode TimeTestCaseLabel,CasePagePanel casePagePanel,String quota)
        {
     	   if(TestCaseNodeLabels.size() != 0)
     	   {
@@ -33,7 +33,7 @@ public class TimeCaseNodePanel {
     			if(NodeLabel.getText().equals(TimeTestCaseLabel.getText()))
     			{
     				isExist = true;	
-    				NodeLabel.setTestDataPanel(TestDataPanel);
+    				NodeLabel.setCasePagePanel(casePagePanel);
     				NodeLabel.setQuota(quota);
     			}
     		   }
@@ -47,7 +47,7 @@ public class TimeCaseNodePanel {
     	   }
        }
        
-       public void insertCustomNodeLabel(TimeTestCaseNode TimeTestCaseLabel,JPanel TestDataPanel,JPanel TestRoute,String quota)
+       public void insertCustomNodeLabel(TimeTestCaseNode TimeTestCaseLabel,CasePagePanel casePagePanel,JPanel TestRoute,String quota)
        {
     	   if(TestCaseNodeLabels.size() != 0)
     	   {
@@ -57,7 +57,7 @@ public class TimeCaseNodePanel {
     			if(NodeLabel.getText().equals(TimeTestCaseLabel.getText()))
     			{
     				isExist = true;	
-    				NodeLabel.setTestDataPanel(TestDataPanel);
+    				NodeLabel.setCasePagePanel(casePagePanel);
     				NodeLabel.setTestRoute(TestRoute);
     				NodeLabel.setQuota(quota);
     			}

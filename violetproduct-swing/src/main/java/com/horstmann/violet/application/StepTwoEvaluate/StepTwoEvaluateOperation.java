@@ -349,6 +349,7 @@ public class StepTwoEvaluateOperation extends JPanel{
     				
     				mainFrame.getStepTwoModelOperation().getStartExpandButton().setEnabled(true);
     				mainFrame.getStepTwoCaseOperation().getStartExpandButton().setEnabled(true);
+    				mainFrame.getStepTwoExchangeOperation().getStartExchange().setEnabled(true);
     				
                     mainFrame.getsteponeButton().getExpandModelLabel().setEnabled(true);
     				mainFrame.getsteponeButton().getExpandCaseModel().setEnabled(true);

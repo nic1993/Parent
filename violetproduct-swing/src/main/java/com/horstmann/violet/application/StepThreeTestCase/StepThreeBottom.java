@@ -12,6 +12,7 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
 import com.horstmann.violet.application.gui.GBC;
@@ -81,34 +82,28 @@ public class StepThreeBottom extends JPanel{
 				mainFrame.getStepTwoPanel().setBackground(new Color(200,200,200));
 				mainFrame.getStepTwoPanel().setLayout(new GridLayout(1, 1));
 				
-				mainFrame.getOpreationPart().removeAll();
-				mainFrame.getOpreationPart().setLayout(new GridLayout(1, 1));
-				
 				mainFrame.getconsolepartPanel().removeAll();
 				mainFrame.getconsolepartPanel().setLayout(new GridLayout(1, 1));
 				
 				mainFrame.getReduceOrEnlargePanel().removeAll();
 				mainFrame.getReduceOrEnlargePanel().setLayout(new GridLayout(1, 1));
 				
-				mainFrame.getpanel().removeAll();
-				mainFrame.getpanel().setLayout(new GridLayout(1, 1));
-				
-				mainFrame.getCenterTabPanel().removeAll();
-				
 				mainFrame.getTitlePanel().getBigTitle().setText("第二步:Markov链使用模型构建");
 				mainFrame.getTitlePanel().getSmallTitle().setText("对第一步扩展模型进行评估、转换成Markov链模型");				
 				
-				mainFrame.getjRadionPanel().initFile();
-				
 				mainFrame.getOpreationPart().removeAll();
+				mainFrame.getOpreationPart().setLayout(new GridLayout(1, 1));
 				mainFrame.getOpreationPart().add(mainFrame.getStepTwoExpand());
 				stepTwo = mainFrame.getStepTwoExpandBottom().getStep();
 				
 				switch (stepTwo) {
                 case 1:
+                	mainFrame.getpanel().removeAll();
+    				mainFrame.getpanel().setLayout(new GridLayout(1, 1));
                 	mainFrame.getpanel().add(mainFrame.getStepTwoEvaluateOperation());
 					mainFrame.getpanel().setVisible(true);
 					mainFrame.getpanel().updateUI();
+					mainFrame.getCenterTabPanel().removeAll();
 					mainFrame.getCenterTabPanel().add(mainFrame.getStepTwoEvaluateTabbedPane());
 					
 					mainFrame.getStepTwoCenterRightPanel().getGraphButton().setVisible(false);
@@ -116,9 +111,12 @@ public class StepThreeBottom extends JPanel{
 					mainFrame.getStepTwoCenterRightPanel().getZoomoutButton().setVisible(false);
 	                break;
                 case 2:
+                	mainFrame.getpanel().removeAll();
+    				mainFrame.getpanel().setLayout(new GridLayout(1, 1));
                 	mainFrame.getpanel().add(mainFrame.getStepTwoExchangeOperation());
 					mainFrame.getpanel().setVisible(true);
 					mainFrame.getpanel().updateUI();
+					mainFrame.getCenterTabPanel().removeAll();
 					mainFrame.getCenterTabPanel().add(mainFrame.getStepTwoExchangeTabbedPane());
 					
 					mainFrame.getStepTwoCenterRightPanel().getGraphButton().setVisible(true);
@@ -128,7 +126,6 @@ public class StepThreeBottom extends JPanel{
 				default:
 					break;
 				}
-				mainFrame.getOpreationPart().updateUI();
 				
 				mainFrame.getconsolepartPanel().add(mainFrame.getStepTwoExpandBottom());
 				mainFrame.getconsolepartPanel().updateUI();
@@ -136,6 +133,8 @@ public class StepThreeBottom extends JPanel{
 				mainFrame.getReduceOrEnlargePanel().add(mainFrame.getStepTwoCenterRightPanel());
 				mainFrame.getReduceOrEnlargePanel().updateUI();
 				mainFrame.getReduceOrEnlargePanel().setVisible(true);
+				
+				mainFrame.renewPanel();
 			}
 		});
 		nextbutton.addActionListener(new ActionListener() {
@@ -158,7 +157,9 @@ public class StepThreeBottom extends JPanel{
 				mainFrame.getTitlePanel().getBigTitle().setText("第四步:可靠性测试数据执行");
 				mainFrame.getTitlePanel().getSmallTitle().setText("对第三步生成的测试用例进行验证");	
 				
-				mainFrame.getOpreationPart().add(mainFrame.getStepFourTestCase());
+				JScrollPane jScrollPane = new JScrollPane(mainFrame.getStepFourTestCase());
+				jScrollPane.setBorder(null);
+				mainFrame.getOpreationPart().add(jScrollPane);
 				mainFrame.getOpreationPart().updateUI();
 				
 				mainFrame.getNameRadionPanel().initFile();

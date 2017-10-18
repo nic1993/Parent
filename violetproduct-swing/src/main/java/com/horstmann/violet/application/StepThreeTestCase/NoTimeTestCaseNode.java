@@ -17,7 +17,7 @@ public class NoTimeTestCaseNode extends JLabel{
        private Icon icon;
        private String name;
        private String quota;
-       private JPanel TestDataPanel;
+       private CasePagePanel casePagePanel;
        private JPanel TestRoute;
        private MainFrame mainFrame;
        public NoTimeTestCaseNode(String name,MainFrame mainFrame)
@@ -60,7 +60,7 @@ public class NoTimeTestCaseNode extends JLabel{
 				mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeNoTimeTabbedPane());
 				mainFrame.getStepThreeNoTimeTabbedPane().getTestData().removeAll();
 				mainFrame.getStepThreeNoTimeTabbedPane().getTestData().setLayout(new GridLayout());
-				mainFrame.getStepThreeNoTimeTabbedPane().getTestData().add(TestDataPanel);
+				mainFrame.getStepThreeNoTimeTabbedPane().getTestData().add(casePagePanel);
 				mainFrame.getStepThreeNoTimeTabbedPane().repaint();
 				mainFrame.getNoTimeCaseOperation().getTopLabel().removeAll();
 				mainFrame.getNoTimeCaseOperation().getTopLabel().setText(((NoTimeTestCaseNode)e.getSource()).getQuota());
@@ -79,11 +79,12 @@ public class NoTimeTestCaseNode extends JLabel{
 	public String getQuota() {
 		return quota;
 	}
-	public JPanel getTestDataPanel() {
-		return TestDataPanel;
+	
+	public CasePagePanel getCasePagePanel() {
+		return casePagePanel;
 	}
-	public void setTestDataPanel(JPanel testDataPanel) {
-		TestDataPanel = testDataPanel;
+	public void setCasePagePanel(CasePagePanel casePagePanel) {
+		this.casePagePanel = casePagePanel;
 	}
 	public JPanel getTestRoute() {
 		return TestRoute;

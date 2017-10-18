@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import com.horstmann.violet.application.gui.MainFrame;
+
 import cn.edu.hdu.lab.config.StaticConfig;
 import cn.edu.hdu.lab.dao.interfacedao.InterfaceUCRelation;
 import cn.edu.hdu.lab.dao.tmc.State;
@@ -157,10 +159,6 @@ public class Translation {
 					}
 					
 					System.out.println("\n~~~~~~~~~MC~~~~~~~~~~~~~~");
-					StaticConfig.mainFrame.getOutputinformation().geTextArea().append("~~~~~~~~~MC~~~~~~~~~~~~~~" + "\n");
-					int length = StaticConfig.mainFrame.getOutputinformation().geTextArea().getText().length(); 
-					StaticConfig.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
-					
 					Tmc seqTmc=new Tmc();
 					this.assignmentTmc(seqTmc, tmc);
 					
@@ -169,7 +167,7 @@ public class Translation {
 					seqTmc.setOwned(useCase.getUseCaseName());
 //					seqTmc.printTmc();
 					//动态存取MC的XML文件
-					writeSeqMC(seqTmc);
+//					writeSeqMC(seqTmc);
 					seqTmcList.add(seqTmc);//添加到场景markov模型集合当中
 					
 					sdSetsMergeMarkov();//生成用例级别的Markov chain
@@ -178,7 +176,7 @@ public class Translation {
 					
 					tmc.printTmc();
 					 
-					writeUcMC(tmc);
+//					writeUcMC(tmc);
 					tmcs.add(tmc);
 					/*
 					 * 对集成后的All用例级Markov链中的迁移做归一化处理
@@ -194,7 +192,7 @@ public class Translation {
 		//System.out.println("………………………输出软件级Markov链使用模型……………………………………………");
 		//F_Tmc.printTmc();//输出软件级Markov链使用模型
 		
-		writeSoftwareMC(F_Tmc);
+//		writeSoftwareMC(F_Tmc);
 		return F_Tmc;		
 	}
 	
@@ -202,13 +200,8 @@ public class Translation {
 	//将剩下的顺序图添加到马尔科夫链上
 	public void sdSetsMergeMarkov() throws Exception
 	{
-		if(sdSets.size()<2){
+		if(sdSets.size()<2)
 			System.out.println("用例只有一个顺序图");
-		
-		StaticConfig.mainFrame.getOutputinformation().geTextArea().append("用例只有一个顺序图"+"\n");
-		int length = StaticConfig.mainFrame.getOutputinformation().geTextArea().getText().length(); 
-		StaticConfig.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
-		}
 		else
 		{
 			for(int i=1;i<sdSets.size();i++)
@@ -268,7 +261,7 @@ public class Translation {
 				seqTmc.setOwned(tmc.getNames());
 				seqTmc.setNames(seqTmcList.get(seqTmcList.size()-1).getNames()+"; "+sdSet.getName());				
 				seqTmcList.add(seqTmc);				
-				writeSeqMC(seqTmc);
+//				writeSeqMC(seqTmc);
 			}
 		}
 	}
@@ -1888,11 +1881,6 @@ public class Translation {
 		if(currentState.getStopTimeConstraint()!=null&&currentState.getStopTimeConstraint().length()>0)
 		{
 			System.out.println(currentState.getStopTimeConstraint());
-			
-			StaticConfig.mainFrame.getOutputinformation().geTextArea().append(currentState.getStopTimeConstraint()+ "\n");
-			int length = StaticConfig.mainFrame.getOutputinformation().geTextArea().getText().length(); 
-			StaticConfig.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
-			
 			if(currentState.getLabel()!=null)
 			{
 				currentState.setLabel(state.getLabel()+";timeDelay");
@@ -2104,23 +2092,23 @@ public class Translation {
 		tmc1.setPro(tmc2.getPro());
 		tmc1.setCombine(tmc2.isCombine());
 	}
-	public void writeSeqMC(Tmc tmc) throws Exception
-	{
+//	public void writeSeqMC(Tmc tmc) throws Exception
+//	{
 //		String fileName=StaticConfig.mcPathPrefix+"Seq_MarkovChainModel"+seqCount+".xml";
 //		Write.writeMarkov2XML(tmc, fileName);
 //		seqCount++;
-	}
-	public void writeUcMC(Tmc tmc) throws Exception
-	{
+//	}
+//	public void writeUcMC(Tmc tmc) throws Exception
+//	{
 //		String fileName=StaticConfig.mcPathPrefix+"UC_MarkovChainModel"+ucCount+".xml";
-//		Write.writeMarkov2XML(tmc, fileName);
+//		Write.writeMarkov2XML(tmc, fileName,MainFrame);
 //		ucCount++;
-	}
-	public void writeSoftwareMC(Tmc tmc) throws Exception
-	{
+//	}
+//	public void writeSoftwareMC(Tmc tmc) throws Exception
+//	{
 //		String fileName=StaticConfig.mcPathPrefix+"Software_MarkovChainModel"+".xml";
 //		Write.writeMarkov2XML(tmc, fileName);
-	}
+//	}
 	public List<Tmc> getTmcs() {
 		return tmcs;
 	}

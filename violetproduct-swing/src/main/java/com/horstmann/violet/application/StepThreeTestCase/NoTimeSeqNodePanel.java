@@ -24,7 +24,7 @@ public class NoTimeSeqNodePanel {
        {
     	   SeqNodeLabels = new ArrayList<NoTimeSeqNode>();
        }
-       public void insertNodeLabel(NoTimeSeqNode noTimeSeqNode,JPanel AbstractSequencePanel)
+       public void insertNodeLabel(NoTimeSeqNode noTimeSeqNode,AbstractPagePanel abstractPagePanel)
        {
     	   isExist = false;
     	   if(SeqNodeLabels.size() != 0)
@@ -34,7 +34,7 @@ public class NoTimeSeqNodePanel {
     			if(NodeLabel.getTitle().equals(noTimeSeqNode.getTitle()))
     			{
     				isExist = true;	
-    				NodeLabel.setAbstractSequencePanel(AbstractSequencePanel);
+    				NodeLabel.setAbstractPagePanel(abstractPagePanel);
     			}
     		   }
     	   }

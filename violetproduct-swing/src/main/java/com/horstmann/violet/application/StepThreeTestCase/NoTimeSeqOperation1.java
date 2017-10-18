@@ -169,7 +169,7 @@ public class NoTimeSeqOperation1 extends JPanel{
 				}
 				ReadMarkov2 rm = new ReadMarkov2();
 				try {
-				markov = rm.readMarkov(route,mainFrame);
+				markov = rm.readMarkov(route);
 				min = mainFrame.getStepThreeLeftButton().getMin();
 				if(isInt(textField.getText().toString()))
 				{
@@ -317,7 +317,8 @@ public class NoTimeSeqOperation1 extends JPanel{
        				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(false);
        				mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(false);
        				mainFrame.getStepThreeLeftButton().getNoTimeCase().setEnabled(false);
-      				
+       				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(false);
+       				
       				JPanel mainPanel = new JPanel();
        				mainPanel.setLayout(new GridBagLayout());
       				
@@ -353,6 +354,8 @@ public class NoTimeSeqOperation1 extends JPanel{
      				button.setEnabled(false);
          			mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
          			mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(true);
+         			
+         			mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
 					}
 					return 1;
 				}
@@ -409,12 +412,12 @@ public class NoTimeSeqOperation1 extends JPanel{
 						{
 							index = lists.size();
 						}
+						
+						abstractPagePanel.getAbstractPanel().add(new JPanel(), new GBC(0, index).setFill(GBC.BOTH).setWeight(1, 1));
+						
 						for(int k = 0;k < index;k++){
 							Route r = markov.getRouteList().get(k);
-							
-							StepThreeTabelPanel testTabelPanel1 = new StepThreeTabelPanel(r.getTcSequence(), 1,mainFrame);
-							seqPanel.add(testTabelPanel1, new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
-							
+
 							StepThreeTabelPanel testTabelPanel = new StepThreeTabelPanel(r.getTcSequence(), 1,mainFrame);
 //							mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().add(testTabelPanel, new GBC(0, k).setFill(GBC.BOTH).setWeight(1, 0));
 							abstractPagePanel.getAbstractPanel().add(testTabelPanel, new GBC(0, k).setFill(GBC.BOTH).setWeight(1, 0));
@@ -446,9 +449,9 @@ public class NoTimeSeqOperation1 extends JPanel{
 						mainFrame.getNoTimeCaseOperation1().setModelName(ModelName);
 						
 						NoTimeSeqNode noTimeSeqNode = new NoTimeSeqNode(ModelName+"_×Ô¶¨Òå", mainFrame);
-						noTimeSeqNode.setAbstractSequencePanel(seqPanel);
+						noTimeSeqNode.setAbstractPagePanel(abstractPagePanel);
 						
-						mainFrame.getStepThreeLeftButton().getNoTimeSeqNodePanel().insertNodeLabel(noTimeSeqNode, seqPanel);
+						mainFrame.getStepThreeLeftButton().getNoTimeSeqNodePanel().insertNodeLabel(noTimeSeqNode, abstractPagePanel);
 						mainFrame.getStepThreeLeftButton().getNoTimeSeqNode().repaint();
 						
 						topLabel.removeAll();
@@ -461,6 +464,8 @@ public class NoTimeSeqOperation1 extends JPanel{
      					button.setEnabled(true);
          				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
          				mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(true);
+         				
+         				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
 					}
 					return 1;
 				}

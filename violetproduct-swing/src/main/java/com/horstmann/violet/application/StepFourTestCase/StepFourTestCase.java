@@ -25,6 +25,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
@@ -40,9 +41,11 @@ import com.horstmann.violet.application.gui.MainFrame;
 import com.horstmann.violet.application.menu.FileMenu;
 
 public class StepFourTestCase extends JPanel{
+
 	private JLabel testCaseLabel;	
 	private JPanel testCasePanel;	
 	private NameRadionPanel jRadionPanel;
+	private JScrollPane scrollPane;
 	private static JPanel bottompanel;
 	private MainFrame mainFrame;
 	public StepFourTestCase(MainFrame mainFrame)
@@ -52,7 +55,7 @@ public class StepFourTestCase extends JPanel{
 		this.setLayout(new GridBagLayout());
 		this.add(testCaseLabel,new GBC(0, 0).setFill(GBC.BOTH).setWeight(1, 0).setInsets(15, 10, 0, 0));
 		this.add(testCasePanel,new GBC(0, 1).setFill(GBC.BOTH).setWeight(1, 0).setInsets(0, 10, 0, 0));	
-		this.add(new JPanel(),new GBC(0, 2).setFill(GBC.BOTH).setWeight(1, 1).setInsets(0, 10, 0, 158));	
+		this.add(new JPanel(),new GBC(0, 2).setFill(GBC.BOTH).setWeight(1, 1).setInsets(0, 10, 0, 0));	
 	}
 	public void init()
 	{
@@ -63,8 +66,12 @@ public class StepFourTestCase extends JPanel{
 		testCasePanel.setBackground(new Color(233,233,233));	
 		
 		jRadionPanel = mainFrame.getNameRadionPanel();
+		scrollPane = new JScrollPane(jRadionPanel);
+		scrollPane.setBorder(null);
+		
 		testCasePanel.setLayout(new GridBagLayout());
-		testCasePanel.add(jRadionPanel, new GBC(0, 0).setFill(GBC.BOTH).setWeight(1, 0).setInsets(0, 25, 0, 0));
+		testCasePanel.add(scrollPane, new GBC(0, 0).setFill(GBC.BOTH).setWeight(1, 0).setInsets(0, 15, 0, 0));
+		
 	}
 	public void clearPanel()
 	{

@@ -48,6 +48,7 @@ public class ModelPanel extends JPanel{
       
       private boolean isSave = false;
       
+      private int index;
 	  public ModelPanel(MainFrame mainFrame,FileMenu fileMenu) {
 		this.mainFrame = mainFrame;
 		this.fileMenu = fileMenu;
@@ -192,6 +193,12 @@ public class ModelPanel extends JPanel{
 	}
 	public void setTemporarySeqFile(String temporarySeqFile) {
 		this.temporarySeqFile = temporarySeqFile;
+	}
+	public int getIndex() {
+		return index;
+	}
+	public void setIndex(int index) {
+		this.index = index;
 	}      
      
 }

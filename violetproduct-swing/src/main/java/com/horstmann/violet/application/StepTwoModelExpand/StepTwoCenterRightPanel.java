@@ -235,77 +235,107 @@ public class StepTwoCenterRightPanel extends JPanel{
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-				boolean isShowInformation = false;
-				IGraphFile graphFile = mainFrame.getActiveWorkspace().getGraphFile();
-				Collection<INode> nodes = graphFile.getGraph().getAllNodes();
-				Collection<IEdge> edges = graphFile.getGraph().getAllEdges();
-				for(INode node : nodes)
-				{
-					if(node.getClass().getSimpleName().equals("MarkovNode"))
-					{
-//						((MarkovNode)node).setName(nodeTextMap.get(node.hashCode()));
-						if(((MarkovNode)node).getName() != "")
-							isShowInformation = true;
-					}
-					if(node.getClass().getSimpleName().equals("MarkovStartNode")) {
-//						((MarkovStartNode)node).setName(nodeTextMap.get(node.hashCode()));
-						if(((MarkovStartNode)node).getName() != "")
-							isShowInformation = true;
-					}
-				}
-				for(IEdge edge : edges)
-				{
-					if(edge.getClass().getSimpleName().equals("MarkovTransitionEdge"))
-					{
-//						((MarkovTransitionEdge)edge).setLabel(edgeTextMap.get(edge.hashCode()));
-						
-						if(((MarkovTransitionEdge)edge).getPro() != ""){
-							isShowInformation = true;
-						}
-					}
-				}
 				
-				if(!isShowInformation)
+				if(mainFrame.getCenterTabPanel().getComponentCount() != 0)
 				{
-					for(INode node : nodes)
+					if(mainFrame.getCenterTabPanel().getComponent(0).equals(mainFrame.getStepTwoExchangeTabbedPane()))
 					{
-						if(node.getClass().getSimpleName().equals("MarkovNode"))
-						{
-							System.out.println(nodeTextMap.get(node.hashCode()));
-							((MarkovNode)node).setName(nodeTextMap.get(node.hashCode()));
-						}
-						if(node.getClass().getSimpleName().equals("MarkovStartNode")) {
-							((MarkovStartNode)node).setName(nodeTextMap.get(node.hashCode()));
-						}
+						if(mainFrame.getStepTwoExchangeTabbedPane().getExchangeResults().getComponentCount() != 0)
+		        		{
+		        			setNodeTextMap(mainFrame.getStepTwoExchangeOperation().getNodeTextMap());
+		        			setEdgeTextMap(mainFrame.getStepTwoExchangeOperation().getEdgeTextMap());
+		        			
+		        		}
 					}
-					for(IEdge edge : edges)
-					{
-						if(edge.getClass().getSimpleName().equals("MarkovTransitionEdge"))
-						{
-							((MarkovTransitionEdge)edge).setPro(edgeTextMap.get(edge.hashCode()));
-						}
+					else if (mainFrame.getCenterTabPanel().getComponent(0).equals(mainFrame.getTimeExpandTabbedPane())) {
+		        		if(mainFrame.getTimeExpandTabbedPane().getExpandResults().getComponentCount() != 0)
+		        		{
+		        			setNodeTextMap(mainFrame.getTimeExpandOperation().getNodeTextMap());
+		        			setEdgeTextMap(mainFrame.getTimeExpandOperation().getEdgeTextMap());
+		        		}
+					}
+					else {
+						setNodeTextMap(null);
+						setEdgeTextMap(null);
 					}
 				}
-				
 				else {
+					setNodeTextMap(null);
+					setEdgeTextMap(null);
+				}
+				if(nodeTextMap != null && edgeTextMap != null){
+					boolean isShowInformation = false;
+					IGraphFile graphFile = mainFrame.getActiveWorkspace().getGraphFile();
+					Collection<INode> nodes = graphFile.getGraph().getAllNodes();
+					Collection<IEdge> edges = graphFile.getGraph().getAllEdges();
 					for(INode node : nodes)
 					{
 						if(node.getClass().getSimpleName().equals("MarkovNode"))
 						{
-							((MarkovNode)node).setName("");
+//							((MarkovNode)node).setName(nodeTextMap.get(node.hashCode()));
+							if(((MarkovNode)node).getName() != "")
+								isShowInformation = true;
 						}
 						if(node.getClass().getSimpleName().equals("MarkovStartNode")) {
-							((MarkovStartNode)node).setName("");
+//							((MarkovStartNode)node).setName(nodeTextMap.get(node.hashCode()));
+							if(((MarkovStartNode)node).getName() != "")
+								isShowInformation = true;
 						}
 					}
 					for(IEdge edge : edges)
 					{
 						if(edge.getClass().getSimpleName().equals("MarkovTransitionEdge"))
 						{
-							((MarkovTransitionEdge)edge).setPro("");
+//							((MarkovTransitionEdge)edge).setLabel(edgeTextMap.get(edge.hashCode()));
+							
+							if(((MarkovTransitionEdge)edge).getPro() != ""){
+								isShowInformation = true;
+							}
+						}
+					}
+					
+					if(!isShowInformation)
+					{
+						for(INode node : nodes)
+						{
+							if(node.getClass().getSimpleName().equals("MarkovNode"))
+							{
+								((MarkovNode)node).setName(nodeTextMap.get(node.hashCode()));
+							}
+							if(node.getClass().getSimpleName().equals("MarkovStartNode")) {
+								((MarkovStartNode)node).setName(nodeTextMap.get(node.hashCode()));
+							}
+						}
+						for(IEdge edge : edges)
+						{
+							if(edge.getClass().getSimpleName().equals("MarkovTransitionEdge"))
+							{
+								((MarkovTransitionEdge)edge).setPro(edgeTextMap.get(edge.hashCode()));
+							}
+						}
+					}
+					
+					else {
+						for(INode node : nodes)
+						{
+							if(node.getClass().getSimpleName().equals("MarkovNode"))
+							{
+								((MarkovNode)node).setName("");
+							}
+							if(node.getClass().getSimpleName().equals("MarkovStartNode")) {
+								((MarkovStartNode)node).setName("");
+							}
+						}
+						for(IEdge edge : edges)
+						{
+							if(edge.getClass().getSimpleName().equals("MarkovTransitionEdge"))
+							{
+								((MarkovTransitionEdge)edge).setPro("");
+							}
 						}
 					}
 				}
+				
 				mainFrame.renewPanel();
 			}
 			

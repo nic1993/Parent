@@ -302,67 +302,28 @@ public class TimeCaseOperation extends JPanel {
 					CasePagePanel casePagePanel = new CasePagePanel(lists,mainFrame);
 					mainFrame.getStepThreeTimeTabbedPane().getTestData().add(casePagePanel);
 					
-					i = 0;
+					int index = 500;
+					if(lists.size() < 500)
+					{
+						index = lists.size();
+					}
+
 					// 生成测试数据
-//					mainFrame.getStepThreeTimeTabbedPane().getTestData().removeAll();
-//					mainFrame.getStepThreeTimeTabbedPane().getTestData().setLayout(new GridBagLayout());
 					JPanel TestDataPanel = new JPanel();
 					TestDataPanel.setLayout(new GridBagLayout());
-                    if(lists.size() < 500)
-                    {
-                    	for(TCDetail tcDetail : lists){
-                    		StepThreeTabelPanel testTabelPanel = new StepThreeTabelPanel(tcDetail.getTestCase(), 2,
-            						mainFrame);
-                    		casePagePanel.getCasePanel().add(testTabelPanel,
-								new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
-                    		i++;
-                    		progressBar.setValue(60 + (int) (((double) i / lists.size()) * 40));
-                    		Thread.sleep(10);
-                    		mainFrame.renewPanel();
-                    	}
-                    	casePagePanel.getPageTestField().setText("1");
-                    }
-                    else {
-                    	for(int j = 0;j < 500;j++){
-                    		StepThreeTabelPanel testTabelPanel = new StepThreeTabelPanel(lists.get(j).getTestCase(), 2,
-            						mainFrame);
-                    		casePagePanel.getCasePanel().add(testTabelPanel,
-								new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
-                    		i++;
-                    		progressBar.setValue(60 + (int) (((double) i / 500) * 40));
-                    		Thread.sleep(10);
-                    		mainFrame.renewPanel();
-                    	}
-                    	casePagePanel.getPageTestField().setText("1");
-					}
-					
-					
-//					for (TCDetail tcDetail : lists) {
-//						StepThreeTabelPanel testTabelPanel = new StepThreeTabelPanel(tcDetail.getTestCase(), 2,
-//								mainFrame);
-//
-//						StepThreeTabelPanel testTabelPanel2 = new StepThreeTabelPanel(tcDetail.getTestCase(), 2,
-//								mainFrame);
-//
-//						TestDataPanel.add(testTabelPanel, new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
-//
-//						mainFrame.getStepThreeTimeTabbedPane().getTestData().add(testTabelPanel2,
-//								new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
-//						mainFrame.getStepThreeTimeTabbedPane().getTestData().updateUI();
-//						mainFrame.getStepThreeTimeTabbedPane().getTestDataScroll().getVerticalScrollBar()
-//								.setValue(mainFrame.getStepThreeTimeTabbedPane().getTestDataScroll()
-//										.getVerticalScrollBar().getMaximum());
-//						i++;
-//						progressBar.setValue(60 + (int) (((double) i / lists.size()) * 40));
-//
-//						topLabel.removeAll();
-//						topLabel.setText("正在生成第" + i + "条测试数据信息........");
-//						Thread.sleep(10);
-//						mainFrame.renewPanel();
-//					}
 
-//					mainFrame.getStepThreeTimeTabbedPane().getTestData().add(new JPanel(),
-//							new GBC(0, i + 1).setFill(GBC.BOTH).setWeight(1, 1));
+                    	for(int i = 0;i < index;i++){
+                    		StepThreeTabelPanel testTabelPanel = new StepThreeTabelPanel(lists.get(i).getTestCase(), 2,
+            						mainFrame);
+                    		casePagePanel.getCasePanel().add(testTabelPanel,
+								new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
+                    		i++;
+                    		progressBar.setValue(60 + (int) (((double) i / index) * 40));
+                    		Thread.sleep(10);
+                    		mainFrame.renewPanel();
+                    	}
+                    	casePagePanel.getPageTestField().setText("1");
+
 					mainFrame.getStepThreeTimeTabbedPane().getTestData().updateUI();
 					mainFrame.renewPanel();
 
@@ -377,16 +338,18 @@ public class TimeCaseOperation extends JPanel {
 					TimeTestCaseNode timeTestCaseLabel = new TimeTestCaseNode(ModelName + "_相似度", mainFrame);
 					quota = "测试用例信息生成完成,共生成" + lists.size() + "条测试用例。" + "  可靠性测试用例生成比率与使用模型实际使用概率平均偏差:" + df.format(d);
 					timeTestCaseLabel.setQuota(quota);
-					timeTestCaseLabel.setTestDataPanel(TestDataPanel);
+					timeTestCaseLabel.setCasePagePanel(casePagePanel);
 
 					mainFrame.getStepThreeLeftButton().getTimeCaseNodePanel().insertNodeLabel(timeTestCaseLabel,
-							TestDataPanel, quota);
+							casePagePanel, quota);
 
 					button.setEnabled(true);
 					mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
 					mainFrame.getStepThreeLeftButton().getModelExpand().setEnabled(true);
 					mainFrame.getStepThreeLeftButton().getTimeExpandLabel().setEnabled(true);
 					mainFrame.getStepThreeLeftButton().getTimeSeq().setEnabled(true);
+					
+					mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
 
 				} catch (Exception e) {
 					// TODO: handle exception

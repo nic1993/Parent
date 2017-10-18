@@ -152,7 +152,7 @@ public class StepFourOperation extends JPanel {
 					} else {
 						progressBarIndex++;
 						ExchangeProgressBar.setValue(progressBarIndex);
-						Thread.sleep(1000);
+						Thread.sleep(3000);
 					}
 				}
 				return 1;
@@ -167,239 +167,229 @@ public class StepFourOperation extends JPanel {
 			@Override
 			public Integer call() throws Exception {
 				// TODO Auto-generated method stub
+				
 				mainFrame.getStepFourTabbedPane().getTestCaseResults().removeAll();
 				
 				modelName = mainFrame.getNameRadionPanel().getSelectName();
 				Exchangelabel.removeAll();
-				Exchangelabel.setText("正在验证" + modelName + "生成的测试数据....");
+				Exchangelabel.setText("正在连接服务器....");
+				Thread.sleep(100);
 				
 				
 				String type = type1;
-				if(modelName.contains("_TimeExtend"))
+				if(modelName.contains("#3"))
 				{
 					type = type3;
 				}
 
-
 				PropertyConfigurator.configure("src/log4j.properties");
-
 				
-				
-				File file = new File(System.getProperty("user.dir") + "//" + modelName);
-				Controller.Run(new Pair<String, File>(type, file));
-				int size;
-				while(true)
+				File file = new File(route + modelName+".xml");
+				if(!Controller.Ready(1))
 				{
-					size = ResultService.list.size();
-					if(size != 0) break;
+					Exchangelabel.removeAll();
+					Exchangelabel.setText("服务器连接失败,请重新连接!");
+					
+					thread.interrupt();
+					mainthread.interrupt();
 				}
-			    
-				int index = 0;
-				while (true) {
-					try {
-						size = ResultService.list.size();
-						
-						if (index != size) {
-								List<TestCase> testcaselist = ResultService.list;
-
-								i = index;
-								for (int j = index; j < testcaselist.size(); j++) {
-									TestCase testCase = testcaselist.get(j);
-									TestCaseMatrixPanel testCaseMatrixPanel = new TestCaseMatrixPanel();
-									TestCaseTabelPanel titleCaseTabelPanel = new TestCaseTabelPanel(
-											testCase.getTestCaseID(), testCase.getResult().getResultDetail(),
-											testCase.getState());
-
-									
-									testCaseMatrixPanel.getTitleTabel().add(titleCaseTabelPanel);
-									
-									processID.clear();
-									processName.clear();
-									processParam.clear();
-									processExec.clear();
-									processStatus.clear();
-									for (myProcess p : testCase.getProcessList()) {
-										processID.add(p.getProcessID());
-										processName.add(p.getProcessName());
-										processParam.add(p.getProcessParam());
-										processStatus.add(p.getProcessStatus());
-										processExec.add(p.isProcessExec());
-									}
-									TestCaseTabelPanel testCaseTabelPanel = new TestCaseTabelPanel(processID,
-											processName, processParam, processStatus, processExec);
-									testCaseMatrixPanel.getTabelPanel().add(testCaseTabelPanel, BorderLayout.CENTER);
-
-									mainFrame.getStepFourTabbedPane().getTestCaseResults().add(testCaseMatrixPanel,
-											new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
-									Exchangelabel.removeAll();
-									Exchangelabel.setText("正在验证第" + (j+1)+ "个测试用例....");
-									progressBarIndex = ExchangeProgressBar.getValue();
-									mainFrame.getStepFourTabbedPane().getjScrollPane().getVerticalScrollBar()
-											.setValue(mainFrame.getStepFourTabbedPane().getjScrollPane()
-													.getVerticalScrollBar().getMaximum());
-									mainFrame.renewPanel();
-									Thread.sleep(10);
-									i++;
-							}
-							index = size;
-							Thread.sleep(100);
-						}
-						else{
-							break;
-						}
-						TimeUnit.SECONDS.sleep(2);
-					} catch (InterruptedException e) {
-
-						e.printStackTrace();
-					}
-				}
-				List<TestCase> testcaselist = ResultService.list;
-
-				// List<TestCase> testcaselist=new ArrayList<TestCase>();
-				//
-				// String serialpath =
-				// "C:\\Users\\ccc\\Desktop\\平台xml\\UAVForXStreamV9+-+=+++++-1+border+path+performserialtestcase.txt";
-				// FileInputStream fis = new FileInputStream(serialpath);
-				// ObjectInputStream ois = new ObjectInputStream(fis);
-				//
-				// while(true){//使用处理异常的方式来判断文件是否结束
-				// try {
-				// TestCase tc=(TestCase) ois.readObject();//文件读取完毕后，会抛异常
-				// testcaselist.add(tc);
-				// } catch (Exception e1) {
-				// // TODO Auto-generated catch block
-				// e1.printStackTrace();
-				// System.out.println("文件读取完毕!");
-				// break;
-				// }
-				// }
-				//
-				// ois.close();
-				// fis.close();
-
-
-
-//				i = 0;
-//				mainFrame.getStepFourTabbedPane().getTestCaseResults().removeAll();
-//				// mainFrame.getStepFourTabbedPane().getTestCaseResults().add(testCaseReportTableHeaderPanel,new
-//				// GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
-//
-//				for (int j = 0; j < testcaselist.size(); j++) {
-//					TestCase testCase = testcaselist.get(j);
-//					TestCaseMatrixPanel testCaseMatrixPanel = new TestCaseMatrixPanel();
-//					TestCaseTabelPanel titleCaseTabelPanel = new TestCaseTabelPanel(testCase.getTestCaseID(),
-//							testCase.getState(), testCase.getResult().getResultDetail());
-//
-//					testCaseMatrixPanel.getTitleTabel().add(titleCaseTabelPanel);
-//					processID.clear();
-//					processName.clear();
-//					processParam.clear();
-//					processExec.clear();
-//					processStatus.clear();
-//					for (myProcess p : testCase.getProcessList()) {
-//						processID.add(p.getProcessID());
-//						processName.add(p.getProcessName());
-//						processParam.add(p.getProcessParam());
-//						processStatus.add(p.getProcessStatus());
-//						processExec.add(p.isProcessExec());
+				else {
+					Controller.Run(new Pair<String, File>(type, file));
+					
+					int size;
+//					while(true)
+//					{
+//						size = ResultService.list.size();
+//						if(size != 0) break;
 //					}
-//					TestCaseTabelPanel testCaseTabelPanel = new TestCaseTabelPanel(processID, processName, processParam,
-//							processStatus, processExec);
-//					testCaseMatrixPanel.getTabelPanel().add(testCaseTabelPanel, BorderLayout.CENTER);
-//
-//					mainFrame.getStepFourTabbedPane().getTestCaseResults().add(testCaseMatrixPanel,
-//							new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
-//					Exchangelabel.removeAll();
-//					Exchangelabel.setText("正在验证第" + j + "个测试用例....");
-//					ExchangeProgressBar.setValue(20 + (int) (((double) j / testcaselist.size()) * 50));
-//					progressBarIndex = ExchangeProgressBar.getValue();
-//					mainFrame.getStepFourTabbedPane().getjScrollPane().getVerticalScrollBar().setValue(
-//							mainFrame.getStepFourTabbedPane().getjScrollPane().getVerticalScrollBar().getMaximum());
-//					mainFrame.renewPanel();
-//					Thread.sleep(100);
-//					i++;
-//				}
-				mainFrame.getStepFourTabbedPane().getTestCaseResults().add(new JPanel(),
-						new GBC(0, ++i).setFill(GBC.BOTH).setWeight(1, 1));
-				Exchangelabel.removeAll();
-				Exchangelabel.setText("正在生成验证报告....");
+//					
+					int index = 0;
+					while (true ) {
+						try {
+							size = ResultService.list.size();
+							List<TestCase> testcaselist = ResultService.list;
+							
+							if (index != size) {
+									i = index;
+									for (int j = index; j < size; j++) {
+										TestCase testCase = testcaselist.get(j);
+										testCase.setTestCaseID(String.valueOf(j+1));
+										TestCaseMatrixPanel testCaseMatrixPanel = new TestCaseMatrixPanel();
+										TestCaseTabelPanel titleCaseTabelPanel = new TestCaseTabelPanel(
+												testCase.getTestCaseID(), testCase.getResult().getResultDetail(),
+												testCase.getState());
+										
+										testCaseMatrixPanel.getTitleTabel().add(titleCaseTabelPanel);
+										
+										processID.clear();
+										processName.clear();
+										processParam.clear();
+										processExec.clear();
+										processStatus.clear();
+										for (myProcess p : testCase.getProcessList()) {
+											processID.add(p.getProcessID());
+											processName.add(p.getProcessName());
+											processParam.add(p.getProcessParam());
+											processStatus.add(p.getProcessStatus());
+											processExec.add(p.isProcessExec());
+										}
+										TestCaseTabelPanel testCaseTabelPanel = new TestCaseTabelPanel(processID,
+												processName, processParam, processStatus, processExec);
+										testCaseMatrixPanel.getTabelPanel().add(testCaseTabelPanel, BorderLayout.CENTER);
 
-				List<Integer> totalList = ResultService.getResults(testcaselist);
-				// 统计成功失败
-				FailReportTableHeaderPanel failReportTableHeaderPanel = new FailReportTableHeaderPanel();
-				TestCaseTabelPanel testCaseTabelPanel = new TestCaseTabelPanel(totalList.get(0), totalList.get(1),
-						totalList.get(2), mainFrame);
-				CountMatrixPanel countMatrixPanel = new CountMatrixPanel(failReportTableHeaderPanel,
-						testCaseTabelPanel);
-				mainFrame.getStepFourTabbedPane().getTestCaseResport().add(countMatrixPanel,
-						new GBC(0, 0, 2, 1).setFill(GBC.BOTH).setWeight(1, 0));
+										mainFrame.getStepFourTabbedPane().getTestCaseResults().add(testCaseMatrixPanel,
+												new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
+										
+										Exchangelabel.removeAll();
+										Exchangelabel.setText("正在验证第" + (j+1)+ "个测试用例....");
+										i++;
+								}
+								index = size;
+								
+								Thread.sleep(100);
+								mainFrame.renewPanel();
+								if(size == ResultService.list.size()) 
+									break;
+							}
+							TimeUnit.SECONDS.sleep(2);
+						} catch (InterruptedException e) {
 
-				// 统计失败类型
-				TypeFailReportTableHeaderPanel typeFailReportTableHeaderPanel = new TypeFailReportTableHeaderPanel();
-				List<Integer> failList = ResultService.getFailType(testcaselist);
-				TestCaseTabelPanel failTypeTable = new TestCaseTabelPanel(failList.get(0), failList.get(1));
-				CountMatrixPanel countFailMatrixPanel = new CountMatrixPanel(typeFailReportTableHeaderPanel,
-						failTypeTable);
-				mainFrame.getStepFourTabbedPane().getTestCaseResport().add(countFailMatrixPanel,
-						new GBC(0, 1, 2, 1).setFill(GBC.BOTH).setWeight(1, 0));
-
-				// 生成失败测试用例
-				List<TestCase> failtestcases = ResultService.getFail(testcaselist);
-				if (failtestcases.size() != 0) {
-					i = 0;
-					mainFrame.getStepFourTabbedPane().getWrongtestCaseResults().removeAll();
-					for (int j = 0; j < failtestcases.size(); j++) {
-						TestCase testCase = failtestcases.get(j);
-						TestCaseMatrixPanel testCaseMatrixPanel = new TestCaseMatrixPanel();
-						TestCaseTabelPanel titleCaseTabelPanel = new TestCaseTabelPanel(testCase.getTestCaseID(),
-								testCase.getResult().getResultDetail(), testCase.getState());
-						// testCaseMatrixPanel.getTitleLabel().setText(testCase.getTestCaseID()+"
-						// "+
-						// testCase.getExeState()+" "+testCase.getState());
-						testCaseMatrixPanel.getTitleTabel().add(titleCaseTabelPanel);
-						processID.clear();
-						processName.clear();
-						processParam.clear();
-						processExec.clear();
-						processStatus.clear();
-						for (myProcess p : testCase.getProcessList()) {
-							processID.add(p.getProcessID());
-							processName.add(p.getProcessName());
-							processParam.add(p.getProcessParam());
-							processStatus.add(p.getProcessStatus());
-							processExec.add(p.isProcessExec());
+							e.printStackTrace();
 						}
-						TestCaseTabelPanel testCaseTabelPanel1 = new TestCaseTabelPanel(processID, processName,
-								processParam, processStatus, processExec);
-						testCaseMatrixPanel.getTabelPanel().add(testCaseTabelPanel1, BorderLayout.CENTER);
-
-						mainFrame.getStepFourTabbedPane().getWrongtestCaseResults().add(testCaseMatrixPanel,
-								new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
-						Exchangelabel.removeAll();
-						Exchangelabel.setText("正在验证第" + j + "个错误的测试用例....");
-						progressBarIndex = ExchangeProgressBar.getValue();
-						mainFrame.getStepFourTabbedPane().getjScrollPane3().getVerticalScrollBar().setValue(mainFrame
-								.getStepFourTabbedPane().getjScrollPane3().getVerticalScrollBar().getMaximum());
-						mainFrame.renewPanel();
-						Thread.sleep(100);
-						i++;
 					}
+					
+					
+					List<TestCase> testcaselist = ResultService.list;
+
+//					i = 0;
+//					mainFrame.getStepFourTabbedPane().getTestCaseResults().removeAll();
+//					// mainFrame.getStepFourTabbedPane().getTestCaseResults().add(testCaseReportTableHeaderPanel,new
+//					// GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
+	//
+//					for (int j = 0; j < testcaselist.size(); j++) {
+//						TestCase testCase = testcaselist.get(j);
+//						TestCaseMatrixPanel testCaseMatrixPanel = new TestCaseMatrixPanel();
+//						TestCaseTabelPanel titleCaseTabelPanel = new TestCaseTabelPanel(testCase.getTestCaseID(),
+//								testCase.getState(), testCase.getResult().getResultDetail());
+	//
+//						testCaseMatrixPanel.getTitleTabel().add(titleCaseTabelPanel);
+//						processID.clear();
+//						processName.clear();
+//						processParam.clear();
+//						processExec.clear();
+//						processStatus.clear();
+//						for (myProcess p : testCase.getProcessList()) {
+//							processID.add(p.getProcessID());
+//							processName.add(p.getProcessName());
+//							processParam.add(p.getProcessParam());
+//							processStatus.add(p.getProcessStatus());
+//							processExec.add(p.isProcessExec());
+//						}
+//						TestCaseTabelPanel testCaseTabelPanel = new TestCaseTabelPanel(processID, processName, processParam,
+//								processStatus, processExec);
+//						testCaseMatrixPanel.getTabelPanel().add(testCaseTabelPanel, BorderLayout.CENTER);
+	//
+//						mainFrame.getStepFourTabbedPane().getTestCaseResults().add(testCaseMatrixPanel,
+//								new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
+//						Exchangelabel.removeAll();
+//						Exchangelabel.setText("正在验证第" + j + "个测试用例....");
+//						ExchangeProgressBar.setValue(20 + (int) (((double) j / testcaselist.size()) * 50));
+//						progressBarIndex = ExchangeProgressBar.getValue();
+//						mainFrame.getStepFourTabbedPane().getjScrollPane().getVerticalScrollBar().setValue(
+//								mainFrame.getStepFourTabbedPane().getjScrollPane().getVerticalScrollBar().getMaximum());
+//						mainFrame.renewPanel();
+//						Thread.sleep(10);
+//						i++;
+//					}
+					
+					mainFrame.getStepFourTabbedPane().getTestCaseResults().add(new JPanel(),
+							new GBC(0, ++i).setFill(GBC.BOTH).setWeight(1, 1));
+					Exchangelabel.removeAll();
+					Exchangelabel.setText("正在生成验证报告....");
+
+					List<Integer> totalList = ResultService.getResults(testcaselist);
+					// 统计成功失败
+					FailReportTableHeaderPanel failReportTableHeaderPanel = new FailReportTableHeaderPanel();
+					TestCaseTabelPanel testCaseTabelPanel = new TestCaseTabelPanel(totalList.get(0), totalList.get(1),
+							totalList.get(2), mainFrame);
+					CountMatrixPanel countMatrixPanel = new CountMatrixPanel(failReportTableHeaderPanel,
+							testCaseTabelPanel);
+					mainFrame.getStepFourTabbedPane().getTestCaseResport().add(countMatrixPanel,
+							new GBC(0, 0, 2, 1).setFill(GBC.BOTH).setWeight(1, 0));
+//
+//					// 统计失败类型
+					TypeFailReportTableHeaderPanel typeFailReportTableHeaderPanel = new TypeFailReportTableHeaderPanel();
+					List<Integer> failList = ResultService.getFailType(testcaselist);
+					TestCaseTabelPanel failTypeTable = new TestCaseTabelPanel(failList.get(0), failList.get(1));
+					CountMatrixPanel countFailMatrixPanel = new CountMatrixPanel(typeFailReportTableHeaderPanel,
+							failTypeTable);
+					mainFrame.getStepFourTabbedPane().getTestCaseResport().add(countFailMatrixPanel,
+							new GBC(0, 1, 2, 1).setFill(GBC.BOTH).setWeight(1, 0));
+//
+//					// 生成失败测试用例
+//					List<TestCase> failtestcases = ResultService.getFail(testcaselist);
+//					
+//					
+//					
+//					mainFrame.getStepFourTabbedPane().getWrongtestCaseResults().add(new JPanel(),
+//							new GBC(0, failtestcases.size()).setFill(GBC.BOTH).setWeight(1, 1));
+//					if (failtestcases.size() != 0) {
+//						i = 0;
+//						mainFrame.getStepFourTabbedPane().getWrongtestCaseResults().removeAll();
+//						for (int j = 0; j < failtestcases.size(); j++) {
+//							TestCase testCase = failtestcases.get(j);
+//							TestCaseMatrixPanel testCaseMatrixPanel = new TestCaseMatrixPanel();
+//							TestCaseTabelPanel titleCaseTabelPanel = new TestCaseTabelPanel(testCase.getTestCaseID(),
+//									testCase.getResult().getResultDetail(), testCase.getState());
+//							// testCaseMatrixPanel.getTitleLabel().setText(testCase.getTestCaseID()+"
+//							// "+
+//							// testCase.getExeState()+" "+testCase.getState());
+//							testCaseMatrixPanel.getTitleTabel().add(titleCaseTabelPanel);
+//							processID.clear();
+//							processName.clear();
+//							processParam.clear();
+//							processExec.clear();
+//							processStatus.clear();
+//							for (myProcess p : testCase.getProcessList()) {
+//								processID.add(p.getProcessID());
+//								processName.add(p.getProcessName());
+//								processParam.add(p.getProcessParam());
+//								processStatus.add(p.getProcessStatus());
+//								processExec.add(p.isProcessExec());
+//							}
+//							TestCaseTabelPanel testCaseTabelPanel1 = new TestCaseTabelPanel(processID, processName,
+//									processParam, processStatus, processExec);
+//							testCaseMatrixPanel.getTabelPanel().add(testCaseTabelPanel1, BorderLayout.CENTER);
+//
+//							mainFrame.getStepFourTabbedPane().getWrongtestCaseResults().add(testCaseMatrixPanel,
+//									new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
+//							Exchangelabel.removeAll();
+//							Exchangelabel.setText("正在验证第" + j + "个错误的测试用例....");
+//							progressBarIndex = ExchangeProgressBar.getValue();
+//							mainFrame.getStepFourTabbedPane().getjScrollPane3().getVerticalScrollBar().setValue(mainFrame
+//									.getStepFourTabbedPane().getjScrollPane3().getVerticalScrollBar().getMaximum());
+//							mainFrame.renewPanel();
+//							Thread.sleep(100);
+//							i++;
+//						}
+//					}
+//
+//					Integer[] integers = { totalList.get(0), totalList.get(1) };
+//					ChartPanel chartPanel = createPiePanel(integers);
+//					ChartPanel barPanel = createLinePanel(integers);
+//
+//					mainFrame.getStepFourTabbedPane().getTestCaseResport().add(chartPanel,
+//							new GBC(0, 2, 1, 1).setFill(GBC.BOTH).setWeight(1, 1));
+//
+//					mainFrame.getStepFourTabbedPane().getTestCaseResport().add(barPanel,
+//							new GBC(1, 2, 1, 1).setFill(GBC.BOTH).setWeight(1, 1));
+//					Exchangelabel.removeAll();
+//					Exchangelabel.setText("验证报告生成完毕!");
+//					// mainFrame.getStepFourTabbedPane().getTestCaseResport().add(new
+//					// JPanel(),new GBC(1,2,1,1).setFill(GBC.BOTH).setWeight(1, 1));
+//					mainFrame.getStepFourTabbedPane().setSelectedIndex(0);
 				}
-
-				Integer[] integers = { totalList.get(0), totalList.get(1) };
-				ChartPanel chartPanel = createPiePanel(integers);
-				ChartPanel barPanel = createLinePanel(integers);
-
-				mainFrame.getStepFourTabbedPane().getTestCaseResport().add(chartPanel,
-						new GBC(0, 2, 1, 1).setFill(GBC.BOTH).setWeight(1, 1));
-
-				mainFrame.getStepFourTabbedPane().getTestCaseResport().add(barPanel,
-						new GBC(1, 2, 1, 1).setFill(GBC.BOTH).setWeight(1, 1));
-				Exchangelabel.removeAll();
-				Exchangelabel.setText("验证报告生成完毕!");
-				// mainFrame.getStepFourTabbedPane().getTestCaseResport().add(new
-				// JPanel(),new GBC(1,2,1,1).setFill(GBC.BOTH).setWeight(1, 1));
-				mainFrame.getStepFourTabbedPane().setSelectedIndex(1);
+				
 				return 1;
 			}
 		};
@@ -413,7 +403,6 @@ public class StepFourOperation extends JPanel {
 		PieChart pieChart = new PieChart(integers);
 		pieChart.createDataset();
 		return pieChart.createChart();
-
 	}
 
 	private ChartPanel createLinePanel(Integer[] integers) {

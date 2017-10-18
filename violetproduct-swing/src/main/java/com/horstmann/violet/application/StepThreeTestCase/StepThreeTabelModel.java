@@ -25,7 +25,7 @@ public class StepThreeTabelModel extends AbstractTableModel
     private List<Integer> numbers;
     private List<Double> actualPercentsDoubles;
     private DecimalFormat  df = new DecimalFormat();
-	private String pattern = "#0.0000";
+	private String pattern = "#0.000";
     //注意构造函数是第一个执行的，用于初始化 TableData，TableTitle
     public StepThreeTabelModel(List<String> paramterNameList,List<String> paramterValueList)
     {
@@ -55,8 +55,14 @@ public class StepThreeTabelModel extends AbstractTableModel
 //           TableTitle.add("迁移关系");
            //这里我们假设当前的表格是 3x3的
            //先初始化列标题,有3列
-           TableTitle.add("测试序列集");
-           TableTitle.add("测试序列信息");
+           //杨杰部分界面
+           TableTitle.addElement("序号");
+           TableTitle.addElement("测试用例()路径");
+           TableTitle.addElement("路径概率");
+           TableTitle.addElement("抽取组数");
+           
+//           TableTitle.add("测试序列集");
+//           TableTitle.add("测试序列信息");
            initData(constraintNameString, actualPercentsDoubles,pros, numbers);
     }
     public StepThreeTabelModel(String testSequence,int flag)
@@ -157,9 +163,12 @@ public class StepThreeTabelModel extends AbstractTableModel
     	int size = TableData.size();
     	for(int i = 0;i < constraintNameString.size();i++)
     	{
-    		String[] line4 = new String[2];
-   		 line4[0] = constraintNameString.get(i);
-   		 line4[1] = "路径概率为(可靠性测试用例生成比率"+df.format(actualPercentsDoubles.get(i))+"):  "+df.format(pros.get(i))+" "+"此类用例包含"+String.valueOf(number.get(i))+"个";
+    		String[] line4 = new String[4];
+   		 line4[0] = String.valueOf(i);
+   		 line4[1] = constraintNameString.get(i);
+   		 line4[2] = String.valueOf(pros.get(i));
+   		 line4[3] = String.valueOf(number.get(i));
+//   		 line4[1] = "路径概率为(可靠性测试用例生成比率"+df.format(actualPercentsDoubles.get(i))+"):  "+df.format(pros.get(i))+" "+"此类用例包含"+String.valueOf(number.get(i))+"个";
    		 TableData.add(line4);
    		 line4 = null;
     	}

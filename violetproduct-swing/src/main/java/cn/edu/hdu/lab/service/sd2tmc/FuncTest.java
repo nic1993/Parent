@@ -19,9 +19,9 @@ public class FuncTest {
 		Work worker=new WorkImpl();
 		
 		//第一步：解析EA画出的UML模型的XML文件
-		worker.transInitial(StaticConfig.umlPath);		
+		//worker.transInitial(StaticConfig.umlPath);		
 		//第一步：解析HDU601实验室平台画出UML模型的XML文件
-		//worker.transInitialHDU(StaticConfig.umlPathHDU);
+		worker.transInitialHDU(StaticConfig.umlPathHDU);
 		
 		
 		//第二步：获取用例执行顺序关系
@@ -118,7 +118,7 @@ public class FuncTest {
 		worker.probabilityAndReachableTest();//概率查询
 		
 		//第八步：控制着数据结构写在同一个xml文件里面。****************前缀名需要修改*********
-//		worker.writeMarkov(StaticConfig.mcPathPrefix);
+//		worker.writeMarkov(StaticConfig.mcPathPrefixHDU);
 	}
 	
 }

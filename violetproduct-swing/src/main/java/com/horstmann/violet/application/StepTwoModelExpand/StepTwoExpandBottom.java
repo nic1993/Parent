@@ -156,9 +156,7 @@ public class StepTwoExpandBottom extends JPanel{
 				}
 				
 				mainFrame.renewPanel();
-//				mainFrame.getinformationPanel().removeAll();
-//				mainFrame.getinformationPanel().setLayout(new GridLayout(1, 1));
-//				mainFrame.getinformationPanel().add(mainFrame.getOutputinformation());
+
 				mainFrame.getReduceOrEnlargePanel().removeAll();
 				mainFrame.getReduceOrEnlargePanel().setLayout(new GridLayout(1, 1));
 				mainFrame.getReduceOrEnlargePanel().add(mainFrame.getstepOneCenterRightPanel());
@@ -219,12 +217,6 @@ public class StepTwoExpandBottom extends JPanel{
 					mainFrame.getCenterTabPanel().removeAll();
 					mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeChoosePattern());
 					
-					
-					
-					mainFrame.getconsolepartPanel().
-					removeAll();
-					mainFrame.getconsolepartPanel().setLayout(new GridLayout(1, 1));
-					mainFrame.getconsolepartPanel().add(mainFrame.getStepThreeBottom());
 					
 					mainFrame.getpanel().removeAll();
 					mainFrame.getpanel().setVisible(false);
@@ -407,6 +399,9 @@ public class StepTwoExpandBottom extends JPanel{
 					break;
 				}
 
+				mainFrame.getconsolepartPanel().removeAll();
+				mainFrame.getconsolepartPanel().setLayout(new GridLayout(1, 1));
+				mainFrame.getconsolepartPanel().add(mainFrame.getStepThreeBottom());
 			}
 		});
 	}
