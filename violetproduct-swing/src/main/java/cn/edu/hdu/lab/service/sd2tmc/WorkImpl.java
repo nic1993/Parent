@@ -59,6 +59,8 @@ public class WorkImpl implements Work  {
 		api.initialize();
 		api.getUseCasesInfo(); //封装了所有信息
 		this.useCases=api.getUseCases();
+		
+		
 	}
 	public void transInitialHDU(String xmlFileName) throws Throwable
 	{
@@ -384,14 +386,14 @@ public class WorkImpl implements Work  {
 		return verifyReList;
 	}
 	@Override
-	public void transToMarckov(Map<String, List<InterfaceUCRelation>> UCRMap) throws Exception
+	public void transToMarckov(Map<String, List<InterfaceUCRelation>> UCRMap,List<String> seqNames,List<String> ucNames) throws Exception
 	{
 		Translation translation=new Translation();
 		/*for(UseCase uc:useCases)
 		{
 			uc.print_useCase();
 		}*/
-		f_Tmc=translation.UMLTranslationToMarkovChain(useCases,UCRMap); //得到软件级Markov		
+		f_Tmc=translation.UMLTranslationToMarkovChain(useCases,UCRMap,seqNames,ucNames); //得到软件级Markov		
 		seqTmcs=translation.getSeqTmcList();//得到场景逐步叠加的Markov
 		ucTmcs=translation.getTmcs();    //得到用例Markov
 		
@@ -416,8 +418,9 @@ public class WorkImpl implements Work  {
 					proSum+=tr.getTransFlag().getProb();
 				}
 			}
-			if(proSum<0.999||proSum>1.001)
+			if(proSum<0.999 || proSum>1.001)
 			{
+				System.out.println("proSum: " + proSum);
 				throw new Exception("结点："+state.getName()+" 出迁移概率不为1");
 //				System.out.println("结点："+state.getName()+" 出迁移概率不为1");
 			}
@@ -471,24 +474,26 @@ public class WorkImpl implements Work  {
 	
 	public void writeMarkov(String mcXMLFileName,MainFrame mainFrame,List<String> seqNames,List<String> ucNames) throws Exception
 	{
-		String McName="MarkovChainModel";
-		int count=1;
-		for(Tmc tmc:seqTmcs)
-		{
-			String[] names = tmc.getNames().split(";");
-			int length = names.length - 1;
-			String seq = names[length].trim();
-			String fileName=seq+".xml";
-			Write.writeMarkov2XML(tmc, fileName,mainFrame);
-			count++; 
-		}
-		count=1;
-		for(Tmc tmc:ucTmcs) //用例级别
-		{
-			String fileName=tmc.getNames()+".xml";
-			Write.writeMarkov2XML(tmc,fileName,mainFrame);
-			count++;
-		}
+//		String McName="MarkovChainModel";
+//		int count=1;
+//		for(Tmc tmc:seqTmcs)
+//		{
+//			String[] names = tmc.getNames().split(";");
+//			int length = names.length - 1;
+//			String seq = names[length].trim();
+//			String fileName=seq+".xml";
+//			Write.writeMarkov2XML(tmc, fileName,mainFrame);
+//			
+//			seqNames.add(fileName);
+//		}
+//		count=1;
+//		for(Tmc tmc:ucTmcs) //用例级别
+//		{
+//			String fileName=tmc.getNames()+".xml";
+//			Write.writeMarkov2XML(tmc,fileName,mainFrame);
+//			
+//			ucNames.add(fileName);
+//		}
 		
 		Write.writeMarkov2XML(f_Tmc,mcXMLFileName+".xml",mainFrame);   
 	}

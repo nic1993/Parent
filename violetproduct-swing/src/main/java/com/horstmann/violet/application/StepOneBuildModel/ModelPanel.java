@@ -45,6 +45,7 @@ public class ModelPanel extends JPanel{
       private JPopupMenu popupMenu;
       private JMenuItem deleteDiagram;
       private JMenuItem saveDiagram;
+      private JMenuItem changeName;
       
       private boolean isSave = false;
       
@@ -100,10 +101,12 @@ public class ModelPanel extends JPanel{
     				popupMenu = new JPopupMenu();
 					deleteDiagram = new JMenuItem("删除     ",new ImageIcon("resources/icons/16x16/new.png"));
 					saveDiagram = new JMenuItem("保存    ",new ImageIcon("resources/icons/16x16/save.png"));
+					changeName = new JMenuItem("改名");
 					deleteDiagram.setAccelerator(KeyStroke.getKeyStroke('N', InputEvent.CTRL_MASK));
 					saveDiagram.setAccelerator(KeyStroke.getKeyStroke('O', InputEvent.CTRL_MASK));
 					popupMenu.add(deleteDiagram);
 					popupMenu.add(saveDiagram);
+					popupMenu.add(changeName);
 					popupMenu.show(e.getComponent(), e.getX(), e.getY());
 					
 					deleteDiagram.addActionListener(new ActionListener() {
@@ -152,6 +155,26 @@ public class ModelPanel extends JPanel{
 								mainFrame.saveModelPanel(selectmodel);
 								
 							}
+						}
+					});
+					
+                    changeName.addActionListener(new ActionListener() {
+						
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							// TODO Auto-generated method stub
+							Icon icon = new ImageIcon("resources/icons/22x22/open.png");
+							String str = (String) JOptionPane.showInputDialog(null,"请输入名称:\n","名称",JOptionPane.PLAIN_MESSAGE,icon,null,"在这输入");
+							System.out.println(str);
+							if(str.equals(""))
+							{
+								JOptionPane.showMessageDialog(null, "工程名称不能为空!","标题",JOptionPane.WARNING_MESSAGE); 
+							}
+							else {
+								title.removeAll();
+								title.setText(str);
+							}
+							
 						}
 					});
 				}

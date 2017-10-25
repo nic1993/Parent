@@ -106,7 +106,7 @@ public class TimeCaseOperation1 extends JPanel {
 	private BigDecimal bigDecimal;
 	private String quota;
 	private DecimalFormat df = new DecimalFormat();
-	private String pattern = "#0.0000";
+	private String pattern = "#0.000000";
 
 	public TimeCaseOperation1(MainFrame mainFrame) {
 		this.mainFrame = mainFrame;
@@ -114,21 +114,23 @@ public class TimeCaseOperation1 extends JPanel {
 		this.setBackground(new Color(233, 233, 233));
 		this.setLayout(new GridBagLayout());
 		this.add(topLabel, new GBC(0, 0, 5, 1).setFill(GBC.BOTH).setWeight(1, 0).setInsets(10, 15, 10, 0));
-		this.add(progressBar, new GBC(0, 1, 5, 1).setFill(GBC.BOTH).setWeight(1, 0).setInsets(0, 15, 10, 15));
+		this.add(progressBar, new GBC(0, 1, 4, 1).setFill(GBC.BOTH).setWeight(1, 0).setInsets(0, 15, 10, 15));
 		this.add(label1, new GBC(0, 2, 1, 1).setFill(GBC.BOTH).setWeight(0, 0).setInsets(0, 15, 10, 5));
 		this.add(textField, new GBC(1, 2, 1, 1).setFill(GBC.BOTH).setWeight(0, 0).setInsets(0, 0, 10, 5));
-		this.add(label2, new GBC(2, 2, 1, 1).setFill(GBC.BOTH).setWeight(0, 0).setInsets(0, 0, 10, 5));
-		this.add(gapPanel, new GBC(3, 2, 1, 1).setFill(GBC.BOTH).setWeight(1, 0).setInsets(0, 0, 10, 5));
-		this.add(button, new GBC(4, 2, 1, 1).setFill(GBC.BOTH).setWeight(0, 1).setInsets(0, 0, 10, 15));
+//		this.add(label2, new GBC(2, 2, 1, 1).setFill(GBC.BOTH).setWeight(0, 0).setInsets(0, 0, 10, 5));
+		this.add(gapPanel, new GBC(2, 2, 1, 1).setFill(GBC.BOTH).setWeight(1, 0).setInsets(0, 0, 10, 5));
+		this.add(button, new GBC(3, 2, 1, 1).setFill(GBC.BOTH).setWeight(0, 1).setInsets(0, 0, 10, 15));
 	}
 
 	private void init() {
 		topLabel = new JLabel("测试用例生成完成");
 		label1 = new JLabel("测试用例条数:");
-		label2 = new JLabel("(不少于185条)");
+//		label2 = new JLabel("(不少于185条)");
 
 		progressBar = new JProgressBar();
 		textField = new JTextField();
+		textField.setEditable(false);
+		
 		button = new JButton("开始生成");
 		gapPanel = new JPanel();
 
@@ -143,7 +145,7 @@ public class TimeCaseOperation1 extends JPanel {
 		textField.setText("230");
 		topLabel.setFont(new Font("宋体", Font.PLAIN, 16));
 		label1.setFont(new Font("宋体", Font.PLAIN, 16));
-		label2.setFont(new Font("宋体", Font.PLAIN, 16));
+//		label2.setFont(new Font("宋体", Font.PLAIN, 16));
 
 		progressBar.setUI(new ProgressUI(progressBar, Color.green));
 		progressBar.setUI(new GradientProgressBarUI());
@@ -174,7 +176,6 @@ public class TimeCaseOperation1 extends JPanel {
 			public Integer call() throws Exception {
 				// TODO Auto-generated method stub
 				try {
-
 					progressBarIndex = 0;
 					progressBar.setValue(0);
 					progressBar.setValue(progressBarIndex);
@@ -329,6 +330,7 @@ public class TimeCaseOperation1 extends JPanel {
 					button.setEnabled(true);
 					mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
 					mainFrame.getStepThreeLeftButton().getModelExpand().setEnabled(true);
+					mainFrame.getStepThreeLeftButton().getTimeModelLabel().setEnabled(true);
 					mainFrame.getStepThreeLeftButton().getTimeExpandLabel().setEnabled(true);
 					mainFrame.getStepThreeLeftButton().getTimeSeq().setEnabled(true);
 
@@ -349,8 +351,12 @@ public class TimeCaseOperation1 extends JPanel {
 				// TODO Auto-generated method stub
 				try {
 					button.setEnabled(false);
+					
+					
 					mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(false);
 					mainFrame.getStepThreeLeftButton().getModelExpand().setEnabled(false);
+					
+					mainFrame.getStepThreeLeftButton().getTimeModelLabel().setEnabled(false);
 					mainFrame.getStepThreeLeftButton().getTimeExpandLabel().setEnabled(false);
 					mainFrame.getStepThreeLeftButton().getTimeSeq().setEnabled(false);
 
@@ -371,7 +377,6 @@ public class TimeCaseOperation1 extends JPanel {
 					topLabel.setText("正在获取生成的抽象测试用例.....");
 					Thread.sleep(100);
 					
-					System.out.println("ModelName: " + ModelName);
 					
 					Calculate.getAllTransValues(markov);
 
@@ -391,6 +396,7 @@ public class TimeCaseOperation1 extends JPanel {
 					button.setEnabled(true);
 					mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
 					mainFrame.getStepThreeLeftButton().getModelExpand().setEnabled(true);
+					mainFrame.getStepThreeLeftButton().getTimeModelLabel().setEnabled(true);
 					mainFrame.getStepThreeLeftButton().getTimeExpandLabel().setEnabled(true);
 					mainFrame.getStepThreeLeftButton().getTimeSeq().setEnabled(true);
 
@@ -398,6 +404,9 @@ public class TimeCaseOperation1 extends JPanel {
 					topLabel.setText(e2.getLocalizedMessage());
 
 					mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
+					
+					mainthread.stop();
+					thread2.stop();
 				}
 				return 1;
 			}
@@ -496,6 +505,7 @@ public class TimeCaseOperation1 extends JPanel {
 
 					button.setEnabled(true);
 					mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
+					mainFrame.getStepThreeLeftButton().getTimeModelLabel().setEnabled(true);
 					mainFrame.getStepThreeLeftButton().getModelExpand().setEnabled(true);
 					mainFrame.getStepThreeLeftButton().getTimeExpandLabel().setEnabled(true);
 					mainFrame.getStepThreeLeftButton().getTimeSeq().setEnabled(true);
@@ -505,6 +515,7 @@ public class TimeCaseOperation1 extends JPanel {
 					button.setEnabled(true);
 					mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
 					mainFrame.getStepThreeLeftButton().getModelExpand().setEnabled(true);
+					mainFrame.getStepThreeLeftButton().getTimeModelLabel().setEnabled(true);
 					mainFrame.getStepThreeLeftButton().getTimeExpandLabel().setEnabled(true);
 					mainFrame.getStepThreeLeftButton().getTimeSeq().setEnabled(true);
 
@@ -512,6 +523,8 @@ public class TimeCaseOperation1 extends JPanel {
 					topLabel.setText(e2.getLocalizedMessage());
 
 					mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
+					
+					mainthread.stop();
 				}
 				return 1;
 			}
@@ -553,6 +566,9 @@ public class TimeCaseOperation1 extends JPanel {
 
 	public String getModelName() {
 		return ModelName;
+	}
+	public JTextField getTextField() {
+		return textField;
 	}
 
 	public void setModelName(String modelName) {

@@ -39,6 +39,8 @@ public class TimeSeqNode extends JLabel{
     		@Override
     		public void mousePressed(MouseEvent e) {
     			// TODO Auto-generated method stub
+    			mainFrame.getCenterTabPanel().removeAll();
+    			mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeTimeSeqTabbedPane());
     			
                 mainFrame.getStepThreeTimeSeqTabbedPane().getAbstractSequence().removeAll();
                 mainFrame.getStepThreeTimeSeqTabbedPane().getAbstractSequence().setLayout(new GridLayout());

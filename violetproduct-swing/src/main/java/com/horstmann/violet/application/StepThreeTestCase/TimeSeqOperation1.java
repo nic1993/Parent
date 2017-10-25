@@ -356,6 +356,10 @@ public class TimeSeqOperation1 extends JPanel{
          			mainFrame.getStepThreeLeftButton().getTimeModelLabel().setEnabled(true);
          			
          			mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
+         			
+         			mainthread.suspend();
+         			thread1.suspend();
+         			thread2.suspend();
 					}
 					return 1;
 				}
@@ -429,7 +433,7 @@ public class TimeSeqOperation1 extends JPanel{
 				                mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
 							}
 							
-							progressBar.setValue(41 + (int)(((double)k/index)*60));
+							progressBar.setValue(40 + (int)(((double)(k+1)/index)*60));
 							
 							Thread.sleep(10);
 						}
@@ -459,7 +463,7 @@ public class TimeSeqOperation1 extends JPanel{
 						mainFrame.getStepThreeLeftButton().getTimeSeqNode().repaint();
 						
 						topLabel.removeAll();
-						topLabel.setText("抽象测试序列生成完成，共生成" + markov.getRouteList().size()+"条抽象测试序列");
+						topLabel.setText("抽象测试序列生成完成，共生成" + lists.size()+"条抽象测试序列");
 				    } catch (RuntimeException e) {
 						// TODO: handle exception
                   	    topLabel.removeAll();
@@ -471,6 +475,10 @@ public class TimeSeqOperation1 extends JPanel{
          				mainFrame.getStepThreeLeftButton().getTimeModelLabel().setEnabled(true);
          				
          				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
+         				
+         				mainthread.suspend();
+             			thread1.suspend();
+             			thread2.suspend();
 					}
 					return 1;
 				}

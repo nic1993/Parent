@@ -220,6 +220,7 @@ public class TimeExpandOperation extends JPanel{
 			@Override
 			public Integer call() throws Exception {
 				// TODO Auto-generated method stub
+				try {
 				ModelExchange.setEnabled(false);
 				restartExchange.setEnabled(true);
    				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(false);
@@ -239,7 +240,6 @@ public class TimeExpandOperation extends JPanel{
 						currentFile = file;
 					}		
 				}
-				try {
 					XMLParser xParser = new XMLParser(currentFile);	
 					StateTimeExtend sTimeExtend = new StateTimeExtend();
 					expandlabel.removeAll();
@@ -252,6 +252,17 @@ public class TimeExpandOperation extends JPanel{
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
+					expandlabel.removeAll();
+					expandlabel.setText("扩展Markov链出错!请检查模型!");
+					
+                    ModelExchange.setEnabled(true);
+					
+	   				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
+					
+					thread1.interrupt();
+					thread2.interrupt();
+					thread3.interrupt();
+					thread4.interrupt();
 				}
 				return 1;
 			}
@@ -264,6 +275,9 @@ public class TimeExpandOperation extends JPanel{
 			@Override
 			public Integer call() throws Exception {
 				// TODO Auto-generated method stub
+				try {
+					
+				
 				expandlabel.removeAll();
 				expandlabel.setText("正在生成扩展后的"+modelName+"模型.....");
 				WriteToXML wtXML = new WriteToXML();
@@ -276,6 +290,22 @@ public class TimeExpandOperation extends JPanel{
                 LayoutMarkov.layout(ExtendRoute,ExtendRoute+modelName+"_TimeExtend.markov.violet.xml",modelName+"_TimeExtendLayout.markov.violet.xml");
 				
 				graphFile=MarkovXML2GraphFile.toGraphFile(ExtendRoute,modelName+"_TimeExtendLayout.markov.violet.xml");
+				} catch (Exception e) {
+					// TODO: handle exception
+					e.printStackTrace();
+					expandlabel.removeAll();
+					expandlabel.setText("扩展Markov链出错!请检查模型!");
+					
+					
+					ModelExchange.setEnabled(true);
+					
+	   				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
+	   				
+	   				mainthread.suspend();
+	   				thread2.suspend();
+	   				thread3.suspend();
+	   				thread4.suspend();
+				}
 				return 1;
 			}
 		};
@@ -286,7 +316,9 @@ public class TimeExpandOperation extends JPanel{
 			@Override
 			public Integer call() throws Exception {
 				// TODO Auto-generated method stub
-				 
+				 try {
+					
+				
 				    expandlabel.removeAll();
 				    expandlabel.setText("正在获取扩展的"+modelName+"模型信息.....");
 				    Thread.sleep(500);
@@ -382,7 +414,7 @@ public class TimeExpandOperation extends JPanel{
 					
 					expandlabel.removeAll();
 				    expandlabel.setText("正在生成扩展"+modelName+"Markov图形.....");
-					mainFrame.addTabbedPane(workspace);
+					mainFrame.addTabbedPane(workspace,"step3");
 					workspace.getAWTComponent().getScrollableSideBar().setVisible(false);
 					workspace.getAWTComponent().updateUI();
 					
@@ -397,7 +429,22 @@ public class TimeExpandOperation extends JPanel{
 				    
 				    mainFrame.getStepThreeLeftButton().getTimeExpandNodePanel().insertNodeLabel(expandNode);
 				    
-				    
+				 }
+				 catch (Exception e) {
+					// TODO: handle exception
+					 e.printStackTrace();
+					 expandlabel.removeAll();
+					 expandlabel.setText("扩展Markov链出错!请检查模型!");
+					 ModelExchange.setEnabled(true);
+						
+			   		mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
+					 
+					 mainthread.suspend();
+		   			 thread2.suspend();
+		   			 thread3.suspend();
+		   			 thread4.suspend();
+					
+				}
 				return 1;
 			}
 		};
@@ -409,6 +456,8 @@ public class TimeExpandOperation extends JPanel{
 			@Override
 			public Integer call() throws Exception {
 				// TODO Auto-generated method stub
+				try {
+				
 				expandlabel.removeAll();
 			    expandlabel.setText("正在生成转换XML信息.....");
 			    Thread.sleep(500);
@@ -435,6 +484,23 @@ public class TimeExpandOperation extends JPanel{
    				mainFrame.getTimeSeqOperation().setModelName(modelName);
    				mainFrame.getTimeSeqOperation1().setModelName(modelName);
 			    restartExchange.setText("停止扩展");
+
+				} catch (Exception e) {
+					// TODO: handle exception
+					e.printStackTrace();
+					
+					expandlabel.removeAll();
+				    expandlabel.setText("扩展Markov链出错!请检查模型!");
+				    
+				    ModelExchange.setEnabled(true);
+					
+		   			mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
+						
+				     mainthread.suspend();
+		   			 thread4.suspend();
+						
+					
+				}
 				return 1;
 			}
 		};

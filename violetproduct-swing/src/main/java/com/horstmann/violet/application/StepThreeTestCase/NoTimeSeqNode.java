@@ -40,6 +40,9 @@ public class NoTimeSeqNode extends JLabel{
     		public void mousePressed(MouseEvent e) {
     			// TODO Auto-generated method stub
     			
+    			mainFrame.getCenterTabPanel().removeAll();
+				mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeNoTimeSeqTabbedPane());
+    			
                 mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().removeAll();
                 mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().setLayout(new GridLayout());
                 mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().add(abstractPagePanel);

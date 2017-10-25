@@ -14,7 +14,6 @@ import com.horstmann.violet.application.gui.MainFrame;
 
 public class TimeExpandNodePanel {
 	   private MainFrame mainFrame;
-       private JPanel expandLabelPanel;
        private List<ExpandNode> expandNodeLabels;
        private boolean isExist = false;
        public TimeExpandNodePanel(MainFrame mainFrame)
@@ -47,7 +46,6 @@ public class TimeExpandNodePanel {
     		   }
 
         	   mainFrame.getStepThreeLeftButton().getTimeExpandLabel().add(expandNode, new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0).setInsets(5, 10, 0, 0));
-        	   expandLabelPanel.repaint();
     	   }
     	   
        }

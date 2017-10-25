@@ -8,6 +8,8 @@ import java.io.File;
 
 public class FileUtil {
 
+	public static String COMPILE_COP_PATH = "/home/KKXFINAL/Test/Coptermaster/obj";
+	public static String COMPILE_TIME_PATH = "/home/KKXFINAL/Test/Time/obj";
     public static String REMOTE_TC_PATH ="/home/KKXFINAL/Test/testcase/";
     public static String REMOTE_RS_PATH ="/home/KKXFINAL/Test/result/";
     public static String LOCAL_TARGET_PATH =System.getProperty("user.dir")+"\\src\\main\\java\\com\\horstmann\\violet\\application\\gui\\util\\chenzuo\\File\\";

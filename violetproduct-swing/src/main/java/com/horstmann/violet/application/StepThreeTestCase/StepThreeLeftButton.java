@@ -752,7 +752,6 @@ public class StepThreeLeftButton extends JPanel{
 				// TODO Auto-generated method stub
 				if(((JLabel)e.getSource()).isEnabled())
 				{
-					
 					clearPanel();
 					modelExpand.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 					timeSeq.setFont(new Font("微软雅黑", Font.PLAIN, 18));
@@ -780,7 +779,11 @@ public class StepThreeLeftButton extends JPanel{
 					}
 					else if(mainFrame.getStepThreeChoosePattern().getselectString().equals("自定义测试用例个数生成"))
 					{
+						
 						stepThree = 10;
+						int minCase = mainFrame.getTimeSeqOperation1().getMinSeq();
+						mainFrame.getTimeCaseOperation1().getTextField().setText(String.valueOf(minCase));
+						
 						mainFrame.getOutputinformation().setVisible(true);
 						mainFrame.getReduceOrEnlargePanel().setVisible(true);
 						mainFrame.getpanel().setVisible(true);

@@ -196,6 +196,42 @@ public abstract class SegmentedLineEdge extends ShapeEdge
      */
     public void setMiddleLabel(String newValue)
     {
+    	
+//    	if(endLabel.equals("extend"))
+//    	{
+//    		if(newValue != null)
+//    		{
+//        	if(newValue.trim().equals("?extend?") && newValue.trim().equals("«extend»") )
+//        	{
+//        		newValue = "«extend»";
+//        	}
+//        	else {
+//        		   if(newValue.trim().length() > 8){
+//        			   if(newValue.trim().substring(0, 8) == "?extend?" || newValue.trim().substring(0, 8).equals("«extend»"))
+//               		{
+//               			newValue.replace("?extend?", "«extend»");
+//               		}
+//        		   }
+//        		   else {
+//        			   newValue = "«extend»" + " " + newValue;
+//				}
+//    		}
+//    		}
+//        	else {
+//    			newValue = "«extend»" + " " + newValue;
+//    		}
+//    	}
+//    	if(endLabel != null)
+//    	{
+//    		if(endLabel.contains("EXTEND"))
+//    		{
+//    			if( newValue != "《EXTEND》" && !newValue.contains("《EXTEND》"))
+//    			{
+//    				newValue = "《EXTEND》" + newValue;
+//    			}
+//    		}
+//    	}
+    	
         middleLabel = newValue;
     }
 
@@ -252,6 +288,7 @@ public abstract class SegmentedLineEdge extends ShapeEdge
         drawString(g2, (Point2D) points.get(points.size() - 2), (Point2D) points.get(points.size() - 1), getEndArrowHead(),
                 endLabel, false);
         g2.setColor(oldColor);
+        
     }
 
     /**
@@ -502,9 +539,10 @@ public abstract class SegmentedLineEdge extends ShapeEdge
     private ArrowHead endArrowHead;
     
     private BentStyle bentStyle;
-    @XStreamOmitField
+   
     private String startLabel;
     private String middleLabel;
+    
     @XStreamOmitField
     private String endLabel;
 

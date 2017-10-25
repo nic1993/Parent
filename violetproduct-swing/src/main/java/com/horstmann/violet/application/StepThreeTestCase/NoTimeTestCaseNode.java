@@ -64,6 +64,9 @@ public class NoTimeTestCaseNode extends JLabel{
 				mainFrame.getStepThreeNoTimeTabbedPane().repaint();
 				mainFrame.getNoTimeCaseOperation().getTopLabel().removeAll();
 				mainFrame.getNoTimeCaseOperation().getTopLabel().setText(((NoTimeTestCaseNode)e.getSource()).getQuota());
+				
+				mainFrame.getNoTimeCaseOperation1().getTopLabel().removeAll();
+				mainFrame.getNoTimeCaseOperation1().getTopLabel().setText(((NoTimeTestCaseNode)e.getSource()).getQuota());
 //			}
 			for(NoTimeTestCaseNode noTimeTestCaseLabel : mainFrame.getStepThreeLeftButton().getNoTimeCaseNodePanel().getTestCaseNodeLabels())
 			{
@@ -72,7 +75,6 @@ public class NoTimeTestCaseNode extends JLabel{
 			((NoTimeTestCaseNode)e.getSource()).setFont(new Font("ËÎÌו", Font.BOLD, 16));
 			mainFrame.renewPanel();
     		}
-    	
 		});
     }
    

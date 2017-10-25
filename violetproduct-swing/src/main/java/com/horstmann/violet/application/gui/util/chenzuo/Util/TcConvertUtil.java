@@ -294,7 +294,8 @@ public class TcConvertUtil {
 					// 功能、性能
 					switch (Integer.valueOf(r[0])) {
 					case 1:
-						exeState = "测试用例有误,无法对应到执行程序，且测试耗时:" + r[1] + " ms [不准确]";
+//						exeState = "测试用例有误,无法对应到执行程序，且测试耗时:" + r[1] + " ms [不准确]";
+						exeState = "测试耗时:" + r[1] + " ms";
 						break;
 					case 2:
 						exeState = "测试耗时:" + r[1] +" ms";
@@ -321,15 +322,15 @@ public class TcConvertUtil {
 			 */
 			String result = "";
 			// 时间约束
-			if (type == "Time") {
-				result = stringRegEx(s, "resultStatus:([\\s|\\S]*?)]").get(0).split(":")[1];
-				if (result == "3") {
-					result = "程序出现出现死循环或者抛出异常!";
-				} else {
-					testCaseResult.setTimeLimit(timeStatistics(result));
-				}
-
-			} else {
+//			if (type == "Time") {
+//				result = stringRegEx(s, "resultStatus:([\\s|\\S]*?)]").get(0).split(":")[1];
+//				if (result == "3") {
+//					result = "程序出现出现死循环或者抛出异常!";
+//				} else {
+//					testCaseResult.setTimeLimit(timeStatistics(result));
+//				}
+//
+//			} else {
 				// 功能性能
 				t = stringRegEx(s, "resultStatus:([\\s|\\S]*?)]").get(0);
 				if (!t.contains(":")) {
@@ -342,9 +343,9 @@ public class TcConvertUtil {
 						break;
 					}
 				} else {
-					result = "测试执行成功!耗时:" + t.split(":")[1]+" ms";
+					result = "测试执行成功!";
 				}
-			}
+//			}
 
 			testCaseResult.setResultDetail(result);
 			testCase.setResult(testCaseResult);

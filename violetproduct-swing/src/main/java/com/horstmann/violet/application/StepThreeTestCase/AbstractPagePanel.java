@@ -85,8 +85,7 @@ public class AbstractPagePanel extends JPanel{
 		
 		first.setIcon(new ImageIcon("resources/icons/16x16/first.png"));
 		firstPanel.setPreferredSize(new Dimension(30, 23));
-		firstPanel.setLayout(new BorderLayout());
-		firstPanel.add(first,BorderLayout.CENTER);
+		firstPanel.add(first);
 		first.setPreferredSize(new Dimension(25, 18));
 		first.addMouseListener(new MouseAdapter() {
 			@Override
@@ -171,7 +170,7 @@ public class AbstractPagePanel extends JPanel{
 		pagePanel.add(linePanel, new GBC(0, 0,6,1).setFill(GBC.BOTH).setWeight(1, 0));
 		pagePanel.add(gapPanel, new GBC(0, 1,1,1).setFill(GBC.BOTH).setWeight(1, 0).setInsets(5, 0, 5, 0));
 		pagePanel.add(firstPanel, new GBC(1, 1,1,1).setFill(GBC.BOTH).setWeight(0, 0).setInsets(5));
-		pagePanel.add(previousPanel, new GBC(2, 1,1,1).setFill(GBC.BOTH).setWeight(0, 0).setInsets(5, 0, 5, 5));
+		pagePanel.add(previousPanel, new GBC(2, 1,1,1).setFill(GBC.BOTH).setWeight(0, 0).setInsets(6, 0, 5, 5));
 		pagePanel.add(pageTestField, new GBC(3, 1,1,1).setFill(GBC.BOTH).setWeight(0, 0).setInsets(5, 0, 5, 5));
 		pagePanel.add(nextPanel, new GBC(4, 1,1,1).setFill(GBC.BOTH).setWeight(0, 0).setInsets(8, 0, 5, 0));
 		pagePanel.add(lastPanel, new GBC(5, 1,1,1).setFill(GBC.BOTH).setWeight(0, 0).setInsets(5, 0, 5, 10));

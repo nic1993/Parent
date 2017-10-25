@@ -43,6 +43,9 @@ public class ConGraph {
 	{
 		num=1;
 		//根据前置条件 初始化一个首状态结点;
+		//by cai
+		vertexList.clear();
+		
 		ConVertex initVertex=new ConVertex("000000","Initial",0);
 		vertexList.add(initVertex);
 		

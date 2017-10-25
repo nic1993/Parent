@@ -274,6 +274,9 @@ public class TimeSeqOperation extends JPanel{
 	   				mainFrame.getStepThreeLeftButton().getTimeModelLabel().setEnabled(true);
 	   				
 	   				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
+	   				
+	   				thread2.stop();
+	   				mainthread.stop();
 				}
 				return 1;
 			}
@@ -378,6 +381,9 @@ public class TimeSeqOperation extends JPanel{
 	   				mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(true);
 	   				
 	   				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
+	   				
+	   				thread2.stop();
+	   				mainthread.stop();
 				}
 				return 1;
 			}

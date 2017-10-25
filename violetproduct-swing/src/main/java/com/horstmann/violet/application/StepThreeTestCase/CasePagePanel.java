@@ -84,7 +84,7 @@ public class CasePagePanel extends JPanel{
 		pageTestField.setPreferredSize(new Dimension(25, 18));
 		
 		first.setIcon(new ImageIcon("resources/icons/16x16/first.png"));
-		firstPanel.setPreferredSize(new Dimension(30, 30));
+		firstPanel.setPreferredSize(new Dimension(30, 23));
 		firstPanel.setLayout(new BorderLayout());
 		firstPanel.add(first,BorderLayout.CENTER);
 		first.setPreferredSize(new Dimension(25, 18));
@@ -103,10 +103,9 @@ public class CasePagePanel extends JPanel{
 		
 		
 		previous.setIcon(new ImageIcon("resources/icons/16x16/previous.png"));
-		previousPanel.setPreferredSize(new Dimension(30, 30));
-		previousPanel.setLayout(new BorderLayout());
-		previousPanel.add(previous,BorderLayout.CENTER);
-		previous.setPreferredSize(new Dimension(25, 18));
+		previousPanel.setPreferredSize(new Dimension(30, 23));
+		previousPanel.add(previous);
+		previous.setPreferredSize(new Dimension(25, 15));
 		previous.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -122,9 +121,9 @@ public class CasePagePanel extends JPanel{
 		
 		
 		next.setIcon(new ImageIcon("resources/icons/16x16/next.png"));
-		nextPanel.setLayout(new BorderLayout());
-		nextPanel.add(next,BorderLayout.CENTER);
-		nextPanel.setPreferredSize(new Dimension(30, 30));
+		nextPanel.setPreferredSize(new Dimension(30, 27));
+		nextPanel.add(next);
+		next.setPreferredSize(new Dimension(25, 17));
 		next.setPreferredSize(new Dimension(25, 18));
 		next.addMouseListener(new MouseAdapter() {
 			@Override
@@ -140,9 +139,8 @@ public class CasePagePanel extends JPanel{
 		});
 		
 		last.setIcon(new ImageIcon("resources/icons/16x16/last.png"));
-		lastPanel.setPreferredSize(new Dimension(30, 30));
-		lastPanel.setLayout(new BorderLayout());
-		lastPanel.add(last,BorderLayout.CENTER);
+		lastPanel.setPreferredSize(new Dimension(30,23));
+		lastPanel.add(last);
 		last.setPreferredSize(new Dimension(25, 18));
 		last.addMouseListener(new MouseAdapter() {
 			@Override
@@ -175,9 +173,9 @@ public class CasePagePanel extends JPanel{
 		pagePanel.add(linePanel, new GBC(0, 0,6,1).setFill(GBC.BOTH).setWeight(1, 0));
 		pagePanel.add(gapPanel, new GBC(0, 1,1,1).setFill(GBC.BOTH).setWeight(1, 0).setInsets(5, 0, 5, 0));
 		pagePanel.add(firstPanel, new GBC(1, 1,1,1).setFill(GBC.BOTH).setWeight(0, 0).setInsets(5));
-		pagePanel.add(previousPanel, new GBC(2, 1,1,1).setFill(GBC.BOTH).setWeight(0, 0).setInsets(5, 0, 5, 5));
+		pagePanel.add(previousPanel, new GBC(2, 1,1,1).setFill(GBC.BOTH).setWeight(0, 0).setInsets(6, 0, 5, 5));
 		pagePanel.add(pageTestField, new GBC(3, 1,1,1).setFill(GBC.BOTH).setWeight(0, 0).setInsets(5, 0, 5, 5));
-		pagePanel.add(nextPanel, new GBC(4, 1,1,1).setFill(GBC.BOTH).setWeight(0, 0).setInsets(5, 0, 5, 5));
+		pagePanel.add(nextPanel, new GBC(4, 1,1,1).setFill(GBC.BOTH).setWeight(0, 0).setInsets(8, 0, 5, 5));
 		pagePanel.add(lastPanel, new GBC(5, 1,1,1).setFill(GBC.BOTH).setWeight(0, 0).setInsets(5, 0, 5, 0));
 		
 		if(list.size() % 500 == 0)

@@ -83,7 +83,8 @@ public class UseCaseDiagramGraph extends AbstractGraph
         extendRel.setBentStyle(BentStyle.STRAIGHT);
         extendRel.setLineStyle(LineStyle.DOTTED);
         extendRel.setEndArrowHead(ArrowHead.V);
-        extendRel.setMiddleLabel("\u00ABextend\u00BB");
+//        extendRel.setMiddleLabel("\u00ABextend\u00BB");
+        extendRel.setStartLabel("《EXTEND》");
         extendRel.setToolTip(rs.getString("edge1.tooltip"));
         EDGE_PROTOTYPES.add(extendRel);
 
@@ -91,7 +92,8 @@ public class UseCaseDiagramGraph extends AbstractGraph
         includeRel.setBentStyle(BentStyle.STRAIGHT);
         includeRel.setLineStyle(LineStyle.DOTTED);
         includeRel.setEndArrowHead(ArrowHead.V);
-        includeRel.setMiddleLabel("\u00ABinclude\u00BB");
+//        includeRel.setMiddleLabel("\u00ABinclude\u00BB");
+        includeRel.setStartLabel("《INCLUDE》");
         includeRel.setToolTip(rs.getString("edge2.tooltip"));
         EDGE_PROTOTYPES.add(includeRel);
 

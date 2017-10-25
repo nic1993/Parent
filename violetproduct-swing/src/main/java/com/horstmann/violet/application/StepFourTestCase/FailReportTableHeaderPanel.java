@@ -55,7 +55,7 @@ public class FailReportTableHeaderPanel extends JPanel{
 	private void initAttributePanel() {
 		// TODO Auto-generated method stub
 
-		String[] columnNames = { "","成功","失败","测试用例总数"};
+		String[] columnNames = { "","成功","失效","测试用例总数"};
 		String[][] tabelValues = {};
 
 		attributetablemodel = new DefaultTableModel(tabelValues, columnNames) {
@@ -93,8 +93,8 @@ public class FailReportTableHeaderPanel extends JPanel{
 		attributetable.getColumn("成功").setPreferredWidth(100);
 		attributetable.getColumn("成功").setMinWidth(100);
 		
-		attributetable.getColumn("失败").setPreferredWidth(100);
-		attributetable.getColumn("失败").setMinWidth(100);
+		attributetable.getColumn("失效").setPreferredWidth(100);
+		attributetable.getColumn("失效").setMinWidth(100);
 		
 		attributetable.getColumn("测试用例总数").setPreferredWidth(100);
 		attributetable.getColumn("测试用例总数").setMinWidth(100);

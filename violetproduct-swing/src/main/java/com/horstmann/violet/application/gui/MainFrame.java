@@ -344,6 +344,7 @@ public class MainFrame extends JFrame
      		listenToDiagramPanelEvents(workspace,this.getActiveModelPanel().getSequencespaceList());   		
      	    repaint();    		              
  		}    
+     	
      	if(workspace.getTitle().toString().endsWith(".markov.violet.xml")
      			||workspace.getTitle().toString().substring(2, 4).equals("Ma"))//Èç¹ûÊÇ×´Ì¬Í¼
  		{
@@ -439,7 +440,7 @@ public class MainFrame extends JFrame
  		{
      		if(this.MarkovpaceList.contains(workspace) || this.ExpandMarkovpaceList.contains(workspace) )
      		{
-     			if(title.equals("step3")){
+     			if(title.equals("step2")){
      	     		this.getStepTwoExchangeTabbedPane().getExchangeResults().removeAll();
      	     		this.getStepTwoExchangeTabbedPane().getExchangeResults()
      	     		.add(workspace.getAWTComponent(),new GBC(0,0).setWeight(1, 1).setFill(GBC.BOTH));
@@ -451,19 +452,32 @@ public class MainFrame extends JFrame
      				}
      			return;
      		}
-     		
-     		if(this.getCenterTabPanel().getComponent(0).equals(getStepTwoExchangeTabbedPane())){
-     		this.getStepTwoExchangeTabbedPane().getExchangeResults().removeAll();
-     		this.getStepTwoExchangeTabbedPane().getExchangeResults()
-     		.add(workspace.getAWTComponent(),new GBC(0,0).setWeight(1, 1).setFill(GBC.BOTH));
-     		this.MarkovpaceList.add(workspace);
-     		}
-     		else if (this.getCenterTabPanel().getComponent(0).equals(getTimeExpandTabbedPane())) {
-     			this.getTimeExpandTabbedPane().getExpandResults().removeAll();
-         		this.getTimeExpandTabbedPane().getExpandResults()
-         		.add(workspace.getAWTComponent(),new GBC(0,0).setWeight(1, 1).setFill(GBC.BOTH));
-         		this.ExpandMarkovpaceList.add(workspace);
+     		else {
+     			if(title.equals("step2")){
+     				this.getStepTwoExchangeTabbedPane().getExchangeResults().removeAll();
+     	     		this.getStepTwoExchangeTabbedPane().getExchangeResults()
+     	     		.add(workspace.getAWTComponent(),new GBC(0,0).setWeight(1, 1).setFill(GBC.BOTH));
+     	     		this.MarkovpaceList.add(workspace);
+     			}
+     			else if (title.equals("step3")) {
+     				this.getTimeExpandTabbedPane().getExpandResults().removeAll();
+             		this.getTimeExpandTabbedPane().getExpandResults()
+             		.add(workspace.getAWTComponent(),new GBC(0,0).setWeight(1, 1).setFill(GBC.BOTH));
+             		this.ExpandMarkovpaceList.add(workspace);
+				}
 			}
+//     		if(this.getCenterTabPanel().getComponent(0).equals(getStepTwoExchangeTabbedPane())){
+//     		this.getStepTwoExchangeTabbedPane().getExchangeResults().removeAll();
+//     		this.getStepTwoExchangeTabbedPane().getExchangeResults()
+//     		.add(workspace.getAWTComponent(),new GBC(0,0).setWeight(1, 1).setFill(GBC.BOTH));
+//     		this.MarkovpaceList.add(workspace);
+//     		}
+//     		else if (this.getCenterTabPanel().getComponent(0).equals(getTimeExpandTabbedPane())) {
+//     			this.getTimeExpandTabbedPane().getExpandResults().removeAll();
+//         		this.getTimeExpandTabbedPane().getExpandResults()
+//         		.add(workspace.getAWTComponent(),new GBC(0,0).setWeight(1, 1).setFill(GBC.BOTH));
+//         		this.ExpandMarkovpaceList.add(workspace);
+//			}
      		 listenToDiagramPanelEvents(workspace,MarkovpaceList);
      	    repaint();     
  		}
@@ -758,7 +772,7 @@ public class MainFrame extends JFrame
      * 
      * @param diagramPanel
      */
-    private static DefaultMutableTreeNode getKey(Map<DefaultMutableTreeNode, IWorkspace> map,IWorkspace panel)
+    public static DefaultMutableTreeNode getKey(Map<DefaultMutableTreeNode, IWorkspace> map,IWorkspace panel)
     {
     	Iterator<DefaultMutableTreeNode> it = map.keySet().iterator();
     	while (it.hasNext()) {

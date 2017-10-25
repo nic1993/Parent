@@ -237,7 +237,7 @@ public class MultiLineString implements Serializable, Cloneable {
 	public static final int SMALL = 5;
 
 	private String text;
-	@XStreamOmitField
+//	@XStreamOmitField
 	private int justification;
 	@XStreamOmitField
 	private int size;

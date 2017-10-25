@@ -160,6 +160,8 @@ public class StepTwoEvaluateOperation extends JPanel{
 				Thread.sleep(200);
 				//首先添加归一性信息
 				worker = mainFrame.getStepTwoModelOperation().getWorker();
+				
+				
 				list = worker.transVerify(); 
 				
 				StepTwoTabelPanel stepTwoTabelPanel = new StepTwoTabelPanel();
@@ -209,15 +211,7 @@ public class StepTwoEvaluateOperation extends JPanel{
 				
 				//确定性信息
 				List<InterfaceIsogenySD> IISDList = mainFrame.getStepTwoModelOperation().getIISDList();
-//				System.out.println("模型评估====================");
-//				for(InterfaceIsogenySD interfaceIsogenySD : IISDList)
-//				{
-//					System.out.println(interfaceIsogenySD.getUcName() + "用例场景个数: " + interfaceIsogenySD.getISDList().size());
-//					for(InterfaceSD interfaceSD : interfaceIsogenySD.getISDList())
-//					{
-//						System.out.println("场景名称： " + interfaceSD.getName());
-//					}
-//				}
+
 				for(InterfaceIsogenySD interfaceIsogenySD : IISDList)
 				{
 					List<InterfaceSD> ISDList = interfaceIsogenySD.getISDList();
@@ -297,6 +291,7 @@ public class StepTwoEvaluateOperation extends JPanel{
 					nameList.add("Initial");
 					for(InterfaceIsogenySD interfaceIsogenySD : IISDList)
 					{
+						System.out.println("ucName: " + interfaceIsogenySD.getUcName());
 						nameList.add(interfaceIsogenySD.getUcName());
 					}
 					nameList.add("Exit");
@@ -334,6 +329,8 @@ public class StepTwoEvaluateOperation extends JPanel{
 					
 					mainFrame.getStepTwoModelOperation().getStartExpandButton().setEnabled(true);
 					mainFrame.getStepTwoCaseOperation().getStartExpandButton().setEnabled(true);
+					
+					list.clear();
 				}
 				else if(ispolarity == true && isconfirm == true && isreachable == true)
                 {
@@ -355,8 +352,12 @@ public class StepTwoEvaluateOperation extends JPanel{
     				mainFrame.getsteponeButton().getExpandCaseModel().setEnabled(true);
     				mainFrame.getStepTwoExpand().getExchangeLabel().setEnabled(true);	
     				mainFrame.renewPanel();
+    				
+    				list.clear();
                 }
                 
+				
+				
 				return 1;
 			}
 			
@@ -380,7 +381,6 @@ public class StepTwoEvaluateOperation extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				System.out.println("before: " + mainthread.isAlive());
 				if(!isAlive){
 					reEvaluateButton.setText("停止评估");
 					mainthread.resume();
@@ -394,6 +394,8 @@ public class StepTwoEvaluateOperation extends JPanel{
 			}
 		});
        }
+       
+      
     //添加路径   
     public StepTwoMatrixPanel getRoute(Map<?,?> prePath,String title) {
     	StepTwoMatrixPanel stepTwoTabelPanel = new StepTwoMatrixPanel();
@@ -404,6 +406,7 @@ public class StepTwoEvaluateOperation extends JPanel{
     	for(Object en:prePath.keySet())
 		{
     		StepTwoMatrixPanel stepTwoMatrixPanel = new StepTwoMatrixPanel();
+    		
     		stepTwoMatrixPanel.getTitleLabel().setText(en.toString());
     		
     		RoutePanel routePanel = new RoutePanel(mainFrame);

@@ -53,13 +53,18 @@ public class readUseCaseXMLFromEA{
 				an.setName(element.attributeValue("name"));
 				nodeList.add(an);
 			}else if(type.toString().equals("uml:Association")){
+				
 				Edge edge=new Edge();
 				edge.setType(type);
 				edge.setId(element.attributeValue("id"));
 				if(element.attributeValue("name") != null)
-				edge.setName(element.attributeValue("name")); 
+				{
+					String name = element.attributeValue("name");
+					edge.setName(name); 
+				}
+				
 				else {
-					edge.setName(element.attributeValue("type"));
+					edge.setName("");
 				}
 				edgeList.add(edge);	
 			}
@@ -74,8 +79,25 @@ public class readUseCaseXMLFromEA{
 				edge.setId(conn.attributeValue("idref"));
 				Element labels = conn.element("labels");
 
-				edge.setName(labels.attributeValue("mb")); //后期修改
-				edge.setType(labels.attributeValue("mb"));
+				if(labels.attributeValue("mb").contains("include"))
+				{
+					edge.setType("《INCLUDE》");
+				}
+				else if(labels.attributeValue("mb").contains("extend")){
+					edge.setType("《EXTEND》");
+				}
+
+				if(labels.attributeValue("mt") != null)
+				{
+					String name = labels.attributeValue("mt");
+					
+					edge.setName(name);
+				}
+				else if(labels.attributeValue("mt") == null){
+					edge.setName(" ");
+				}
+				
+//				edge.setName(labels.attributeValue("mb")); //后期修改
 				edgeList.add(edge);
 			}	
 			

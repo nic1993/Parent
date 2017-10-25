@@ -98,7 +98,7 @@ public class NoTimeCaseOperation extends JPanel{
    	   
    	   private BigDecimal bigDecimal;
    	   private DecimalFormat  df = new DecimalFormat();
-	   private String pattern = "#0.000";
+	   private String pattern = "#0.000000";
 	   
 	   private String ModelName;
 	   private String NoTimeMarkovRoute;
@@ -304,7 +304,7 @@ public class NoTimeCaseOperation extends JPanel{
 	   				progressBarIndex = 0;
 					
 	   				topLabel.removeAll();
-					topLabel.setText("正在生成测试数据信息........");
+					topLabel.setText("正在生成测试数据信息.....");
 					
 					Calculate.getAllTransValues(markov);
 					for (int i = 0; i < gc.testCasesExtend.size(); i++) {
@@ -324,6 +324,10 @@ public class NoTimeCaseOperation extends JPanel{
 						// TODO: handle exception
 	   					topLabel.removeAll();
 	   					topLabel.setText(e.getLocalizedMessage());
+	   					
+	   					mainthread.interrupt();
+	   					thread1.interrupt();
+	   					thread2.interrupt();
 	   					
 	   					button.setEnabled(true);
 	   	   				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);

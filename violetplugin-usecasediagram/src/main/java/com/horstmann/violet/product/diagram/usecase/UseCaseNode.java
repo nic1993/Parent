@@ -56,7 +56,7 @@ public class UseCaseNode extends EllipticalNode
         sceneConstraint = new SceneConstraint();      
     }
     
-
+    
     @Override
     public Rectangle2D getBounds()
     {
@@ -108,6 +108,8 @@ public class UseCaseNode extends EllipticalNode
 
         // Restore first color
         g2.setColor(oldColor);
+        
+        
     }
 
     /**

@@ -113,14 +113,14 @@ public class CreateUseCaseDiagramVioletXml {
 						UseCaseRelationshipEdge.addElement("lineStyle").addAttribute("id", bentid+"").addAttribute("name", "SOLID");
 						UseCaseRelationshipEdge.addElement("startArrowHead").addAttribute("id", bentid+1+"").addAttribute("name", "NONE");
 					}
-					if(edge.getName().contains("extend"))
+					if(edge.getType().contains("EXTEND"))
 					{
 						UseCaseRelationshipEdge.addElement("lineStyle").addAttribute("id", bentid+"").addAttribute("name", "DOTTED");
 						UseCaseRelationshipEdge.addElement("startArrowHead").addAttribute("id", bentid+1+"").addAttribute("name", "NONE");
 						UseCaseRelationshipEdge.addElement("endArrowHead").addAttribute("id", bentid+2+"").addAttribute("name", "V");
 						
 					}
-					if(edge.getName().contains("include"))
+					if(edge.getType().contains("INCLUDE"))
 					{
 						UseCaseRelationshipEdge.addElement("lineStyle").addAttribute("id", bentid+"").addAttribute("name", "DOTTED");
 						UseCaseRelationshipEdge.addElement("startArrowHead").addAttribute("id", bentid+1+"").addAttribute("name", "NONE");
@@ -128,6 +128,7 @@ public class CreateUseCaseDiagramVioletXml {
 					}
 					UseCaseRelationshipEdge.addElement("bentStyle").addAttribute("id", k+4+"").addAttribute("name", "STRAIGHT");
 					UseCaseRelationshipEdge.addElement("middleLabel").addText(edge.getName());
+					UseCaseRelationshipEdge.addElement("startLabel").addText(edge.getType());
 					k=k+4;
 
 			}	

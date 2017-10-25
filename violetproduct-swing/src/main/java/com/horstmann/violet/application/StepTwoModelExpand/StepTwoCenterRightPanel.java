@@ -243,8 +243,7 @@ public class StepTwoCenterRightPanel extends JPanel{
 						if(mainFrame.getStepTwoExchangeTabbedPane().getExchangeResults().getComponentCount() != 0)
 		        		{
 		        			setNodeTextMap(mainFrame.getStepTwoExchangeOperation().getNodeTextMap());
-		        			setEdgeTextMap(mainFrame.getStepTwoExchangeOperation().getEdgeTextMap());
-		        			
+		        			setEdgeTextMap(mainFrame.getStepTwoExchangeOperation().getEdgeTextMap());	
 		        		}
 					}
 					else if (mainFrame.getCenterTabPanel().getComponent(0).equals(mainFrame.getTimeExpandTabbedPane())) {

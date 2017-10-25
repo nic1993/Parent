@@ -13,7 +13,7 @@ public class TestCase implements Serializable{
 	 */
 	private static final long serialVersionUID = 7785205898142381116L;
 	//ID
-	String  testCaseID;
+	String testCaseID;
 	//list of process
 	List<myProcess> processList;
 	//state of testcase

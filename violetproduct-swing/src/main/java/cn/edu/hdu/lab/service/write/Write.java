@@ -242,16 +242,11 @@ public class Write {
 						owne.setText("null");
 					}
 					
-					if(transition.getTransFlag().getAssignValue()!=null&&!"".equals(transition.getTransFlag().getAssignValue().trim()))
-					{
-						Element assignValue=arc.addElement("assignValue");
-						assignValue.setText(transition.getTransFlag().getAssignValue());
-					}
-					if(transition.getTransFlag().getAssignType()!=null&&!"".equals(transition.getTransFlag().getAssignType().trim()))
-					{
-						Element assignType=arc.addElement("assignType");
-						assignType.setText(transition.getTransFlag().getAssignType());
-					}
+//					if(transition.getTransFlag().getAssignValue()!=null&&!"".equals(transition.getTransFlag().getAssignValue().trim()))
+//					{
+//						Element assignValue=arc.addElement("assignValue");
+//						assignValue.setText(transition.getTransFlag().getAssignValue());
+//					}
 					
 					if(transition.getTransFlag().getStimulate()!=null && transition.getTransFlag().getStimulate().getTimeConstraints().size()>0)
 					{
@@ -353,6 +348,8 @@ public class Write {
 		if(isTime == true)
 		{
 			 FileName =mainFrame.getBathRoute()+"/TimeMarkov/"+fileName;
+			 
+			 
 		}
 		else {
 			 FileName =mainFrame.getBathRoute()+"/NoTimeMarkov/"+fileName;

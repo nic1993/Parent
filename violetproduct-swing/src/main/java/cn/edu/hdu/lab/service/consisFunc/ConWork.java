@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 import cn.edu.hdu.lab.dao.condao.ConGraph;
 import cn.edu.hdu.lab.dao.condao.ConSD;
 import cn.edu.hdu.lab.dao.condao.ConUseCase;
+import cn.edu.hdu.lab.dao.condao.ConVertex;
 import cn.edu.hdu.lab.dao.tmc.Tmc;
 import cn.edu.hdu.lab.dao.uml.UseCase;
 import cn.edu.hdu.lab.service.parserEA.InvalidTagException;
@@ -39,6 +40,7 @@ public class ConWork {
 		3.用例前置条件是用例下所有场景的前置条件
 		 * */	
 		//软件必然执行结束
+		
 		ConGraph tempGraph=new ConGraph(conUseCases);
 		System.out.println("邻接矩阵节点数："+tempGraph.getNum());
 		tempGraph.printGraph();
@@ -71,7 +73,6 @@ public class ConWork {
 			}
 			if(Sprob < 0.998 || Sprob > 1.002)
 			{
-				System.out.println("Sprob: " + Sprob);
 				verifyReList.add(false);
 				verifyReList.add("'序列图概率归一' 验证不通过！");
 				return verifyReList;
@@ -83,6 +84,8 @@ public class ConWork {
 	     * 图的遍历算法
 	     *---////弗洛伊德||迪杰斯特拉
 	     */
+		
+		
 		ConGraph graph=new ConGraph(conUseCases);
 		//graph.printGraph();
 		/*
@@ -176,17 +179,25 @@ public class ConWork {
 	private Map<String,List<String>> obtainPrePath(ConGraph graph)
 	{
 		System.out.println("…………………………………………获取路径………………………………");
+		
+		for(ConVertex conVertex : graph.getVertexList())
+		{
+			System.out.println("++++++: " + conVertex.getName());
+		}
+		
 		Map<String,List<String>> prePathMap=new HashMap<String,List<String>>();
 		for(int i=1;i<graph.getNum()-1;i++)
 		{
 			List<String> prePath=new ArrayList<String>();
 			boolean[] visited=new boolean[graph.getNum()];//默认为false 
 			
+			
 			List<Integer> pathNums=new ArrayList<Integer>();
 			pathNums.add(0);
 			pathNums.addAll(searchPath(graph,visited,0,i));
 			for(int k=0;k<pathNums.size();k++)
 			{
+				System.out.println("uc :  " + graph.getVertexList().get(pathNums.get(k)).getName());
 				prePath.add(graph.getVertexList().get(pathNums.get(k)).getName());
 			}
 			prePathMap.put(graph.getVertexList().get(i).getName(),prePath);
@@ -197,6 +208,8 @@ public class ConWork {
 		{
 			System.out.println(prePathMap.get(en).toString());
 		}*/
+		
+		
 		return prePathMap;
 	}
 	

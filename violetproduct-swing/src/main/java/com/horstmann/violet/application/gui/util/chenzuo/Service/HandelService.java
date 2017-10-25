@@ -71,10 +71,44 @@ public class HandelService implements Callable {
         return false;
     }
 
+    
+    //send compilefiles by cai
+    public void sendcompilefile()
+    {
+    	try {
+            dos = new DataOutputStream(socket.getOutputStream());
+            //send compile file by cai
+            File[] compilefiles = null;
+            if(node.getType().equals("Time"))
+            {
+            	compilefiles = new File("resources/Time/obj").listFiles();
+            	 for(File compile : compilefiles)
+                 {
+                 	scpclient.putFile(compile.getAbsolutePath(), compile.getName(), FileUtil.COMPILE_TIME_PATH, null);
+                 }
+            }
+            else {
+            	compilefiles = new File("resources/Coptermaster/obj").listFiles();
+            	 for(File compile : compilefiles)
+                 {
+                 	scpclient.putFile(compile.getAbsolutePath(), compile.getName(), FileUtil.COMPILE_COP_PATH, null);
+                 }
+			}
+            
+           
+
+            ResultService.list.removeAll(ResultService.list);
+            Constants.ISFINISH.set(false);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
     // send xml files
     public void send() {
         try {
             dos = new DataOutputStream(socket.getOutputStream());
+            
             for (File f : files) {
                 //send file
                 scpclient.putFile(f.getAbsolutePath(), f.getName(), FileUtil.REMOTE_TC_PATH, null);
@@ -151,6 +185,8 @@ public class HandelService implements Callable {
     		// 1.create connection
             boolean isCon = connection();
             if (isCon) {
+            	sendcompilefile();
+            	
                 // 2.send data
                 send();
 

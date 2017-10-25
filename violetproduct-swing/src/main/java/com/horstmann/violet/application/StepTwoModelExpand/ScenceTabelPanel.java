@@ -251,11 +251,14 @@ public class ScenceTabelPanel extends JPanel implements Cloneable{
         	   public void setValue(Object value) { //重写setValue方法，从而可以动态设置列单元字体颜色      
                     if(value.toString().contains("true"))
                     {
-                    	setForeground(Color.red);
+                    	setBackground(Color.red);
+//                    	setForeground(Color.red);
+                    	
                     	setText((value == null) ? "" : value.toString().replace("true", ""));  
                     }
                     else{
-                    	setForeground(Color.black);  
+//                    	setForeground(Color.black);  
+                    	setBackground(Color.white);
                         setText((value == null) ? "" : value.toString());  
                     }
                }   

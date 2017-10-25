@@ -91,6 +91,7 @@ public class RoutePanel extends JPanel{
     				}
 				}
     			table.repaint();
+    			
     			//获得路径并标红
     			for(int i = 1;i < routes.length;i++)
     			{

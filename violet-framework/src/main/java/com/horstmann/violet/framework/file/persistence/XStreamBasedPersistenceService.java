@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.util.Collection;
 import java.util.List;
 
@@ -22,7 +23,12 @@ import com.horstmann.violet.product.diagram.abstracts.property.ArrowHead;
 import com.horstmann.violet.product.diagram.abstracts.property.BentStyle;
 import com.horstmann.violet.product.diagram.abstracts.property.LineStyle;
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.core.util.QuickWriter;
+import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
+import com.thoughtworks.xstream.io.naming.NoNameCoder;
 import com.thoughtworks.xstream.io.xml.DomDriver;
+import com.thoughtworks.xstream.io.xml.PrettyPrintWriter;
+import com.thoughtworks.xstream.io.xml.XppDriver;
 
 @ManagedBean(registeredManually=true)
 public class XStreamBasedPersistenceService implements IFilePersistenceService {
@@ -55,7 +61,39 @@ public class XStreamBasedPersistenceService implements IFilePersistenceService {
 	public void write(IGraph graph, OutputStream out) {
 		try {
 			OutputStreamWriter writer = new OutputStreamWriter(out);
-			XStream xStream = new XStream(new DomDriver("UTF-8"));
+			
+//			XStream xStream = new XStream(new Dœ»omDriver("UTF-8"));
+			XStream xStream = new XStream(new XppDriver(new NoNameCoder()) {    
+	            @Override  
+	            public HierarchicalStreamWriter createWriter(Writer out) {  
+	                return new PrettyPrintWriter(out) {  
+	                    boolean cdata = true;  
+	                    @Override  
+	                    @SuppressWarnings("rawtypes")  
+	                    public void startNode(String name, Class clazz) {  
+	                        super.startNode(name, clazz);  
+	                    }  
+	  
+	                    @Override  
+	                    public String encodeNode(String name) {  
+	                        return name;  
+	                    }  
+	  
+	  
+	                    @Override         
+	                    protected void writeText(QuickWriter writer, String text) {  
+	                        if (cdata) {  
+	                            writer.write("<![CDATA[");  
+	                            writer.write(text);  
+	                            writer.write("]]>");  
+	                        } else {  
+	                            writer.write(text);  
+	                        }  
+	                    }  
+	                };  
+	            }  
+	        });  
+			
 			xStream = getConfiguredXStream(xStream);
 			xStream.toXML(graph, writer);			
 			writer.close();

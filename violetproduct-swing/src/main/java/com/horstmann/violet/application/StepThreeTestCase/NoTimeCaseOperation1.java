@@ -105,7 +105,7 @@ public class NoTimeCaseOperation1 extends JPanel {
 
 	private BigDecimal bigDecimal;
 	private DecimalFormat df = new DecimalFormat();
-	private String pattern = "#0.0000";
+	private String pattern = "#0.0000000";
 
 	private String ModelName;
 	private String NoTimeMarkovRoute;
@@ -152,6 +152,7 @@ public class NoTimeCaseOperation1 extends JPanel {
 		label2.setFont(new Font("宋体", Font.PLAIN, 16));
 
 		progressBar.setUI(new ProgressUI(progressBar, Color.green));
+		progressBar.setMinimumSize(new Dimension(800, 30));
 		progressBar.setPreferredSize(new Dimension(800, 30));
 		progressBar.setUI(new GradientProgressBarUI());
 		progressBar.setValue(0);
@@ -496,7 +497,7 @@ public class NoTimeCaseOperation1 extends JPanel {
 						casePagePanel.getCasePanel().add(testTabelPanel,
 								new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
 						i++;
-						progressBar.setValue(60 + (int) (((double) i / 500) * 40));
+						progressBar.setValue(61 + (int) (((double) i / 500) * 40));
 						Thread.sleep(10);
 						mainFrame.renewPanel();
 					}
@@ -519,6 +520,11 @@ public class NoTimeCaseOperation1 extends JPanel {
 					topLabel.setText("测试用例生成完成, 共生成" + minSeq + "条!" + "可靠性测试用例数据库覆盖率:"
 							+ df.format(markov.getDbCoverage()) + "  可靠性测试用例生成比率与使用模型实际使用概率平均偏差:" + df.format(d));
 
+					
+	                mainFrame.getOutputinformation().geTextArea().append("指标:可靠性测试用例数据库覆盖率 = 覆盖的马尔可夫链路径/总的马尔可夫链路径" + "\n");
+					int length = mainFrame.getOutputinformation().geTextArea().getText().length(); 
+	                mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
+					
 					NoTimeTestCaseNode noTimeTestCaseLabel = new NoTimeTestCaseNode(ModelName + "_自定义", mainFrame);
 					quota = "测试用例生成完成, 共生成" + minSeq + "条!" + "可靠性测试用例数据库覆盖率:" + df.format(markov.getDbCoverage())
 							+ "  可靠性测试用例生成比率与使用模型实际使用概率平均偏差:" + df.format(d);

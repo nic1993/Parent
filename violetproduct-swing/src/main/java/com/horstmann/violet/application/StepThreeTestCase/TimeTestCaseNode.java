@@ -43,19 +43,20 @@ public class TimeTestCaseNode extends JLabel{
     			// TODO Auto-generated method stub
 			mainFrame.getCenterTabPanel().removeAll();
 			mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeTimeTabbedPane());
+			
 			mainFrame.getStepThreeTimeTabbedPane().getTestData().removeAll();
 			mainFrame.getStepThreeTimeTabbedPane().getTestData().setLayout(new GridLayout());
 			mainFrame.getStepThreeTimeTabbedPane().getTestData().add(casePagePanel);
 			mainFrame.getStepThreeTimeTabbedPane().repaint();
 			
-			if(quota.contains("可靠性测试用例数据库覆盖率:")){
+//			if(quota.contains("可靠性测试用例数据库覆盖率:")){
 				mainFrame.getTimeCaseOperation1().getTopLabel().removeAll();
 				mainFrame.getTimeCaseOperation1().getTopLabel().setText(((TimeTestCaseNode)e.getSource()).getQuota());
-			}
-			else {
+//			}
+//			else {
 				mainFrame.getTimeCaseOperation().getTopLabel().removeAll();
 				mainFrame.getTimeCaseOperation().getTopLabel().setText(((TimeTestCaseNode)e.getSource()).getQuota());
-			}
+			
 			
 			for(TimeTestCaseNode TimeTestCaseLabel : mainFrame.getStepThreeLeftButton().getTimeCaseNodePanel().getTestCaseNodeLabels())
 			{

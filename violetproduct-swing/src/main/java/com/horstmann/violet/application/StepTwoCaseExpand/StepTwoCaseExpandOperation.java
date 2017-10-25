@@ -398,16 +398,21 @@ public class StepTwoCaseExpandOperation extends JPanel{
 					if(isFinish == false)
 					{
 						toplabel.removeAll();
-						toplabel.setText("对"+Model_Name+"用例扩展验证不通过,请重新填写扩展矩阵!");
+						toplabel.setText("对"+Model_Name+"场景扩展验证不通过,请重新填写扩展矩阵!");
 						mainFrame.getStepTwoExpand().getEstimateLabel().setEnabled(false);
 						mainFrame.getStepTwoExpand().getExpandCasePanel().repaint();
+						
+						startExpandButton.setEnabled(true);
+						mainFrame.getsteponeButton().getExpandModelLabel().setEnabled(true);
+						
 					}
 					else {
 //						caseTabelMap.put(Model_Name, scenceTabelPanel);
 						
 						toplabel.removeAll();
-						toplabel.setText("对"+Model_Name+"用例扩展验证完成,可以对该模型进行一致性验证!");
+						toplabel.setText("对"+Model_Name+"场景扩展验证完成,可以对该模型进行一致性验证!");
 						mainFrame.getStepTwoExpand().getEstimateLabel().setEnabled(true);
+						mainFrame.getStepTwoEvaluateOperation().getEvaluateButton().setEnabled(true);
 						
 						worker.assignmentPro(IISDList);
 						ExpandNodeLabel expandNodeLabel = new ExpandNodeLabel(Model_Name,mainFrame);
@@ -419,7 +424,6 @@ public class StepTwoCaseExpandOperation extends JPanel{
     					{
     						for(InterfaceSD interfaceSD : interfaceIsogenySD.getISDList())
     						{
-    							System.out.println(interfaceSD + "场景概率: " + interfaceSD.getPro());
     							
     							mainFrame.getOutputinformation().geTextArea().append(interfaceSD.getName() + "场景概率: " + interfaceSD.getPro() + "\n");
     	    					int length = mainFrame.getOutputinformation().geTextArea().getText().length(); 
@@ -499,12 +503,12 @@ public class StepTwoCaseExpandOperation extends JPanel{
 					stepTwoCaseExpandTabbedPane.getCaseExpandPanel().updateUI();
 					startVerificationButton.setEnabled(true);
 					toplabel.removeAll();
-					toplabel.setText(Model_Name+"用例模型进行扩展,填写矩阵即对同源场景进行两两对比打分,填写完成后进行验证!");	
+					toplabel.setText(Model_Name+"用例模型进行场景扩展,填写矩阵即对同源场景进行两两对比打分,填写完成后进行验证!");	
 					if(isNeedExpand == false)
 					{
 						stepTwoCaseExpandTabbedPane.getCaseExpandPanel().removeAll();
 						toplabel.removeAll();
-						toplabel.setText(Model_Name+"模型不需要进行用例扩展，可以直接进行验证"); 
+						toplabel.setText(Model_Name+"模型不需要进行场景扩展，可以直接进行验证"); 
 					}
 					mainFrame.getStepTwoCaseExpandTabbedPane().setSelectedIndex(0);
 					mainFrame.getStepTwoCaseExpandTabbedPane().getValidationResults().removeAll();

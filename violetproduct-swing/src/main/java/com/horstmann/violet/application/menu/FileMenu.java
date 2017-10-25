@@ -624,11 +624,14 @@ public class FileMenu extends JMenu
    							usecasetree.makeVisible(path);
    						}
    						usecasetree.getSelectionModel().setSelectionPath(new TreePath(node.getPath()));
-   						Map<DefaultMutableTreeNode, IWorkspace> hashMap = mainFrame.getActiveModelPanel().getUsecaseTreePanel().getHashMap();
+//   						Map<DefaultMutableTreeNode, IWorkspace> hashMap = mainFrame.getActiveModelPanel().getUsecaseTreePanel().getHashMap();
+   						
    						int length = mainFrame.getActiveModelPanel().getUseCaseworkspaceList().size()-1;
-   						hashMap.put(node, mainFrame.getActiveModelPanel().getUseCaseworkspaceList().get(length));
-
+   						
+   						mainFrame.getActiveModelPanel().getUsecaseTreePanel().getHashMap().put(node, mainFrame.getActiveModelPanel().getUseCaseworkspaceList().get(length));
+   						DefaultMutableTreeNode rootnode = mainFrame.getKey(mainFrame.getActiveModelPanel().getUsecaseTreePanel().getHashMap(), mainFrame.getActiveModelPanel().getUseCaseworkspaceList().get(length));
 						
+   						
    						//切换界面
    						mainFrame.getStepOperationButton().getPromptLabel().setText("用例图是指由参与者（Actor）、用例（Use Case）以及它们之间的关系构成的用于描述系统功能的视图。");
    						mainFrame.getOpreationPart().validate();
@@ -650,13 +653,13 @@ public class FileMenu extends JMenu
                  if(filename.contains(".ucase.violet.xml")){
                  	String name = filename.replace(".ucase.violet.xml", "");
                		path=mainFrame.getBathRoute()+"/UseCaseDiagram/VioletXML/";
-               		graphFile.AutoSave(selectedFile, path);
+//               		graphFile.AutoSave(selectedFile, path);
                		workspace.setName(name);
                		mainFrame.addTabbedPane(workspace);
 
-               	   JTree usecasetree = mainFrame.getActiveModelPanel().getUsecaseTreePanel().getUsecasetree();
+               	    JTree usecasetree = mainFrame.getActiveModelPanel().getUsecaseTreePanel().getUsecasetree();
                      DefaultTreeModel usecasetreemodel = mainFrame.getActiveModelPanel().getUsecaseTreePanel().getUsecasetreemodel();
-                  	DefaultMutableTreeNode usecasetreerootnode = mainFrame.getActiveModelPanel().getUsecaseTreePanel().getUsecasetreerootnode();                        
+                  	 DefaultMutableTreeNode usecasetreerootnode = mainFrame.getActiveModelPanel().getUsecaseTreePanel().getUsecasetreerootnode();                        
 						DefaultMutableTreeNode node=new DefaultMutableTreeNode(name);
 						usecasetreemodel.insertNodeInto(node, usecasetreerootnode, usecasetreerootnode.getChildCount());
 						Collection<INode> nodes = graphFile.getGraph().getAllNodes();
@@ -1111,7 +1114,9 @@ public class FileMenu extends JMenu
           						Map<DefaultMutableTreeNode, IWorkspace> hashMap = mainFrame.getActiveModelPanel().getUsecaseTreePanel().getHashMap();
           						int length = mainFrame.getActiveModelPanel().getUseCaseworkspaceList().size()-1;
           						hashMap.put(node, mainFrame.getActiveModelPanel().getUseCaseworkspaceList().get(length));
-
+                                 
+          					
+          						DefaultMutableTreeNode rootnode = mainFrame.getKey(hashMap, mainFrame.getActiveModelPanel().getUseCaseworkspaceList().get(length)); 
        						
           						//切换界面
           						mainFrame.getStepOperationButton().getPromptLabel().setText("用例图是指由参与者（Actor）、用例（Use Case）以及它们之间的关系构成的用于描述系统功能的视图。");

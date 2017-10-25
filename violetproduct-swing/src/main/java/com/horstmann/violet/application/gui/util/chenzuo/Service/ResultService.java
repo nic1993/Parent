@@ -109,7 +109,7 @@ public class ResultService {
     	
     	for(int i = 0;i < testcaselist.size();i++)
     	{
-    		if(testcaselist.get(i).getState().contains("成功"))
+    		if(testcaselist.get(i).getResult().getResultDetail().contains("成功"))
     		{
     			success++;
     		}
@@ -117,9 +117,12 @@ public class ResultService {
 				fail++;
 			}
     	}
+    	
+    	
     	lists.add(success);
     	lists.add(fail);
-    	lists.add(lists.size());
+    	lists.add(testcaselist.size());
+    	
     	
     	return lists;
     }
@@ -133,16 +136,35 @@ public class ResultService {
     	int failtype = 0;
     	for(int i = 0;i < testcaselist.size();i++)
     	{
-    		if(testcaselist.get(i).getState().contains("成功"))
+    		if(!testcaselist.get(i).getResult().getResultDetail().contains("成功"))
+    		{
+    			fail++;
+    			if(testcaselist.get(i).getResult().getResultDetail().contains("程序执行过程中出现死循环或者抛出异常!"))
+    			{
+    				failtype++;
+    			}
+    		}
+    	}
+    	
+    	System.out.println("failtype: " + failtype);
+    	System.out.println("fail: " + fail);
+    	lists.add(failtype);
+    	lists.add(fail);
+    	return lists;
+    }
+    
+    public static List<TestCase> getFail(List<TestCase> testcaselist)
+    {
+    	List<TestCase> lists = new ArrayList<TestCase>();
+    	
+    	for(int i = 0;i < testcaselist.size();i++)
+    	{
+    		if(testcaselist.get(i).getResult().getResultDetail().contains("成功"))
     		{
     			
     		}
     		else {
-    			fail++;
-    			if(testcaselist.get(i).getResult().getResultDetail().contains(""))
-    			{
-    				
-    			}
+    			lists.add(testcaselist.get(i));
 			}
     	}
     	

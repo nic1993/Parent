@@ -36,7 +36,7 @@ public class PieChart {
 	}
 
 	public DefaultPieDataset createDataset() {
-		String[] categories = { "成功", "失败"};
+		String[] categories = { "成功概率", "失效概率"};
 		Object[] datas = integers;
 		DefaultPieDataset dataset = ChartUtils.createDefaultPieDataset(categories, datas);
 		return dataset;
