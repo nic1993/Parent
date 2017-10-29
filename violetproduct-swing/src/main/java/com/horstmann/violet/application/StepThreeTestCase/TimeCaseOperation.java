@@ -504,7 +504,6 @@ public class TimeCaseOperation extends JPanel {
         						mainFrame);
                 		casePagePanel.getCasePanel().add(testTabelPanel,
 							new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
-                		i++;
                 		progressBar.setValue(60 + (int) (((double) (i+1)/ index) * 40));
                 		topLabel.removeAll();
     					topLabel.setText("正在生成第" + (i+1) + "个测试数据....");

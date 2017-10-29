@@ -187,7 +187,7 @@ public class CreateUseCaseDiagramVioletXml {
 						}		
 						Element name =ActorNode.addElement("name").addAttribute("id", k+4+"");
 								name.addElement("text").addText(node.getName());//节点的name属�?	
-
+								name.addElement("justification").addText("1");
 								k=k+5;
 					if(node.getType().equals("UseCaseNode")){
 						Element useConstraint =ActorNode.addElement("useConstraint").addAttribute("id", k+5+"");	

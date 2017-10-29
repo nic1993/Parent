@@ -344,8 +344,8 @@ public class TimeSeqOperation extends JPanel{
 		                int length2 = mainFrame.getOutputinformation().geTextArea().getText().length(); 
 		                mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
 		                
-		                i++;
-						progressBar.setValue(41 + (int)(((double)j/index)*60));
+
+						progressBar.setValue(40 + (int)(((double)(j+1)/index)*60));
 						
 						Thread.sleep(10);
 						

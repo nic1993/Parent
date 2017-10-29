@@ -711,7 +711,7 @@ public class StepThreeLeftButton extends JPanel{
 						if(mainFrame.getStepThreeChoosePattern().getReliabilityIndex() == null || 
 								mainFrame.getStepThreeChoosePattern().getConfidence() == null)
 						{
-							mainFrame.getTimeSeqOperation1().getLabel2().removeAll();
+							mainFrame.getTimeSeqOperation1().getLabel2().removeAll();      
 						    mainFrame.getTimeSeqOperation1().getLabel2().setText("请在自定义生成测试用例方式中填写置信度与可靠性指标！");
 						    mainFrame.getTimeSeqOperation1().getButton().setEnabled(false);
 						}
@@ -719,6 +719,9 @@ public class StepThreeLeftButton extends JPanel{
 							mainFrame.getTimeSeqOperation1().getButton().setEnabled(true);
 							p = mainFrame.getStepThreeChoosePattern().getReliabilityIndex();
 							c = mainFrame.getStepThreeChoosePattern().getConfidence();
+							
+							System.out.println("p: " + p + "  c: " + c);
+							
 							rm = new ReadMarkov2();
 							markov = rm.readMarkov(route);
 							min = getMinTCNum(markov,p,c);
@@ -823,6 +826,7 @@ public class StepThreeLeftButton extends JPanel{
 
 		int temp = Math.max(min_pc, min_routePro);
 
+		
 		return Math.max(temp, min_mcdc);
 
 	}

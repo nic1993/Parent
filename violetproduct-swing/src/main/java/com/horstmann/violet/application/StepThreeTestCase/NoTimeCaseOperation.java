@@ -380,7 +380,7 @@ public class NoTimeCaseOperation extends JPanel{
                     		
                     		mainFrame.getStepThreeNoTimeTabbedPane().getTestData().updateUI();
                     		
-                    		progressBar.setValue(60 + (int) (((double) j / 500) * 60));
+                    		progressBar.setValue(60 + (int) (((double) (j+1) / 500) * 60));
                     		Thread.sleep(10);
                     		mainFrame.renewPanel();
                     	}

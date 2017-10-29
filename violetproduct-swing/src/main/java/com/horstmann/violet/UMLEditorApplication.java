@@ -80,7 +80,7 @@ public class UMLEditorApplication
                 initBeanFactory();
                 UserPreferencesService service = BeanFactory.getFactory().getBean(UserPreferencesService.class);
                 service.reset();
-                System.out.println("User preferences reset done.");
+//                System.out.println("User preferences reset done.");
             }
             if ("-english".equals(arg))
             {
@@ -89,9 +89,9 @@ public class UMLEditorApplication
             }
             if ("-help".equals(arg) || "-?".equals(arg))
             {
-                System.out.println("Violet UML Editor command line help. Options are :");
-                System.out.println("-reset to reset user preferences,");
-                System.out.println("-english to force language to english.");
+//                System.out.println("Violet UML Editor command line help. Options are :");
+//                System.out.println("-reset to reset user preferences,");
+//                System.out.println("-english to force language to english.");
                 return;
             } 
         }

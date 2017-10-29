@@ -46,15 +46,15 @@ public class StepFourTabbedPane extends JTabbedPane{
 	{
 		this.mainFrame = mainFrame;
 		init();
-		this.add("验证信息",results);
-		this.add("验证报告",jScrollPane2);
+		this.addTab("验证信息",results);
+		this.addTab("验证报告",jScrollPane2);
 		this.addTab("验证错误信息", wrongResults);
 	}
 	
 	private void init()
 	{
 		testCaseResults = new JPanel();
-		testCaseResults.setLayout(new GridBagLayout());
+		testCaseResults.setLayout(new GridLayout(1,1));
 		testCaseResport = new JPanel();
 		testCaseResport.setLayout(new GridBagLayout());
 		wrongtestCaseResults = new JPanel();
@@ -76,7 +76,7 @@ public class StepFourTabbedPane extends JTabbedPane{
 		results = new JPanel();
 		results.setLayout(new BorderLayout());
 		results.add(tableHeaderPanel,BorderLayout.NORTH);
-		results.add(jScrollPane,BorderLayout.CENTER);
+		results.add(testCaseResults,BorderLayout.CENTER);
 
 		//错误的测试用例
 		JPanel gapPanel1 = new JPanel();

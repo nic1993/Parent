@@ -316,7 +316,7 @@ public class NoTimeSeqOperation extends JPanel{
 						
 						abstractPagePanel.getAbstractPanel().add(testTabelPanel, new GBC(0, j).setFill(GBC.BOTH).setWeight(1, 0));
 
-						progressBar.setValue(41 + (int)(((double)j/index)*60));
+						progressBar.setValue(40 + (int)(((double)(j+1)/index)*60));
 						
 						gc.testCasesExtend.get(j);
 						//Êä³ö¼¤ÀøÐòÁÐ

@@ -283,6 +283,10 @@ public class MainFrame extends JFrame
     	File extendMarkovFile = new File(getBathRoute() + "/extendMarkov");
     	if(!extendMarkovFile.exists())
     		extendMarkovFile.mkdirs();
+    	
+    	File failTestCase = new File(getBathRoute() + "/FailTestCase");
+    	if(!failTestCase.exists())
+    		failTestCase.mkdirs();
     }
     /**
      * Adds a tabbed pane (only if not already added)
@@ -579,8 +583,9 @@ public class MainFrame extends JFrame
         int i = jFileChooser.showSaveDialog(null);
         if(i== jFileChooser.APPROVE_OPTION){ //打开文件
         	File file = jFileChooser.getSelectedFile(); 
-            String path = jFileChooser.getSelectedFile().getAbsolutePath() ; 
+            String path = jFileChooser.getSelectedFile().getAbsolutePath() ;
             String name = jFileChooser.getSelectedFile().getName();
+            
             //生成存放用例图的文件夹
             String packagePath = path + "/" +  modelPanel.getTitle().getText();
             this.getModelPanelMap().put(modelPanel, packagePath);

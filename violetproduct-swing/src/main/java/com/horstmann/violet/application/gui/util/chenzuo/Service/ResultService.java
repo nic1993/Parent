@@ -53,13 +53,11 @@ public class ResultService {
             File file = new File(FileUtil.LOCAL_TARGET_PATH);
             if (file.isDirectory()) {
                 String[] filelist = file.list();
-                
-//            	String[] filelist=OrderWrapperTool.SortFileNameList(file.list());
-                System.out.println("readfile()+++++++++++++++++++++"+filelist.length);
+
                 for (int i = 0; i < filelist.length; i++) {
                 	System.out.println(filelist[i]);
                 }
-                System.out.println("readfile()-----------------------");
+     
                 
                 for (int i = 0; i < filelist.length; i++) {
                 	
@@ -146,8 +144,6 @@ public class ResultService {
     		}
     	}
     	
-    	System.out.println("failtype: " + failtype);
-    	System.out.println("fail: " + fail);
     	lists.add(failtype);
     	lists.add(fail);
     	return lists;

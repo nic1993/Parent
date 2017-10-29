@@ -475,7 +475,6 @@ public class NoTimeCaseOperation1 extends JPanel {
 					mainFrame.getStepThreeNoTimeTabbedPane().getTestData().add(casePagePanel);
 
 					// 生成测试数据
-					i = 0;
 					topLabel.removeAll();
 					topLabel.setText("正在生成测试数据信息........");
 
@@ -495,9 +494,9 @@ public class NoTimeCaseOperation1 extends JPanel {
 						StepThreeTabelPanel testTabelPanel = new StepThreeTabelPanel(lists.get(j).getTestCase(), 2,
 								mainFrame);
 						casePagePanel.getCasePanel().add(testTabelPanel,
-								new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
-						i++;
-						progressBar.setValue(61 + (int) (((double) i / 500) * 40));
+								new GBC(0, j).setFill(GBC.BOTH).setWeight(1, 0));
+						
+						progressBar.setValue(61 + (int) (((double) (j+1) / 500) * 40));
 						Thread.sleep(10);
 						mainFrame.renewPanel();
 					}

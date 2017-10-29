@@ -291,7 +291,6 @@ public class StepTwoEvaluateOperation extends JPanel{
 					nameList.add("Initial");
 					for(InterfaceIsogenySD interfaceIsogenySD : IISDList)
 					{
-						System.out.println("ucName: " + interfaceIsogenySD.getUcName());
 						nameList.add(interfaceIsogenySD.getUcName());
 					}
 					nameList.add("Exit");
@@ -354,10 +353,7 @@ public class StepTwoEvaluateOperation extends JPanel{
     				mainFrame.renewPanel();
     				
     				list.clear();
-                }
-                
-				
-				
+                }	
 				return 1;
 			}
 			

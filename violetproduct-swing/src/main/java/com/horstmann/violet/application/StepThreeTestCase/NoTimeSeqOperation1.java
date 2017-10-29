@@ -429,7 +429,7 @@ public class NoTimeSeqOperation1 extends JPanel{
 				                mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
 							}
 
-							progressBar.setValue(40 + (int)(((double)k/index)*60));
+							progressBar.setValue(40 + (int)(((double)(k+1)/index)*60));
 							
 							Thread.sleep(10);
 						}

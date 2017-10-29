@@ -2,6 +2,7 @@ package com.horstmann.violet.application.StepFourTestCase;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -112,6 +113,21 @@ public class TestCaseTabelPanel extends JPanel{
     	   table.getColumnModel().getColumn(0).setCellRenderer(render);
            table.setRowHeight(30);
    		   DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+   		   
+   		   DefaultTableCellRenderer columnRender = new DefaultTableCellRenderer()
+   		   {
+    			  public Component getTableCellRendererComponent(JTable table,  
+    		            Object value, boolean isSelected, boolean hasFocus,  
+    		            int row, int column) {  
+    		     if(value.toString().contains("false")) 
+    		     setForeground(Color.red);  
+    		     else  
+    		     setForeground(Color.black);  
+    		     return super.getTableCellRendererComponent(table, value,  
+    		               isSelected, hasFocus, row, column);  
+    		     
+    		    }  
+    		};
    		   renderer.setBackground(new Color(188, 188, 188));
 //   		renderer.setForeground(new Color(255, 255, 255));
    		   renderer.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 16));
@@ -134,6 +150,7 @@ public class TestCaseTabelPanel extends JPanel{
            table.getColumn("¼¤Àø×´Ì¬").setMinWidth(60);
            table.getColumn("¼¤ÀøÖ´ÐÐÇé¿ö").setPreferredWidth(60);
            table.getColumn("¼¤ÀøÖ´ÐÐÇé¿ö").setMinWidth(60);
+           table.getColumn("¼¤ÀøÖ´ÐÐÇé¿ö").setCellRenderer(columnRender);
     	   jScrollPane = new JScrollPane();
     	   jScrollPane.setViewportView(table);
     	   table.setPreferredScrollableViewportSize(new Dimension(table.getWidth(),table.getRowHeight()* table.getRowCount()));
@@ -153,7 +170,20 @@ public class TestCaseTabelPanel extends JPanel{
    		   table.getTableHeader().getColumnModel().getColumn(2).setPreferredWidth(100);
    		   table.getTableHeader().getColumnModel().getColumn(2).setMinWidth(100);
 
-  		   DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+  		   DefaultTableCellRenderer renderer = new DefaultTableCellRenderer()
+  		  {
+  			 public Component getTableCellRendererComponent(JTable table,  
+   		            Object value, boolean isSelected, boolean hasFocus,  
+   		            int row, int column) {  
+   		     if(value.toString().contains("ÓÐÎó") && column == 2)  
+   		     setForeground(Color.red);  
+   		     else  
+   		     setForeground(Color.black);  
+   		     return super.getTableCellRendererComponent(table, value,  
+   		               isSelected, hasFocus, row, column);  
+   		     
+   		     }  
+  			};
   	       renderer.setBackground(new Color(233, 233, 233));
 //		renderer.setForeground(new Color(255, 255, 255));
 		   renderer.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 16));
@@ -196,6 +226,8 @@ public class TestCaseTabelPanel extends JPanel{
 		   table.getTableHeader().getColumnModel().getColumn(3).setMinWidth(100);
 
   		   DefaultTableCellRenderer render = new DefaultTableCellRenderer();
+  		   
+  	      
   	       render.setBackground(new Color(233, 233, 233));
 //		   renderer.setForeground(new Color(255, 255, 255));
 		   render.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 16));

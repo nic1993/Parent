@@ -268,7 +268,7 @@ public class AbstractPagePanel extends JPanel{
 				if(list.size() > 500 && index != 1)
 				{
 					abstractPanel.removeAll();
-					for(int i = 500 * index;i < 500 * (index - 1);i++)
+					for(int i = 500 * (index - 2);i < 500 * (index - 1);i++)
 					{
 						StepThreeTabelPanel testTabelPanel = new StepThreeTabelPanel(list.get(i),1,
 	        					mainFrame);

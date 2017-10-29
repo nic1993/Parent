@@ -466,7 +466,7 @@ public class TimeCaseOperation1 extends JPanel {
 						casePagePanel.getCasePanel().add(testTabelPanel2,
 								new GBC(0, k).setFill(GBC.BOTH).setWeight(1, 0));
 						mainFrame.getStepThreeTimeTabbedPane().getTestData().updateUI();
-						progressBar.setValue(61 + (int) (((double) k / index) * 40));
+						progressBar.setValue(60 + (int) (((double)(k+1) / index) * 40));
 
 						Thread.sleep(10);
 						mainFrame.renewPanel();
