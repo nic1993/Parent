@@ -1,7 +1,10 @@
 package com.horstmann.violet.application.menu.xiaole.SequenceTransfrom;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -113,7 +116,12 @@ public class TransEAToViolet {
             	{
             		ReturnEdgeInfo returnedge=new ReturnEdgeInfo();
             		returnedge.setId(messageElement.attributeValue("id"));
-            		returnedge.setName(messageElement.attributeValue("name"));
+            		if(messageElement.attributeValue("name") != null){
+            			returnedge.setMessage(messageElement.attributeValue("name"));
+            		}
+            		else {
+            			returnedge.setMessage("");
+    				}
             		if(parameter != null)
             		{
             			returnedge.setParameter(parameter);
@@ -180,42 +188,11 @@ public class TransEAToViolet {
         					  String  argumentsText =  value.replace("paramvalues=", "");
         	        		  callEdge.setArguments(argumentsText);
 						}
+        				  else if (value.contains("DCBM=")) {
+        					  String  timeText =  value.replace("DCBM=", "");
+        					  callEdge.setTimeconstraint(timeText);
+						}
         			  }
-        		     
-//        		  String judgeStyleList[] = judgeStyle.split("\\;");
-//        		  if(judgeStyle.contains("io=in"))
-//        		  {
-//        			  String inputlist[] = judgeStyleList[0].split("\\="); 
-//        			  callEdge.setInput(inputlist[1]);
-//        		  }
-//        		  if(judgeStyle.contains("io=out")){
-//        		  String outputList[] = intputOrouput.split("\\:");
-//        		  callEdge.setOutput(outputList[1]);
-//        		  }
-//        		  if(judgeStyle.contains("RESET"))
-//        		  {
-//        			  for(String reset:judgeStyleList)
-//        			  {
-//        				  if(reset.contains("RESET"))
-//        				  {
-//        					  String resetList[] = reset.split("\\,");
-//        					  for(String getreset:resetList)
-//        					  {  
-//        					  if(getreset.contains("RESET"))
-//        					  {
-//        						String finalResetValue[] =getreset.split("\\="); 
-//        					    for(int i = 0 ;i <finalResetValue.length;i++)
-//        					    {
-//        					    	if(finalResetValue[i].equals("RESET"))
-//        					    	{
-//        					    		callEdge.setTimereset(finalResetValue[++i]);
-//        					    	}
-//        					    }
-//        					  }
-//        					  }
-//        				  }
-//        			  } 
-//        		  }
         		  }
         		  if(values != null)
         		  {
@@ -245,9 +222,11 @@ public class TransEAToViolet {
           {
         	  if(ReturnEdge.getId().equals(connectorElement.attributeValue("idref")))
         	  {
+        		  Element documentation = connectorElement.element("documentation");
         		  Element extendedProperties=connectorElement.element("extendedProperties");
         		  String Properties=extendedProperties.attributeValue("sequence_points");
         		  String SplitProperties[]=Properties.split("\\;");
+        		  String condition = documentation.attributeValue("value");
         		  for(String splitproperty : SplitProperties)
         		  {
         			  if(splitproperty.startsWith("PtStartX"))
@@ -272,59 +251,107 @@ public class TransEAToViolet {
         				  ReturnEdge.setEndLocationY(LocationYsplitp[1].substring(1));
         			  }
         			}    
+        		  
         		  Element judgeInputOrOutput = connectorElement.element("style");
-        		  Element intputAndouput = connectorElement.element("labels");
+        		  Element valuesElement = connectorElement.element("extendedProperties");
         		  String  judgeStyle = judgeInputOrOutput.attributeValue("value");
-        		  String intputOrouput = intputAndouput.attributeValue("mt");
+        		  String  values = valuesElement.attributeValue("privatedata2");
         		  if(judgeStyle != null)
         		  {
-        		  String returnjudgeStyleList[] = judgeStyle.split("\\;");
-        		  if(judgeStyle.contains("io=in"))
-        		  {
-        			  String outputlist[] = returnjudgeStyleList[0].split("\\=");
-        			  ReturnEdge.setInput(outputlist[1]);
-        		  }
-        		  if(judgeStyle.contains("io=out")){
-            		  String outputList[] = intputOrouput.split("\\:");
-            		  ReturnEdge.setOutput(outputList[1]);
-            		  }
-        		  if(judgeStyle.contains("RESET"))
-        		  {
-        			  for(String reset:returnjudgeStyleList)
+        			  String judgeStyleList[] = judgeStyle.split("\\;");
+        			  
+        			  for(String value : judgeStyleList)
         			  {
-        				  if(reset.contains("RESET"))
+        				  if(value.contains("alias="))
         				  {
-        					  String resetList[] = reset.split("\\=");
-        					  ReturnEdge.setTimereset(resetList[1]);
+        					  String  aliasText =  value.replace("alias=", "");
+        	        		  ReturnEdge.setAlias(aliasText);
         				  }
+        				  else if(value.contains("paramvalues=")){
+        					  String  argumentsText =  value.replace("paramvalues=", "");
+        					  ReturnEdge.setArguments(argumentsText);
+						}
+        				  else if (value.contains("DCBM=")) {
+        					  String  timeText =  value.replace("DCBM=", "");
+        					  ReturnEdge.setTimeconstraint(timeText);
+						}
         			  }
+        		  }
+        		  if(values != null)
+        		  {
+        			  String value[] = values.split("\\;");
+        			  for(String data : value){
+        				  if(data.contains("retval="))
+        				  {
+        					  ReturnEdge.setReturnvalue(data.replace("retval=", ""));
+        				  }
+        				  else if (data.contains("paramsDlg=")) {
+        					  ReturnEdge.setParameter(data.replace("paramsDlg=", ""));
+						}
+        				  else if (data.contains("retatt=")) {
+        					  ReturnEdge.setAssign(data.replace("retatt=", ""));
+						}
+        			  }
+        		  }
+        		  if(condition != null)
+        		  {
+        			  ReturnEdge.setCondition(condition);
         		  }
         		  
-        		  if(judgeStyle.contains("RESET"))
-        		  {
-        			  for(String reset:returnjudgeStyleList)
-        			  {
-        				  if(reset.contains("RESET"))
-        				  {
-        					  String resetList[] = reset.split("\\,");
-        					  for(String getreset:resetList)
-        					  {  
-        					  if(getreset.contains("RESET"))
-        					  {
-        						String finalResetValue[] =getreset.split("\\="); 
-        					    for(int i = 0 ;i <finalResetValue.length;i++)
-        					    {
-        					    	if(finalResetValue[i].equals("RESET"))
-        					    	{
-        					    		ReturnEdge.setTimereset(finalResetValue[++i]);
-        					    	}
-        					    }
-        					  }
-        					  }
-        				  }
-        			  }
-        		  }
-        		  }
+        		  
+//        		  Element judgeInputOrOutput = connectorElement.element("style");
+//        		  Element intputAndouput = connectorElement.element("labels");
+//        		  String  judgeStyle = judgeInputOrOutput.attributeValue("value");
+//        		  String intputOrouput = intputAndouput.attributeValue("mt");
+//        		  if(judgeStyle != null)
+//        		  {
+//        		  String returnjudgeStyleList[] = judgeStyle.split("\\;");
+//        		  if(judgeStyle.contains("io=in"))
+//        		  {
+//        			  String outputlist[] = returnjudgeStyleList[0].split("\\=");
+//        			  ReturnEdge.setInput(outputlist[1]);
+//        		  }
+//        		  if(judgeStyle.contains("io=out")){
+//            		  String outputList[] = intputOrouput.split("\\:");
+//            		  ReturnEdge.setOutput(outputList[1]);
+//            		  }
+//        		  if(judgeStyle.contains("RESET"))
+//        		  {
+//        			  for(String reset:returnjudgeStyleList)
+//        			  {
+//        				  if(reset.contains("RESET"))
+//        				  {
+//        					  String resetList[] = reset.split("\\=");
+//        					  ReturnEdge.setTimereset(resetList[1]);
+//        				  }
+//        			  }
+//        		  }
+        		  
+//        		  if(judgeStyle.contains("RESET"))
+//        		  {
+//        			  for(String reset:returnjudgeStyleList)
+//        			  {
+//        				  if(reset.contains("RESET"))
+//        				  {
+//        					  String resetList[] = reset.split("\\,");
+//        					  for(String getreset:resetList)
+//        					  {  
+//        					  if(getreset.contains("RESET"))
+//        					  {
+//        						String finalResetValue[] =getreset.split("\\="); 
+//        					    for(int i = 0 ;i <finalResetValue.length;i++)
+//        					    {
+//        					    	if(finalResetValue[i].equals("RESET"))
+//        					    	{
+//        					    		ReturnEdge.setTimereset(finalResetValue[++i]);
+//        					    	}
+//        					    }
+//        					  }
+//        					  }
+//        				  }
+//        			  }
+//        		  }
+//        		  }
        		 } 
         	}//返回消息解析到此结束 
         }	//connector标签解析到此结束          
@@ -368,6 +395,7 @@ public class TransEAToViolet {
     			lifeLineNode.setName(lifelinename);
     			Element links=element.element("links");
     			List<Element> Sequence=links.elements("Sequence");
+    			lifeLineNode.setElements(Sequence);
     			for(Element edgeElement : Sequence)
 	    		{
 	    			
@@ -432,10 +460,23 @@ public class TransEAToViolet {
         			{
         				if(SplitValues[i].substring(0,4).equals("Name"))
         				{
-        					String SplitNames[]=SplitValues[i].split("\\=");
-        					String name=SplitValues[i].replace(SplitNames[1], "");
+//        					String SplitNames[]=SplitValues[i].split("\\=");
+        					String name=SplitValues[i].substring(5);
+        					String newName = name;
+        					System.out.println("name: " + name);
+        					if(name.contains("≤"))
+        					{
+        						newName = ReplaceString(name);
+        						name = newName;
+        					}
+        					if(name.contains("≥"))
+        					{
+        						String newString = name.replaceAll("≥", " ");
+        						newName = ReplaceString(name);
+        					}
+        					System.out.println("newname: " + newName);
         					VLFragmentPartInfo fragmentpart=new VLFragmentPartInfo();
-        					fragmentpart.setConditionText(name);//设置condition	
+        					fragmentpart.setConditionText(newName);//设置condition	
                             String Splitsize=SplitValues[i+1];
                             String SplitSizes[]=Splitsize.split("\\=");
                             String size=SplitSizes[1];
@@ -490,7 +531,7 @@ public class TransEAToViolet {
             		    //获取到Sequence标签，这里的Sequence标签即为从该lifelineNode
             		    //发送或接收的所有消息
             		    
-            		    List<Element> Sequence=links.elements("Sequence");
+            		    List<Element> Sequence = links.elements("Sequence");
             		    for(Element sequence : Sequence)
             			{
             		    	for(CallEdgeInfo callEdgeInfo : CallEdges)
@@ -539,12 +580,16 @@ public class TransEAToViolet {
                 					//接收一个消息新建一个ActivationBar
                 					if(calledge.getId().equals(sequence.attributeValue("id")))
                 					{
-                						for(CallEdgeInfo callEdgeInfo : selfCallEdgesID)
+//                						for(CallEdgeInfo callEdgeInfo : selfCallEdgesID)
+//                						{
+//                							if(Integer.parseInt(callEdgeInfo.getStartLocationY()) > Integer.parseInt(calledge.getStartLocationY()))
+//                							{
+//                								
+//                							}
+//                						}
+                						if(selfCallEdgesID.contains(calledge))
                 						{
-                							if(Integer.parseInt(callEdgeInfo.getStartLocationY()) > Integer.parseInt(calledge.getStartLocationY()))
-                							{
-                								
-                							}
+                							
                 						}
                 					} 					
                 				}
@@ -579,7 +624,8 @@ public class TransEAToViolet {
             								&&sequence1.attributeValue("start").equals(lifelineId))
             						{
             							activationBarNode.setEdgeID(calledge.getId());
-            							calledge.setStartReferenceId(activationBarNode.getId());    							
+            							calledge.setStartReferenceId(activationBarNode.getId());  
+            							
             						}
             						
             					}
@@ -775,14 +821,36 @@ public class TransEAToViolet {
             				    }    					
             				}    				        		 
             			}  
-        			}
-        		     		
+        			}	
         			LifeLines.add(lifeLineNode);
         		}
     		}
     		
-    	}
-    	
+    	}  	
+ 		
+for(CallEdgeInfo calledge : CallEdges)
+{
+	if(calledge.getStartReferenceId() == null)
+	{
+		ActivationBarNodeInfo activationBarNode=new ActivationBarNodeInfo(); //生成孩子节点
+		activationBarNode.setEdgeID(calledge.getId()); //设置生成ActivationBarID 自己加的
+		activationBarNode.setLifeID(calledge.getEndEAReferenceId()); //设置生成lifelineId 自己加的
+		activationBarNode.setId(GenerateID());//新建ID
+		activationBarNode.setParentId(calledge.getEndEAReferenceId());//新建父节点ID
+		activationBarNode.setLocationX("32");//默认离lifelineNode节点X轴的偏差
+		activationBarNode.setLocationY(calledge.getEndLocationY());
+		
+		calledge.setStartReferenceId(activationBarNode.getId());
+		
+		for(LifeLineNodeInfo lifeLine : LifeLines)
+		{
+			if(lifeLine.getId().equals(calledge.getStartEAReferenceId()))
+			{
+				lifeLine.getActivationBarNodes().add(activationBarNode);
+			}
+		}
+	}
+}
 //    Element diagram=Extension.element("diagrams");
 //    List<Element> diagrams = diagram.elements("diagram");
 //    Element diagramelements = null;
@@ -791,11 +859,11 @@ public class TransEAToViolet {
     	if(component.element("model").attributeValue("package").equals(packagedID))
     	{
     		if(component.attributeValue("id").equals(diagramID))
-    		diagramelements = component.element("elements");
-    		
+    		diagramelements = component.element("elements");	
     	}
     		
     }
+    
     List<Element> geometryElements=diagramelements.elements("element");
     for(Element geometryElement : geometryElements)
     {
@@ -1183,9 +1251,9 @@ public class TransEAToViolet {
     		 Element conditions=CombinedFragment.addElement("conditions"); 
     		 CombinedFragment.addElement("ID").addText(GenerateID());
     		 VLFragmentPartInfo fragmentpart = combinedFragment.getFragmentParts().get(0);
-    		 conditions.addElement("string").addText(fragmentpart.getConditionText());
+    		 conditions.addElement("string").addText("<![CDATA[" + fragmentpart.getConditionText() + "]]>");
  			 Element fragmentPart=fragmentParts.addElement("com.horstmann.violet.product.diagram.abstracts.property.FragmentPart");
- 			 fragmentPart.addElement("conditionText").addText(fragmentpart.getConditionText());
+ 			 fragmentPart.addElement("conditionText").addText("<![CDATA[" + fragmentpart.getConditionText() + "]]>");
  			 Element borderline=fragmentPart.addElement("borderline").addAttribute("class", "java.awt.geom.Line2D$Double")
  					.addAttribute("id", GenerateID()); 			
  			 fragmentPart.addElement("coveredMessagesID").addAttribute("id",GenerateID());
@@ -1218,9 +1286,9 @@ public class TransEAToViolet {
     		 {
     			size+=Integer.parseInt(fragmentpart.getSize());
     			//int fragmentpartIndex=combinedFragment.getFragmentParts().indexOf(fragmentpart);
-    			conditions.addElement("string").addText(fragmentpart.getConditionText());
+    			conditions.addElement("string").addText("<![CDATA[" + fragmentpart.getConditionText() + "]]>");
     			Element fragmentPart=fragmentParts.addElement("com.horstmann.violet.product.diagram.abstracts.property.FragmentPart");
-    			fragmentPart.addElement("conditionText").addText(fragmentpart.getConditionText());
+    			fragmentPart.addElement("conditionText").addText("<![CDATA[" + fragmentpart.getConditionText() + "]]>");
     			Element borderline=fragmentPart.addElement("borderline").addAttribute("class", "java.awt.geom.Line2D$Double")
     					.addAttribute("id", GenerateID());
     			
@@ -1286,9 +1354,10 @@ public class TransEAToViolet {
     		Calledge.addElement("assign").addText(calledge.getAssign());
     		Calledge.addElement("returnvalue").addText(calledge.getReturnvalue());
     		Calledge.addElement("message").addText(calledge.getmessage());
-    		Calledge.addElement("condition").addText(calledge.getmessage());
+    		Calledge.addElement("condition").addText(calledge.getCondition());
     		Calledge.addElement("constraint").addText(calledge.getmessage());
     		Calledge.addElement("alias").addText(calledge.getAlias());
+    		Calledge.addElement("timeconstraint").addText("<![CDATA[" + calledge.getTimeconstraint() + "]]>");
     		  		
     	 }
     	 //处理ReturnEdges
@@ -1305,14 +1374,15 @@ public class TransEAToViolet {
     		 Returnedge.addElement("endLocation").addAttribute("class", "Point2D.Double")
      		.addAttribute("id", GenerateID()).addAttribute("x", returnedge.getEndLocationX())
      		.addAttribute("y", returnedge.getEndLocationY());
-    		 Returnedge.addElement("parameters").addText(Returnedge.getName());
-    		 Returnedge.addElement("arguments").addText(Returnedge.getName());
-    		 Returnedge.addElement("assign").addText(Returnedge.getName());
-    		 Returnedge.addElement("returnvalue").addText(Returnedge.getName());
-    		 Returnedge.addElement("message").addText(Returnedge.getName());
-    		 Returnedge.addElement("condition").addText(Returnedge.getName());
-    		 Returnedge.addElement("constraint").addText(Returnedge.getName());
-    		 Returnedge.addElement("alias").addText(Returnedge.getName());
+    		 Returnedge.addElement("parameters").addText(returnedge.getParameter());
+    		 Returnedge.addElement("arguments").addText(returnedge.getArguments());
+    		 Returnedge.addElement("assign").addText(returnedge.getAssign());
+    		 Returnedge.addElement("returnvalue").addText(returnedge.getReturnvalue());
+    		 Returnedge.addElement("message").addText(returnedge.getMessage());
+    		 Returnedge.addElement("condition").addText(returnedge.getCondition());
+    		 Returnedge.addElement("constraint").addText(returnedge.getMessage());
+    		 Returnedge.addElement("alias").addText(returnedge.getAlias());
+    		 Returnedge.addElement("timeconstraint").addText("<![CDATA[" + returnedge.getTimeconstraint() + "]]>");
     	 }    	     	 
     	 outputXml(doc, filename);     
 
@@ -1355,6 +1425,7 @@ public class TransEAToViolet {
 	      //定义用于输出xml文件的XMLWriter对象
 	      XMLWriter xmlWriter 
 	        = new XMLWriter(fw, format);
+	      xmlWriter.setEscapeText(false);
 	      xmlWriter.write(doc);//*****	      
 	      xmlWriter.close(); 
 	    } catch (IOException e) {
@@ -1364,5 +1435,26 @@ public class TransEAToViolet {
 	private String GenerateID() {
 		// TODO Auto-generated method stub
 		return UUID.randomUUID().toString();
+	}
+	private String ReplaceString(String name)
+	{
+		StringBuffer builder = new StringBuffer();
+		char[] before = name.toCharArray();
+		for(int i = 0;i < before.length;i++)
+		{
+			String str = String.valueOf(before[i]);
+			if(!str.equals("≤") &&  !str.equals("≥"))
+			{
+//				repalce[i] = before[i];
+				builder.append(str);
+			}
+			else if (str.equals("≤")) {
+				builder.append("<=");
+			}
+			else if (str.equals("≥")) {
+				builder.append(">=");
+			}
+		}
+		return builder.toString();
 	}
 }			

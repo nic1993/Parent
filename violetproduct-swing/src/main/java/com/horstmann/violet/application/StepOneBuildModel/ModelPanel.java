@@ -96,6 +96,7 @@ public class ModelPanel extends JPanel{
         			else {
     					TreePanel.setVisible(true);
     				}
+    				mainFrame.renewPanel();
     			}
     			else if (e.getButton() == e.BUTTON3) {
     				popupMenu = new JPopupMenu();
@@ -134,7 +135,8 @@ public class ModelPanel extends JPanel{
 								else {
 									mainFrame.removeModelPanel(selectmodel);
 								}								
-							}							
+							}		
+							mainFrame.renewPanel();
 						}
 					});
 					
@@ -155,6 +157,7 @@ public class ModelPanel extends JPanel{
 								mainFrame.saveModelPanel(selectmodel);
 								
 							}
+							mainFrame.renewPanel();
 						}
 					});
 					
@@ -165,7 +168,6 @@ public class ModelPanel extends JPanel{
 							// TODO Auto-generated method stub
 							Icon icon = new ImageIcon("resources/icons/22x22/open.png");
 							String str = (String) JOptionPane.showInputDialog(null,"请输入名称:\n","名称",JOptionPane.PLAIN_MESSAGE,icon,null,"在这输入");
-							System.out.println(str);
 							if(str.equals(""))
 							{
 								JOptionPane.showMessageDialog(null, "工程名称不能为空!","标题",JOptionPane.WARNING_MESSAGE); 
@@ -174,7 +176,7 @@ public class ModelPanel extends JPanel{
 								title.removeAll();
 								title.setText(str);
 							}
-							
+							mainFrame.renewPanel();
 						}
 					});
 				}

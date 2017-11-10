@@ -24,6 +24,7 @@
 		<!-- <property name="hibernate.show_sql">true</property> -->
 		<!-- 2.2 格式化sql -->
 		<!-- <property name="hibernate.format_sql">true</property> -->
+		
 		<!-- 2.3 自动建表  -->
 		<property name="hibernate.hbm2ddl.auto">create</property>
 		

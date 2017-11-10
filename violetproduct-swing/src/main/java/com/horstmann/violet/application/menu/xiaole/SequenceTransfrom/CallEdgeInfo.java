@@ -17,6 +17,7 @@ public class CallEdgeInfo {
   private String assign = "";
   private String arguments = "";
   private String condition = "";
+  private String timeconstraint="";
 public String getStartReferenceId() {
 	return startReferenceId;
 }
@@ -113,6 +114,10 @@ public String getCondition() {
 public void setCondition(String condition) {
 	this.condition = condition;
 }
-
-  
+public String getTimeconstraint() {
+	return timeconstraint;
+}
+public void setTimeconstraint(String timeconstraint) {
+	this.timeconstraint = timeconstraint;
+}  
 }

@@ -12,6 +12,7 @@ public class BestAssign {
 	public void assign(Markov markov, Element root) {
 
 		List<Route> routeList = markov.getRouteList();
+		RandomCase randomCase = new RandomCase();
 		for (Route route : routeList) {
 			actualTcNumber += route.getNumber();
 			List<Transition> transitionList = route.getTransitionList();
@@ -21,10 +22,9 @@ public class BestAssign {
 			String stimulateSequence = getStimulateSequence(stimulateList);
 			TCDetail.getInstance().setTestSequence(testSequence);
 			TCDetail.getInstance().setStimulateSequence(stimulateSequence);
-
 			for (int i = 0; i < route.getNumber(); i++) {
 //				System.out.print("²âÊÔÓÃÀý£º");
-				RandomCase.getCase(stimulateList, root);
+				randomCase.getCase(stimulateList, root);
 			}
 		}
 		markov.setActualNum(actualTcNumber);

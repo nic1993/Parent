@@ -17,6 +17,7 @@ import javax.swing.SwingConstants;
 
 import com.horstmann.violet.application.gui.GBC;
 import com.horstmann.violet.application.gui.MainFrame;
+import com.horstmann.violet.workspace.IWorkspace;
 import com.horstmann.violet.workspace.sidebar.SideBar;
 
 public class StepOneCenterRightPanel extends JPanel{
@@ -43,7 +44,6 @@ public class StepOneCenterRightPanel extends JPanel{
     	this.setLayout(new GridBagLayout());
     	this.add(consoleButton,new GBC(0, 0, 1, 1).setFill(GBC.BOTH).setInsets(14, 10, 7, 10));
     	this.add(sidbarbButton,new GBC(0, 1, 1, 1).setFill(GBC.BOTH).setInsets(3, 10, 7, 10));
-//    	this.add(zoomoutButton,new GBC(0, 2, 1, 1).setFill(GBC.BOTH).setInsets(3, 10, 7, 10));
     	this.add(bottomPanel,new GBC(0, 3, 1, 1).setFill(GBC.BOTH).setWeight(1, 1));
     	buttonListen();
     }
@@ -53,7 +53,6 @@ public class StepOneCenterRightPanel extends JPanel{
     	sidbarbButton = new JButton();
     	bottomPanel = new JPanel();
     	Icon newIcon = new ImageIcon("resources/icons/22x22/console.png");
-//    	Icon newIcon = new ImageIcon("resources/icons/22x22/zoomin.png");
     	consoleButton.setIcon(newIcon);
     	consoleButton.setBorderPainted(false);
     	consoleButton.setFocusPainted(false);
@@ -78,7 +77,7 @@ public class StepOneCenterRightPanel extends JPanel{
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
 				consoleButton.setContentAreaFilled(false);
-//				consoleButton.setBorderPainted(false);
+				mainFrame.renewPanel();
 			}
 			
 			@Override
@@ -86,7 +85,7 @@ public class StepOneCenterRightPanel extends JPanel{
 				// TODO Auto-generated method stub
 				consoleButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 				consoleButton.setContentAreaFilled(true);
-//				consoleButton.setBorderPainted(true);
+				mainFrame.renewPanel();
 			}
 			
 			@Override
@@ -126,6 +125,7 @@ public class StepOneCenterRightPanel extends JPanel{
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
 				sidbarbButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				mainFrame.renewPanel();
 			}
 			
 			@Override
@@ -167,6 +167,28 @@ public class StepOneCenterRightPanel extends JPanel{
 					flag = 0;
 				}
 				mainFrame.renewPanel();
+			}
+		});
+    	
+    	sidbarbButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				IWorkspace workspace = mainFrame.getActiveWorkspace();
+				if(workspace != null)
+				{
+					boolean isVisible = workspace.getAWTComponent().getScrollableSideBar().isVisible();
+					if(!isVisible)
+					{
+						workspace.getAWTComponent().getScrollableSideBar().setVisible(true);
+					}
+					else {
+						workspace.getAWTComponent().getScrollableSideBar().setVisible(false);
+					}
+					workspace.getAWTComponent().repaint();
+					mainFrame.renewPanel();
+				}
 			}
 		});
     }

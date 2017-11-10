@@ -8,6 +8,8 @@ import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -18,6 +20,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -94,6 +97,7 @@ public class Outputinformation extends JPanel{
 				mainFrame.getinformationPanel().setVisible(false);
 				mainFrame.getbotoomJSplitPane().setDividerSize(0);	
 				mainFrame.renewPanel();
+				mainFrame.renewPanel();
 			}
 			
 			@Override
@@ -101,6 +105,7 @@ public class Outputinformation extends JPanel{
 				// TODO Auto-generated method stub
 				reducePanel.setBackground(new Color(222, 222, 222));
 				reducePanel.repaint();
+				mainFrame.renewPanel();
 			}
 			
 			@Override
@@ -108,6 +113,7 @@ public class Outputinformation extends JPanel{
 				// TODO Auto-generated method stub
 				reducePanel.setBackground(new Color(211, 211, 211));
 				reducePanel.repaint();
+				mainFrame.renewPanel();
 			}
 			
 			@Override
@@ -143,6 +149,7 @@ public class Outputinformation extends JPanel{
 				// TODO Auto-generated method stub
 				enlargePanel.setBackground(new Color(222, 222, 222));
 				enlargePanel.repaint();
+				mainFrame.renewPanel();
 			}
 			
 			@Override
@@ -150,6 +157,7 @@ public class Outputinformation extends JPanel{
 				// TODO Auto-generated method stub
 				enlargePanel.setBackground(new Color(211, 211, 211));
 				enlargePanel.repaint();
+				mainFrame.renewPanel();
 			}
 			
 			@Override
@@ -184,6 +192,7 @@ public class Outputinformation extends JPanel{
 				// TODO Auto-generated method stub
 				clearPanel.setBackground(new Color(222, 222, 222));
 				clearPanel.repaint();
+				mainFrame.renewPanel();
 			}
 			
 			@Override
@@ -191,12 +200,14 @@ public class Outputinformation extends JPanel{
 				// TODO Auto-generated method stub
 				clearPanel.setBackground(new Color(211, 211, 211));
 				clearPanel.repaint();
+				mainFrame.renewPanel();
 			}
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
 				geTextArea().setText("");
+				mainFrame.renewPanel();
 			}
 		});
     	 
@@ -210,9 +221,24 @@ public class Outputinformation extends JPanel{
     	 panel.add(clearPanel, new GBC(2, 0).setFill(GBC.NONE).setWeight(0, 0).setInsets(0,0,8,8));
     	 panel.add(reducePanel, new GBC(3, 0).setFill(GBC.NONE).setWeight(0, 0).setInsets(3,0,8,0));
     	 panel.add(enlargePanel, new GBC(4, 0).setFill(GBC.NONE).setWeight(0, 0).setInsets(0,0,8,8));
-    	 
-    	 
+
     	 scrollPane.setViewportView(textField);
+    	 JScrollBar HorizontalBar = scrollPane.getHorizontalScrollBar();
+ 		JScrollBar VerticalBar = scrollPane.getVerticalScrollBar();
+ 		HorizontalBar.addAdjustmentListener(new AdjustmentListener() {
+ 			@Override
+ 			public void adjustmentValueChanged(AdjustmentEvent e) {
+ 				// TODO Auto-generated method stub
+ 				mainFrame.renewPanel();
+ 			}
+ 		});
+ 		VerticalBar.addAdjustmentListener(new AdjustmentListener() {			
+ 			@Override
+ 			public void adjustmentValueChanged(AdjustmentEvent e) {
+ 				// TODO Auto-generated method stub
+ 				mainFrame.renewPanel();
+ 			}
+ 		});
      }
      
      public JPanel getConsolePanel() {

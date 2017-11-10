@@ -206,7 +206,8 @@ public class TimeSeqOperation extends JPanel{
    				mainFrame.getStepThreeLeftButton().getTimeModelLabel().setEnabled(false);
    				mainFrame.getStepThreeLeftButton().getModelExpand().setEnabled(false);
    				mainFrame.getStepThreeLeftButton().getTimeCase().setEnabled(false);
-   				progressBarIndex = 0;
+   				mainFrame.renewPanel();
+   				
    				
    				mainFrame.getStepThreeTimeSeqTabbedPane().getAbstractSequence().removeAll();
 				File files = new File(TimeMarkovRoute);
@@ -218,7 +219,7 @@ public class TimeSeqOperation extends JPanel{
 				
 				topLabel.removeAll();
 				topLabel.setText("正在读取生成的markov链信息........");
-				Thread.sleep(200);
+				Thread.sleep(100);
 				
    				ReadMarkov2 rm = new ReadMarkov2();
 				markov = rm.readMarkov(route);
@@ -232,7 +233,7 @@ public class TimeSeqOperation extends JPanel{
 				{
 					topLabel.removeAll();
 					topLabel.setText("markov链的平稳分布:" + PI[i]);
-					Thread.sleep(200);
+					Thread.sleep(100);
 				}
 				
 				double similarity = 999991;
@@ -257,16 +258,18 @@ public class TimeSeqOperation extends JPanel{
 					
 					topLabel.removeAll();
 					topLabel.setText("markov链的使用链和测试链的相似度:" + similarity);
-					Thread.sleep(200);
+					Thread.sleep(150);
 					
 					markov.setDeviation(similarity);
 					markov.setActualNum(numberOfTestCases);
+					
+					mainFrame.renewPanel();
                     
 				} while (similarity > 0.1);
 				}catch (RuntimeException e) {
 					// TODO: handle exception
 					topLabel.removeAll();
-   					topLabel.setText(e.getLocalizedMessage());
+   					topLabel.setText("生成抽象测试序列出错!");
 					
 					button.setEnabled(true);
 	   				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
@@ -277,6 +280,7 @@ public class TimeSeqOperation extends JPanel{
 	   				
 	   				thread2.stop();
 	   				mainthread.stop();
+	   				mainFrame.renewPanel();
 				}
 				return 1;
 			}
@@ -291,13 +295,8 @@ public class TimeSeqOperation extends JPanel{
 				// TODO Auto-generated method stub
 				try {
 					topLabel.removeAll();
-					topLabel.setText("正在生成第抽象测试序列.....");
-					
-					JPanel seqPanel = new JPanel();
-					seqPanel.setLayout(new GridBagLayout());
-					
-					AbstractPagePanel abstractPagePanel = new AbstractPagePanel(gc.abstractTS, mainFrame);
-					
+					topLabel.setText("正在生成第抽象测试序列(该过程需要较久时间,请耐心等待)....");
+
 					int index = 0;
 					if(gc.abstractTS.size() < 500)
 					{
@@ -307,15 +306,20 @@ public class TimeSeqOperation extends JPanel{
 						index = 500;
 					}
 					
+					AbstractPagePanel abstractPagePanel = new AbstractPagePanel(gc.abstractTS, mainFrame);
 					mainFrame.getStepThreeTimeSeqTabbedPane().getAbstractSequence().removeAll();
 					mainFrame.getStepThreeTimeSeqTabbedPane().getAbstractSequence().add(abstractPagePanel);
-					int i = 0;
+					mainFrame.getStepThreeTimeSeqTabbedPane().getAbstractSequence().repaint();
+					mainFrame.renewPanel();
 					for(int j = 0; j < index;j++)
 					{
 						
 						StepThreeTabelPanel testTabelPanel = new StepThreeTabelPanel(gc.abstractTS.get(j), 1,mainFrame);
 //						mainFrame.getStepThreeTimeSeqTabbedPane().getAbstractSequence().add(testTabelPanel, new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
 						abstractPagePanel.getAbstractPanel().add(testTabelPanel, new GBC(0, j).setFill(GBC.BOTH).setWeight(1, 0));
+						abstractPagePanel.getAbstractPanel().repaint();
+						mainFrame.getStepThreeTimeSeqTabbedPane().getAbstractSequence().repaint();
+						
 						
 						gc.testCasesExtend.get(j);
 						//输出激励序列
@@ -348,12 +352,14 @@ public class TimeSeqOperation extends JPanel{
 						progressBar.setValue(40 + (int)(((double)(j+1)/index)*60));
 						
 						Thread.sleep(10);
-						
-						mainFrame.getStepThreeTimeSeqTabbedPane().getAbstractSequence().repaint();
+
 						mainFrame.renewPanel();
-						Thread.sleep(10);
 					}
 					abstractPagePanel.getPageTestField().setText("1");
+					mainFrame.getStepThreeTimeSeqTabbedPane().getAbstractSequence().removeAll();
+					mainFrame.getStepThreeTimeSeqTabbedPane().getAbstractSequence().add(abstractPagePanel);
+					mainFrame.getStepThreeTimeSeqTabbedPane().getAbstractSequence().repaint();
+					mainFrame.renewPanel();
 					
 					button.setEnabled(true);
 	   				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
@@ -370,6 +376,7 @@ public class TimeSeqOperation extends JPanel{
 					
 					topLabel.removeAll();
 					topLabel.setText("抽象测试序列生成完成，共生成" + gc.abstractTS.size()+"条抽象测试序列");
+					mainFrame.renewPanel();
 				}catch (RuntimeException e) {
 					// TODO: handle exception
 					topLabel.removeAll();
@@ -378,12 +385,13 @@ public class TimeSeqOperation extends JPanel{
 					button.setEnabled(true);
 	   				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
 	   				mainFrame.getStepThreeLeftButton().getModelExpand().setEnabled(true);
-	   				mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(true);
+	   				mainFrame.getStepThreeLeftButton().getTimeModelLabel().setEnabled(true);
 	   				
 	   				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
 	   				
 	   				thread2.stop();
 	   				mainthread.stop();
+	   				mainFrame.renewPanel();
 				}
 				return 1;
 			}

@@ -61,6 +61,7 @@ public class UsecaseTreePanel extends JPanel implements Cloneable{
 	public JMenuItem newDiagram;
 	public JMenuItem importDiagram;
 	private Map<DefaultMutableTreeNode, IWorkspace> hashMap;
+	private Map<DefaultMutableTreeNode, UseCaseNode> NodeMap;
 	private Set<DefaultMutableTreeNode> treeNodes;
 	private JScrollPane jScrollPane;
 	private JTree usecaseTree;
@@ -86,6 +87,8 @@ public class UsecaseTreePanel extends JPanel implements Cloneable{
 	private void init() {
 		// TODO Auto-generated method stub
 		hashMap = new HashMap<DefaultMutableTreeNode,IWorkspace>();
+		NodeMap = new HashMap<DefaultMutableTreeNode, UseCaseNode>();
+		
 		usecasetreerootnode=new DefaultMutableTreeNode("用例图");
 		usecasetreemodel=new DefaultTreeModel(usecasetreerootnode);
 		usecaseTree=new JTree(usecasetreemodel);
@@ -101,22 +104,7 @@ public class UsecaseTreePanel extends JPanel implements Cloneable{
 				// TODO Auto-generated method stub
 				if(e.getButton() == e.BUTTON1)
 				{
-//					mainFrame.getOpreationPart().validate();
-//					wakeupPanel();
-//
-//					mainFrame.getpanel().removeAll();
-//					mainFrame.getpanel().setLayout(new GridLayout(1, 1));
-//					mainFrame.getpanel().add(mainFrame.getStepOperationButton());
-//					mainFrame.getStepOperationButton().getPromptLabel().removeAll();
-//					mainFrame.getStepOperationButton().getPromptLabel().setText("用例图是指由参与者（Actor）、用例（Use Case）以及它们之间的关系构成的用于描述系统功能的视图。");
-//					mainFrame.getpanel().updateUI();
-//					mainFrame.getinformationPanel().removeAll();
-//					mainFrame.getinformationPanel().setLayout(new GridLayout(1, 1));
-//					mainFrame.getinformationPanel().add(mainFrame.getOutputinformation());
-//					mainFrame.getReduceOrEnlargePanel().setLayout(new GridLayout(1, 1));
-//					mainFrame.getReduceOrEnlargePanel().add(mainFrame.getstepOneCenterRightPanel());
-//					mainFrame.getOpreationPart().revalidate();
-//					mainFrame.renewPanel();
+					mainFrame.renewPanel();
 				}
 				
 				if(e.getButton()==e.BUTTON3 ){
@@ -146,6 +134,7 @@ public class UsecaseTreePanel extends JPanel implements Cloneable{
 							mainFrame.getReduceOrEnlargePanel().setLayout(new GridLayout(1, 1));
 							mainFrame.getReduceOrEnlargePanel().add(mainFrame.getstepOneCenterRightPanel());
 							mainFrame.getOpreationPart().revalidate();
+							mainFrame.renewPanel();
 						}
 					});
 					importDiagram.addActionListener(new ActionListener() {
@@ -166,9 +155,11 @@ public class UsecaseTreePanel extends JPanel implements Cloneable{
 							mainFrame.getReduceOrEnlargePanel().setLayout(new GridLayout(1, 1));
 							mainFrame.getReduceOrEnlargePanel().add(mainFrame.getstepOneCenterRightPanel());
 							mainFrame.getOpreationPart().revalidate();
+							mainFrame.renewPanel();
 						}
 					});	
 				}
+					
 				if(((DefaultMutableTreeNode)usecaseTree.getLastSelectedPathComponent()).getLevel() == 2)
 				{
 					if(((DefaultMutableTreeNode)usecaseTree.getLastSelectedPathComponent()).getParent().getParent().equals(usecasetreerootnode))
@@ -202,6 +193,7 @@ public class UsecaseTreePanel extends JPanel implements Cloneable{
 								mainFrame.getpanel().updateUI();
 								mainFrame.getReduceOrEnlargePanel().setLayout(new GridLayout(1, 1));
 								mainFrame.getReduceOrEnlargePanel().add(mainFrame.getstepOneCenterRightPanel());
+								mainFrame.renewPanel();
 							}
 						});
 						importDiagram.addActionListener(new ActionListener() {	
@@ -219,8 +211,7 @@ public class UsecaseTreePanel extends JPanel implements Cloneable{
 								mainFrame.getpanel().updateUI();
 								mainFrame.getReduceOrEnlargePanel().setLayout(new GridLayout(1, 1));
 								mainFrame.getReduceOrEnlargePanel().add(mainFrame.getstepOneCenterRightPanel());
-								
-								
+								mainFrame.renewPanel();
 							}
 						});	
 					}	
@@ -232,11 +223,11 @@ public class UsecaseTreePanel extends JPanel implements Cloneable{
 				{
 					popupMenu = new JPopupMenu();
 					newDiagram = new JMenuItem("删除     ",new ImageIcon("resources/icons/16x16/De.png"));
-					
-					
+					JMenuItem saveDiagram = new JMenuItem("保存     ",new ImageIcon("resources/icons/16x16/saveas.png"));
 					newDiagram.setAccelerator(KeyStroke.getKeyStroke('D', InputEvent.CTRL_MASK));
+					saveDiagram.setAccelerator(KeyStroke.getKeyStroke('S', InputEvent.CTRL_MASK));
 					popupMenu.add(newDiagram);
-					
+					popupMenu.add(saveDiagram);
 					popupMenu.show(e.getComponent(), e.getX(), e.getY());
 					newDiagram.addActionListener(new ActionListener() {
 						@Override
@@ -281,6 +272,14 @@ public class UsecaseTreePanel extends JPanel implements Cloneable{
 						}
 					});
 					
+					saveDiagram.addActionListener(new ActionListener() {
+						
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							// TODO Auto-generated method stub
+							fileMenu.getItem(5).doClick();
+						}
+					});
 				
 				}
 				
@@ -335,10 +334,8 @@ public class UsecaseTreePanel extends JPanel implements Cloneable{
 				// TODO Auto-generated method stub
 				try {
 					while (true ) {
-						
 							AddNodeBehavior.lock.take();	//加锁				
 							if(modelPanel.hashCode() == mainFrame.getActiveModelPanel().hashCode()){
-						    Map<DefaultMutableTreeNode, UseCaseNode> INodeMap = mainFrame.getNodeMap(); 
 						    currentUsecaseWorkspace = ((WorkspacePanel)mainFrame.getCenterTabPanel().getComponent(0)).getWorkspace();//获取当前用例图workspace
 							currentUsecaseNode = getKey(hashMap, currentUsecaseWorkspace); //获取当前用例图树节点
 							nodes = currentUsecaseWorkspace.getGraphFile().getGraph().getAllNodes();
@@ -350,16 +347,21 @@ public class UsecaseTreePanel extends JPanel implements Cloneable{
 			                Icon icon = new ImageIcon("resources/icons/22x22/open.png");
 			            	String str = (String) JOptionPane.showInputDialog(null,"请输入用例名称:\n","用例名称",JOptionPane.PLAIN_MESSAGE,icon,null,"在这输入");
 	                        UseCaseNode usecaseNode = (UseCaseNode) allnodes.get(0);
+	                        if(str == null)
+	                        {
+	                        	str = " ";
+	                        }
 	                        usecaseNode.getName().setText(str);
 			                DefaultMutableTreeNode usecaseTreeNode = new DefaultMutableTreeNode(str);
 			                
 			                usecasetreemodel.insertNodeInto(usecaseTreeNode, currentUsecaseNode, currentUsecaseNode.getChildCount());
-//			                usecasetreemodel.reload(usecaseTreeNode);            
+          
 			                TreePath treePath = new TreePath(usecasetreerootnode.getPath());
 			                usecaseTree.makeVisible(treePath);
 			                usecaseTree.getSelectionModel().setSelectionPath(new TreePath(usecaseTreeNode.getPath()));
 			                usecaseTree.expandPath(treePath);
-						    INodeMap.put(usecaseTreeNode,(UseCaseNode) allnodes.get(0));
+			                
+			                NodeMap.put(usecaseTreeNode,(UseCaseNode) allnodes.get(0));
 						    mainFrame.renewPanel();
 						}
 							else {
@@ -386,12 +388,11 @@ public class UsecaseTreePanel extends JPanel implements Cloneable{
 						e1.printStackTrace();
 					}		
 					if(modelPanel.hashCode() == mainFrame.getActiveModelPanel().hashCode()){
-					Map<DefaultMutableTreeNode, UseCaseNode> INodeMap = mainFrame.getNodeMap();
                     INode node = EditSelectedBehavior.getselectNode();
                     if(node != null && node instanceof UseCaseNode)
                     {
                     	UseCaseNode useCaseNode = (UseCaseNode) node;
-                    	DefaultMutableTreeNode useceseTreeNode = getKey(INodeMap, useCaseNode);
+                    	DefaultMutableTreeNode useceseTreeNode = getKey(NodeMap, useCaseNode);
                     	useceseTreeNode.setUserObject(useCaseNode.getName().getText());
                     	usecaseTree.updateUI();
                     }
@@ -413,25 +414,28 @@ public class UsecaseTreePanel extends JPanel implements Cloneable{
 						INode removeNode = null;
 						AbstractGraph.lock.take();
 						if(modelPanel.hashCode() == mainFrame.getActiveModelPanel().hashCode()){
-						    Map<DefaultMutableTreeNode, UseCaseNode> INodeMap = mainFrame.getNodeMap();
+							
 							currentUsecaseWorkspace = ((WorkspacePanel)mainFrame.getCenterTabPanel().getComponent(0)).getWorkspace();//获取当前用例图workspace
 							currentUsecaseNode = getKey(getHashMap(), currentUsecaseWorkspace); //获取当前用例图树节点
 							nodes = mainFrame.getActiveWorkspace().getGraphFile().getGraph().getAllNodes();
-							Iterator iter = INodeMap.entrySet().iterator();	
+							Iterator iter = NodeMap.entrySet().iterator();	
 							while (iter.hasNext()) {
 								Map.Entry entry = (Map.Entry) iter.next();
 								DefaultMutableTreeNode useceseTreeNode = (DefaultMutableTreeNode) entry.getKey();
 								UseCaseNode useceseNode = (UseCaseNode) entry.getValue();
+								
+								System.out.println("name: " + useceseNode.getName().getText());
                                 if(!nodes.contains(useceseNode))
                                 {
                                 	removeTreeNode = useceseTreeNode;
                                 	removeNode = useceseNode;
                                 }
 								usecaseTree.repaint();
+								
 							}
 							if(removeTreeNode != null && removeNode!= null){
 								usecasetreemodel.removeNodeFromParent(removeTreeNode);
-	                        	INodeMap.remove(removeTreeNode);
+								NodeMap.remove(removeTreeNode);
 							}
 							mainFrame.renewPanel();
 						}
@@ -494,8 +498,9 @@ public class UsecaseTreePanel extends JPanel implements Cloneable{
 	public Map<DefaultMutableTreeNode, IWorkspace> getHashMap() {
 		return hashMap;
 	}
-//	public MouseListener getMouseListener()
-//	{
-//	    return this.mouseAdapter;
-//	}
+
+	public Map<DefaultMutableTreeNode, UseCaseNode> getNodeMap() {
+		return NodeMap;
+	}
+
 }

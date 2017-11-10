@@ -283,13 +283,13 @@ public class TcConvertUtil {
 					} else {
 						tStatus = "测试用例正确执行";
 					}
-
-					if ("1".equals(r[1])) {
-						eStatus = "不满足时间约束";
-					} else {
-						eStatus = "满足时间约束";
-					}
-					exeState = tStatus + ",且" + eStatus;
+					eStatus = "测试耗时:" + r[1] + " ms";
+//					if ("1".equals(r[1])) {
+//						eStatus = "不满足时间约束";
+//					} else {
+//						eStatus = "满足时间约束";
+//					}
+					exeState =  eStatus;
 				} else {
 					// 功能、性能
 					switch (Integer.valueOf(r[0])) {
@@ -356,27 +356,27 @@ public class TcConvertUtil {
 		}
 
 		// 性能测试除去多个0%
-		if (type == "Performance") {
-			//处理越界数据
-			for(int i=0;i<list.size();i++){
-				double battery=list.get(i).getResult().getBattery_remainingDouble();
-				if(battery>100){
-					list.get(i).getResult().setBattery_remaining(100);
-				}
-				else if(battery<0){
-					list.get(i).getResult().setBattery_remaining(0);
-				}
-			}
-			
-			// 处理多个0%
-			for (int i = 0; i < list.size() - 1; i++) {
-				if (list.get(i).getResult().getBattery_remaining().equals("0%")
-						&& list.get(i + 1).getResult().getBattery_remaining().equals("0%")) {
-					list.get(i).getResult().setBattery_remaining(1);
-				}
-
-			}
-		}
+//		if (type == "Performance") {
+//			//处理越界数据
+//			for(int i=0;i<list.size();i++){
+//				double battery=list.get(i).getResult().getBattery_remainingDouble();
+//				if(battery>100){
+//					list.get(i).getResult().setBattery_remaining(100);
+//				}
+//				else if(battery<0){
+//					list.get(i).getResult().setBattery_remaining(0);
+//				}
+//			}
+//			
+//			// 处理多个0%
+//			for (int i = 0; i < list.size() - 1; i++) {
+//				if (list.get(i).getResult().getBattery_remaining().equals("0%")
+//						&& list.get(i + 1).getResult().getBattery_remaining().equals("0%")) {
+//					list.get(i).getResult().setBattery_remaining(1);
+//				}
+//
+//			}
+//		}
 		
 		return list;
 	}

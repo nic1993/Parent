@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.io.IOException;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -33,9 +34,12 @@ public class TitlePanel extends JPanel{
 	}
 	private void init()
 	{
+		try {
 		picturePanel = new JPanel();				
 		leftlabelpanel = new JPanel();
-		iconPanel = new ImagePanel("resources/icons/72x72/steponeimage.png", 0, 0);
+		
+			iconPanel = new ImagePanel("resources/icons/72x72/steponeimage.png", 2, 2);
+		
 		Icon icon = new ImageIcon("resources/icons/72x72/violet.png");
 		iconPanel.setBackground(new Color(211,211,211));
 		iconLabel = new JLabel();
@@ -53,6 +57,10 @@ public class TitlePanel extends JPanel{
 //		leftlabelpanel.add(picturePanel, new GBC(0,0,1,2).setFill(GBC.BOTH));
 		leftlabelpanel.add(bigTitle, new GBC(0,0,1,1).setFill(GBC.BOTH).setInsets(10, 0, 0, 250));
 		leftlabelpanel.add(smallTitle, new GBC(0,1,1,1).setFill(GBC.BOTH).setInsets(17, 28, 0, 0));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	public JLabel getBigTitle() {
 		return bigTitle;

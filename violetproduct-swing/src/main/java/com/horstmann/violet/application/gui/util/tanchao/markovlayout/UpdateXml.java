@@ -4,22 +4,15 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
-import org.dom4j.tree.DefaultAttribute;
-
-
+import com.horstmann.violet.application.gui.MainFrame;
 import org.dom4j.io.XMLWriter;
-
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 
 public class UpdateXml {
 	String route;
@@ -28,12 +21,13 @@ public class UpdateXml {
 	SAXReader reader = new SAXReader();	
 	String filename;
 	String newFileName;
-	public UpdateXml(String route,String file,String newFileName) throws DocumentException
+	public UpdateXml(String route,String file,String newFileName,MainFrame mainFrame) throws DocumentException
 	{
 		this.route = route;
 		this.filename=file;
 		this.newFileName = newFileName;
-		dom=reader.read(new File(file));
+		File file2 = new File(file);
+		dom=reader.read(file2);    
 	}
     public void update() throws Exception{
 		
@@ -75,6 +69,7 @@ public class UpdateXml {
 		    	IT.next();
 		    	j++;//j代表着每个Template有几条边
 		    }
+		    
          A=new TestGraph(filename).init();
 //         System.out.println("A"+A.length);
          for (int I = 0; I < 2 * i; I+=2) {
@@ -235,7 +230,6 @@ public class UpdateXml {
 				
 				B[M][N]=B[N][M]=0;
 			}	
-//			System.out.println("=====: " + route+newFileName);
 		    XMLWriter writer = new XMLWriter(new FileOutputStream(route+newFileName),//("stabilize_run.xml"),
 		    OutputFormat.createPrettyPrint());	
 		    writer.write(dom);

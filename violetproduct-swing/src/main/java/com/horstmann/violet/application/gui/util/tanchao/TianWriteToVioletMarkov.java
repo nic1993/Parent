@@ -36,7 +36,7 @@ public class TianWriteToVioletMarkov {
     * @param path 读取文件的路径
     * @throws DocumentException
     */
-   public void find(String path) throws DocumentException{
+   public void find(String path) throws DocumentException{ 
 	   File file = new File(path);
 	   Document dom=reader.read(file);
 	   Element root= dom.getRootElement();

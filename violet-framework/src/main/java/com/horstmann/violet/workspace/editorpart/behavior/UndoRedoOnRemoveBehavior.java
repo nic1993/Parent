@@ -108,7 +108,6 @@ public class UndoRedoOnRemoveBehavior extends AbstractEditorPartBehavior
         List<INode> filteredNodes = removeChildren(nodesReallyRemoved);
         for (final INode aSelectedNode : filteredNodes)
         {
-
             UndoableEdit edit = new AbstractUndoableEdit()
             {
                 @Override
@@ -117,6 +116,7 @@ public class UndoRedoOnRemoveBehavior extends AbstractEditorPartBehavior
                     IGraph graph = editorPart.getGraph();
                     graph.addNode(aSelectedNode, aSelectedNode.getLocationOnGraph());
                     super.undo();
+                    
                 }
 
                 @Override
@@ -125,6 +125,8 @@ public class UndoRedoOnRemoveBehavior extends AbstractEditorPartBehavior
                     super.redo();
                     IGraph graph = editorPart.getGraph();
                     graph.removeNode(aSelectedNode);
+                    
+                    
                 }
             };
             capturedEdit.addEdit(edit);

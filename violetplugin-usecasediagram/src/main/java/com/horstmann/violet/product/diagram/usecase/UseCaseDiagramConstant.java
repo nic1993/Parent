@@ -1,8 +1,7 @@
 package com.horstmann.violet.product.diagram.usecase;
 
-public interface UseCaseDiagramConstant
-{
+public class UseCaseDiagramConstant {
 
-    public static final String USECASE_DIAGRAM_STRINGS = "properties.UseCaseDiagramGraphStrings";
-    
+	public static final String USECASE_DIAGRAM_STRINGS = "properties.UseCaseDiagramGraphStrings";;
+
 }

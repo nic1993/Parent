@@ -129,19 +129,12 @@ package com.horstmann.violet.application.gui.util.tanchao;
 
 import java.awt.Color;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-
-import com.horstmann.violet.application.gui.MainFrame;
-import com.horstmann.violet.application.gui.util.wujun.TDVerification.UppaalLocation;
 import com.horstmann.violet.application.gui.util.wujun.TDVerification.UppaalTransition;
 import com.horstmann.violet.product.diagram.abstracts.IColorable;
 import com.horstmann.violet.product.diagram.abstracts.IEdgeColorable;
-import com.horstmann.violet.product.diagram.abstracts.Id;
 import com.horstmann.violet.product.diagram.abstracts.edge.IEdge;
 import com.horstmann.violet.product.diagram.abstracts.node.INode;
-import com.horstmann.violet.product.diagram.uppaal.CircularNode;
-import com.horstmann.violet.product.diagram.uppaal.CircularStartNode;
 import com.horstmann.violet.product.diagram.uppaal.TransitionEdge;
 //用于改变迁移的颜色
 import com.horstmann.violet.workspace.IWorkspace;

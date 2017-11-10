@@ -1,21 +1,20 @@
 package com.horstmann.violet.application.gui.util.suna.TimeExtend;
 
 public class Arc {
-	private String name = null;            //迁移名
-	private String label = null;           //标签，分辨是prob还是time
-	private String time = null;            //迁移时间约束，迁移的属性label是time时，有time元素
+	private String name = null;            
+	private String label = null;           
+	private String time = null;            
 	private String type = null;
 	private String owned = null;
 	private String conditions = null;
 
-	private double prob;                   //迁移概率，迁移属性label为prob时，有prob元素
-	private Stimulate stimulate;           //迁移上约束载体，内涵约束表达式的相关信息
-	private String toStateName;            //目的节点名
-	private String fromStateName;          //源节点名
+	private double prob;                   
+	private Stimulate stimulate;           
+	private String toStateName;            
+	private String fromStateName;          
 	
 	public Arc(){}
 	
-	//重载Arc构造方法，用于在模型扩展时新建Arc;
     public Arc(String name,String targetName,double prob) {
         this.name = name;
         this.toStateName = targetName;

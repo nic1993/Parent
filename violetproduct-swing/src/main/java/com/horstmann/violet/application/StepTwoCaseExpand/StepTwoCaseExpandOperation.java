@@ -79,10 +79,10 @@ public class StepTwoCaseExpandOperation extends JPanel{
 	private JLabel toplabel;
 	private JPanel labelPanel;
 	private List<InterfaceIsogenySD> IISDList;
-	private List<String> relations;  //è·å–å…³ç³»é›†åˆ
+	private List<String> relations;  
 	private List<Double> relationsData;
-	private List<StepTwoMatrixPanel> MatrixPanels;  //åœºæ™¯æ‰©å±•
-	private List<StepTwoMatrixPanel> EvaluateMatrixPanels;  //æ¨¡å‹è¯„ä¼°
+	private List<StepTwoMatrixPanel> MatrixPanels;  
+	private List<StepTwoMatrixPanel> EvaluateMatrixPanels;  
 	private JPanel MatrixPanel;
 	private List<double[][]> tableDatas;
 	private Work worker;
@@ -147,18 +147,18 @@ public class StepTwoCaseExpandOperation extends JPanel{
 		relations = new ArrayList<String>();
 		relationsData = new ArrayList<Double>();
 		tableDatas = new ArrayList<double[][]>();
-		numberLabel = new JLabel("ç”¨æˆ·æ•°:");
-		numberLabel.setFont(new Font("å®‹ä½“", Font.PLAIN, 16));
+		numberLabel = new JLabel("ÓÃ»§Êı:");
+		numberLabel.setFont(new Font("ËÎÌå", Font.PLAIN, 16));
 		
 		numberTextField = new JTextField();
-		numberTextField.setFont(new Font("å®‹ä½“", Font.PLAIN, 16));
+		numberTextField.setFont(new Font("ËÎÌå", Font.PLAIN, 16));
 		numberTextField.setPreferredSize(new Dimension(30,30));
 		numberTextField.setMinimumSize(new Dimension(100, 30));
 		numberTextField.setMaximumSize(new Dimension(100, 30));
 		numberTextField.addCaretListener(new TextFieldInputListener());
 		
-		startExpandButton = new JButton("å¼€å§‹æ‰©å±•");
-		startVerificationButton = new JButton("å¼€å§‹éªŒè¯");
+		startExpandButton = new JButton("¿ªÊ¼À©Õ¹");
+		startVerificationButton = new JButton("¿ªÊ¼ÑéÖ¤");
 		startVerificationButton.setEnabled(false);
 		
 		verificationProgressBar = new JProgressBar();
@@ -185,7 +185,7 @@ public class StepTwoCaseExpandOperation extends JPanel{
 		};
 		
 		toplabel = new JLabel();
-		toplabel.setFont(new Font("å®‹ä½“", Font.PLAIN, 16));
+		toplabel.setFont(new Font("ËÎÌå", Font.PLAIN, 16));
 		labelPanel = new JPanel();
 		
 		otherPanel.setLayout(new GridBagLayout());
@@ -200,9 +200,6 @@ public class StepTwoCaseExpandOperation extends JPanel{
 		startVerificationButton.setEnabled(false);
 		
 		mainFrame.getsteponeButton().getExpandModelLabel().setEnabled(false);
-//		mainFrame.getStepTwoExpand().getEstimateLabel().setEnabled(false);
-//		mainFrame.getStepTwoExpand().getExchangeLabel().setEnabled(false);
-//		mainFrame.getStepTwoExpand().getExpandCaseModel().setEnabled(false);
 		
 		progressBarIndex = 0;
 		verificationProgressBar.setValue(0);
@@ -221,11 +218,17 @@ public class StepTwoCaseExpandOperation extends JPanel{
 							threadlist.get(step - 1).start();
 						}		
   					}
-  					else if(step != 2){
+  					else if( !futuretasklist.get(step-1).isDone()){
 							progressBarIndex++;
 							verificationProgressBar.setValue(verificationProgressBar.getValue()+1);	
+							Thread.sleep(100);
 					}
-  					Thread.sleep(100);
+  					else {
+  						progressBarIndex++;
+						verificationProgressBar.setValue(verificationProgressBar.getValue()+1);	
+						Thread.sleep(10);
+					}
+  					Thread.sleep(10); 
 				}
   				return progressBarIndex;
   			}
@@ -239,18 +242,19 @@ public class StepTwoCaseExpandOperation extends JPanel{
 			public Integer call() throws Exception {
 				// TODO Auto-generated method stub
 				toplabel.removeAll();
-			    toplabel.setText("æ­£åœ¨åˆå§‹åŒ–æ•°æ®.....");
+			    toplabel.setText("ÕıÔÚ³õÊ¼»¯Êı¾İ....");
 			    Thread.sleep(500);
 
 			    stepTwoCaseExpandTabbedPane.getValidationResults().removeAll();
 			    stepTwoCaseExpandTabbedPane.getValidationResults().updateUI();
 			    MatrixPanels.clear();
 			    EvaluateMatrixPanels.clear();				
+			    
 				for(InterfaceIsogenySD interfaceIsogenySD : IISDList)
 				{
+					List<InterfaceSD> ISDList = interfaceIsogenySD.getISDList();
 					relations.clear();
 					relationsData.clear();
-					List<InterfaceSD> ISDList = interfaceIsogenySD.getISDList();
 					if(ISDList.size() == 1)
 					{						
 						relations.add(ISDList.get(0).getName());
@@ -258,13 +262,13 @@ public class StepTwoCaseExpandOperation extends JPanel{
 						relationsData.add(1.0);
 						
 						toplabel.removeAll();
-					    toplabel.setText("æ­£åœ¨è®¡ç®—" + ISDList.get(0).getName()+"åœºæ™¯å‘ç”Ÿæ¦‚ç‡.....");
+					    toplabel.setText("ÕıÔÚ¼ÆËã" + ISDList.get(0).getName()+"³¡¾°·¢Éú¸ÅÂÊ....");
 					    
-					    StepTwoMatrixPanel stepTwoMatrixPanel = new StepTwoMatrixPanel();
-						stepTwoMatrixPanel.getTitleLabel().setText("ç”¨ä¾‹åç§°: "+ interfaceIsogenySD.getUcName());
+					    StepTwoMatrixPanel stepTwoMatrixPanel = new StepTwoMatrixPanel(mainFrame);
+						stepTwoMatrixPanel.getTitleLabel().setText("ÓÃÀıÃû³Æ: "+ interfaceIsogenySD.getUcName());
 						
-						StepTwoMatrixPanel stepTwoMatrixPanel1 = new StepTwoMatrixPanel();
-						stepTwoMatrixPanel1.getTitleLabel().setText("ç”¨ä¾‹åç§°: "+interfaceIsogenySD.getUcName());
+						StepTwoMatrixPanel stepTwoMatrixPanel1 = new StepTwoMatrixPanel(mainFrame);
+						stepTwoMatrixPanel1.getTitleLabel().setText("ÓÃÀıÃû³Æ: "+interfaceIsogenySD.getUcName());
 					    
 					    ScenceTabelPanel scenceTabelPanel = new ScenceTabelPanel(relations, relationsData, 2, mainFrame);
 					    stepTwoMatrixPanel.getTabelPanel().add(scenceTabelPanel);
@@ -300,10 +304,11 @@ public class StepTwoCaseExpandOperation extends JPanel{
 					   					if(!isDouble(table.getValueAt(row, column).toString()))
 					   					{
 					   						toplabel.removeAll();
-										    toplabel.setText("æ‰©å±•çŸ©é˜µç¬¬" + row + "è¡Œ" +" ç¬¬" + column + "åˆ—ä¸­æ•°æ®ä¸ºç©º!");
+					   						toplabel.setText("¼ÆËãÀ©Õ¹¾ØÕó³ö´í,Çë¼ì²éÌîĞ´µÄÀ©Õ¹¾ØÕó!");
 										    startVerificationButton.setEnabled(true);
 										    thread1.interrupt();
 										    mainthread.interrupt(); 
+										    mainFrame.renewPanel();
 										    break;
 					   					}
 					   					else {
@@ -320,7 +325,7 @@ public class StepTwoCaseExpandOperation extends JPanel{
 //						break;
 					if(tableDatas.size() > 0)
 					{
-						List list=worker.calculateProb(tableDatas); //å¸¦å…¥ç•Œé¢å¡«å†™çš„çŸ©é˜µæ•°ç»„é›†åˆï¼Œè¿”å›è®¡ç®—ç»“æœ
+						List list=worker.calculateProb(tableDatas); 
 						double[] datas = (double[]) list.get(1);
 						for(int k = 0; k < datas.length;k++)
 						{
@@ -328,25 +333,26 @@ public class StepTwoCaseExpandOperation extends JPanel{
 							relationsData.add(datas[k]);
 							
 							toplabel.removeAll();
-						    toplabel.setText("æ­£åœ¨è®¡ç®—" + ISDList.get(k).getName()+"åœºæ™¯å‘ç”Ÿæ¦‚ç‡.....");
-						    Thread.sleep(500);
+						    toplabel.setText("ÕıÔÚ¼ÆËã" + ISDList.get(k).getName()+"³¡¾°·¢Éú¸ÅÂÊ.....");
+						    Thread.sleep(200);
+						    mainFrame.renewPanel();
 						}
 						
-						StepTwoMatrixPanel stepTwoMatrixPanel = new StepTwoMatrixPanel();
-						stepTwoMatrixPanel.getTitleLabel().setText("ç”¨ä¾‹åç§°:"+interfaceIsogenySD.getUcName());
+						StepTwoMatrixPanel stepTwoMatrixPanel = new StepTwoMatrixPanel(mainFrame);
+						stepTwoMatrixPanel.getTitleLabel().setText("ÓÃÀıÃû³Æ:"+interfaceIsogenySD.getUcName());
 						ScenceTabelPanel scenceTabelPanel = new ScenceTabelPanel(relations, relationsData, 2, mainFrame);
 						stepTwoMatrixPanel.getTabelPanel().add(scenceTabelPanel);
 						MatrixPanels.add(stepTwoMatrixPanel);
 						
-						StepTwoMatrixPanel stepTwoMatrixPanel1 = new StepTwoMatrixPanel();
-						stepTwoMatrixPanel1.getTitleLabel().setText("ç”¨ä¾‹åç§°:"+interfaceIsogenySD.getUcName());
+						StepTwoMatrixPanel stepTwoMatrixPanel1 = new StepTwoMatrixPanel(mainFrame);
+						stepTwoMatrixPanel1.getTitleLabel().setText("ÓÃÀıÃû³Æ:"+interfaceIsogenySD.getUcName());
 						ScenceTabelPanel scenceTabelPanel1 = new ScenceTabelPanel(relations, relationsData, 2, mainFrame);
 						stepTwoMatrixPanel1.getTabelPanel().add(scenceTabelPanel1);
 						EvaluateMatrixPanels.add(stepTwoMatrixPanel1);
 						
 						tableDatas.clear();
-						
 					}
+					 mainFrame.renewPanel();
 				}
 				return 1;
 			}
@@ -360,18 +366,9 @@ public class StepTwoCaseExpandOperation extends JPanel{
 			public Integer call() throws Exception {
 				// TODO Auto-generated method stub
 				toplabel.removeAll();
-				toplabel.setText("æ­£åœ¨ç”Ÿæˆåœºæ™¯æ¦‚ç‡åˆ—è¡¨.....");
+				toplabel.setText("ÕıÔÚÉú³É³¡¾°¸ÅÂÊÁĞ±í....");
 				if(relations.size() > 0)
 				{
-					while (progressBarIndex <= 99) {
-				    	progressBarIndex++;
-						verificationProgressBar.setValue(progressBarIndex);
-						Thread.sleep(100);
-					}
-					progressBarIndex++;
-					verificationProgressBar.setValue(progressBarIndex);
-					
-
 					JPanel panel = new JPanel();
 					panel.setLayout(new GridBagLayout());
 					MatrixPanel = new JPanel();
@@ -390,27 +387,32 @@ public class StepTwoCaseExpandOperation extends JPanel{
 					stepTwoCaseExpandTabbedPane.setSelectedIndex(1);
 					
 					isFinish = true;
-					for(double data : relationsData)
-				    {
-				    	if(data <= 0.0 || data > 1.0)
-				    		isFinish = false;
-				    }
+					for(InterfaceIsogenySD interfaceIsogenySD : IISDList)
+					{
+						List<InterfaceSD> ISDList = interfaceIsogenySD.getISDList();
+						for(InterfaceSD interfaceSD : ISDList)
+						{
+							if(interfaceSD.getPro() <= 0.0 || interfaceSD.getPro() > 1.0)
+								isFinish = false;
+						}
+					}
+
 					if(isFinish == false)
 					{
 						toplabel.removeAll();
-						toplabel.setText("å¯¹"+Model_Name+"åœºæ™¯æ‰©å±•éªŒè¯ä¸é€šè¿‡,è¯·é‡æ–°å¡«å†™æ‰©å±•çŸ©é˜µ!");
+						toplabel.setText("¶Ô"+Model_Name+"³¡¾°À©Õ¹ÑéÖ¤²»Í¨¹ı,ÇëÖØĞÂÌîĞ´À©Õ¹¾ØÕó!");
 						mainFrame.getStepTwoExpand().getEstimateLabel().setEnabled(false);
 						mainFrame.getStepTwoExpand().getExpandCasePanel().repaint();
 						
 						startExpandButton.setEnabled(true);
 						mainFrame.getsteponeButton().getExpandModelLabel().setEnabled(true);
-						
+						mainFrame.renewPanel();
 					}
 					else {
 //						caseTabelMap.put(Model_Name, scenceTabelPanel);
 						
 						toplabel.removeAll();
-						toplabel.setText("å¯¹"+Model_Name+"åœºæ™¯æ‰©å±•éªŒè¯å®Œæˆ,å¯ä»¥å¯¹è¯¥æ¨¡å‹è¿›è¡Œä¸€è‡´æ€§éªŒè¯!");
+						toplabel.setText("¶Ô"+Model_Name+"³¡¾°À©Õ¹ÑéÖ¤Íê³É,¿ÉÒÔ¶Ô¸ÃÄ£ĞÍ½øĞĞÒ»ÖÂĞÔÑéÖ¤!");
 						mainFrame.getStepTwoExpand().getEstimateLabel().setEnabled(true);
 						mainFrame.getStepTwoEvaluateOperation().getEvaluateButton().setEnabled(true);
 						
@@ -418,6 +420,8 @@ public class StepTwoCaseExpandOperation extends JPanel{
 						ExpandNodeLabel expandNodeLabel = new ExpandNodeLabel(Model_Name,mainFrame);
 
 						caseExpandNodePanel.insertNodeLabel(expandNodeLabel,panel);
+						mainFrame.getsteponeButton().getExpandCasePanel().repaint();
+						
 						mainFrame.getStepTwoCaseExpandTabbedPane().setSelectedIndex(1);
 						
 						for(InterfaceIsogenySD interfaceIsogenySD : IISDList)
@@ -425,11 +429,12 @@ public class StepTwoCaseExpandOperation extends JPanel{
     						for(InterfaceSD interfaceSD : interfaceIsogenySD.getISDList())
     						{
     							
-    							mainFrame.getOutputinformation().geTextArea().append(interfaceSD.getName() + "åœºæ™¯æ¦‚ç‡: " + interfaceSD.getPro() + "\n");
+    							mainFrame.getOutputinformation().geTextArea().append(interfaceSD.getName() + "³¡¾°¸ÅÂÊ: " + interfaceSD.getPro() + "\n");
     	    					int length = mainFrame.getOutputinformation().geTextArea().getText().length(); 
     			                mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
     						}
     					}
+						mainFrame.renewPanel();
 					}		
 				}
 				startExpandButton.setEnabled(true);
@@ -458,43 +463,44 @@ public class StepTwoCaseExpandOperation extends JPanel{
 				isFinish = false;
 				isNeedExpand = false;
 				relations.clear();
-                IISDList=mainFrame.getStepTwoModelOperation().getIISDList();//è·å–ç”¨ä¾‹åœºæ™¯ä¿¡æ¯
+                IISDList=mainFrame.getStepTwoModelOperation().getIISDList();//»ñÈ¡ÓÃÀı³¡¾°ĞÅÏ¢
                 worker = mainFrame.getStepTwoModelOperation().getWorker();
                 
                if(numberTextField.getText().equals(""))
 				{ 
-				   //æ·»åŠ å¼¹å‡ºï¿½?
 					toplabel.removeAll();
-					toplabel.setText("è¯·å¡«å†™æ­£ç¡®çš„ç”¨æˆ·æ•°é‡!");
+					toplabel.setText("ÇëÌîĞ´ÕıÈ·µÄÓÃ»§ÊıÁ¿!");
 					mainFrame.getStepTwoModelOperation().updateUI();
+					mainFrame.renewPanel();
 				}
 				else {
 					stepTwoCaseExpandTabbedPane.getCaseExpandPanel().removeAll();
 					number = Integer.parseInt(numberTextField.getText());
                     int j = 0;
 					for(j = 0;j < number;++j){
-						int i = 0; //æ ‡è®°ä½ç½®
-						StepTwoTabelPanel stepTwoTabelPanel = new StepTwoTabelPanel();
-						stepTwoTabelPanel.getTitleLabel().setText("ç”¨æˆ·"+(j+1));
+						int i = 0; //±ê¼ÇÎ»ÖÃ
+						StepTwoTabelPanel stepTwoTabelPanel = new StepTwoTabelPanel(mainFrame);
+						stepTwoTabelPanel.getTitleLabel().setText("ÓÃ»§"+(j+1));
 						stepTwoTabelPanel.getTabelPanel().setLayout(new GridBagLayout());
 						for(InterfaceIsogenySD interfaceIsogenySD : IISDList)
 						{
 							if(interfaceIsogenySD.getISDList().size() > 1)
 							{
 								isNeedExpand = true;
-								relations.add(interfaceIsogenySD.getUcName());  //æ·»åŠ ç”¨ä¾‹åç§°
+								relations.add(interfaceIsogenySD.getUcName());  //Ìí¼ÓÓÃÀıÃû³Æ
 								List<InterfaceSD> ISDList = interfaceIsogenySD.getISDList();
 								for(InterfaceSD interfaceSD : ISDList)
 								{
-									relations.add(interfaceSD.getName()); //æ·»åŠ ç”¨ä¾‹åœºæ™¯åç§°
+									relations.add(interfaceSD.getName()); //Ìí¼ÓÓÃÀı³¡¾°Ãû³Æ
 								}
 								CaseExpandTable scenceTabelPanel = new CaseExpandTable(relations);
-								StepTwoMatrixPanel stepTwoMatrixPanel = new StepTwoMatrixPanel();
-								stepTwoMatrixPanel.getTitleLabel().setText("ç”¨ä¾‹åç§°:"+interfaceIsogenySD.getUcName());
+								StepTwoMatrixPanel stepTwoMatrixPanel = new StepTwoMatrixPanel(mainFrame);
+								stepTwoMatrixPanel.getTitleLabel().setText("ÓÃÀıÃû³Æ:"+interfaceIsogenySD.getUcName());
 								stepTwoMatrixPanel.getTabelPanel().add(scenceTabelPanel);
 								stepTwoTabelPanel.getTabelPanel().add(stepTwoMatrixPanel, new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
 								i++;
 								relations.clear();
+								mainFrame.renewPanel();
 							}
 						}
 					    stepTwoCaseExpandTabbedPane.getCaseExpandPanel().add(stepTwoTabelPanel,new GBC(0, j).setFill(GBC.BOTH).setWeight(1, 0));
@@ -503,20 +509,20 @@ public class StepTwoCaseExpandOperation extends JPanel{
 					stepTwoCaseExpandTabbedPane.getCaseExpandPanel().updateUI();
 					startVerificationButton.setEnabled(true);
 					toplabel.removeAll();
-					toplabel.setText(Model_Name+"ç”¨ä¾‹æ¨¡å‹è¿›è¡Œåœºæ™¯æ‰©å±•,å¡«å†™çŸ©é˜µå³å¯¹åŒæºåœºæ™¯è¿›è¡Œä¸¤ä¸¤å¯¹æ¯”æ‰“åˆ†,å¡«å†™å®Œæˆåè¿›è¡ŒéªŒè¯!");	
+					toplabel.setText(Model_Name+"ÓÃÀıÄ£ĞÍ½øĞĞ³¡¾°À©Õ¹,ÌîĞ´¾ØÕó¼´¶ÔÍ¬Ô´³¡¾°½øĞĞÁ½Á½¶Ô±È´ò·Ö,ÌîĞ´Íê³Éºó½øĞĞÑéÖ¤!");	
 					if(isNeedExpand == false)
 					{
 						stepTwoCaseExpandTabbedPane.getCaseExpandPanel().removeAll();
 						toplabel.removeAll();
-						toplabel.setText(Model_Name+"æ¨¡å‹ä¸éœ€è¦è¿›è¡Œåœºæ™¯æ‰©å±•ï¼Œå¯ä»¥ç›´æ¥è¿›è¡ŒéªŒè¯"); 
+						toplabel.setText(Model_Name+"Ä£ĞÍ²»ĞèÒª½øĞĞ³¡¾°À©Õ¹£¬¿ÉÒÔÖ±½Ó½øĞĞÑéÖ¤"); 
 					}
 					mainFrame.getStepTwoCaseExpandTabbedPane().setSelectedIndex(0);
 					mainFrame.getStepTwoCaseExpandTabbedPane().getValidationResults().removeAll();
 					mainFrame.getStepTwoEvaluateTabbedPane().getHomogeneityResults().removeAll();
 					mainFrame.getStepTwoExchangeTabbedPane().getExchangeResults().removeAll();
 					mainFrame.getStepTwoExchangeTabbedPane().getExchangeResport().removeAll();
-					mainFrame.getStepTwoEvaluateOperation().getTopLabel().setText("å½“å‰æ¨¡å‹ä¸º:"+Model_Name);
-					mainFrame.getStepTwoExchangeOperation().getToplabel().setText("å½“å‰æ¨¡å‹ä¸º:"+Model_Name);
+					mainFrame.getStepTwoEvaluateOperation().getTopLabel().setText("µ±Ç°Ä£ĞÍÎª:"+Model_Name);
+					mainFrame.getStepTwoExchangeOperation().getToplabel().setText("µ±Ç°Ä£ĞÍÎª:"+Model_Name);
 					
 					startExpandButton.setEnabled(false);
 					startVerificationButton.setEnabled(true);
@@ -533,76 +539,6 @@ public class StepTwoCaseExpandOperation extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-//				relations.clear();
-//				relationsData.clear();
-//				worker = mainFrame.getStepTwoModelOperation().getWorker();
-//				for(InterfaceIsogenySD interfaceIsogenySD : IISDList)
-//				{
-//					List<InterfaceSD> ISDList = interfaceIsogenySD.getISDList();
-//					if(ISDList.size() == 1)
-//					{
-//						relations.add(ISDList.get(0).getName());
-//						ISDList.get(0).setPro(1.0);
-//						relationsData.add(1.0);
-//					}
-//					else 
-//					{    
-//						for(InterfaceSD interfaceSD:ISDList)
-//						{
-//							relations.add(interfaceSD.getName());
-//						}
-//					   	 for(int i = 0;i <number;i++)
-//					   	 {
-//					   		 int location = getplace(interfaceIsogenySD.getUcName());
-//					   		 if(location != -1)
-//					   		 {
-//					   			JPanel panel = ((StepTwoTabelPanel) stepTwoCaseExpandTabbedPane.getCaseExpandPanel().getComponent(i)).getTabelPanel();
-//					   			JPanel tabelPanel = ((StepTwoMatrixPanel)panel.getComponent(location)).getTabelPanel();
-//					   			JTable table = ((ScenceTabelPanel)tabelPanel.getComponent(0)).getTable();
-//					   			int rows = table.getRowCount();
-//					   			int columns = table.getColumnCount();
-//					   			double a[][] = new double[rows][columns-1];
-//					   			for(int row = 0;row < rows;row++)
-//					   			{
-//					   				for(int column = 1;column < columns;column++)
-//					   				{
-//					   					a[row][column-1] = Double.parseDouble(table.getValueAt(row, column).toString());
-//					   				}
-//					   			}
-//					   			tableDatas.add(a);
-//					   		 }
-//					   	 }
-//					}
-//					if(tableDatas.size() > 0)
-//					{
-//						List list=worker.calculateProb(tableDatas); //å¸¦å…¥ç•Œé¢å¡«å†™çš„çŸ©é˜µæ•°ç»„é›†åˆï¼Œè¿”å›è®¡ç®—ç»“æœ
-//						double[] datas = (double[]) list.get(1);
-//						for(int k = 0; k < datas.length;k++)
-//						{
-//							System.out.println("++++:"+datas[k]);
-//							ISDList.get(k).setPro(datas[k]);
-//							relationsData.add(datas[k]);
-//						}
-//						tableDatas.clear();
-//					}
-//				}
-//				//ç”ŸæˆéªŒè¯æŠ¥å‘Š
-//				if(relations.size() > 0)
-//				{
-//					stepTwoCaseExpandTabbedPane.getValidationResults().removeAll();
-//					ScenceTabelPanel scenceTabelPanel = new ScenceTabelPanel(relations, relationsData,2);
-//					stepTwoCaseExpandTabbedPane.getValidationResults().add(scenceTabelPanel);
-//					caseTabelMap.put(mainFrame.getStepTwoModelOperation().getModel_name(), scenceTabelPanel);
-//					label.removeAll();
-//					label.setText("å¯¹Primaryç”¨ä¾‹æ‰©å±•éªŒè¯å®Œæˆ,å¯ä»¥å¯¹è¯¥æ¨¡å‹è¿›è¡Œä¸€è‡´æ€§éªŒè¯!");
-//
-//					worker.assignmentPro(IISDList);
-//					ExpandNodeLabel expandNodeLabel = new ExpandNodeLabel("Primary",mainFrame);
-//					expandNodeLabel.setOperationPanel(mainFrame.getStepTwoCaseOperation());
-//					expandNodeLabel.setResultPanel(scenceTabelPanel);
-//					expandNodeLabel.setCenterPanel((JPanel) mainFrame.getStepTwoCaseExpandTabbedPane().getCaseExpandPanel().getComponent(0));
-//					mainFrame.getStepTwoExpand().getExpandCasePanel().add(expandNodeLabel, new GBC(0, 0).setFill(GBC.BOTH).setWeight(1, 0).setInsets(5, 25, 0, 0));
-//				}	
 		    initThread();
 		    mainthread.start();
 		    thread1.start();
@@ -612,7 +548,7 @@ public class StepTwoCaseExpandOperation extends JPanel{
 	}	
 	
 
-	private static boolean isNumeric(String str){  //åˆ¤æ–­è¾“å…¥çš„æ˜¯å¦ä¸ºæ•°å­—å‡½æ•°
+	private static boolean isNumeric(String str){ //ÅĞ¶ÏÊäÈëµÄÊÇ·ñÎªÊı×Öº¯Êı
 		  for (int i = str.length();--i>=0;){    
 		   if (!Character.isDigit(str.charAt(i))){ 
 		    return false; 
@@ -647,18 +583,17 @@ public class StepTwoCaseExpandOperation extends JPanel{
 		 
 	    @Override
 	    public void caretUpdate(CaretEvent e) {
-	        JTextField textField = (JTextField) e.getSource(); // è·å¾—è§¦å‘äº‹ä»¶çš„ JTextField
+	        JTextField textField = (JTextField) e.getSource(); 
 	        final String text = textField.getText();
 	        if (text.length() == 0) {
 	            return;
 	        }
 	        char ch = text.charAt(text.length() - 1);
-	        if (!(ch >= '0' && ch <= '9') // æ•°å­—
-	               ) { // ä¸­æ–‡ï¼Œæœ€å¸¸ç”¨çš„èŒƒå›´æ˜¯ U+4E00ï½U+9FA5ï¼Œä¹Ÿæœ‰ä½¿ç”¨ U+4E00ï½ U+9FFF çš„ï¼Œä½†ç›®å‰ U+9FA6ï½U+9FFF ä¹‹é—´çš„å­—ç¬¦è¿˜å±äºç©ºç ï¼Œæš‚æ—¶è¿˜æœªå®šä¹‰ï¼Œä½†ä¸èƒ½ä¿è¯ä»¥åä¸ä¼šè¢«å®šä¹‰
+	        if (!(ch >= '0' && ch <= '9') 
+	               ) { 
 	            SwingUtilities.invokeLater(new Runnable() {
 	                @Override
 	                public void run() {
-	                    // å»æ‰ JTextField ä¸­çš„æœ«å°¾å­—ç¬¦
 	                    numberTextField.setText(text.substring(0, text.length() - 1));
 	                }
 	            });
@@ -668,10 +603,6 @@ public class StepTwoCaseExpandOperation extends JPanel{
 	public JPanel getOtherPanel(){
 		return otherPanel;
 	}
-//	public Map<String, ScenceTabelPanel> getCaseTabelMap() {
-//		return caseTabelMap;
-//	}
-	
 	public List<InterfaceIsogenySD> getIISDList() {
 		return IISDList;
 	}

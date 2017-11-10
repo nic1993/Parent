@@ -76,7 +76,7 @@ public class CreateUseCaseDiagramVioletXml {
 	 * @param root
 	 */
 	private  void createEdge(Element root) {
-		int k;//定义k来计算转换成平台xml时的id�??
+		int k;
 		Element edges =root.addElement("edges").addAttribute("id", l+1+"");
 		k=l+2;
 		for(int j =0;j<edgeList.size();j++){

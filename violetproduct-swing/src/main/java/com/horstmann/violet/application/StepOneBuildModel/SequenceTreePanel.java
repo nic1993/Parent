@@ -105,6 +105,8 @@ public class SequenceTreePanel extends JPanel{
 								mainFrame.getpanel().updateUI();
 								mainFrame.getReduceOrEnlargePanel().setLayout(new GridLayout(1, 1));
 								mainFrame.getReduceOrEnlargePanel().add(mainFrame.getstepOneCenterRightPanel());
+								
+								mainFrame.renewPanel();
 							}
 						});
 						
@@ -124,6 +126,8 @@ public class SequenceTreePanel extends JPanel{
 								mainFrame.getpanel().updateUI();
 								mainFrame.getReduceOrEnlargePanel().setLayout(new GridLayout(1, 1));
 								mainFrame.getReduceOrEnlargePanel().add(mainFrame.getstepOneCenterRightPanel());
+								
+								mainFrame.renewPanel();
 							}
 						});	
 					}
@@ -133,8 +137,9 @@ public class SequenceTreePanel extends JPanel{
 					{
 						popupMenu = new JPopupMenu();
 						newDiagram = new JMenuItem("É¾³ý     ",new ImageIcon("resources/icons/16x16/De.png"));
-						JMenuItem saveDiagram = new JMenuItem("±£´æ     ",new ImageIcon("resources/icons/16x16/De.png"));
+						JMenuItem saveDiagram = new JMenuItem("±£´æ     ",new ImageIcon("resources/icons/16x16/saveas.png"));
 						newDiagram.setAccelerator(KeyStroke.getKeyStroke('D', InputEvent.CTRL_MASK));
+						saveDiagram.setAccelerator(KeyStroke.getKeyStroke('S', InputEvent.CTRL_MASK));
 						popupMenu.add(newDiagram);
 						popupMenu.add(saveDiagram);
 						popupMenu.show(e.getComponent(), e.getX(), e.getY());
@@ -185,7 +190,19 @@ public class SequenceTreePanel extends JPanel{
 							@Override
 							public void actionPerformed(ActionEvent e) {
 								// TODO Auto-generated method stub
-								fileMenu.getItem(5).doClick();
+								IWorkspace saveWorkSpace = null;
+								int count = sequencetreerootnode.getChildCount();
+								String name = ((DefaultMutableTreeNode)sequencetree.getLastSelectedPathComponent()).getUserObject().toString();
+								for(IWorkspace workspace : modelPanel.getSequencespaceList())
+								{
+									if(workspace.getName().equals(name))
+									{
+										saveWorkSpace = workspace;
+									}
+								}
+								if(saveWorkSpace != null)
+								fileMenu.initFileSaveAsItem(saveWorkSpace);
+								mainFrame.renewPanel();
 							}
 						});
 					}
@@ -224,6 +241,7 @@ public class SequenceTreePanel extends JPanel{
 								 mainFrame.getpanel().updateUI();
 								 mainFrame.getReduceOrEnlargePanel().setLayout(new GridLayout(1, 1));
 								 mainFrame.getReduceOrEnlargePanel().add(mainFrame.getstepOneCenterRightPanel());
+								 mainFrame.renewPanel();
 							 }
 							 else if(isExist == false) {
 

@@ -36,37 +36,47 @@ public class ApplicationStopper
         if (ok)
         {
         	//É¾³ýÖ´ÐÐÎÄ¼þ
-        	File ucaseEAFile = new File(mainFrame.getBathRoute() + "/UseCaseDiagram"); 
-        	if(ucaseEAFile.listFiles() != null){
-        		for(File file : ucaseEAFile.listFiles())
-            	{
-            		file.delete();
-            	}
-        	}
-
-        	
-        	File seqEAFile = new File(mainFrame.getBathRoute() + "/SequenceDiagram"); 
-        	if(seqEAFile.listFiles() != null){
-        	for(File file : seqEAFile.listFiles())
+        	File[] files = new File(mainFrame.getBathRoute()).listFiles();
+        	for(File file : files)
         	{
-        		file.delete();
-        	}
+        		if(!file.getName().equals("TestCase") && !file.getName().equals("FailTestCase"))
+        		{
+        			DeleteFileUtil.delete(file.getAbsolutePath());
+        		}
         	}
         	
-        	File notimeMarkovFile = new File(mainFrame.getBathRoute() + "/NoTimeMarkov");
-        	if(notimeMarkovFile.listFiles() != null){
-        	for(File file : notimeMarkovFile.listFiles())
-        	{
-        		file.delete();
-        	}
-        	}
-        	File timeMarkovFile = new File(mainFrame.getBathRoute() + "/TimeMarkov");
-        	if(timeMarkovFile.listFiles() != null){
-        	for(File file : timeMarkovFile.listFiles())
-        	{
-        		file.delete();
-        	}
-        	}
+        	
+//        	File ucaseEAFile = new File(mainFrame.getBathRoute() + "/UseCaseDiagram"); 
+//        	if(ucaseEAFile.listFiles() != null){
+//        		for(File file : ucaseEAFile.listFiles())
+//            	{
+//            		file.delete();
+//            	}
+//        	}
+//
+//        	
+//        	File seqEAFile = new File(mainFrame.getBathRoute() + "/SequenceDiagram"); 
+//        	if(seqEAFile.listFiles() != null){
+//        	for(File file : seqEAFile.listFiles())
+//        	{
+//        		file.delete();
+//        	}
+//        	}
+//        	
+//        	File notimeMarkovFile = new File(mainFrame.getBathRoute() + "/NoTimeMarkov");
+//        	if(notimeMarkovFile.listFiles() != null){
+//        	for(File file : notimeMarkovFile.listFiles())
+//        	{
+//        		file.delete();
+//        	}
+//        	}
+//        	File timeMarkovFile = new File(mainFrame.getBathRoute() + "/TimeMarkov");
+//        	if(timeMarkovFile.listFiles() != null){
+//        	for(File file : timeMarkovFile.listFiles())
+//        	{
+//        		file.delete();
+//        	}
+//        	}
 //        	File testcaseFile = new File(mainFrame.getBathRoute() + "/TestCase");
 //        	if(testcaseFile.listFiles() != null){
 //        	for(File file : testcaseFile.listFiles())

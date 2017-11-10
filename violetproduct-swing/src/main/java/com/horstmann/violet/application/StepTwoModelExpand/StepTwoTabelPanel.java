@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.horstmann.violet.application.gui.GBC;
+import com.horstmann.violet.application.gui.MainFrame;
 
 public class StepTwoTabelPanel extends JPanel{
 	   private JPanel titlePanel;
@@ -22,8 +23,10 @@ public class StepTwoTabelPanel extends JPanel{
 	   private JPanel gapPanel;
 	   private JLabel reduceTabel; 
 	   private JPanel tabelPanel;
-	   public StepTwoTabelPanel()
+	   private MainFrame mainFrame;
+	   public StepTwoTabelPanel(MainFrame mainFrame)
 	   {
+		  this.mainFrame = mainFrame;
 		  initComponent();
 		  this.setLayout(new GridBagLayout());
 		  this.add(titlePanel, new GBC(0, 0).setFill(GBC.BOTH).setWeight(1, 0));
@@ -64,7 +67,8 @@ public class StepTwoTabelPanel extends JPanel{
 				   else {
 					   tabelPanel.setVisible(true);
 //					   reduceTabel.setIcon(new ImageIcon("resources/icons/16x16/down.png"));
-				}  
+				   }  
+				   mainFrame.renewPanel();
 			}
 		});   
 		   titlePanel.setLayout(new GridBagLayout());

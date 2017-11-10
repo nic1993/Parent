@@ -49,11 +49,13 @@ public class ExpandNodeLabel extends JLabel{
 				mainFrame.getStepTwoCaseExpandTabbedPane().getValidationResults().removeAll();
 				mainFrame.getStepTwoCaseExpandTabbedPane().getValidationResults().add(resultPanel);		
 				mainFrame.getStepTwoCaseExpandTabbedPane().setSelectedIndex(1);
+				mainFrame.getStepTwoCaseExpandTabbedPane().repaint();
 				for(ExpandNodeLabel expandNodeLabel : mainFrame.getStepTwoCaseOperation().getCaseExpandNodePanel().getExpandNodeLabels())
 				{
 					expandNodeLabel.setFont(new Font("ËÎÌו", Font.PLAIN, 16));
 				}
     			setFont(new Font("ËÎÌו", Font.BOLD, 16));
+    			mainFrame.renewPanel();
     		};
     		
 		});

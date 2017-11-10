@@ -24,7 +24,7 @@ public class CaseSuspension extends JPanel{
 	   private JPanel tabelPanel;
 	   public CaseSuspension()
 	   {
-		   initComponent();
+		  initComponent();
 		  this.setLayout(new GridBagLayout());
 		  this.add(titlePanel, new GBC(0, 0).setFill(GBC.BOTH).setWeight(1, 0));
 	   }

@@ -7,7 +7,13 @@ import org.dom4j.Element;
 
 public class RandomCase {
 
-	public static void getCase(List<Stimulate> oneCaseExtend, Element root) {
+	private HibernateUtils hibernateUtils;
+	public RandomCase()
+	{
+		hibernateUtils = new HibernateUtils();
+	}
+	
+	public void getCase(List<Stimulate> oneCaseExtend, Element root) {
 
 		Element tc = root.addElement("testcase");
 
@@ -115,8 +121,9 @@ public class RandomCase {
 			testCase = testCase.substring(0, testCase.length() - 2);
 		}
 //		System.out.println(testCase);
+		
 		TCDetail.getInstance().setTestCase(testCase);
 		// 此处插入mysql，插入对象为TCDetail.getinstance
-		HibernateUtils.saveTCDetail(TCDetail.getInstance());
+		hibernateUtils.saveTCDetail(TCDetail.getInstance());
 	}
 }

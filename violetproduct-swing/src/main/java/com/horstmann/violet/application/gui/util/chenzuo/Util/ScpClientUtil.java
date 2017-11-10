@@ -90,15 +90,11 @@ public class ScpClientUtil {
     }
 
 
-    public void getFile(String remoteFile, String localTargetDirectory) {
-        try {
+    public void getFile(String remoteFile, String localTargetDirectory) throws IOException{
             if(login()){
                 SCPClient client = new SCPClient(conn);
                 client.get(remoteFile, localTargetDirectory);
             }
-        } catch (IOException ex) {
-            Logger.getLogger(SCPClient.class.getName()).log(Level.SEVERE, null,ex);
-        }
     }
 
     public void putFile(String localFile, String remoteFileName,String remoteTargetDirectory,String mode) {

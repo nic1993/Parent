@@ -234,6 +234,8 @@ public class UndoRedoCompoundBehavior extends AbstractEditorPartBehavior
             undoManager.undo();
             editorPart.getSwingComponent().invalidate();
             editorPart.getSwingComponent().repaint();
+
+            System.out.println("=============");
         }
     }
 
@@ -247,6 +249,8 @@ public class UndoRedoCompoundBehavior extends AbstractEditorPartBehavior
             undoManager.redo();
             editorPart.getSwingComponent().invalidate();
             editorPart.getSwingComponent().repaint();
+            
+            System.out.println("++++++++++");
         }
     }
 

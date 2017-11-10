@@ -2,43 +2,15 @@ package com.horstmann.violet.application.StepFourTestCase;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Insets;
-import java.awt.LayoutManager;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
-import javax.swing.SwingConstants;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
-
-import org.eclipse.draw2d.FlowLayout;
-
-
-import com.horstmann.violet.application.StepOneBuildModel.UsecaseTreePanel;
 
 import com.horstmann.violet.application.gui.GBC;
 import com.horstmann.violet.application.gui.MainFrame;
-import com.horstmann.violet.application.menu.FileMenu;
+
 
 public class StepFourTestCase extends JPanel{
 
@@ -48,6 +20,7 @@ public class StepFourTestCase extends JPanel{
 	private JScrollPane scrollPane;
 	private static JPanel bottompanel;
 	private MainFrame mainFrame;
+	
 	public StepFourTestCase(MainFrame mainFrame)
 	{
 		this.mainFrame = mainFrame;	
@@ -81,5 +54,9 @@ public class StepFourTestCase extends JPanel{
     
 	public JLabel getExpandModelLabel() {
 		return testCaseLabel;
+	}
+	public NameRadionPanel getjRadionPanel() {
+		return jRadionPanel;
 	}	
+	
 }

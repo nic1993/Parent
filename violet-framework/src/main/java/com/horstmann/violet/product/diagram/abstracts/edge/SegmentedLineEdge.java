@@ -196,42 +196,6 @@ public abstract class SegmentedLineEdge extends ShapeEdge
      */
     public void setMiddleLabel(String newValue)
     {
-    	
-//    	if(endLabel.equals("extend"))
-//    	{
-//    		if(newValue != null)
-//    		{
-//        	if(newValue.trim().equals("?extend?") && newValue.trim().equals("«extend»") )
-//        	{
-//        		newValue = "«extend»";
-//        	}
-//        	else {
-//        		   if(newValue.trim().length() > 8){
-//        			   if(newValue.trim().substring(0, 8) == "?extend?" || newValue.trim().substring(0, 8).equals("«extend»"))
-//               		{
-//               			newValue.replace("?extend?", "«extend»");
-//               		}
-//        		   }
-//        		   else {
-//        			   newValue = "«extend»" + " " + newValue;
-//				}
-//    		}
-//    		}
-//        	else {
-//    			newValue = "«extend»" + " " + newValue;
-//    		}
-//    	}
-//    	if(endLabel != null)
-//    	{
-//    		if(endLabel.contains("EXTEND"))
-//    		{
-//    			if( newValue != "《EXTEND》" && !newValue.contains("《EXTEND》"))
-//    			{
-//    				newValue = "《EXTEND》" + newValue;
-//    			}
-//    		}
-//    	}
-    	
         middleLabel = newValue;
     }
 

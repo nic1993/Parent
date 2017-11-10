@@ -172,7 +172,7 @@ public class FileMenu extends JMenu
         initFileCloseItem();
         initFileRecentMenu();
         initFileSaveItem();
-        initFileSaveAsItem();
+//        initFileSaveAsItem();
         initFileExportMenu();
         initFilePrintItem();
         initFileExitItem();
@@ -335,24 +335,30 @@ public class FileMenu extends JMenu
     /**
      * Init 'save as' menu entry
      */
-    private void initFileSaveAsItem()
-    {
-        this.fileSaveAsItem.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                IWorkspace workspace = (Workspace) mainFrame.getActiveWorkspace();
-                if (workspace != null)
-                {
-                    IGraphFile graphFile = workspace.getGraphFile();
-                    graphFile.saveToNewLocation();
-                    userPreferencesService.addRecentFile(graphFile);
-                }
-            }
-        });
-        if (this.fileChooserService == null) this.fileSaveAsItem.setEnabled(false);
-    }
+//    private void initFileSaveAsItem()
+//    {
+//        this.fileSaveAsItem.addActionListener(new ActionListener()
+//        {
+//            public void actionPerformed(ActionEvent e)
+//            {
+//                IWorkspace workspace = (Workspace) mainFrame.getActiveWorkspace();
+//                if (workspace != null)
+//                {
+//                    IGraphFile graphFile = workspace.getGraphFile();
+//                    graphFile.saveToNewLocation();
+//                    userPreferencesService.addRecentFile(graphFile);
+//                }
+//            }
+//        });
+//        if (this.fileChooserService == null) this.fileSaveAsItem.setEnabled(false);
+//    }
 
+    public void initFileSaveAsItem(IWorkspace workspace)
+    {
+          IGraphFile graphFile = workspace.getGraphFile();
+          graphFile.saveToNewLocation();
+          
+    }
     /**
      * Init save menu entry
      */
@@ -606,7 +612,7 @@ public class FileMenu extends JMenu
    								UseCaseNode useCaseNode = (UseCaseNode)ucase;
    								String ucaseName = useCaseNode.getName().getText();
    								DefaultMutableTreeNode ucaseNode=new DefaultMutableTreeNode(ucaseName); //用例图节点
-   								mainFrame.getNodeMap().put(ucaseNode, (UseCaseNode) ucase);
+   								mainFrame.getActiveModelPanel().getUsecaseTreePanel().getNodeMap().put(ucaseNode, (UseCaseNode) ucase);
    								usecasetreemodel.insertNodeInto(ucaseNode, node, node.getChildCount());
    								List<String> sequenceNames = useCaseNode.getSceneConstraint().getSequenceName();
    								if(sequenceNames.size() != 0)
@@ -671,7 +677,7 @@ public class FileMenu extends JMenu
 								UseCaseNode useCaseNode = (UseCaseNode)ucase;
 								String ucaseName = useCaseNode.getName().getText();
 								DefaultMutableTreeNode ucaseNode=new DefaultMutableTreeNode(ucaseName); //用例图节点
-								mainFrame.getNodeMap().put(ucaseNode, (UseCaseNode) ucase);
+								mainFrame.getActiveModelPanel().getUsecaseTreePanel().getNodeMap().put(ucaseNode, (UseCaseNode) ucase);
 								usecasetreemodel.insertNodeInto(ucaseNode, node, node.getChildCount());
 								List<String> sequenceNames = useCaseNode.getSceneConstraint().getSequenceName();
 								if(sequenceNames.size() != 0)
@@ -1093,7 +1099,7 @@ public class FileMenu extends JMenu
           								UseCaseNode useCaseNode = (UseCaseNode)ucase;
           								String ucaseName = useCaseNode.getName().getText();
           								DefaultMutableTreeNode ucaseNode=new DefaultMutableTreeNode(ucaseName); //用例图节点
-          								mainFrame.getNodeMap().put(ucaseNode, (UseCaseNode) ucase);
+          								mainFrame.getActiveModelPanel().getUsecaseTreePanel().getNodeMap().put(ucaseNode, (UseCaseNode) ucase);
           								usecasetreemodel.insertNodeInto(ucaseNode, node, node.getChildCount());
           								List<String> sequenceNames = useCaseNode.getSceneConstraint().getSequenceName();
           								if(sequenceNames.size() != 0)
@@ -1172,7 +1178,7 @@ public class FileMenu extends JMenu
       								UseCaseNode useCaseNode = (UseCaseNode)ucase;
       								String ucaseName = useCaseNode.getName().getText();
       								DefaultMutableTreeNode ucaseNode=new DefaultMutableTreeNode(ucaseName); //用例图节点
-      								mainFrame.getNodeMap().put(ucaseNode, (UseCaseNode) ucase);
+      								mainFrame.getActiveModelPanel().getUsecaseTreePanel().getNodeMap().put(ucaseNode, (UseCaseNode) ucase);
       								usecasetreemodel.insertNodeInto(ucaseNode, node, node.getChildCount());
       								List<String> sequenceNames = useCaseNode.getSceneConstraint().getSequenceName();
       								if(sequenceNames.size() != 0)

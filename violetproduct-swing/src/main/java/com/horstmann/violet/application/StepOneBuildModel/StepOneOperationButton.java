@@ -204,6 +204,7 @@ public class StepOneOperationButton extends JPanel{
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
 				saveButton.setBorderPainted(false);
+				mainFrame.renewPanel();
 			}
 			
 			@Override
@@ -211,6 +212,7 @@ public class StepOneOperationButton extends JPanel{
 				// TODO Auto-generated method stub.
 				saveButton.setBorderPainted(true);
 				saveButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				mainFrame.renewPanel();
 			}
 			
 			@Override
@@ -251,6 +253,7 @@ public class StepOneOperationButton extends JPanel{
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
 				newButton.setBorderPainted(false);
+				mainFrame.renewPanel();
 			}
 			
 			@Override
@@ -258,6 +261,7 @@ public class StepOneOperationButton extends JPanel{
 				// TODO Auto-generated method stub
 				newButton.setBorderPainted(true);
 				newButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				mainFrame.renewPanel();
 			}
 			
 			@Override
@@ -296,6 +300,7 @@ public class StepOneOperationButton extends JPanel{
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
 				saveasButton.setBorderPainted(false);
+				mainFrame.renewPanel();
 			}
 			
 			@Override
@@ -303,6 +308,7 @@ public class StepOneOperationButton extends JPanel{
 				// TODO Auto-generated method stub
 				saveasButton.setBorderPainted(true);
 				saveasButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				mainFrame.renewPanel();
 			}
 			
 			@Override
@@ -339,6 +345,7 @@ public class StepOneOperationButton extends JPanel{
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
 				closeButton.setBorderPainted(false);
+				mainFrame.renewPanel();
 			}
 			
 			@Override
@@ -346,6 +353,7 @@ public class StepOneOperationButton extends JPanel{
 				// TODO Auto-generated method stub
 				closeButton.setBorderPainted(true);
 				closeButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				mainFrame.renewPanel();
 			}
 			
 			@Override

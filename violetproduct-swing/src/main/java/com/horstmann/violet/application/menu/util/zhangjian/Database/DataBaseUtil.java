@@ -21,6 +21,7 @@ public  class DataBaseUtil {
     public static final String password ="root";  
     public static Connection conn = null;  
     public static PreparedStatement pst = null;  
+    
     /**
      * 删除表中的所有数据
      * @param sql 删除语句： delete from 表名  where 1=1;

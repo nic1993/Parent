@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+
 import org.eclipse.draw2d.graph.DirectedGraph;
 import org.eclipse.draw2d.graph.DirectedGraphLayout;
 import org.eclipse.draw2d.graph.Edge;
@@ -30,10 +31,11 @@ public class TestGraph {
    public List edgeList=null;//边初始化
    DirectedGraph directedGraph=null;
    JGraph graph=null;
-   String filename;
-   
-   public TestGraph(String filename){
-	   this.filename=filename;
+   String filename = "";
+   public TestGraph(String name){
+	   
+	   this.filename=name;
+	   
    }
    
    public int[] init(){
@@ -45,24 +47,21 @@ public class TestGraph {
 	   ReadXml read=new ReadXml(filename);
 	   int i=0,I,J;
 	   String[] vertexID=read.getIdValue(filename);
-//	   System.out.println("vertexID---"+vertexID.length);
-//	   for(String a:vertexID){
-//		   System.out.print("a-----"+a+"  ");
-//	   }
+
 	   int vertexNum=read.getNodeNum(filename);
-//	   System.out.println("vertexNum----"+vertexNum);
+
 	   int edgeNum=read.getEdgeNum(filename);
-//	   System.out.println("edgeNum----"+edgeNum);
+
 	   List<EdgeBean> edgeBeanList=new ArrayList<EdgeBean>();
-	   List<NodeBean> list=new ArrayList<NodeBean>();//存储Node
-	   List<EdgeBean> List=new ArrayList<EdgeBean>();//存储edge
+	   List<NodeBean> list=new ArrayList<NodeBean>();
+	   List<EdgeBean> List=new ArrayList<EdgeBean>();
 	   int A[][]=read.find(filename);
 	   int B[]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 			   ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 			   ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 			   ,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-	   int flag=0;//表示回路边
-	   int Flag=0;//表示自己到自己的边
+	   int flag=0;
+	   int Flag=0;
 	   while(i<vertexNum){
 		   list.add(new NodeBean(vertexID[i]));
 		   i++;

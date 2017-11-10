@@ -165,98 +165,7 @@ public class NoTimeCaseOperation extends JPanel{
     	   maincallable = new Callable<Integer>() {
    			@Override
    			public Integer call() throws Exception {
-   				// TODO Auto-generated method stub
-//   				try {
-//   				button.setEnabled(false);
-//   				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(false);
-//   				mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(false);
-//   				mainFrame.getStepThreeLeftButton().getNoTimeSeq().setEnabled(false);
-//   				
-//				mainFrame.getStepThreeNoTimeTabbedPane().getTestData().removeAll();
-//				
-//				markov = mainFrame.getNoTimeSeqOperation().getMarkov();
-//				gc = mainFrame.getNoTimeSeqOperation().getGc();
-//				root = mainFrame.getNoTimeSeqOperation().getRoot();
-//				dom = mainFrame.getNoTimeSeqOperation().getDom();
-//				
-//   				progressBarIndex = 0;
-//				
-//				topLabel.removeAll();
-//				topLabel.setText("正在获取生成的抽象测试用例.....");
-//				Thread.sleep(100);
-//				
-//				Calculate.getAllTransValues(markov);
-//				
-//			    OutputFormat format = OutputFormat.createPrettyPrint();
-//			    XMLWriter writer = new XMLWriter(new FileOutputStream(
-//					mainFrame.getBathRoute()+"\\TestCase\\"+ModelName+"_相似度.xml"), format);
-//			    writer.write(dom);
-//			    writer.close();		
-//
-//			    
-//				List<TCDetail> lists = DataBaseUtil.showTCDetailAll("select * from tcdetail");
-//				i = 0;
-//				
-//				//生成测试数据
-//				mainFrame.getStepThreeNoTimeTabbedPane().getTestData().removeAll();
-//				
-//				CasePagePanel casePagePanel = new CasePagePanel(lists,mainFrame);
-//				mainFrame.getStepThreeNoTimeTabbedPane().getTestData().add(casePagePanel);
-//				
-//				JPanel TestDataPanel = new JPanel();
-//			
-//				for(TCDetail tcDetail : lists)
-//				{
-//					StepThreeTabelPanel testTabelPanel = new StepThreeTabelPanel(tcDetail.getTestCase(),2,mainFrame);
-//					
-////					mainFrame.getStepThreeNoTimeTabbedPane().getTestData().add(testTabelPanel2, new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
-//					
-//					casePagePanel.getCasePanel().add(testTabelPanel,
-//							new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
-//					
-//					mainFrame.getStepThreeNoTimeTabbedPane().getTestData().updateUI();
-//					mainFrame.getStepThreeNoTimeTabbedPane().getTestDataScroll().getVerticalScrollBar().setValue(
-//					mainFrame.getStepThreeNoTimeTabbedPane().getTestDataScroll().getVerticalScrollBar().getMaximum());
-//					i++;
-//					progressBar.setValue(60 + (int)(((double)i/lists.size())*40));
-//					
-//					topLabel.removeAll();
-//					topLabel.setText("正在生成第"+i+"条测试数据信息........");
-//					Thread.sleep(10);
-//					mainFrame.renewPanel();
-//				}
-//			    
-//				mainFrame.getStepThreeNoTimeTabbedPane().getTestData().add(new JPanel(), new GBC(0, i+1).setFill(GBC.BOTH).setWeight(1, 1));		
-//				mainFrame.getStepThreeNoTimeTabbedPane().getTestData().updateUI();
-//				mainFrame.renewPanel();
-//				
-//				button.setEnabled(true);
-//   				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
-//   				mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(true);
-//   				mainFrame.getStepThreeLeftButton().getNoTimeSeq().setEnabled(true);
-//				
-//				bigDecimal = new BigDecimal(markov.getDeviation());
-//				String ii = bigDecimal.toPlainString();
-//				double d = Double.valueOf(ii);
-//				topLabel.removeAll();
-//				topLabel.setText("测试用例信息生成完成,共生成"+lists.size() + "条测试用例。"+"  可靠性测试用例生成比率与使用模型实际使用概率平均偏差:"+df.format(d));
-//				
-//				NoTimeTestCaseNode noTimeTestCaseLabel = new NoTimeTestCaseNode(ModelName+"_相似度", mainFrame);
-//				quota = "测试用例信息生成完成,共生成"+lists.size() + "条测试用例。"+"  可靠性测试用例生成比率与使用模型实际使用概率平均偏差:"+df.format(d);
-//				noTimeTestCaseLabel.setQuota(quota);
-//				noTimeTestCaseLabel.setTestDataPanel(TestDataPanel);
-//				mainFrame.getStepThreeLeftButton().getNoTimeCaseNodePanel().insertNodeLabel(noTimeTestCaseLabel,TestDataPanel,quota);
-//   				} catch (RuntimeException e) {
-//					// TODO: handle exception
-//   					topLabel.removeAll();
-//   					topLabel.setText(e.getLocalizedMessage());
-//   					
-//   					button.setEnabled(true);
-//   	   				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
-//   	   				mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(true);
-//   	   				mainFrame.getStepThreeLeftButton().getNoTimeSeq().setEnabled(true);
-//				}
-   				
+   				// TODO Auto-generated method stub			
    				progressBarIndex = 0;
    				progressBar.setValue(0);
    				while (progressBarIndex < 40) {
@@ -306,20 +215,23 @@ public class NoTimeCaseOperation extends JPanel{
 	   				topLabel.removeAll();
 					topLabel.setText("正在生成测试数据信息.....");
 					
+					RandomCase randomCase = new RandomCase();
 					Calculate.getAllTransValues(markov);
 					for (int i = 0; i < gc.testCasesExtend.size(); i++) {
 						TCDetail.getInstance().setTestSequence(gc.abstractTS.get(i));
 						String stimulateSequence = getStimulateSeq(gc.testCasesExtend
 								.get(i));
 						TCDetail.getInstance().setStimulateSequence(stimulateSequence);
-						RandomCase.getCase(gc.testCasesExtend.get(i), root);
+						randomCase.getCase(gc.testCasesExtend.get(i), root);
 					}
 					
 				    OutputFormat format = OutputFormat.createPrettyPrint();
 				    XMLWriter writer = new XMLWriter(new FileOutputStream(
-					mainFrame.getBathRoute()+"\\TestCase\\"+ModelName+"_相似度#1.xml"), format);
+					mainFrame.getBathRoute()+"\\TestCase\\"+ModelName+"_Similarity#1.xml"), format);
 				    writer.write(dom);
 				    writer.close();	
+				    
+				    mainFrame.renewPanel();
 				}catch (RuntimeException e) {
 						// TODO: handle exception
 	   					topLabel.removeAll();
@@ -335,6 +247,7 @@ public class NoTimeCaseOperation extends JPanel{
 	   	   				mainFrame.getStepThreeLeftButton().getNoTimeSeq().setEnabled(true);
 	   	   				
 	   	   			    mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
+	   	   			    mainFrame.renewPanel();
 	   	   				
 					}
 				return 1;
@@ -352,7 +265,6 @@ public class NoTimeCaseOperation extends JPanel{
 				List<TCDetail> lists = DataBaseUtil.showTCDetailAll("select * from tcdetail");
 				
 				mainFrame.getStepThreeNoTimeTabbedPane().getTestData().removeAll();
-				
 				CasePagePanel casePagePanel = new CasePagePanel(lists,mainFrame);
 				mainFrame.getStepThreeNoTimeTabbedPane().getTestData().add(casePagePanel);
 				
@@ -378,6 +290,7 @@ public class NoTimeCaseOperation extends JPanel{
                     		casePagePanel.getCasePanel().add(testTabelPanel,
 								new GBC(0, j).setFill(GBC.BOTH).setWeight(1, 0));
                     		
+                    		casePagePanel.getCasePanel().repaint();
                     		mainFrame.getStepThreeNoTimeTabbedPane().getTestData().updateUI();
                     		
                     		progressBar.setValue(60 + (int) (((double) (j+1) / 500) * 60));
@@ -386,6 +299,8 @@ public class NoTimeCaseOperation extends JPanel{
                     	}
                     	casePagePanel.getPageTestField().setText("1");
 					
+                mainFrame.getStepThreeNoTimeTabbedPane().getTestData().removeAll();
+                mainFrame.getStepThreeNoTimeTabbedPane().getTestData().add(casePagePanel);
 				mainFrame.renewPanel();
 				
 				button.setEnabled(true);
@@ -397,13 +312,14 @@ public class NoTimeCaseOperation extends JPanel{
 				String ii = bigDecimal.toPlainString();
 				double d = Double.valueOf(ii);
 				topLabel.removeAll();
-				topLabel.setText("测试用例信息生成完成,共生成"+lists.size() + "条测试用例。"+"  可靠性测试用例生成比率与使用模型实际使用概率平均偏差:"+df.format(d));
+				topLabel.setText("测试用例生成完成, 共生成"+lists.size() + "条测试用例。"+"  可靠性测试用例生成比率与使用模型实际使用概率平均偏差:"+df.format(d));
 				
 				NoTimeTestCaseNode noTimeTestCaseLabel = new NoTimeTestCaseNode(ModelName+"_相似度", mainFrame);
-				quota = "测试用例信息生成完成,共生成"+lists.size() + "条测试用例。"+"  可靠性测试用例生成比率与使用模型实际使用概率平均偏差:"+df.format(d);
+				quota = "测试用例生成完成, 共生成"+lists.size() + "条测试用例。"+"  可靠性测试用例生成比率与使用模型实际使用概率平均偏差:"+df.format(d);
 				noTimeTestCaseLabel.setQuota(quota);
 				noTimeTestCaseLabel.setCasePagePanel(casePagePanel);
 				mainFrame.getStepThreeLeftButton().getNoTimeCaseNodePanel().insertNodeLabel(noTimeTestCaseLabel,casePagePanel,quota);
+				mainFrame.renewPanel();
 				}catch (Exception e) {
 					// TODO: handle exception
 					topLabel.removeAll();
@@ -415,6 +331,7 @@ public class NoTimeCaseOperation extends JPanel{
    	   				mainFrame.getStepThreeLeftButton().getNoTimeSeq().setEnabled(true);
    	   				
    	   			    mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
+   	   			    mainFrame.renewPanel();
 				}
 				
 				return 1;

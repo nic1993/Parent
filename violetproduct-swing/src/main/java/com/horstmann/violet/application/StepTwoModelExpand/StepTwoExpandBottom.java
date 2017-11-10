@@ -117,6 +117,12 @@ public class StepTwoExpandBottom extends JPanel{
 				mainFrame.getconsolepartPanel().add(mainFrame.getsteponebottmopanel());
 				
 				int step = mainFrame.getsteponeButton().getCurrentStep();
+				
+				if(step == 3 && !mainFrame.getsteponeButton().getExpandCaseModel().isEnabled())
+				{
+					step = 2;
+				}
+				
 				switch (step) {
 				case 1:
 					mainFrame.getCenterTabPanel().removeAll();
@@ -177,6 +183,16 @@ public class StepTwoExpandBottom extends JPanel{
 				
 				
 			    stepThree = mainFrame.getStepThreeLeftButton().getStepThree();
+			    if(stepThree == 2 || stepThree == 3 ||stepThree == 4 || stepThree == 5
+			    		 && !mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().isEnabled())
+			    {
+			    	stepThree = 1;
+			    	mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 18));
+			    }
+			    else if(!mainFrame.getStepThreeLeftButton().getTimeModelLabel().isEnabled()){
+			    	stepThree = 1;
+			    	mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 18));
+				}
 			    
 			    if(mainFrame.getStepTwoExchangeOperation().getModel_Name() != null){
 					if(mainFrame.getStepTwoExchangeOperation().isTime())

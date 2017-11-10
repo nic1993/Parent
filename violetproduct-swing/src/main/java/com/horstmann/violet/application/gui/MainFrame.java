@@ -1652,14 +1652,14 @@ public HomePanel getHomePanel()
 		return stepThreeBottom;
 	}
 
-	public JScrollPane getStepFourTestCase() {
+	public StepFourTestCase getStepFourTestCase() {
 		if(this.stepFourTestCase == null)
 		{
 			stepFourTestCase = new StepFourTestCase(this);
 			stepFourJScrollPane = new JScrollPane(stepFourTestCase);
 			stepFourJScrollPane.setBorder(null);
 		}
-		return stepFourJScrollPane;
+		return stepFourTestCase;
 	}
 	public NameRadionPanel getNameRadionPanel() {
 		if(this.nameRadionPanel == null)
@@ -1689,17 +1689,7 @@ public HomePanel getHomePanel()
 		}
 		return stepFourBottom;
 	} 
-	
-	
-	public Map<DefaultMutableTreeNode, UseCaseNode> getNodeMap() {
-		if(this.NodeMap == null)
-		{
-			NodeMap = new HashMap<DefaultMutableTreeNode,UseCaseNode>();
-		}
-		return NodeMap;
-	}
-    
-	
+
 
 	public List<ModelPanel> getModelPanels() {
 		return modelPanels;
@@ -1961,7 +1951,6 @@ public HomePanel getHomePanel()
     
     private StepFourBottom stepFourBottom;
     
-    private Map<DefaultMutableTreeNode, UseCaseNode> NodeMap;
     
     
 	/**

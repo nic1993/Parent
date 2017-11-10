@@ -229,13 +229,6 @@ public class StepOneButton extends JPanel{
 		mainFrame.getCenterTabPanel().removeAll();
 		
 	}
-//	public SequenceTreePanel getSequenceJtree() {
-//		return mainFrame.getsequencetree();
-//	}
-//	public UsecaseTreePanel getUseCaseJtree() {
-//		return mainFrame.getUsecaseTree();
-//	}
-	
 	public JPanel getTreePanel() {
 		return treePanel;
 	}

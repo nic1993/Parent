@@ -35,7 +35,7 @@ import com.horstmann.violet.product.diagram.abstracts.property.BentStyle;
 import com.horstmann.violet.product.diagram.abstracts.property.LineStyle;
 import com.horstmann.violet.product.diagram.common.NoteEdge;
 import com.horstmann.violet.product.diagram.common.NoteNode;
-
+import com.horstmann.violet.product.diagram.usecase.*;
 /**
  * A UML use case diagram.
  */
@@ -83,8 +83,7 @@ public class UseCaseDiagramGraph extends AbstractGraph
         extendRel.setBentStyle(BentStyle.STRAIGHT);
         extendRel.setLineStyle(LineStyle.DOTTED);
         extendRel.setEndArrowHead(ArrowHead.V);
-//        extendRel.setMiddleLabel("\u00ABextend\u00BB");
-        extendRel.setStartLabel("《EXTEND》");
+        extendRel.setStartLabel("EXTEND");
         extendRel.setToolTip(rs.getString("edge1.tooltip"));
         EDGE_PROTOTYPES.add(extendRel);
 
@@ -92,8 +91,7 @@ public class UseCaseDiagramGraph extends AbstractGraph
         includeRel.setBentStyle(BentStyle.STRAIGHT);
         includeRel.setLineStyle(LineStyle.DOTTED);
         includeRel.setEndArrowHead(ArrowHead.V);
-//        includeRel.setMiddleLabel("\u00ABinclude\u00BB");
-        includeRel.setStartLabel("《INCLUDE》");
+        includeRel.setStartLabel("INCLUDE");
         includeRel.setToolTip(rs.getString("edge2.tooltip"));
         EDGE_PROTOTYPES.add(includeRel);
 

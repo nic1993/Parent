@@ -19,8 +19,11 @@ import java.awt.event.AdjustmentListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -69,15 +72,21 @@ public class HeadTitle extends JPanel{
 		
 	}
 	public void initButton() {	
-		
+		try {
 		firstLabel = new JLabel();
 		secondLabel = new JLabel();
 		thirdLabel = new JLabel();
 		fourthLabel = new JLabel();
 		homebutton =new JButton();
 		rightPanel = new JPanel();
-		Icon openIcon = new ImageIcon("resources/icons/72x72/start.png");
+//		Icon openIcon = new ImageIcon("resources/icons/72x72/start.png");
+		File openFile = new File("resources/icons/72x72/start.png");
+		Icon openIcon;
+		
+			openIcon = new ImageIcon(ImageIO.read(openFile));
+		
 		homebutton.setIcon(openIcon);
+		
 		homebutton.setHorizontalTextPosition(SwingConstants.CENTER);
 		homebutton.setVerticalTextPosition(SwingConstants.BOTTOM);
 		homebutton.setFocusPainted(false);
@@ -85,7 +94,7 @@ public class HeadTitle extends JPanel{
 		homebutton.setContentAreaFilled(false);
 		homebutton.setBorderPainted(false);
 		homebutton.setFocusable(true);
-		rightpicturePanel = new ImagePanel("resources\\flowchart.png",0,0);
+		rightpicturePanel = new ImagePanel("resources\\flowchart.PNG",0,0);
 		leftpicturePanel = new JPanel(){
 		public void paint(Graphics g){
             super.paint(g);
@@ -102,7 +111,7 @@ public class HeadTitle extends JPanel{
 		rightpicturePanel.setBackground(Color.white);
 		rightPanel.setBackground(Color.white);
 		rightPanel.setLayout(new GridBagLayout());
-		rightPanel.add(rightpicturePanel,new GBC(0, 0).setFill(GBC.BOTH).setWeight(1, 1));
+		rightPanel.add(rightpicturePanel,new GBC(0, 0).setFill(GBC.BOTH).setWeight(1, 1).setInsets(10));
 		rightPanel.add(homebutton,new GBC(0, 1).setFill(GBC.VERTICAL).setInsets(10, 0, 20, 0));
 		
 		firstLabel.setText("第一步:UML模型的可靠性测试扩展");
@@ -128,6 +137,10 @@ public class HeadTitle extends JPanel{
 
 //		sequenceLabel = new JLabel("顺序图是将交互关系表示为一个二维图。纵向是时间轴，时间沿竖线向下延伸。横向轴代表了在协作中各独立对象的类元角色。");
 //		sequenceLabel = new JLabel("填写用例的迁移概率，即为当前用例执行完后后续满足条件用例的执行概率。");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	private void SetButtonListener() {
 		homebutton.addActionListener(new ActionListener() {

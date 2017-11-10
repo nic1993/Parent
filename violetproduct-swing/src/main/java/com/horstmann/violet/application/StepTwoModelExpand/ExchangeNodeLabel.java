@@ -65,6 +65,8 @@ public class ExchangeNodeLabel extends JLabel{
    					exchangeNodeLabel.setFont(new Font("ËÎÌו", Font.PLAIN, 16));
    				}
        			setFont(new Font("ËÎÌו", Font.BOLD, 16));
+       			
+       			mainFrame.renewPanel();
        		};
        		
    		});

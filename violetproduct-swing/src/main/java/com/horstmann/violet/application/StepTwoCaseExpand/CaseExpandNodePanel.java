@@ -33,8 +33,6 @@ public class CaseExpandNodePanel {
     	   {
     		   for(ExpandNodeLabel NodeLabel :expandNodeLabels)
     		   {
-    			   System.out.println("11: " + NodeLabel.getName());
-    			   System.out.println("22: " + expandNodeLabel.getName());
     			if(NodeLabel.getName().equals(expandNodeLabel.getName()))
     			{
     				NodeLabel.setResultPanel(panel);

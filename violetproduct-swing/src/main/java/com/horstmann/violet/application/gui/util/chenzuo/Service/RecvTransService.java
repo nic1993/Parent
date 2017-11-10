@@ -9,6 +9,7 @@ import com.horstmann.violet.application.gui.util.chenzuo.Util.FileUtil;
 import com.horstmann.violet.application.gui.util.chenzuo.Util.ScpClientUtil;
 
 import java.io.File;
+import java.util.Date;
 import java.util.concurrent.Callable;
 
 /**
@@ -33,14 +34,32 @@ public class RecvTransService implements Callable {
     	synchronized(RecvTransService.class){
     		String fileName = "result_" + node.getType() + "_" + id + ".txt";
             String fileName1 = "result_"+node.getIp().split("\\.")[3]+"_" + node.getType() + "_" + id + ".txt";
-            
-            System.out.println(fileName+" - "+fileName1);
+
             
             long l = System.currentTimeMillis();
-            scpclient.getFile(FileUtil.REMOTE_RS_PATH + fileName, FileUtil.LOCAL_TARGET_PATH);
+            int flag = 0;
+            for(;;){
+            	try {
+            		scpclient.getFile(FileUtil.REMOTE_RS_PATH + fileName, FileUtil.LOCAL_TARGET_PATH);
+				} catch (Exception e) {
+					// TODO: handle exception
+					flag = 1;
+				}
+            	if (flag == 0) {
+					break;
+				}
+            }
             
-            File file=new File(FileUtil.LOCAL_TARGET_PATH+fileName);
-            file.renameTo(new File(FileUtil.LOCAL_TARGET_PATH+fileName1));
+            for(;;){
+            	File file=new File(FileUtil.LOCAL_TARGET_PATH+fileName);
+                file.renameTo(new File(FileUtil.LOCAL_TARGET_PATH+fileName1));
+                
+                File newfile=new File(FileUtil.LOCAL_TARGET_PATH+fileName1);
+                if(newfile.exists()){
+                	break;
+                }
+                System.out.println(FileUtil.LOCAL_TARGET_PATH+fileName+" - - "+FileUtil.LOCAL_TARGET_PATH+fileName1);
+            }
             
             logger.debug(node.getIp()+" file " + id + " get ok,cost time is:" + (System.currentTimeMillis() - l) + " ms");
 
@@ -62,8 +81,13 @@ public class RecvTransService implements Callable {
     }
 
     @Override
-    public Object call() throws Exception {
-        recvRSFile();
+    public Object call() {
+    	try {
+    		recvRSFile();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+        
         return null;
     }
 }

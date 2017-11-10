@@ -11,8 +11,7 @@ import com.horstmann.violet.application.gui.DisplayForm;
 
 public class Calculate {
 
-	public static void getAllTransValues(Markov markov) {
-
+	public static void getAllTransValues(Markov markov) {	
 		for (State state : markov.getStates()) {
 			// System.out.println(state.getOutTransitions().size());
 			for (Transition t : state.getOutTransitions()) {

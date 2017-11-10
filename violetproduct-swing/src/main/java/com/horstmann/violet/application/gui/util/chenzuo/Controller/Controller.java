@@ -37,7 +37,7 @@ public class Controller {
 
     private static Logger logger = Logger.getLogger(Controller.class);
 
-    private static long MAX_FILE_SIZE = 10 * 1024 * 1024;
+    private static long MAX_FILE_SIZE = 5 * 1024 * 1024;
     // deploy
     private static IPDeploy IP_TYPE_DEPLOY = new IPDeploy();
     // thread pool
@@ -117,6 +117,8 @@ public class Controller {
         handFutureList=new ArrayList<>();
         
         if ((nodes = IP_TYPE_DEPLOY.findNodeFree(num)) != null) {
+        	
+        	System.out.println("nodes length: " + nodes.size());
             for (IPNode node : nodes) {
                 node.setType(type);
                 
@@ -185,9 +187,7 @@ public class Controller {
     	
         try {
             // deploy, distribute and accept
-        	System.out.println("--------------------*******************");
             handleMapping(data);
-            System.out.println("++++++++++++++++++++++++---------------");
         } catch (Exception e) {
             logger.error(e.getMessage());
 		} finally {

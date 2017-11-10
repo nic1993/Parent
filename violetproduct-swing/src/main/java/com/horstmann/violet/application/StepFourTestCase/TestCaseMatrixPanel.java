@@ -21,6 +21,7 @@ import javax.swing.JTable;
 import org.junit.Test.None;
 
 import com.horstmann.violet.application.gui.GBC;
+import com.horstmann.violet.application.gui.MainFrame;
 
 public class TestCaseMatrixPanel extends JPanel{
 	   private JPanel titlePanel;
@@ -28,8 +29,10 @@ public class TestCaseMatrixPanel extends JPanel{
 	   private JPanel gapPanel;
 	   private JLabel reduceTabel; 
 	   private JPanel tabelPanel;
-	   public TestCaseMatrixPanel()
+	   private MainFrame mainFrame;
+	   public TestCaseMatrixPanel(MainFrame mainFrame)
 	   {
+		   this.mainFrame = mainFrame;
 		   initComponent();
 //		  this.setBackground(Color.green);
 		  this.setLayout(new GridBagLayout());
@@ -79,7 +82,8 @@ public class TestCaseMatrixPanel extends JPanel{
 				   else {
 					   tabelPanel.setVisible(true);
 				}
-  
+				   mainFrame.renewPanel();
+ 
 			}
 		});   
 		   titlePanel.setLayout(new GridBagLayout());

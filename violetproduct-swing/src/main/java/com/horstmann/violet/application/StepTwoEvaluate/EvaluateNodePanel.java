@@ -44,7 +44,6 @@ public class EvaluateNodePanel {
     	   }
     	   if(isExist == false)
     	   {
-			   System.out.println("22: " + evaluateNodeLabel.getName());
     		   evaluateNodeLabel.setHomogeneityPanel(HomogeneityPanel);
     		   evaluateNodeLabel.setCertaintyPanel(CertaintyPanel);
     		   evaluateNodeLabel.setAccessibilityPanel(AccessibilityPanel);

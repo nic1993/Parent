@@ -3,6 +3,8 @@ package com.horstmann.violet.application.menu.xiaole.SequenceTransfrom;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.dom4j.Element;
+
 public class LifeLineNodeInfo implements Comparable{
 
 	private String Id;
@@ -12,6 +14,8 @@ public class LifeLineNodeInfo implements Comparable{
 	private List<ActivationBarNodeInfo> activationBarNodes=new ArrayList<ActivationBarNodeInfo>();
 	private List<CallEdgeInfo> callEdges = new ArrayList<CallEdgeInfo>(); 
     private List<ReturnEdgeInfo> returnEdges = new ArrayList<ReturnEdgeInfo>(); 
+    
+    private List<Element> elements = new ArrayList<Element>();
 	public String getId() {
 		return Id;
 	}
@@ -54,6 +58,14 @@ public class LifeLineNodeInfo implements Comparable{
 	}
 	public void setReturnEdges(List<ReturnEdgeInfo> returnEdges) {
 		this.returnEdges = returnEdges;
+	}
+	
+	
+	public List<Element> getElements() {
+		return elements;
+	}
+	public void setElements(List<Element> elements) {
+		this.elements = elements;
 	}
 	@Override
 	public int compareTo(Object o) {

@@ -3,7 +3,6 @@ package com.horstmann.violet.application.gui.util.tanchao;
 import java.io.File;
 import java.io.IOException;
 
-import com.horstmann.violet.application.gui.util.tanchao.markovlayout.PathProp;
 import com.horstmann.violet.framework.file.GraphFile;
 import com.horstmann.violet.framework.file.IFile;
 import com.horstmann.violet.framework.file.LocalFile;

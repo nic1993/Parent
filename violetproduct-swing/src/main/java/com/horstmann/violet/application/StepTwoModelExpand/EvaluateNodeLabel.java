@@ -57,6 +57,8 @@ public class EvaluateNodeLabel extends JLabel{
    					evaluateNodeLabel.setFont(new Font("ËÎÌו", Font.PLAIN, 16));
    				}
        			setFont(new Font("ËÎÌו", Font.BOLD, 16));
+       			
+       			mainFrame.renewPanel();
        		};
        		
    		});

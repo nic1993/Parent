@@ -86,7 +86,7 @@ public class ShowMenuOnRightClickBehavior extends AbstractEditorPartBehavior
                 found.get(0).undo();
             }
         });
-        aPopupMenu.add(undo);
+//        aPopupMenu.add(undo);
 
         redo.addActionListener(new ActionListener()
         {
@@ -100,7 +100,7 @@ public class ShowMenuOnRightClickBehavior extends AbstractEditorPartBehavior
                 found.get(0).redo();
             }
         });
-        aPopupMenu.add(redo);
+//        aPopupMenu.add(redo);
 
         properties.addActionListener(new ActionListener()
         {

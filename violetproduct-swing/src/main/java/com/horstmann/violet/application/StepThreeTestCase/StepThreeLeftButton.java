@@ -388,105 +388,109 @@ public class StepThreeLeftButton extends JPanel{
 		noTimeSeq.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub				
-				noTimeSeq.setFont(new Font("微软雅黑", Font.BOLD, 16));
-				noTimeCase.setFont(new Font("微软雅黑", Font.PLAIN, 16));
+				// TODO Auto-generated method stub	
+				if(((JLabel)e.getSource()).isEnabled())
+				{
+					noTimeSeq.setFont(new Font("微软雅黑", Font.BOLD, 16));
+					noTimeCase.setFont(new Font("微软雅黑", Font.PLAIN, 16));
 
-				noTimeSeqNode.setVisible(true);
-				noTimeNode.setVisible(false);
-				clearPanel();		
-				
-				if(mainFrame.getStepThreeChoosePattern().getselectString() == null)
-				{
-					stepThree = 2;
-					mainFrame.getOutputinformation().setVisible(true);
-					mainFrame.getReduceOrEnlargePanel().setVisible(true);
-					mainFrame.getpanel().setVisible(true);
+					noTimeSeqNode.setVisible(true);
+					noTimeNode.setVisible(false);
+					clearPanel();		
 					
-					mainFrame.getpanel().add(mainFrame.getNoTimeSeqOperation());
-					mainFrame.getNoTimeSeqOperation().getTopLabel().setText("请选择测试数据生成方式!");
-					mainFrame.getNoTimeSeqOperation().getButton().setEnabled(false);
-					mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeNoTimeSeqTabbedPane());
-					mainFrame.getStepTwoCenterRightPanel().getGraphButton().setVisible(false);
-					mainFrame.getStepTwoCenterRightPanel().getZoominButton().setVisible(false);
-					mainFrame.getStepTwoCenterRightPanel().getZoomoutButton().setVisible(false);
-					
-				}
-				else if(mainFrame.getStepThreeChoosePattern().getselectString().equals("根据模型相似度生成"))
-				{
-					stepThree = 2;
-					mainFrame.getOutputinformation().setVisible(true);
-					mainFrame.getReduceOrEnlargePanel().setVisible(true);
-					mainFrame.getpanel().setVisible(true);
-					mainFrame.renewPanel();
-					
-					mainFrame.getpanel().add(mainFrame.getNoTimeSeqOperation());
-					if(isNew == true && ModelName != null){
-						mainFrame.getNoTimeSeqOperation().getTopLabel().setText("当前选择的模型为:"+ModelName);
-						mainFrame.getNoTimeSeqOperation().getButton().setEnabled(true);
-					}
-					if(ModelName == null)
+					if(mainFrame.getStepThreeChoosePattern().getselectString() == null)
 					{
-						mainFrame.getNoTimeSeqOperation().getTopLabel().setText("当前选择的模型为:"+ModelName);
-						mainFrame.getNoTimeSeqOperation().getButton().setEnabled(false);
-					}
-					else {
-						mainFrame.getNoTimeSeqOperation().getButton().setEnabled(true);
-					}
-					mainFrame.getpanel().updateUI();
-					
-					mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeNoTimeSeqTabbedPane());
-					mainFrame.getStepTwoCenterRightPanel().getGraphButton().setVisible(false);
-					mainFrame.getStepTwoCenterRightPanel().getZoominButton().setVisible(false);
-					mainFrame.getStepTwoCenterRightPanel().getZoomoutButton().setVisible(false);
-				}
-				else{
-					try {
-					stepThree = 3;
-					File files = new File(mainFrame.getBathRoute()+"/NoTimeMarkov/");
-					if(isNew == true && ModelName != null){
-						mainFrame.getNoTimeSeqOperation1().getTopLabel().setText("当前选择的模型为:"+ModelName);
+						stepThree = 2;
+						mainFrame.getOutputinformation().setVisible(true);
+						mainFrame.getReduceOrEnlargePanel().setVisible(true);
+						mainFrame.getpanel().setVisible(true);
 						
-						for(File selectFile : files.listFiles())
-						{
-							if(selectFile.getName().contains(ModelName))
-								route = selectFile.getAbsolutePath();
+						mainFrame.getpanel().add(mainFrame.getNoTimeSeqOperation());
+						mainFrame.getNoTimeSeqOperation().getTopLabel().setText("请选择测试数据生成方式!");
+						mainFrame.getNoTimeSeqOperation().getButton().setEnabled(false);
+						mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeNoTimeSeqTabbedPane());
+						mainFrame.getStepTwoCenterRightPanel().getGraphButton().setVisible(false);
+						mainFrame.getStepTwoCenterRightPanel().getZoominButton().setVisible(false);
+						mainFrame.getStepTwoCenterRightPanel().getZoomoutButton().setVisible(false);
+						
+					}
+					else if(mainFrame.getStepThreeChoosePattern().getselectString().equals("根据模型相似度生成"))
+					{
+						stepThree = 2;
+						mainFrame.getOutputinformation().setVisible(true);
+						mainFrame.getReduceOrEnlargePanel().setVisible(true);
+						mainFrame.getpanel().setVisible(true);
+						mainFrame.renewPanel();
+						
+						mainFrame.getpanel().add(mainFrame.getNoTimeSeqOperation());
+						if(isNew == true && ModelName != null){
+							mainFrame.getNoTimeSeqOperation().getTopLabel().setText("当前选择的模型为:"+ModelName);
+							mainFrame.getNoTimeSeqOperation().getButton().setEnabled(true);
 						}
-						if(mainFrame.getStepThreeChoosePattern().getReliabilityIndex() == null || 
-								mainFrame.getStepThreeChoosePattern().getConfidence() == null)
+						if(ModelName == null)
 						{
-							mainFrame.getNoTimeSeqOperation1().getLabel2().removeAll();
-						    mainFrame.getNoTimeSeqOperation1().getLabel2().setText("请在自定义生成测试用例方式中填写置信度与可靠性指标！");
-						    mainFrame.getNoTimeSeqOperation1().getButton().setEnabled(false);
+							mainFrame.getNoTimeSeqOperation().getTopLabel().setText("当前选择的模型为:"+ModelName);
+							mainFrame.getNoTimeSeqOperation().getButton().setEnabled(false);
 						}
 						else {
-							mainFrame.getNoTimeSeqOperation1().getButton().setEnabled(true);
-							p = mainFrame.getStepThreeChoosePattern().getReliabilityIndex();
-							c = mainFrame.getStepThreeChoosePattern().getConfidence();
-							rm = new ReadMarkov2();
-							markov = rm.readMarkov(route);
-							min = getMinTCNum(markov,p,c);
-							mainFrame.getNoTimeSeqOperation1().getLabel2().removeAll();
-							mainFrame.getNoTimeSeqOperation1().getLabel2().setText("(不少于)"+String.valueOf(min)+"条");
+							mainFrame.getNoTimeSeqOperation().getButton().setEnabled(true);
+						}
+						mainFrame.getpanel().updateUI();
+						
+						mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeNoTimeSeqTabbedPane());
+						mainFrame.getStepTwoCenterRightPanel().getGraphButton().setVisible(false);
+						mainFrame.getStepTwoCenterRightPanel().getZoominButton().setVisible(false);
+						mainFrame.getStepTwoCenterRightPanel().getZoomoutButton().setVisible(false);
+					}
+					else{
+						try {
+						stepThree = 3;
+						File files = new File(mainFrame.getBathRoute()+"/NoTimeMarkov/");
+						if(isNew == true && ModelName != null){
+							mainFrame.getNoTimeSeqOperation1().getTopLabel().setText("当前选择的模型为:"+ModelName);
+							
+							for(File selectFile : files.listFiles())
+							{
+								if(selectFile.getName().contains(ModelName))
+									route = selectFile.getAbsolutePath();
+							}
+							if(mainFrame.getStepThreeChoosePattern().getReliabilityIndex() == null || 
+									mainFrame.getStepThreeChoosePattern().getConfidence() == null)
+							{
+								mainFrame.getNoTimeSeqOperation1().getLabel2().removeAll();
+							    mainFrame.getNoTimeSeqOperation1().getLabel2().setText("请在自定义生成测试用例方式中填写置信度与可靠性指标！");
+							    mainFrame.getNoTimeSeqOperation1().getButton().setEnabled(false);
+							}
+							else {
+								mainFrame.getNoTimeSeqOperation1().getButton().setEnabled(true);
+								p = mainFrame.getStepThreeChoosePattern().getReliabilityIndex();
+								c = mainFrame.getStepThreeChoosePattern().getConfidence();
+								rm = new ReadMarkov2();
+								markov = rm.readMarkov(route);
+								min = getMinTCNum(markov,p,c);
+								mainFrame.getNoTimeSeqOperation1().getLabel2().removeAll();
+								mainFrame.getNoTimeSeqOperation1().getLabel2().setText("(不少于)"+String.valueOf(min)+"条");
+							}
+						}
+						else if(ModelName == null){
+							mainFrame.getNoTimeSeqOperation1().getTopLabel().setText("当前选择的模型为:"+ModelName);
+							mainFrame.getNoTimeSeqOperation1().getButton().setEnabled(false);
+						}
+
+						clearPanel();
+						mainFrame.getpanel().add(mainFrame.getNoTimeSeqOperation1());
+						
+						mainFrame.getpanel().updateUI();	
+						mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeNoTimeSeqTabbedPane());
+						mainFrame.getCenterTabPanel().updateUI();
+						mainFrame.renewPanel();
+						} catch (Exception e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
 						}
 					}
-					else if(ModelName == null){
-						mainFrame.getNoTimeSeqOperation1().getTopLabel().setText("当前选择的模型为:"+ModelName);
-						mainFrame.getNoTimeSeqOperation1().getButton().setEnabled(false);
-					}
-
-					clearPanel();
-					mainFrame.getpanel().add(mainFrame.getNoTimeSeqOperation1());
+				}
 					
-					mainFrame.getpanel().updateUI();	
-					mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeNoTimeSeqTabbedPane());
-					mainFrame.getCenterTabPanel().updateUI();
-					mainFrame.renewPanel();
-					} catch (Exception e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				}	
 			}
 		});
 		
@@ -526,6 +530,8 @@ public class StepThreeLeftButton extends JPanel{
 							if(isNew == true && ModelName != null){
 								mainFrame.getNoTimeCaseOperation1().getTopLabel().setText("当前选择的模型为:"+ModelName);
 									mainFrame.getNoTimeCaseOperation1().getButton().setEnabled(true);
+									int minCase = mainFrame.getNoTimeSeqOperation1().getMinSeq();
+									mainFrame.getTimeCaseOperation1().getTextField().setText(String.valueOf(minCase));
 								}
 							
 							else if(ModelName == null){
@@ -612,140 +618,145 @@ public class StepThreeLeftButton extends JPanel{
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-				stepThree = 6;
-				clearPanel();
-				modelExpand.setFont(new Font("微软雅黑", Font.BOLD, 18));
-				timeSeq.setFont(new Font("微软雅黑", Font.PLAIN, 18));
-				timeCase.setFont(new Font("微软雅黑", Font.PLAIN, 18));
-				
-				TimeExpandLabel.setVisible(true);
-				TimeSeqNode.setVisible(false);
-				TimeNode.setVisible(false);
-				if(isNew == true && ModelName != null){
-					mainFrame.getTimeExpandOperation().getExpandlabel().setText("当前选择的模型为:"+ModelName);
-					mainFrame.getTimeExpandOperation().getModelExchange().setEnabled(true);
+				if(((JLabel)e.getSource()).isEnabled())
+				{
+					stepThree = 6;
+					clearPanel();
+					modelExpand.setFont(new Font("微软雅黑", Font.BOLD, 18));
+					timeSeq.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+					timeCase.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+					
+					TimeExpandLabel.setVisible(true);
+					TimeSeqNode.setVisible(false);
+					TimeNode.setVisible(false);
+					if(isNew == true && ModelName != null){
+						mainFrame.getTimeExpandOperation().getExpandlabel().setText("当前选择的模型为:"+ModelName);
+						mainFrame.getTimeExpandOperation().getModelExchange().setEnabled(true);
+					}
+					else if(ModelName == null){
+						mainFrame.getTimeExpandOperation().getExpandlabel().setText("当前选择的模型为:"+ModelName);
+						mainFrame.getTimeExpandOperation().getModelExchange().setEnabled(false);
+					}
+					else{
+						mainFrame.getTimeExpandOperation().getModelExchange().setEnabled(true);
+					}
+					mainFrame.getpanel().setVisible(true);
+					mainFrame.getpanel().add(mainFrame.getTimeExpandOperation());
+					mainFrame.getCenterTabPanel().add(mainFrame.getTimeExpandTabbedPane());
+					
+					mainFrame.getStepTwoCenterRightPanel().getGraphButton().setVisible(true);
+					mainFrame.getStepTwoCenterRightPanel().getZoominButton().setVisible(true);
+					mainFrame.getStepTwoCenterRightPanel().getZoomoutButton().setVisible(true);
+					mainFrame.renewPanel();
 				}
-				else if(ModelName == null){
-					mainFrame.getTimeExpandOperation().getExpandlabel().setText("当前选择的模型为:"+ModelName);
-					mainFrame.getTimeExpandOperation().getModelExchange().setEnabled(false);
-				}
-				else{
-					mainFrame.getTimeExpandOperation().getModelExchange().setEnabled(true);
-				}
-				mainFrame.getpanel().setVisible(true);
-				mainFrame.getpanel().add(mainFrame.getTimeExpandOperation());
-				mainFrame.getCenterTabPanel().add(mainFrame.getTimeExpandTabbedPane());
-				
-				mainFrame.getStepTwoCenterRightPanel().getGraphButton().setVisible(true);
-				mainFrame.getStepTwoCenterRightPanel().getZoominButton().setVisible(true);
-				mainFrame.getStepTwoCenterRightPanel().getZoomoutButton().setVisible(true);
-				mainFrame.renewPanel();
 			}
 		});
 		
 		timeSeq.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub				
-				timeCase.setFont(new Font("微软雅黑", Font.PLAIN, 18));
-				timeSeq.setFont(new Font("微软雅黑", Font.BOLD, 18));
-				modelExpand.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+				// TODO Auto-generated method stub	
+				if(((JLabel)e.getSource()).isEnabled())
+				{
+					timeCase.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+					timeSeq.setFont(new Font("微软雅黑", Font.BOLD, 18));
+					modelExpand.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 
-				TimeExpandLabel.setVisible(false);
-				TimeSeqNode.setVisible(true);
-				TimeNode.setVisible(false);
-				
-				mainFrame.getOutputinformation().setVisible(true);
-				mainFrame.getReduceOrEnlargePanel().setVisible(true);
-				mainFrame.getpanel().setVisible(true);
-				clearPanel();		
-				
-				if(mainFrame.getStepThreeChoosePattern().getselectString() == null)
-				{
-					stepThree = 7;
+					TimeExpandLabel.setVisible(false);
+					TimeSeqNode.setVisible(true);
+					TimeNode.setVisible(false);
 					
-					mainFrame.getpanel().add(mainFrame.getTimeSeqOperation());
-					mainFrame.getTimeSeqOperation().getTopLabel().setText("请选择测试数据生成方式!");
-					mainFrame.getTimeSeqOperation().getButton().setEnabled(false);
-					mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeTimeSeqTabbedPane());
-					mainFrame.getStepTwoCenterRightPanel().getGraphButton().setVisible(false);
-					mainFrame.getStepTwoCenterRightPanel().getZoominButton().setVisible(false);
-					mainFrame.getStepTwoCenterRightPanel().getZoomoutButton().setVisible(false);
+					mainFrame.getOutputinformation().setVisible(true);
+					mainFrame.getReduceOrEnlargePanel().setVisible(true);
+					mainFrame.getpanel().setVisible(true);
+					clearPanel();		
 					
-				}
-				else if(mainFrame.getStepThreeChoosePattern().getselectString().equals("根据模型相似度生成"))
-				{
-					stepThree = 7;
-					
-					mainFrame.getpanel().add(mainFrame.getTimeSeqOperation());
-					if(isNew == true && ModelName != null){
-						mainFrame.getTimeSeqOperation().getTopLabel().setText("当前选择的模型为:"+ModelName);
-						mainFrame.getTimeSeqOperation().getButton().setEnabled(true);
-					}
-					if(ModelName == null)
+					if(mainFrame.getStepThreeChoosePattern().getselectString() == null)
 					{
-						mainFrame.getTimeSeqOperation().getTopLabel().setText("当前选择的模型为:"+ModelName);
-						mainFrame.getTimeSeqOperation().getButton().setEnabled(false);
-					}
-					else {
-						mainFrame.getTimeSeqOperation().getButton().setEnabled(true);
-					}
-					
-					mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeTimeSeqTabbedPane());
-					mainFrame.getStepTwoCenterRightPanel().getGraphButton().setVisible(false);
-					mainFrame.getStepTwoCenterRightPanel().getZoominButton().setVisible(false);
-					mainFrame.getStepTwoCenterRightPanel().getZoomoutButton().setVisible(false);
-				}
-				else{
-					try {
-					stepThree = 8;
-					File files = new File(mainFrame.getBathRoute()+"/TimeMarkov/");
-					if(isNew == true && ModelName != null){
-						mainFrame.getTimeSeqOperation1().getTopLabel().setText("当前选择的模型为:"+ModelName);
+						stepThree = 7;
 						
-						for(File selectFile : files.listFiles())
-						{
-							if(selectFile.getName().replaceAll(".xml", "").equals(ModelName))
-								route = selectFile.getAbsolutePath();
+						mainFrame.getpanel().add(mainFrame.getTimeSeqOperation());
+						mainFrame.getTimeSeqOperation().getTopLabel().setText("请选择测试数据生成方式!");
+						mainFrame.getTimeSeqOperation().getButton().setEnabled(false);
+						mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeTimeSeqTabbedPane());
+						mainFrame.getStepTwoCenterRightPanel().getGraphButton().setVisible(false);
+						mainFrame.getStepTwoCenterRightPanel().getZoominButton().setVisible(false);
+						mainFrame.getStepTwoCenterRightPanel().getZoomoutButton().setVisible(false);
+						
+					}
+					else if(mainFrame.getStepThreeChoosePattern().getselectString().equals("根据模型相似度生成"))
+					{
+						stepThree = 7;
+						
+						mainFrame.getpanel().add(mainFrame.getTimeSeqOperation());
+						if(isNew == true && ModelName != null){
+							mainFrame.getTimeSeqOperation().getTopLabel().setText("当前选择的模型为:"+ModelName);
+							mainFrame.getTimeSeqOperation().getButton().setEnabled(true);
 						}
-						if(mainFrame.getStepThreeChoosePattern().getReliabilityIndex() == null || 
-								mainFrame.getStepThreeChoosePattern().getConfidence() == null)
+						if(ModelName == null)
 						{
-							mainFrame.getTimeSeqOperation1().getLabel2().removeAll();      
-						    mainFrame.getTimeSeqOperation1().getLabel2().setText("请在自定义生成测试用例方式中填写置信度与可靠性指标！");
-						    mainFrame.getTimeSeqOperation1().getButton().setEnabled(false);
+							mainFrame.getTimeSeqOperation().getTopLabel().setText("当前选择的模型为:"+ModelName);
+							mainFrame.getTimeSeqOperation().getButton().setEnabled(false);
 						}
 						else {
-							mainFrame.getTimeSeqOperation1().getButton().setEnabled(true);
-							p = mainFrame.getStepThreeChoosePattern().getReliabilityIndex();
-							c = mainFrame.getStepThreeChoosePattern().getConfidence();
-							
-							System.out.println("p: " + p + "  c: " + c);
-							
-							rm = new ReadMarkov2();
-							markov = rm.readMarkov(route);
-							min = getMinTCNum(markov,p,c);
-							mainFrame.getTimeSeqOperation1().getLabel2().removeAll();
-							mainFrame.getTimeSeqOperation1().getLabel2().setText("(不少于)"+String.valueOf(min)+"条");
+							mainFrame.getTimeSeqOperation().getButton().setEnabled(true);
 						}
+						
+						mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeTimeSeqTabbedPane());
+						mainFrame.getStepTwoCenterRightPanel().getGraphButton().setVisible(false);
+						mainFrame.getStepTwoCenterRightPanel().getZoominButton().setVisible(false);
+						mainFrame.getStepTwoCenterRightPanel().getZoomoutButton().setVisible(false);
 					}
-					else if(ModelName == null){
-						mainFrame.getTimeSeqOperation1().getButton().setEnabled(false);
-					}
+					else{
+						try {
+						stepThree = 8;
+						File files = new File(mainFrame.getBathRoute()+"/TimeMarkov/");
+						if(isNew == true && ModelName != null){
+							mainFrame.getTimeSeqOperation1().getTopLabel().setText("当前选择的模型为:"+ModelName);
+							
+							for(File selectFile : files.listFiles())
+							{
+								if(selectFile.getName().replaceAll(".xml", "").equals(ModelName))
+									route = selectFile.getAbsolutePath();
+							}
+							if(mainFrame.getStepThreeChoosePattern().getReliabilityIndex() == null || 
+									mainFrame.getStepThreeChoosePattern().getConfidence() == null)
+							{
+								mainFrame.getTimeSeqOperation1().getLabel2().removeAll();      
+							    mainFrame.getTimeSeqOperation1().getLabel2().setText("请在自定义生成测试用例方式中填写置信度与可靠性指标！");
+							    mainFrame.getTimeSeqOperation1().getButton().setEnabled(false);
+							}
+							else {
+								mainFrame.getTimeSeqOperation1().getButton().setEnabled(true);
+								p = mainFrame.getStepThreeChoosePattern().getReliabilityIndex();
+								c = mainFrame.getStepThreeChoosePattern().getConfidence();
+								
+								
+								rm = new ReadMarkov2();
+								markov = rm.readMarkov(route);
+								min = getMinTCNum(markov,p,c);
+								mainFrame.getTimeSeqOperation1().getLabel2().removeAll();
+								mainFrame.getTimeSeqOperation1().getLabel2().setText("(不少于)"+String.valueOf(min)+"条");
+							}
+						}
+						else if(ModelName == null){
+							mainFrame.getTimeSeqOperation1().getButton().setEnabled(false);
+						}
 
-					clearPanel();
-					mainFrame.getpanel().add(mainFrame.getTimeSeqOperation1());
-					
-					mainFrame.getpanel().updateUI();	
-					mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeTimeSeqTabbedPane());
-					mainFrame.getCenterTabPanel().updateUI();
+						clearPanel();
+						mainFrame.getpanel().add(mainFrame.getTimeSeqOperation1());
+						
+						mainFrame.getpanel().updateUI();	
+						mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeTimeSeqTabbedPane());
+						mainFrame.getCenterTabPanel().updateUI();
+						mainFrame.renewPanel();
+						} catch (Exception e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}	
 					mainFrame.renewPanel();
-					} catch (Exception e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-				}	
-				mainFrame.renewPanel();
+				}
 			}
 		});
 		
@@ -809,26 +820,31 @@ public class StepThreeLeftButton extends JPanel{
 	}
 	private static int getMinTCNum(Markov markov, double p,double c) throws Exception {
 		// 按照pc公式计算最小测试用例数目
+//		int min_pc = (int) Math.ceil(Math.log10(1 - c) / Math.log10(1 - p));
+//
+//		// 按照固定最小概率路径个数为一来计算最小测试用例数目
+//		new CollectRoute().collect(markov);
+//		double prob = 1;
+//		for (Route r : markov.getRouteList()) {
+//			if (r.getRouteProbability() < prob) {
+//				prob = r.getRouteProbability();
+//			}
+//		}
+//		int min_routePro = (int) Math.round(1.0 / prob);
+//
+//		// 按照DO-178B MCDC准则计算最小测试用例数目(条件数+1)
+//		int min_mcdc = SearchConditions.findConditionNum() + 1;
+//
+//		int temp = Math.max(min_pc, min_routePro);
+//
+//		
+//		return Math.max(temp, min_mcdc);
 		int min_pc = (int) Math.ceil(Math.log10(1 - c) / Math.log10(1 - p));
-
-		// 按照固定最小概率路径个数为一来计算最小测试用例数目
-		new CollectRoute().collect(markov);
-		double prob = 1;
-		for (Route r : markov.getRouteList()) {
-			if (r.getRouteProbability() < prob) {
-				prob = r.getRouteProbability();
-			}
-		}
-		int min_routePro = (int) Math.round(1.0 / prob);
 
 		// 按照DO-178B MCDC准则计算最小测试用例数目(条件数+1)
 		int min_mcdc = SearchConditions.findConditionNum() + 1;
-
-		int temp = Math.max(min_pc, min_routePro);
-
 		
-		return Math.max(temp, min_mcdc);
-
+		return Math.max(min_pc, min_mcdc);
 	}
 	public void clearPanel()
 	{

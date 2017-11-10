@@ -78,7 +78,6 @@ public class SteponeBottomPanel extends JPanel{
 				mainFrame.getCenterTabPanel().removeAll();
 				mainFrame.getCenterTabPanel().add(mainFrame.getHeadTitle());
 				mainFrame.getbotoomJSplitPane().setDividerSize(0);
-				mainFrame.renewPanel();
 				mainFrame.getpanel().updateUI();
 				
 				JPanel mainPanel = mainFrame.getMainPanel();
@@ -90,7 +89,9 @@ public class SteponeBottomPanel extends JPanel{
 						mainPanel.add(mainFrame.getworkpanel(),new GBC(1,2,1,1).setFill(GBC.BOTH).setWeight(1, 0.98));
 					}
 				}
+				mainFrame.renewPanel();
 			}
+			
 		});
 		nextbutton.addActionListener(new ActionListener() {
 			
@@ -114,34 +115,13 @@ public class SteponeBottomPanel extends JPanel{
 				
 				stepTwo = mainFrame.getStepTwoExpandBottom().getStep();
 				
+				if(stepTwo == 2 && !mainFrame.getStepTwoExpand().getExchangeLabel().isEnabled())
+				{
+					stepTwo = 1;
+					mainFrame.getStepTwoExpand().getEstimateLabel().setFont(new Font("微软雅黑", Font.BOLD, 18));
+				}
+				
 				switch (stepTwo) {
-//				case 1:
-//					mainFrame.getpanel().add(mainFrame.getStepTwoModelOperation());
-//					if(mainFrame.getjRadionPanel().getRadioList().size() == 0)
-//					{
-//						mainFrame.getStepTwoModelOperation().getLabel().setText("当前无可以选择的模型!");
-//					}
-//					else {
-//						mainFrame.getStepTwoModelOperation().getLabel().setText("请在左侧选择用例模型并填写用户数进行扩展！");
-//					}
-//					mainFrame.getpanel().setVisible(true);
-//					mainFrame.getpanel().updateUI();
-//					mainFrame.getCenterTabPanel().add(mainFrame.getStepTwoModelExpandTabbedPane());
-//					
-//					mainFrame.getStepTwoCenterRightPanel().getGraphButton().setVisible(false);
-//					mainFrame.getStepTwoCenterRightPanel().getZoominButton().setVisible(false);
-//					mainFrame.getStepTwoCenterRightPanel().getZoomoutButton().setVisible(false);
-//					break;
-//                case 2:
-//                	mainFrame.getpanel().add(mainFrame.getStepTwoCaseOperation());
-//					mainFrame.getpanel().setVisible(true);
-//					mainFrame.getpanel().updateUI();
-//					mainFrame.getCenterTabPanel().add(mainFrame.getStepTwoCaseExpandTabbedPane());
-//					
-//					mainFrame.getStepTwoCenterRightPanel().getGraphButton().setVisible(false);
-//					mainFrame.getStepTwoCenterRightPanel().getZoominButton().setVisible(false);
-//					mainFrame.getStepTwoCenterRightPanel().getZoomoutButton().setVisible(false);
-//					break;
                 case 1:
                 	mainFrame.getpanel().add(mainFrame.getStepTwoEvaluateOperation());
 					mainFrame.getpanel().setVisible(true);
@@ -165,6 +145,7 @@ public class SteponeBottomPanel extends JPanel{
 					mainFrame.getStepTwoCenterRightPanel().getGraphButton().setVisible(false);
 					mainFrame.getStepTwoCenterRightPanel().getZoominButton().setVisible(false);
 					mainFrame.getStepTwoCenterRightPanel().getZoomoutButton().setVisible(false);
+					mainFrame.renewPanel();
 	                break;
                 case 2:
                 	mainFrame.getpanel().add(mainFrame.getStepTwoExchangeOperation());
@@ -176,6 +157,7 @@ public class SteponeBottomPanel extends JPanel{
 					mainFrame.getStepTwoCenterRightPanel().getGraphButton().setVisible(true);
 					mainFrame.getStepTwoCenterRightPanel().getZoominButton().setVisible(true);
 					mainFrame.getStepTwoCenterRightPanel().getZoomoutButton().setVisible(true);
+					mainFrame.renewPanel();
 	                break;
 				default:
 					break;
@@ -192,20 +174,7 @@ public class SteponeBottomPanel extends JPanel{
 						}
 					}
 				}
-				mainFrame.renewPanel();
-//				mainFrame.getpanel().add(mainFrame.getStepTwoModelOperation());
-//				if(mainFrame.getjRadionPanel().getRadioList().size() == 0)
-//				{
-//					mainFrame.getStepTwoModelOperation().getLabel().setText("当前无可以选择的模型!");
-//				}
-//				else {
-//					mainFrame.getStepTwoModelOperation().getLabel().setText("请在左侧选择用例模型并填写用户数进行扩展！");
-//				}
-//				mainFrame.getpanel().setVisible(true);
-//				mainFrame.getpanel().updateUI();
-//				
-//				mainFrame.getCenterTabPanel().add(mainFrame.getStepTwoModelExpandTabbedPane());
-               
+				mainFrame.renewPanel();             
 			}
 		});
 	}

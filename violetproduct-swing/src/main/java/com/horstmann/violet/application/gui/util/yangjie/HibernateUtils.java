@@ -10,20 +10,18 @@ import org.junit.Test;
 
 public class HibernateUtils {
 
-	private static SessionFactory sf;
-	static {
-		// 加载主配置文件, 并创建Session的工厂
+	private  SessionFactory sf;
+	public HibernateUtils()
+	{
 		sf = new Configuration().configure().buildSessionFactory();
-		// sf = new Configuration().configure(new
-		// File("hibernate.cfg.xml")).buildSessionFactory();
 	}
 
 	// 创建Session对象
-	public static Session getSession() {
+	public  Session getSession() {
 		return sf.openSession();
 	}
 
-	public static void saveTCDetail(TCDetail detail) {
+	public  void saveTCDetail(TCDetail detail) {
 		// 对象
 
 		// 根据session的工厂，创建session对象

@@ -2,9 +2,6 @@ package com.horstmann.violet.application.menu.util.UMLTransfrom;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.dom4j.Document;
 import org.dom4j.Element;
 
@@ -29,7 +26,7 @@ public class readActivityXMLFromEA {
 	private  void getInformationFormXML(String path) {
 		Document document =XMLUtils.load(path);
 		Element root=document.getRootElement();//鑾峰彇鏍硅妭鐐�
-		Element extension= root.element("Extension");//鑾峰彇Extension鑺傜�?
+		Element extension= root.element("Extension");//鑾峰彇Extension鑺傜�?
 		List<Element> nodes= extension.element("elements").elements();
 		for(Element element:nodes){
 			String type=element.attributeValue("type");

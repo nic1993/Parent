@@ -41,25 +41,7 @@ public class JRadionPanel extends JPanel {
 
 	public void initFile() {
 		this.removeAll();
-//		list.clear();
-//		radioList.clear();
 		List<String> removelists = new ArrayList<String>();
-		//清除已经删除元素
-//		if(list.size() != 0)
-//		{
-//			for(String title : list)
-//			{
-//				int flag = 0;
-//				for(ModelPanel modelPanel : mainFrame.getModelPanelMap().keySet()){
-//					if(title.equals(modelPanel.getTitle().getText()))
-//						flag = 1;
-//				}
-//				if(flag == 0)
-//				{
-//					list.remove(title);
-//				}
-//			}
-//		}
 		//radios清除已经删除的元素
 		for(String title : radios.keySet())
 		{
@@ -133,16 +115,16 @@ public class JRadionPanel extends JPanel {
 					// TODO Auto-generated method stub
 					if (e.getClickCount() == 2) {
 						if (((Radio) e.getSource()).getScenceTabelPanel() != null) {
-							for (Radio radio : radioList) {
-								radio.setFont(new Font("宋体", Font.PLAIN, 16));
-							}
-							((Radio) e.getSource()).setFont(new Font("宋体", Font.BOLD, 16));
+//							for (Radio radio : radioList) {
+//								radio.setFont(new Font("宋体", Font.PLAIN, 16));
+//							}
+//							((Radio) e.getSource()).setFont(new Font("宋体", Font.BOLD, 16));
 
 							mainFrame.getStepTwoModelExpandTabbedPane().getValidationResults().removeAll();
 							mainFrame.getStepTwoModelExpandTabbedPane().getValidationResults()
 									.add(((Radio) e.getSource()).getScenceTabelPanel());
-							mainFrame.getStepTwoModelExpandTabbedPane().getValidationResults().repaint();
 							mainFrame.getStepTwoModelExpandTabbedPane().setSelectedIndex(1);
+							mainFrame.getStepTwoModelExpandTabbedPane().getValidationResults().repaint();
 						}
 					}
 					mainFrame.renewPanel();

@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 
 public class HandelService implements Callable {
@@ -52,6 +53,8 @@ public class HandelService implements Callable {
         this.node = node;
         this.files = files;
         scpclient = new ScpClientUtil(node.getIp());
+        
+        
 //        resultService = new ResultService(node.getType());
     }
 
@@ -75,8 +78,8 @@ public class HandelService implements Callable {
     //send compilefiles by cai
     public void sendcompilefile()
     {
-    	try {
-            dos = new DataOutputStream(socket.getOutputStream());
+//    	try {
+//            dos = new DataOutputStream(socket.getOutputStream());
             //send compile file by cai
             File[] compilefiles = null;
             if(node.getType().equals("Time"))
@@ -84,6 +87,7 @@ public class HandelService implements Callable {
             	compilefiles = new File("resources/Time/obj").listFiles();
             	 for(File compile : compilefiles)
                  {
+            		 
                  	scpclient.putFile(compile.getAbsolutePath(), compile.getName(), FileUtil.COMPILE_TIME_PATH, null);
                  }
             }
@@ -94,14 +98,9 @@ public class HandelService implements Callable {
                  	scpclient.putFile(compile.getAbsolutePath(), compile.getName(), FileUtil.COMPILE_COP_PATH, null);
                  }
 			}
-            
-           
-
-            ResultService.list.removeAll(ResultService.list);
-            Constants.ISFINISH.set(false);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
     
     // send xml files
@@ -118,8 +117,6 @@ public class HandelService implements Callable {
                 logger.debug(node.getIp()+" success send");
 //                logger.debug("success send file:"+f.getName());
             }
-            ResultService.list.removeAll(ResultService.list);
-            Constants.ISFINISH.set(false);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -127,6 +124,9 @@ public class HandelService implements Callable {
 
     // receive result
     public void recv() throws TestCaseException {
+    	
+    	
+    	
         int bufferSize = 500;
         byte[] buf = new byte[bufferSize];
         String data = "";
@@ -135,7 +135,6 @@ public class HandelService implements Callable {
             dis = new DataInputStream(socket.getInputStream());
             while ( dis.read(buf) != -1) {
                 data = new String(buf, "UTF-8").trim();
-                System.out.println("---- "+data);
                 Arrays.fill(buf, (byte) 0);
 //                logger.debug("receive data:" + data);
                 //get index of result file and convert
@@ -175,6 +174,7 @@ public class HandelService implements Callable {
             scpclient.close();
             logger.debug(node.getIp()+" socket close");
         } catch (IOException e) {
+        	
             logger.error(node.getIp()+" close socket error ,cause by " + e.getMessage());
             throw new TestCaseException("close socket error");
         }
@@ -182,8 +182,27 @@ public class HandelService implements Callable {
 
     public Object call() throws Exception {
     	try {
+    		boolean isCon=false;
+    		for(;;){
+    			try {
+    				isCon=connection();
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+    			if(isCon){
+    				break;
+    			}
+    			else{
+    				try {
+                        TimeUnit.SECONDS.sleep(1);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+    			}
+    		}
+
     		// 1.create connection
-            boolean isCon = connection();
+//            boolean isCon = connection();
             if (isCon) {
             	sendcompilefile();
             	

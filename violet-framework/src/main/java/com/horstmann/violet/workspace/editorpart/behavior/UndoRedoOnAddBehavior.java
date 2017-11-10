@@ -88,8 +88,6 @@ public class UndoRedoOnAddBehavior extends AbstractEditorPartBehavior
 
         for (final INode aSelectedNode : nodesReallyAdded)
         {
-            
-            
             UndoableEdit edit = new AbstractUndoableEdit()
             {
                 @Override
@@ -106,6 +104,11 @@ public class UndoRedoOnAddBehavior extends AbstractEditorPartBehavior
                     super.redo();
                     IGraph graph = editorPart.getGraph();
                     graph.addNode(aSelectedNode, aSelectedNode.getLocationOnGraph());
+                    
+                    if(aSelectedNode.getToolTip().equals("Use case"))
+                	{
+                	   AddNodeBehavior.lock.push(1);
+                	}
                 }
             };
             capturedEdit.addEdit(edit);
@@ -134,8 +137,6 @@ public class UndoRedoOnAddBehavior extends AbstractEditorPartBehavior
             capturedEdit.addEdit(edit);
         }
 
-        
-        
         this.compoundBehavior.stopHistoryCapture();
         this.nodesOnGraphBeforeAdd.clear();
         this.edgesOnGraphBeforeAdd.clear();
@@ -168,9 +169,7 @@ public class UndoRedoOnAddBehavior extends AbstractEditorPartBehavior
         CompoundEdit capturedEdit = this.compoundBehavior.getCurrentCapturedEdit();
 
         for (final INode aSelectedNode : nodesReallyAdded)
-        {
-            
-            
+        { 
             UndoableEdit edit = new AbstractUndoableEdit()
             {
                 @Override
@@ -187,6 +186,11 @@ public class UndoRedoOnAddBehavior extends AbstractEditorPartBehavior
                     super.redo();
                     IGraph graph = editorPart.getGraph();
                     graph.addNode(aSelectedNode, aSelectedNode.getLocationOnGraph());
+                    
+                    if(aSelectedNode.getToolTip().equals("Use case"))
+                	{
+                	   AddNodeBehavior.lock.push(1);
+                	}
                 }
             };
             capturedEdit.addEdit(edit);

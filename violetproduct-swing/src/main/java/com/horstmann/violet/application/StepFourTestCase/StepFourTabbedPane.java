@@ -54,17 +54,15 @@ public class StepFourTabbedPane extends JTabbedPane{
 	private void init()
 	{
 		testCaseResults = new JPanel();
-		testCaseResults.setLayout(new GridLayout(1,1));
+		testCaseResults.setLayout(new GridLayout());
 		testCaseResport = new JPanel();
 		testCaseResport.setLayout(new GridBagLayout());
 		wrongtestCaseResults = new JPanel();
-		wrongtestCaseResults.setLayout(new GridBagLayout());
+		wrongtestCaseResults.setLayout(new GridLayout());
 		jScrollPane = new JScrollPane(testCaseResults);
 		jScrollPane.setBorder(null);
 		jScrollPane2 = new JScrollPane(testCaseResport);
 		jScrollPane2.setBorder(null);
-		jScrollPane3 = new JScrollPane(wrongtestCaseResults);
-		jScrollPane3.setBorder(null);
 		
 		//◊‹≤‚ ‘”√¿˝
 		JPanel gapPanel = new JPanel();
@@ -88,7 +86,7 @@ public class StepFourTabbedPane extends JTabbedPane{
 		wrongResults = new JPanel();
 		wrongResults.setLayout(new BorderLayout());
 		wrongResults.add(wrongtableHeaderPanel,BorderLayout.NORTH);
-		wrongResults.add(jScrollPane3, BorderLayout.CENTER);
+		wrongResults.add(wrongtestCaseResults, BorderLayout.CENTER);
 		
 		listen();
 	}

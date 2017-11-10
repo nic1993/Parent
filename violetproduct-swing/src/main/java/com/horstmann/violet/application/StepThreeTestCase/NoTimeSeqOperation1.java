@@ -174,13 +174,24 @@ public class NoTimeSeqOperation1 extends JPanel{
 				if(isInt(textField.getText().toString()))
 				{
 					minSeq = Integer.parseInt(textField.getText().toString());
-					initThread();
-					mainthread.start();
-					thread1.start();
+					if(minSeq < min)
+					{
+						topLabel.removeAll();
+						topLabel.setText("请输入正确的测试用例个数!");
+					}
+					else {
+						initThread();
+						mainthread.start();
+						thread1.start();
+					}
+				}
+				else {
+					topLabel.removeAll();
+					topLabel.setText("请输入正确的测试用例个数!");
 				}
 				}catch (Exception e2) {
 					// TODO Auto-generated catch block
-					e2.printStackTrace();
+					topLabel.setText("生成抽象测试用例出错!");
 				}		
 				}
 		});
@@ -190,94 +201,7 @@ public class NoTimeSeqOperation1 extends JPanel{
     	   maincallable = new Callable<Integer>() {
       			@Override
       			public Integer call() throws Exception {
-      				// TODO Auto-generated method stub
-//                    try {
-//      				button.setEnabled(false);
-//       				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(false);
-//       				mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(false);
-//       				mainFrame.getStepThreeLeftButton().getNoTimeCase().setEnabled(false);
-//      				
-//      				JPanel mainPanel = new JPanel();
-//       				mainPanel.setLayout(new GridBagLayout());
-//      				
-//      				progressBarIndex = 0;
-//      				progressBar.setValue(0);
-//      				mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().removeAll();
-//    				
-//      				markov.setTcNumber(Integer.valueOf(textField.getText().toString()));
-//      				
-//					Calculate.getAllTransValues(markov);
-//                    
-//					dom = DocumentHelper.createDocument();
-//					root = dom.addElement("TCS");
-//					// 计算markov链的平稳分布
-//					PI = CalculateDistribution.stationaryDistribution(markov);
-//					
-//					new CollectRoute().collect(markov);
-//
-//					// 获取抽象测试序列
-//					// showTestSequence(markov);
-//					for (Route r : markov.getRouteList()) {
-//
-//						String testSequence = "";
-//						for (int i = 0; i < r.getTransitionList().size(); i++) {
-//							if (i != r.getTransitionList().size() - 1) {
-//								testSequence = testSequence
-//										+ r.getTransitionList().get(i).getName() + "-->>";
-//								// System.out.print(oneCaseExtend.get(i).toString() +
-//								// "-->>");
-//							} else {
-//								testSequence = testSequence
-//										+ r.getTransitionList().get(i).getName();
-//								// System.out.println(oneCaseExtend.get(i).toString());
-//							}
-//						}
-//						r.setTcSequence(testSequence);
-//						for (int i = 0; i < r.getNumber(); i++) {
-//							// 显示抽象测试序列testSequence至列表
-//						}
-//					}
-//					
-//					JPanel seqPanel = new JPanel();
-//					seqPanel.setLayout(new GridBagLayout());
-//					
-//					mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().removeAll();
-//					mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().setLayout(new GridBagLayout());
-//					int i = 0;
-//					for(Route r : markov.getRouteList())
-//					{
-//						StepThreeTabelPanel testTabelPanel1 = new StepThreeTabelPanel(r.getTcSequence(), 1,mainFrame);
-//						seqPanel.add(testTabelPanel1, new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
-//						
-//						StepThreeTabelPanel testTabelPanel = new StepThreeTabelPanel(r.getTcSequence(), 1,mainFrame);
-//						mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().add(testTabelPanel, new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
-//						mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().repaint();
-//						i++;
-//						Thread.sleep(100);
-//					}
-//					
-//					button.setEnabled(true);
-//       				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
-//       				mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(true);
-//       				mainFrame.getStepThreeLeftButton().getNoTimeCase().setEnabled(true);
-//					mainFrame.getNoTimeCaseOperation1().setModelName(ModelName);
-//					
-//					NoTimeSeqNode noTimeSeqNode = new NoTimeSeqNode(ModelName+"_自定义", mainFrame);
-//					noTimeSeqNode.setAbstractSequencePanel(seqPanel);
-//					
-//					mainFrame.getStepThreeLeftButton().getNoTimeSeqNodePanel().insertNodeLabel(noTimeSeqNode, seqPanel);
-//					mainFrame.getStepThreeLeftButton().getNoTimeSeqNode().repaint();
-//					
-//                    } catch (RuntimeException e) {
-//						// TODO: handle exception
-//                    	topLabel.removeAll();
-//       					topLabel.setText(e.getLocalizedMessage());
-//       					
-//       					button.setEnabled(true);
-//           				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
-//           				mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(true);
-//					}
-      				
+      				// TODO Auto-generated method stub			
       				progressBarIndex = 0;
        				progressBar.setValue(0);
        				progressBar.setValue(progressBarIndex);
@@ -291,7 +215,7 @@ public class NoTimeSeqOperation1 extends JPanel{
        					else{
        						progressBarIndex++;
        						progressBar.setValue(progressBarIndex);
-       						Thread.sleep(500);
+       						Thread.sleep(1500);
        					}
        				}
        				while(true){
@@ -346,16 +270,18 @@ public class NoTimeSeqOperation1 extends JPanel{
 					}
 					
 					new CollectRoute().collect(markov);
+					mainFrame.renewPanel();
 				    } catch (RuntimeException e) {
 						// TODO: handle exception
                   	topLabel.removeAll();
-     				topLabel.setText(e.getLocalizedMessage());
+                  	topLabel.setText("生成抽象测试用例出错!");
      					
      				button.setEnabled(false);
          			mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
          			mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(true);
          			
          			mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
+         			mainFrame.renewPanel();
 					}
 					return 1;
 				}
@@ -421,6 +347,7 @@ public class NoTimeSeqOperation1 extends JPanel{
 							StepThreeTabelPanel testTabelPanel = new StepThreeTabelPanel(r.getTcSequence(), 1,mainFrame);
 //							mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().add(testTabelPanel, new GBC(0, k).setFill(GBC.BOTH).setWeight(1, 0));
 							abstractPagePanel.getAbstractPanel().add(testTabelPanel, new GBC(0, k).setFill(GBC.BOTH).setWeight(1, 0));
+							abstractPagePanel.getAbstractPanel().repaint();
 							mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().repaint();
 
 							for(int j = 0;j < r.getTransitionList().size();j++){
@@ -429,17 +356,25 @@ public class NoTimeSeqOperation1 extends JPanel{
 				                mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
 							}
 
-							progressBar.setValue(40 + (int)(((double)(k+1)/index)*60));
-							
+							progressBar.setValue(40 + (int)(((double)(k+1)/index)*50));
+							abstractPagePanel.getAbstractPanel().repaint();
 							Thread.sleep(10);
 						}
 						abstractPagePanel.getPageTestField().setText("1");
-						
+						mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().removeAll();
+						mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().add(abstractPagePanel);
+						mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().repaint();
+						int j = 0;
 						for(Route r : markov.getRouteList())
 						{
 							mainFrame.getOutputinformation().geTextArea().append("路径测试序列 " + r.getTcSequence() + " 路径概率: " + r.getRouteProbability() + " 固定测试用例个数时，此路径所占个数 " + r.getNumber()+ "\n");
 							int length = mainFrame.getOutputinformation().geTextArea().getText().length(); 
 			                mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
+			                
+			                progressBar.setValue(90 + (int)(((double)(j+1)/index)*10));
+							abstractPagePanel.getAbstractPanel().repaint();
+							Thread.sleep(10);
+							j++;
 						}
 						
 						button.setEnabled(true);
@@ -456,16 +391,19 @@ public class NoTimeSeqOperation1 extends JPanel{
 						
 						topLabel.removeAll();
 						topLabel.setText("抽象测试序列生成完成，共生成" + markov.getRouteList().size()+"条抽象测试序列");
+						
+						mainFrame.renewPanel();
 				    } catch (RuntimeException e) {
 						// TODO: handle exception
                   	    topLabel.removeAll();
-     					topLabel.setText(e.getLocalizedMessage());
+     					topLabel.setText("生成抽象测试用例出错!");
      					
      					button.setEnabled(true);
          				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
          				mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(true);
          				
          				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
+         				mainFrame.renewPanel();
 					}
 					return 1;
 				}

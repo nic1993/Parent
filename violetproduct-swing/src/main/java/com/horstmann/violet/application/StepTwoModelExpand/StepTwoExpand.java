@@ -78,7 +78,7 @@ public class StepTwoExpand extends JPanel{
 		estimateLabel = new JLabel("Ä£ÐÍÆÀ¹À");
 		exchangeLabel = new JLabel("Markov×ª»»");
 		
-		estimateLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 18));
+		estimateLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 18));
 		exchangeLabel.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 18));
 
 		estimatepPanel = new JPanel();

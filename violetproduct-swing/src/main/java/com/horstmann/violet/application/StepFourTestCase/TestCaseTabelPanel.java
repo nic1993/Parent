@@ -301,19 +301,6 @@ public class TestCaseTabelPanel extends JPanel{
 //  	       jScrollPane.setBorder(null);
 //  	       table.setPreferredScrollableViewportSize(new Dimension(table.getWidth(),table.getRowHeight()* table.getRowCount()));
        }
-       private void listen(JTable table)
-       {
-    	   table.addMouseListener(new MouseAdapter() {
-    		   @Override
-    		public void mouseClicked(MouseEvent e) {
-    			// TODO Auto-generated method stub
-    			if(e.getClickCount() == 2)
-       			{
-    				 
-       			}
-    		}
-		});
-       }
        public JTable getTable()
        {
     	   return this.table;
