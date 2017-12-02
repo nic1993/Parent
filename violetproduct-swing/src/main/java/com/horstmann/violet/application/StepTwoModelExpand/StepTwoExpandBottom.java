@@ -188,10 +188,15 @@ public class StepTwoExpandBottom extends JPanel{
 			    {
 			    	stepThree = 1;
 			    	mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 18));
+			    	mainFrame.getStepThreeLeftButton().getNoTimeModelPanel().setVisible(false);
+			    	mainFrame.getStepThreeLeftButton().getNoTimeModelPanel().setVisible(false);
 			    }
 			    else if(!mainFrame.getStepThreeLeftButton().getTimeModelLabel().isEnabled()){
 			    	stepThree = 1;
 			    	mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 18));
+			    	mainFrame.getStepThreeLeftButton().getTimeModelPanel().setVisible(false);
+			    	mainFrame.getStepThreeLeftButton().getTimeModelPanel().setVisible(false);
+			    	
 				}
 			    
 			    if(mainFrame.getStepTwoExchangeOperation().getModel_Name() != null){
@@ -241,6 +246,7 @@ public class StepTwoExpandBottom extends JPanel{
 					
 					mainFrame.getReduceOrEnlargePanel().setVisible(false);
             		
+					mainFrame.renewPanel();
 					break;
                 case 2:
                 	mainFrame.getpanel().removeAll();
@@ -418,6 +424,7 @@ public class StepTwoExpandBottom extends JPanel{
 				mainFrame.getconsolepartPanel().removeAll();
 				mainFrame.getconsolepartPanel().setLayout(new GridLayout(1, 1));
 				mainFrame.getconsolepartPanel().add(mainFrame.getStepThreeBottom());
+				mainFrame.renewPanel();
 			}
 		});
 	}

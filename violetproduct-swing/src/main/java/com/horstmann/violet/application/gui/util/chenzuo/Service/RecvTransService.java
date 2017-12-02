@@ -34,7 +34,6 @@ public class RecvTransService implements Callable {
     	synchronized(RecvTransService.class){
     		String fileName = "result_" + node.getType() + "_" + id + ".txt";
             String fileName1 = "result_"+node.getIp().split("\\.")[3]+"_" + node.getType() + "_" + id + ".txt";
-
             
             long l = System.currentTimeMillis();
             int flag = 0;
@@ -50,6 +49,8 @@ public class RecvTransService implements Callable {
 				}
             }
             
+            System.out.println("before "+ node.getIp().split("\\.")[3] + " " + fileName);
+            
             for(;;){
             	File file=new File(FileUtil.LOCAL_TARGET_PATH+fileName);
                 file.renameTo(new File(FileUtil.LOCAL_TARGET_PATH+fileName1));
@@ -58,8 +59,10 @@ public class RecvTransService implements Callable {
                 if(newfile.exists()){
                 	break;
                 }
-                System.out.println(FileUtil.LOCAL_TARGET_PATH+fileName+" - - "+FileUtil.LOCAL_TARGET_PATH+fileName1);
+//                System.out.println(FileUtil.LOCAL_TARGET_PATH+fileName+" - - "+FileUtil.LOCAL_TARGET_PATH+fileName1);
             }
+            
+            System.out.println("after "+ node.getIp().split("\\.")[3] + " " + new File(FileUtil.LOCAL_TARGET_PATH+fileName1).getName());
             
             logger.debug(node.getIp()+" file " + id + " get ok,cost time is:" + (System.currentTimeMillis() - l) + " ms");
 

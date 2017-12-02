@@ -66,7 +66,7 @@ public class NoTimeCaseOperation1 extends JPanel {
 
 	private String testSequence;// 测试序列
 	private String excitation; // 激励序列
-	private String testCase; // 测试用例
+	private String testCase; // 可靠性测试数据
 
 	private List<String> paramterNameList;
 	private List<String> paramterValueList;
@@ -131,7 +131,7 @@ public class NoTimeCaseOperation1 extends JPanel {
 		df.applyPattern(pattern);
 
 		topLabel = new JLabel("");
-		label1 = new JLabel("生成测试用例条数:");
+		label1 = new JLabel("生成可靠性测试数据条数:");
 		label2 = new JLabel("");
 
 		progressBar = new JProgressBar();
@@ -149,6 +149,9 @@ public class NoTimeCaseOperation1 extends JPanel {
 		numbers = new ArrayList<Integer>();
 
 		textField.setPreferredSize(new Dimension(40, 30));
+		textField.setMinimumSize(new Dimension(40, 30));
+		textField.setMaximumSize(new Dimension(40, 30));
+		
 		topLabel.setFont(new Font("宋体", Font.PLAIN, 16));
 		label1.setFont(new Font("宋体", Font.PLAIN, 16));
 		label2.setFont(new Font("宋体", Font.PLAIN, 16));
@@ -156,6 +159,7 @@ public class NoTimeCaseOperation1 extends JPanel {
 		progressBar.setUI(new ProgressUI(progressBar, Color.green));
 		progressBar.setMinimumSize(new Dimension(800, 30));
 		progressBar.setPreferredSize(new Dimension(800, 30));
+		progressBar.setMaximumSize(new Dimension(800, 30));
 		progressBar.setUI(new GradientProgressBarUI());
 		progressBar.setValue(0);
 
@@ -185,7 +189,7 @@ public class NoTimeCaseOperation1 extends JPanel {
 					progressBarIndex = 0;
 					progressBar.setValue(0);
 					progressBar.setValue(progressBarIndex);
-					while (progressBarIndex < 40) {
+					while (progressBarIndex < 60) {
 						if (task1.isDone()) {
 							progressBarIndex++;
 							progressBar.setValue(progressBarIndex);
@@ -193,7 +197,7 @@ public class NoTimeCaseOperation1 extends JPanel {
 						} else {
 							progressBarIndex++;
 							progressBar.setValue(progressBarIndex);
-							Thread.sleep(1000);
+							Thread.sleep(10000);
 						}
 					}
 
@@ -240,10 +244,10 @@ public class NoTimeCaseOperation1 extends JPanel {
 					min = mainFrame.getStepThreeLeftButton().getMin();
 					minSeq = mainFrame.getNoTimeSeqOperation1().getMinSeq();
 
-					progressBarIndex = 0;
-					progressBar.setValue(0);
 					mainFrame.getStepThreeNoTimeTabbedPane().getTestData().removeAll();
-					markov.setTcNumber(minSeq);
+					topLabel.removeAll();
+					topLabel.setText("正在生成可靠性测试数据(该过程需要较久时间,请耐心等待)....");
+					Thread.sleep(150);
 
 					Calculate.getAllTransValues(markov);
 
@@ -309,9 +313,6 @@ public class NoTimeCaseOperation1 extends JPanel {
 					CasePagePanel casePagePanel = new CasePagePanel(lists, mainFrame);
 					mainFrame.getStepThreeNoTimeTabbedPane().getTestData().add(casePagePanel);
 
-					// 生成测试数据
-					topLabel.removeAll();
-					topLabel.setText("正在生成测试数据信息........");
 
 					JPanel TestDataPanel = new JPanel();
 
@@ -333,7 +334,8 @@ public class NoTimeCaseOperation1 extends JPanel {
 						casePagePanel.getCasePanel().repaint();
 						mainFrame.getStepThreeNoTimeTabbedPane().getTestData().repaint();
 						
-						progressBar.setValue(61 + (int) (((double) (j+1) / 500) * 40));
+						progressBar.setValue(60 + (int) (((double) (j+1) / 500) * 40));
+
 						Thread.sleep(10);
 						mainFrame.renewPanel();
 					}
@@ -343,31 +345,31 @@ public class NoTimeCaseOperation1 extends JPanel {
 	                mainFrame.getStepThreeNoTimeTabbedPane().getTestData().add(casePagePanel);
 	                mainFrame.renewPanel();
 	                
-					for (Route route : routeList) {
-						mainFrame.getOutputinformation().geTextArea()
-								.append("			测试序列：" + testSequence + "	 路径概率(指标-可靠性测试用例生成比率"
-										+ route.getActualPercent() + "):   " + route.getRouteProbability() + "	此类用例包含"
-										+ route.getNumber() + "个" + "\n");
-
-						int length = DisplayForm.mainFrame.getOutputinformation().geTextArea().getText().length();
-						DisplayForm.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
-						Thread.sleep(10);
-					}
+//					for (Route route : routeList) {
+//						mainFrame.getOutputinformation().geTextArea()
+//								.append("			测试序列：" + testSequence + "	 路径概率(指标-可靠性可靠性测试数据生成比率"
+//										+ route.getActualPercent() + "):   " + route.getRouteProbability() + "	此类用例包含"
+//										+ route.getNumber() + "个" + "\n");
+//
+//						int length = DisplayForm.mainFrame.getOutputinformation().geTextArea().getText().length();
+//						DisplayForm.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
+//						Thread.sleep(10);
+//					}
 
 					bigDecimal = new BigDecimal(markov.getDeviation());
 					String ii = bigDecimal.toPlainString();
 					double d = Double.valueOf(ii);
 					topLabel.removeAll();
-					topLabel.setText("测试用例生成完成, 实际共生成" + lists.size() + "条!" + "可靠性测试用例数据库覆盖率:"
+					topLabel.setText("可靠性测试数据生成完成, 实际共生成" + lists.size() + "条!" + "可靠性测试用例库覆盖率:"
 							+ df.format(markov.getDbCoverage()) + "  可靠性测试用例生成比率与使用模型实际使用概率平均偏差:" + df.format(markov.getDeviation()));
 
 					
-	                mainFrame.getOutputinformation().geTextArea().append("指标:可靠性测试用例数据库覆盖率 = 覆盖的马尔可夫链路径/总的马尔可夫链路径" + "\n");
+	                mainFrame.getOutputinformation().geTextArea().append("指标:可靠性可靠性测试数据数据库覆盖率 = 覆盖的马尔可夫链路径/总的马尔可夫链路径" + "\n");
 					int length = mainFrame.getOutputinformation().geTextArea().getText().length(); 
 	                mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
 					
 					NoTimeTestCaseNode noTimeTestCaseLabel = new NoTimeTestCaseNode(ModelName + "_自定义", mainFrame);
-					quota = "测试用例生成完成, 实际共生成" + lists.size() + "条!" + "可靠性测试用例数据库覆盖率:" + df.format(markov.getDbCoverage())
+					quota = "可靠性测试数据生成完成, 实际共生成" + lists.size() + "条!" + "可靠性测试用例数据库覆盖率:" + df.format(markov.getDbCoverage())
 							+ "  可靠性测试用例生成比率与使用模型实际使用概率平均偏差:" + df.format(d);
 					noTimeTestCaseLabel.setQuota(quota);
 					noTimeTestCaseLabel.setTestRoute(testRoute);
@@ -451,6 +453,10 @@ public class NoTimeCaseOperation1 extends JPanel {
 
 	public JButton getButton() {
 		return button;
+	}
+
+	public JTextField getTextField() {
+		return textField;
 	}
 
 }

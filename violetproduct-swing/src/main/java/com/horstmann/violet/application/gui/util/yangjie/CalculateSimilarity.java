@@ -10,7 +10,7 @@ package com.horstmann.violet.application.gui.util.yangjie;
  * */
 
 public class CalculateSimilarity {
-	private static final double e = 0.1;
+	private static final double e = 0.09;
 
 	/**
 	 * 利用平稳分布求使用链和测试链的相似度
@@ -27,7 +27,7 @@ public class CalculateSimilarity {
 
 		for (State state : markov.getStates()) {
 
-			int totalTimes = 0;
+			double totalTimes = 0;
 			for (Transition t : state.getOutTransitions()) {
 
 				totalTimes += t.getAccessTimes();
@@ -37,8 +37,7 @@ public class CalculateSimilarity {
 				dis += PI[state.getStateNum()]
 						* t.getProbability()
 						* (Math.log10(t.getProbability()
-								/ (t.getAccessTimes() * 1.0 / totalTimes)) / Math
-									.log10(2));
+								/ (t.getAccessTimes() * 1.0 / totalTimes)));
 			}
 		}
 
@@ -60,25 +59,23 @@ public class CalculateSimilarity {
 
 		for (State state : markov.getStates()) {
 
-			int totalTimes = 0;
+			double totalTimes = 0;
 			for (Transition t : state.getOutTransitions()) {
 
 				totalTimes += t.getAccessTimes();
 			}
 			for (Transition t : state.getOutTransitions()) {
-				if (totalTimes == 0)
-					totalTimes = 1;
-				// System.out.println(t.getAccessTimes() * 1.0 / totalTimes
-				// + "**********************");
-				dis += PI[state.getStateNum()]
-						* t.getProbability()
-						* (Math.log10(t.getProbability()
-								/ (e
-										- e
-										* (Math.signum(t.getAccessTimes() * 1.0
-												/ totalTimes)) + t
-										.getAccessTimes() * 1.0 / totalTimes)) / Math
-									.log10(2));
+				double low = e
+						- e
+						* (Math.signum(totalTimes == 0 ? 0 : (t
+								.getAccessTimes() * 1.0 / totalTimes)))
+						+ (totalTimes == 0 ? 0
+								: (t.getAccessTimes() * 1.0 / totalTimes));
+				dis += PI[state.getStateNum()] * t.getProbability()
+						* (Math.log10(t.getProbability() / low));
+				// System.out.println(PI[state.getStateNum()] + "*"
+				// + t.getProbability() + "* (Math.log10("
+				// + t.getProbability() + "/" + low + ") /Math.log10(2))");
 			}
 		}
 
@@ -104,9 +101,9 @@ public class CalculateSimilarity {
 			}
 			for (Transition t : state.getOutTransitions()) {
 
-				distance += Math.pow(
-						t.getAccessTimes() * 1.0 / totalTimes
-								- t.getProbability(), 2);
+				distance += Math.pow((totalTimes == 0 ? 0 : t.getAccessTimes()
+						* 1.0 / totalTimes)
+						- t.getProbability(), 2);
 			}
 		}
 		return Math.sqrt(distance);

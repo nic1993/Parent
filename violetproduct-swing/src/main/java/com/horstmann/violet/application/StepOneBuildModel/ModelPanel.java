@@ -125,7 +125,7 @@ public class ModelPanel extends JPanel{
 							{
 								if(!selectmodel.isSave())
 								{
-									int n = JOptionPane.showConfirmDialog(null, "该模型包还未保存,是否删除?", "标题",JOptionPane.YES_NO_OPTION,0,new ImageIcon("icons/64x64/save.png"));
+									int n = JOptionPane.showConfirmDialog(null, "该工程还未保存,是否删除?", "标题",JOptionPane.YES_NO_OPTION,0,new ImageIcon("icons/64x64/save.png"));
 								    if(n == 0)
 								    {
 								    	mainFrame.removeModelPanel(selectmodel);
@@ -134,6 +134,7 @@ public class ModelPanel extends JPanel{
 								}
 								else {
 									mainFrame.removeModelPanel(selectmodel);
+									mainFrame.getModelPanelMap().remove(selectmodel);
 								}								
 							}		
 							mainFrame.renewPanel();

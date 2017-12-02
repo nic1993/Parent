@@ -233,7 +233,6 @@ public class StepTwoModelOperation extends JPanel{
 		progressBarIndex = 0;
 		verificationProgressBar.setValue(0);
 		step = 1;
-		StaticConfig.mainFrame = mainFrame;
 		maincallable = new Callable<Integer>() {
   			@Override
   			public Integer call() throws Exception {
@@ -262,6 +261,12 @@ public class StepTwoModelOperation extends JPanel{
 					}
   					Thread.sleep(10);
 				}
+  				
+  				mainFrame.getsteponeButton().getExpandCaseModel().setEnabled(true);
+				mainFrame.getStepTwoCaseOperation().getStartExpandButton().setEnabled(true);
+				startExpandButton.setEnabled(true);
+				startVerificationButton.setEnabled(false);
+				
   				return 1;
   			}
   		};
@@ -272,114 +277,125 @@ public class StepTwoModelOperation extends JPanel{
 	 @Override
 	 public Integer call() throws Exception {
 		// TODO Auto-generated method stub
-		    label.removeAll();
-		    label.setText("正在初始化数据.....");
-		    Thread.sleep(100);
-			stepTwoModelExpandTabbedPane.getValidationResults().removeAll();
-			stepTwoModelExpandTabbedPane.getValidationResults().updateUI();
-			MatrixPanels.clear();
-		    EvaluateMatrixPanels.clear();
-		    
-		    label.removeAll();
-		    label.setText("正在计算后继用例迁移关系概率.....");
-			for(String key : ucMap.keySet()) //求解 生成
-			{
-				
-			    relations.clear();
-				relationsData.clear();
-				
+		 try {
+			 label.removeAll();
+			    label.setText("正在初始化数据.....");
 			    Thread.sleep(100);
-				List<InterfaceUCRelation> interfaceUCRelations = ucMap.get(key);
+				stepTwoModelExpandTabbedPane.getValidationResults().removeAll();
+				stepTwoModelExpandTabbedPane.getValidationResults().updateUI();
+				MatrixPanels.clear();
+			    EvaluateMatrixPanels.clear();
+			    
+			    label.removeAll();
+			    label.setText("正在计算后继用例迁移关系概率.....");
+				for(String key : ucMap.keySet()) //求解 生成
+				{
+					
+				    relations.clear();
+					relationsData.clear();
+					
+				    Thread.sleep(100);
+					List<InterfaceUCRelation> interfaceUCRelations = ucMap.get(key);
 
-				if(interfaceUCRelations.size() == 1)
-				{
-					relations.add(interfaceUCRelations.get(0).getUCRelation());
-					interfaceUCRelations.get(0).setUCRelProb(1.000);
-					relationsData.add(1.000);
-					
-					StepTwoMatrixPanel stepTwoMatrixPanel = new StepTwoMatrixPanel(mainFrame);
-					stepTwoMatrixPanel.getTitleLabel().setText("执行用例:"+ key);
-					
-					StepTwoMatrixPanel stepTwoMatrixPanel1 = new StepTwoMatrixPanel(mainFrame);
-					stepTwoMatrixPanel1.getTitleLabel().setText("执行用例:"+ key);
-				    
-				    ScenceTabelPanel scenceTabelPanel = new ScenceTabelPanel(relations, relationsData, 1, mainFrame);
-				    stepTwoMatrixPanel.getTabelPanel().add(scenceTabelPanel);
-				    MatrixPanels.add(stepTwoMatrixPanel);
-				    
-				    ScenceTabelPanel scenceTabelPanel1 = new ScenceTabelPanel(relations, relationsData, 1, mainFrame);
-				    stepTwoMatrixPanel1.getTabelPanel().add(scenceTabelPanel1);
-				    EvaluateMatrixPanels.add(stepTwoMatrixPanel1);
-				}
-				else 
-				{    
-					for(InterfaceUCRelation interfaceUCRelation:interfaceUCRelations)
+					if(interfaceUCRelations.size() == 1)
 					{
-						relations.add(interfaceUCRelation.getUCRelation());
+						relations.add(interfaceUCRelations.get(0).getUCRelation());
+						interfaceUCRelations.get(0).setUCRelProb(1.000);
+						relationsData.add(1.000);
+						
+						StepTwoMatrixPanel stepTwoMatrixPanel = new StepTwoMatrixPanel(mainFrame);
+						stepTwoMatrixPanel.getTitleLabel().setText("执行用例:"+ key);
+						
+						StepTwoMatrixPanel stepTwoMatrixPanel1 = new StepTwoMatrixPanel(mainFrame);
+						stepTwoMatrixPanel1.getTitleLabel().setText("执行用例:"+ key);
+					    
+					    ScenceTabelPanel scenceTabelPanel = new ScenceTabelPanel(relations, relationsData, 1, mainFrame);
+					    stepTwoMatrixPanel.getTabelPanel().add(scenceTabelPanel);
+					    MatrixPanels.add(stepTwoMatrixPanel);
+					    
+					    ScenceTabelPanel scenceTabelPanel1 = new ScenceTabelPanel(relations, relationsData, 1, mainFrame);
+					    stepTwoMatrixPanel1.getTabelPanel().add(scenceTabelPanel1);
+					    EvaluateMatrixPanels.add(stepTwoMatrixPanel1);
 					}
-				   	 for(int i = 0;i <number;i++)
-				   	 {
-				   		 int location = getplace(key);
-				   		 if(location != -1)
-				   		 {
-				   			JPanel panel = ((StepTwoTabelPanel) stepTwoModelExpandTabbedPane.getmodelExpandPanel().getComponent(i)).getTabelPanel();
-				   			JPanel tabelPanel = ((StepTwoMatrixPanel)panel.getComponent(location)).getTabelPanel();
-				   			JTable table = ((ScenceTabelPanel)tabelPanel.getComponent(0)).getTable();
-				   			int rows = table.getRowCount();
-				   			int columns = table.getColumnCount();
-				   			double a[][] = new double[rows][columns-1];
-				   			for(int row = 0;row < rows;row++)
-				   			{
-				   				for(int column = 1;column < columns;column++)
-				   				{
-				   					if(!isDouble(table.getValueAt(row, column).toString()))
-				   					{
-									    
-				   						label.removeAll();
-				   						label.setText("计算扩展矩阵出错,请检查填写的扩展矩阵!");
-									    startVerificationButton.setEnabled(true);
-									    
-									    thread2.interrupt();
-				   					    thread1.interrupt();
-									    mainthread.interrupt();
-									    break;
-				   					}
-				   					else {
-				   						a[row][column-1] = Double.parseDouble(table.getValueAt(row, column).toString());
-									}	
-				   				}
-				   			}
-				   			tableDatas.add(a);
-				   		 }
-				   	 }
-				}
-				if(tableDatas.size() > 0)
-				{
-					List list=worker.calculateProb(tableDatas); //带入界面填写的矩阵数组集合，返回计算结果
-					double[] datas = (double[]) list.get(1);
-					for(int k = 0; k < datas.length;k++)
+					else 
+					{    
+						for(InterfaceUCRelation interfaceUCRelation:interfaceUCRelations)
+						{
+							relations.add(interfaceUCRelation.getUCRelation());
+						}
+					   	 for(int i = 0;i <number;i++)
+					   	 {
+					   		 int location = getplace(key);
+					   		 if(location != -1)
+					   		 {
+					   			JPanel panel = ((StepTwoTabelPanel) stepTwoModelExpandTabbedPane.getmodelExpandPanel().getComponent(i)).getTabelPanel();
+					   			JPanel tabelPanel = ((StepTwoMatrixPanel)panel.getComponent(location)).getTabelPanel();
+					   			JTable table = ((ScenceTabelPanel)tabelPanel.getComponent(0)).getTable();
+					   			int rows = table.getRowCount();
+					   			int columns = table.getColumnCount();
+					   			double a[][] = new double[rows][columns-1];
+					   			for(int row = 0;row < rows;row++)
+					   			{
+					   				for(int column = 1;column < columns;column++)
+					   				{
+					   					if(!isDouble(table.getValueAt(row, column).toString()))
+					   					{
+										    
+					   						label.removeAll();
+					   						label.setText("计算扩展矩阵出错,请检查填写的扩展矩阵!");
+										    startVerificationButton.setEnabled(true);
+										    startExpandButton.setEnabled(true);
+										    
+										    thread2.interrupt();
+					   					    thread1.interrupt();
+										    mainthread.interrupt();
+										    break;
+					   					}
+					   					else {
+					   						a[row][column-1] = Double.parseDouble(table.getValueAt(row, column).toString());
+										}	
+					   				}
+					   			}
+					   			tableDatas.add(a);
+					   		 }
+					   	 }
+					}
+					if(tableDatas.size() > 0)
 					{
-						interfaceUCRelations.get(k).setUCRelProb(datas[k]);
-						relationsData.add(datas[k]);
+						List list=worker.calculateProb(tableDatas); //带入界面填写的矩阵数组集合，返回计算结果
+						double[] datas = (double[]) list.get(1);
+						for(int k = 0; k < datas.length;k++)
+						{
+							interfaceUCRelations.get(k).setUCRelProb(datas[k]);
+							relationsData.add(datas[k]);
+						}
+						tableDatas.clear();
+						stepTwoModelExpandTabbedPane.getValidationResults().updateUI();
+						
+						StepTwoMatrixPanel stepTwoMatrixPanel = new StepTwoMatrixPanel(mainFrame);
+						stepTwoMatrixPanel.getTitleLabel().setText("执行用例:"+key);
+						ScenceTabelPanel scenceTabelPanel = new ScenceTabelPanel(relations, relationsData, 1, mainFrame);
+						stepTwoMatrixPanel.getTabelPanel().add(scenceTabelPanel);
+						MatrixPanels.add(stepTwoMatrixPanel);
+						
+						StepTwoMatrixPanel stepTwoMatrixPanel1 = new StepTwoMatrixPanel(mainFrame);
+						stepTwoMatrixPanel1.getTitleLabel().setText("执行用例:"+key);
+						ScenceTabelPanel scenceTabelPanel1 = new ScenceTabelPanel(relations, relationsData, 1, mainFrame);
+						stepTwoMatrixPanel1.getTabelPanel().add(scenceTabelPanel1);
+						EvaluateMatrixPanels.add(stepTwoMatrixPanel1);
 					}
-					tableDatas.clear();
-					stepTwoModelExpandTabbedPane.getValidationResults().updateUI();
 					
-					StepTwoMatrixPanel stepTwoMatrixPanel = new StepTwoMatrixPanel(mainFrame);
-					stepTwoMatrixPanel.getTitleLabel().setText("执行用例:"+key);
-					ScenceTabelPanel scenceTabelPanel = new ScenceTabelPanel(relations, relationsData, 1, mainFrame);
-					stepTwoMatrixPanel.getTabelPanel().add(scenceTabelPanel);
-					MatrixPanels.add(stepTwoMatrixPanel);
-					
-					StepTwoMatrixPanel stepTwoMatrixPanel1 = new StepTwoMatrixPanel(mainFrame);
-					stepTwoMatrixPanel1.getTitleLabel().setText("执行用例:"+key);
-					ScenceTabelPanel scenceTabelPanel1 = new ScenceTabelPanel(relations, relationsData, 1, mainFrame);
-					stepTwoMatrixPanel1.getTabelPanel().add(scenceTabelPanel1);
-					EvaluateMatrixPanels.add(stepTwoMatrixPanel1);
+					mainFrame.renewPanel();
 				}
-				
-				mainFrame.renewPanel();
-			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			label.removeAll();
+			label.setText("用例扩展出错!");
+			
+			startExpandButton.setEnabled(true);
+			startVerificationButton.setEnabled(false);
+		}
+		    
 		return 1;
 	    }
      };		
@@ -391,78 +407,83 @@ public class StepTwoModelOperation extends JPanel{
 	 @Override
 	 public Integer call() throws Exception {
 		// TODO Auto-generated method stub
-		  label.removeAll();
-		  label.setText("正在生成后继用例概率列表.....");
-		  if(relations.size() > 0)
-		  {
-			    //设置第一个矩阵展开
-			    MatrixPanels.get(0).getTabelPanel().setVisible(true);
-			    
-			    JPanel panel = new JPanel();
-				panel.setLayout(new GridBagLayout());
-				MatrixPanel = new JPanel();
-				MatrixPanel.setLayout(new GridBagLayout());
-				for(int i = 0;i < MatrixPanels.size();i++)
-				{
-					panel.add(MatrixPanels.get(i),new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
-					MatrixPanel.add(EvaluateMatrixPanels.get(i),new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
-				}
-				panel.add(new JPanel(),new GBC(0, MatrixPanels.size()).setFill(GBC.BOTH).setWeight(1, 1));
-				MatrixPanel.add(new JPanel(),new GBC(0, EvaluateMatrixPanels.size()).setFill(GBC.BOTH).setWeight(1, 1));
-				
-				stepTwoModelExpandTabbedPane.getValidationResults().removeAll();
-				stepTwoModelExpandTabbedPane.getValidationResults().add(panel);
-				stepTwoModelExpandTabbedPane.getValidationResults().updateUI();
-				stepTwoModelExpandTabbedPane.setSelectedIndex(1);
-				mainFrame.renewPanel();					
-				
-				for(String string : mainFrame.getjRadionPanel().getRadios().keySet())
-				{
-					if(string.equals(Model_Name))
+		 try {
+			 label.removeAll();
+			  label.setText("正在生成后继用例概率列表.....");
+			  if(relations.size() > 0)
+			  {
+				    //设置第一个矩阵展开
+				    MatrixPanels.get(0).getTabelPanel().setVisible(true);
+				    
+				    JPanel panel = new JPanel();
+					panel.setLayout(new GridBagLayout());
+					MatrixPanel = new JPanel();
+					MatrixPanel.setLayout(new GridBagLayout());
+					for(int i = 0;i < MatrixPanels.size();i++)
 					{
-						mainFrame.getjRadionPanel().getRadios().get(string).setScenceTabelPanel(panel);
+						panel.add(MatrixPanels.get(i),new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
+						MatrixPanel.add(EvaluateMatrixPanels.get(i),new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
 					}
-				}
-				
-				isFinish = true;
-				for(String key : ucMap.keySet()) //求解 生成
+					panel.add(new JPanel(),new GBC(0, MatrixPanels.size()).setFill(GBC.BOTH).setWeight(1, 1));
+					MatrixPanel.add(new JPanel(),new GBC(0, EvaluateMatrixPanels.size()).setFill(GBC.BOTH).setWeight(1, 1));
+					
+					stepTwoModelExpandTabbedPane.getValidationResults().removeAll();
+					stepTwoModelExpandTabbedPane.getValidationResults().add(panel);
+					stepTwoModelExpandTabbedPane.getValidationResults().updateUI();
+					stepTwoModelExpandTabbedPane.setSelectedIndex(1);
+					mainFrame.renewPanel();					
+					
+					for(String string : mainFrame.getjRadionPanel().getRadios().keySet())
 					{
-						List<InterfaceUCRelation> interfaceUCRelations = ucMap.get(key);
-						for(InterfaceUCRelation interfaceUCRelation : interfaceUCRelations){	
-//	    					System.out.println(key+"用例: " + "关系: " + interfaceUCRelation.getUCRelation() + "概率: " + interfaceUCRelation.getUCRelProb());
-	    					if(interfaceUCRelation.getUCRelProb() <= 0.0 || interfaceUCRelation.getUCRelProb() > 1)
-	    					{
-	    						isFinish = false;
-	    					}
-	    					mainFrame.getOutputinformation().geTextArea().append(key+"用例: " + "关系: " + interfaceUCRelation.getUCRelation() + "概率: " + interfaceUCRelation.getUCRelProb() + "\n");
-	    					
-	    					int length = mainFrame.getOutputinformation().geTextArea().getText().length(); 
-			                mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
-	    					}
+						if(string.equals(Model_Name))
+						{
+							mainFrame.getjRadionPanel().getRadios().get(string).setScenceTabelPanel(panel);
+						}
 					}
-			}	
-		    mainFrame.renewPanel();
-		    if(isFinish == false) 
-		    {
-		    	label.removeAll();
-				label.setText(Model_Name+"用例模型进行扩展验证不通过，请重新填写扩展矩阵!");
-				stepTwoModelExpandTabbedPane.setSelectedIndex(1);
-				stepTwoModelExpandTabbedPane.getValidationResults().updateUI();
-				mainFrame.getStepTwoExpand().getExpandCaseModel().setEnabled(false);
-				startExpandButton.setEnabled(true);
-				startVerificationButton.setEnabled(false);
-		    }
-		    else {
-		    	label.removeAll();
-			    label.setText(Model_Name+"用例模型进行扩展验证通过，可以进行场景扩展！");
-				stepTwoModelExpandTabbedPane.getValidationResults().updateUI();
-				stepTwoModelExpandTabbedPane.setSelectedIndex(1);
-				mainFrame.getsteponeButton().getExpandCaseModel().setEnabled(true);
-				mainFrame.getStepTwoCaseOperation().getStartExpandButton().setEnabled(true);
-				startExpandButton.setEnabled(true);
-				startVerificationButton.setEnabled(false);
-			}
-		    mainFrame.renewPanel();
+					
+					isFinish = true;
+					for(String key : ucMap.keySet()) //求解 生成
+						{
+							List<InterfaceUCRelation> interfaceUCRelations = ucMap.get(key);
+							for(InterfaceUCRelation interfaceUCRelation : interfaceUCRelations){	
+//		    					System.out.println(key+"用例: " + "关系: " + interfaceUCRelation.getUCRelation() + "概率: " + interfaceUCRelation.getUCRelProb());
+		    					if(interfaceUCRelation.getUCRelProb() <= 0.0 || interfaceUCRelation.getUCRelProb() > 1)
+		    					{
+		    						isFinish = false;
+		    					}
+		    					mainFrame.getOutputinformation().geTextArea().append(key+"用例: " + "关系: " + interfaceUCRelation.getUCRelation() + "概率: " + interfaceUCRelation.getUCRelProb() + "\n");
+		    					int length = mainFrame.getOutputinformation().geTextArea().getText().length(); 
+				                mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
+		    					}
+						}
+				}	
+			    mainFrame.renewPanel();
+			    if(isFinish == false) 
+			    {
+			    	label.removeAll();
+					label.setText(Model_Name+"用例模型进行扩展验证不通过，请重新填写扩展矩阵!");
+					stepTwoModelExpandTabbedPane.setSelectedIndex(1);
+					stepTwoModelExpandTabbedPane.getValidationResults().updateUI();
+					mainFrame.getStepTwoExpand().getExpandCaseModel().setEnabled(false);
+					startExpandButton.setEnabled(true);
+					startVerificationButton.setEnabled(false);
+			    }
+			    else {
+			    	label.removeAll();
+				    label.setText(Model_Name+"用例模型进行扩展验证通过，可以进行场景扩展！");
+					stepTwoModelExpandTabbedPane.getValidationResults().updateUI();
+					stepTwoModelExpandTabbedPane.setSelectedIndex(1);
+				}
+			    mainFrame.renewPanel();
+		} catch (Exception e) {
+			// TODO: handle exception
+			label.removeAll();
+			label.setText("用例扩展出错!");
+			
+			startExpandButton.setEnabled(true);
+			startVerificationButton.setEnabled(false);
+		}
+		  
 		    return 1;
 	    }
      };		
@@ -486,12 +507,12 @@ public class StepTwoModelOperation extends JPanel{
 				if(((JButton)e.getSource()).isEnabled())
 				{
 					try {
-					DisplayForm.mainFrame = mainFrame;	
-						
+					DisplayForm.mainFrame = mainFrame;
 					isNeedExpand = false;
 					isSanmeName();
 					Model_Name = mainFrame.getjRadionPanel().getSelectName();
 					
+					verificationProgressBar.setValue(0);
 					mainFrame.getStepTwoCaseOperation().setModel_Name(Model_Name);
 					mainFrame.getStepTwoEvaluateOperation().setModel_Name(Model_Name);
 					mainFrame.getStepTwoExchangeOperation().setModel_Name(Model_Name);
@@ -508,6 +529,7 @@ public class StepTwoModelOperation extends JPanel{
 						label.removeAll();
 						label.setText("请在左侧用例列表中选择用例模型或在第一步中建立用例模型!");
 						mainFrame.getStepTwoModelOperation().updateUI();
+						mainFrame.renewPanel();
 					}
 					else if(numberTextField.getText().equals(""))
 					{ 
@@ -515,6 +537,7 @@ public class StepTwoModelOperation extends JPanel{
 						label.removeAll();
 						label.setText("请填写正确的用户数量!");
 						mainFrame.getStepTwoModelOperation().updateUI();
+						mainFrame.renewPanel();
 					}
 					else{
 	                        for(ModelPanel modelPanel : mainFrame.getModelPanelMap().keySet())
@@ -528,13 +551,14 @@ public class StepTwoModelOperation extends JPanel{
 	                        		StaticConfig.umlPathPrefixHDU = modelPanel.getTemporarySeqFile();
 	    						    }
 	                        		else {
-	                        			StaticConfig.umlPathPrefix = modelPanel.getTemporarySeqFile();
+	                        		StaticConfig.umlPathPrefix = modelPanel.getTemporarySeqFile();
 									}
 	                        	}
 	                        }
 	                        
 						    worker=new WorkImpl();
 						    
+						    System.out.println("worker ccode: " + worker.hashCode());
 						    if(currentUcase.contains(".ucase.violet.xml"))
 						    {
 						    	worker.transInitialHDU(currentUcase);
@@ -610,6 +634,7 @@ public class StepTwoModelOperation extends JPanel{
 						mainFrame.getsteponeButton().getExpandCaseModel().setEnabled(false);
 					}catch (Throwable e1) {
 							// TODO Auto-generated catch block
+					    e1.printStackTrace();
 						if(Model_Name == null){
 							label.removeAll();
 							label.setText("请在左侧用例列表中选择用例模型或在第一步中建立用例模型!");
@@ -626,7 +651,6 @@ public class StepTwoModelOperation extends JPanel{
 							label.removeAll();
 							label.setText("请检查模型是否绘制正确或模型是否存在!");
 						}
-							
 						}
 				}	
 			}
@@ -636,84 +660,12 @@ public class StepTwoModelOperation extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-//				stepTwoModelExpandTabbedPane.getValidationResults().removeAll();
-//				relations.clear();
-//				relationsData.clear();
-//				for(String key : ucMap.keySet()) //求解 生成
-//				{
-//					List<InterfaceUCRelation> interfaceUCRelations = ucMap.get(key);
-//					if(interfaceUCRelations.size() == 1)
-//					{
-//						relations.add(interfaceUCRelations.get(0).getUCRelation());
-//						interfaceUCRelations.get(0).setUCRelProb(1.0);
-//						relationsData.add(1.0);
-//					}
-////					else if (key.equals("Use Case3")) {   //后期修改 重复
-////						for(InterfaceUCRelation interfaceUCRelation:interfaceUCRelations)
-////						{
-////							relations.add(interfaceUCRelation.getUCRelation());
-////							relationsData.add(1.0);
-////						}
-////					}
-//					else 
-//					{    
-//						for(InterfaceUCRelation interfaceUCRelation:interfaceUCRelations)
-//						{
-//							relations.add(interfaceUCRelation.getUCRelation());
-//						}
-//					   	 for(int i = 0;i <number;i++)
-//					   	 {
-//					   		 int location = getplace(key);
-//					   		 if(location != -1)
-//					   		 {
-//					   			JPanel panel = ((StepTwoTabelPanel) stepTwoModelExpandTabbedPane.getmodelExpandPanel().getComponent(i)).getTabelPanel();
-//					   			JPanel tabelPanel = ((StepTwoMatrixPanel)panel.getComponent(location)).getTabelPanel();
-//					   			JTable table = ((ScenceTabelPanel)tabelPanel.getComponent(0)).getTable();
-//					   			int rows = table.getRowCount();
-//					   			int columns = table.getColumnCount();
-//					   			double a[][] = new double[rows][columns-1];
-//					   			for(int row = 0;row < rows;row++)
-//					   			{
-//					   				for(int column = 1;column < columns;column++)
-//					   				{
-//					   					a[row][column-1] = Double.parseDouble(table.getValueAt(row, column).toString());
-//					   				}
-//					   			}
-//					   			tableDatas.add(a);
-//					   		 }
-//					   	 }
-//					}
-//					if(tableDatas.size() > 0)
-//					{
-//					
-//						List list=worker.calculateProb(tableDatas); //带入界面填写的矩阵数组集合，返回计算结果
-//						double[] datas = (double[]) list.get(1);
-//						for(int k = 0; k < datas.length;k++)
-//						{
-//							interfaceUCRelations.get(k).setUCRelProb(datas[k]);
-//							relationsData.add(datas[k]);
-//						}
-//						tableDatas.clear();
-//						label.setText(model_name+"用例模型进行扩展验证通过，可以进行用例扩展验证！");
-//						stepTwoModelExpandTabbedPane.getValidationResults().updateUI();
-//					}
-//				}
-//				//生成验证报告
-//				if(relations.size() > 0)
-//				{
-//					ScenceTabelPanel scenceTabelPanel = new ScenceTabelPanel(relations, relationsData,1);
-//					stepTwoModelExpandTabbedPane.getValidationResults().add(scenceTabelPanel);				
-//					tabelResultMap.put(model_name, scenceTabelPanel);
-//				}	
-//				stepTwoModelExpandTabbedPane.getValidationResults().updateUI();
-//			}
 				if(((JButton)e.getSource()).isEnabled())
 				{
 					initThread();
 					mainthread.start();
 					thread1.start();
 				}
-				
 			}
 		});	
 		}
@@ -854,7 +806,7 @@ public class StepTwoModelOperation extends JPanel{
 	            });
 	        }
 	        
-	        else if(!(ch >= '0' && ch <= '9') // 数字
+	        else if(!(ch >= '1' && ch <= '9') // 数字
 	               ) { // 中文，最常用的范围是 U+4E00～U+9FA5，也有使用 U+4E00～ U+9FFF 的，但目前 U+9FA6～U+9FFF 之间的字符还属于空码，暂时还未定义，但不能保证以后不会被定义
 	            SwingUtilities.invokeLater(new Runnable() {
 	                @Override
@@ -864,6 +816,7 @@ public class StepTwoModelOperation extends JPanel{
 	                }
 	            });
 	        }
+	        mainFrame.renewPanel();
 	    }
 }
 }

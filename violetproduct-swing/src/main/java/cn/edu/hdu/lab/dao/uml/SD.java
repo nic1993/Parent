@@ -2,6 +2,8 @@ package cn.edu.hdu.lab.dao.uml;
 
 import java.util.ArrayList;
 
+import com.horstmann.violet.application.gui.DisplayForm;
+
 public class SD {
 
 	private String id;
@@ -55,6 +57,9 @@ public class SD {
 	public void print_SDSet()
 	{
 		System.out.println("---SDSet----\n[\nid="+id+", name="+name+"---probablity="+prob+",postSD="+postSD);
+		DisplayForm.mainFrame.getOutputinformation().geTextArea().append("---SDSet----\n[\nid="+id+", name="+name+"---probablity="+prob+",postSD="+postSD + "\n");
+		
+		
 		if(lifeLines!=null)
 		{
 			print_lifeLines();
@@ -67,6 +72,10 @@ public class SD {
 		if(fragments!=null)
 			print_fragments();
 		System.out.println(" ]");
+		
+		DisplayForm.mainFrame.getOutputinformation().geTextArea().append(" ]" + "\n");
+		int length1 = DisplayForm.mainFrame.getOutputinformation().geTextArea().getText().length(); 
+		DisplayForm.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length1);
 	}
 	
 	public String getId() {

@@ -86,7 +86,7 @@ public class TestCaseReportPartPanel extends JPanel {
 		ImageIcon icon3 = new ImageIcon("resources/icons/16x16/smallDown.png");
 
 		String title = "";
-		title+="测试用例ID:"+testcase.getTestCaseID()+"     ";
+		title+="可靠性测试数据ID:"+testcase.getTestCaseID()+"     ";
 //		if(testcase.getState()!=null){
 //			title+=testcase.getState()+"     ";
 //		}

@@ -3,6 +3,8 @@ package cn.edu.hdu.lab.dao.tmc;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.horstmann.violet.application.gui.DisplayForm;
+
 import cn.edu.hdu.lab.config.StaticConfig;
 
 public class Tmc {
@@ -30,21 +32,21 @@ public class Tmc {
 		System.out.println("开始状态："+start.getName());
 		System.out.println("状态集：");
 		
-		StaticConfig.mainFrame.getOutputinformation().geTextArea().append("对应用例的前置条件："+notation + "\n");
-		StaticConfig.mainFrame.getOutputinformation().geTextArea().append("执行概率："+pro + "\n");
-		StaticConfig.mainFrame.getOutputinformation().geTextArea().append("开始状态："+start.getName() + "\n");
-		StaticConfig.mainFrame.getOutputinformation().geTextArea().append("状态集：" + "\n");
-		int length = StaticConfig.mainFrame.getOutputinformation().geTextArea().getText().length(); 
-		StaticConfig.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
+		DisplayForm.mainFrame.getOutputinformation().geTextArea().append("对应用例的前置条件："+notation + "\n");
+		DisplayForm.mainFrame.getOutputinformation().geTextArea().append("执行概率："+pro + "\n");
+		DisplayForm.mainFrame.getOutputinformation().geTextArea().append("开始状态："+start.getName() + "\n");
+		DisplayForm.mainFrame.getOutputinformation().geTextArea().append("状态集：" + "\n");
+		int length = DisplayForm.mainFrame.getOutputinformation().geTextArea().getText().length(); 
+		DisplayForm.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
 		
 		for (State state : states) 
 		{
 			state.print_state();
 		}
 		System.out.println("迁移集：");
-		StaticConfig.mainFrame.getOutputinformation().geTextArea().append("迁移集：" + "\n");
-		int length1 = StaticConfig.mainFrame.getOutputinformation().geTextArea().getText().length(); 
-		StaticConfig.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length1);
+		DisplayForm.mainFrame.getOutputinformation().geTextArea().append("迁移集：" + "\n");
+		int length1 = DisplayForm.mainFrame.getOutputinformation().geTextArea().getText().length(); 
+		DisplayForm.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length1);
 		
 		for (Transition transition : transitions) 
 		{
@@ -52,9 +54,9 @@ public class Tmc {
 			//System.out.println(transition);
 		}
 		System.out.println("终止状态集：");
-		StaticConfig.mainFrame.getOutputinformation().geTextArea().append("终止状态集：" + "\n");
-		int length2 = StaticConfig.mainFrame.getOutputinformation().geTextArea().getText().length(); 
-		StaticConfig.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length2);
+		DisplayForm.mainFrame.getOutputinformation().geTextArea().append("终止状态集：" + "\n");
+		int length2 = DisplayForm.mainFrame.getOutputinformation().geTextArea().getText().length(); 
+		DisplayForm.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length2);
 		for (State state : ends) 
 		{
 			state.print_state();

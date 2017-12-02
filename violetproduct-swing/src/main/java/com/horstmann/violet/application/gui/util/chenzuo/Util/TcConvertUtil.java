@@ -3,6 +3,7 @@ package com.horstmann.violet.application.gui.util.chenzuo.Util;
 
 
 import java.io.*;
+import java.text.DecimalFormat;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -22,6 +23,8 @@ import com.horstmann.violet.application.gui.util.chenzuo.Bean.myProcess;
  */
 public class TcConvertUtil {
 
+	private static DecimalFormat df = new DecimalFormat();
+	private static String pattern = "#0.000";
 	/**
 	 * 对字符串进行 正则匹配，获取结果
 	 * 
@@ -252,6 +255,7 @@ public class TcConvertUtil {
 	public static List<TestCase> buildTestCaseList(String type, String fileName) {
 
 		List<TestCase> list = new ArrayList<>();
+		try {
 		String str = readFileByLines(fileName);
 		// 1.按*号将测试用例划分
 		String[] tmp = str.split("\\*");
@@ -277,13 +281,13 @@ public class TcConvertUtil {
 				String[] r = t.split(":");
 				// 时间约束
 				if (type == "Time") {
-					String tStatus, eStatus;
+					String tStatus, eStatus,reslut;
 					if ("1".equals(r[0])) {
 						tStatus = "测试用例有误,无法对应到执行程序";
 					} else {
 						tStatus = "测试用例正确执行";
 					}
-					eStatus = "测试耗时:" + r[1] + " ms";
+					eStatus = "测试耗时:" + r[1] + " ms" + r[2];
 //					if ("1".equals(r[1])) {
 //						eStatus = "不满足时间约束";
 //					} else {
@@ -295,10 +299,10 @@ public class TcConvertUtil {
 					switch (Integer.valueOf(r[0])) {
 					case 1:
 //						exeState = "测试用例有误,无法对应到执行程序，且测试耗时:" + r[1] + " ms [不准确]";
-						exeState = "测试耗时:" + r[1] + " ms";
+						exeState = "测试耗时:" + r[1] + " ms" + r[2];
 						break;
 					case 2:
-						exeState = "测试耗时:" + r[1] +" ms";
+						exeState = "测试耗时:" + r[1] +" ms" + r[2];
 						break;
 					}
 //					if (type != "Function") {
@@ -351,10 +355,15 @@ public class TcConvertUtil {
 			testCase.setResult(testCaseResult);
 			// 2.6.测试用例表现格式
 			testCase.setDetail(testCase.showTestCase());
+			
+			
+			CalculateAllExeTime(testCase,"Function");
+			
 			// 2.7.加入测试用例链表
 			list.add(testCase);
 		}
 
+		
 		// 性能测试除去多个0%
 //		if (type == "Performance") {
 //			//处理越界数据
@@ -377,10 +386,49 @@ public class TcConvertUtil {
 //
 //			}
 //		}
-		
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return list;
+
 	}
 
+	//计算时间
+private static void CalculateAllExeTime(TestCase testCase, String type) {
+		
+		double alltime=0;
+		
+		if("Function".equals(type)){
+			for(myProcess process:testCase.getProcessList()){
+				if(process.getProcessStatus()==null||process.getProcessStatus().equals("NULL")){
+				}
+				else{
+					alltime+=Double.parseDouble(process.getProcessStatus());
+				}
+			}
+		}
+		else if("Performance".equals(type)){
+			for(myProcess process:testCase.getProcessList()){
+				if(process.getProcessStatus()==null||process.getProcessStatus().equals("NULL")){
+				}
+				else{
+					alltime+=Double.parseDouble(process.getProcessStatus());
+				}
+			}
+		}
+		else if("Time".equals(type)){
+			for(myProcess process:testCase.getProcessList()){
+				if(process.getProcessStatus().contains("=")){
+					alltime+=Double.parseDouble(process.getProcessStatus().split("=")[1]);
+				}
+			}
+		}
+		df.applyPattern(pattern);
+//		testCase.setState("测试耗时:" + alltime + "ms");
+		testCase.setExeTime(df.format(alltime));
+	}
+
+	
 	/**
 	 * 字符串写入文件 由于测试数据太大需要通过保存在文件的形式查看
 	 * 

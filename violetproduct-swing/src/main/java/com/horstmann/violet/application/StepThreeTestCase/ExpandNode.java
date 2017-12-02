@@ -72,7 +72,11 @@ public class ExpandNode extends JLabel{
    				}
        			setFont(new Font("ËÎÌו", Font.BOLD, 16));
        		};
-       		
+       		@Override
+       		public void mouseEntered(MouseEvent e) {
+       			// TODO Auto-generated method stub
+       			mainFrame.renewPanel();
+       		}
    		});
        }
 	public IWorkspace getWorkspace() {

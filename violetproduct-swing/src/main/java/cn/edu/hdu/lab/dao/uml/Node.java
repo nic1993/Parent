@@ -1,6 +1,6 @@
 package cn.edu.hdu.lab.dao.uml;
 
-
+import com.horstmann.violet.application.gui.DisplayForm;
 
 public class Node implements Cloneable{
 	@Override
@@ -64,6 +64,10 @@ public class Node implements Cloneable{
 	public void print_node()
 	{
 		System.out.println("Node: *nodeId=" + this.id + "\t*coveredId=" + this.coverdID + "\t*lifeLineName=" + this.lifeLineName);
+		
+		DisplayForm.mainFrame.getOutputinformation().geTextArea().append("Node: *nodeId=" + this.id + "\t*coveredId=" + this.coverdID + "\t*lifeLineName=" + this.lifeLineName + "\n");
+		int length11 = DisplayForm.mainFrame.getOutputinformation().geTextArea().getText().length(); 
+		DisplayForm.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length11);
 	}
 	
 }

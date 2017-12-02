@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import com.horstmann.violet.application.gui.DisplayForm;
 import com.wolfram.jlink.KernelLink;
 import com.wolfram.jlink.MathLinkException;
 import com.wolfram.jlink.MathLinkFactory;
@@ -116,17 +117,27 @@ public class Mathematica2 {
 
 			// 将param1和param2中参数标识符按顺序全都替换为26个字母,防止变量命名不符合mathematica规则导致无法运算
 			System.out.println("不等式组和参数集替换前：" + param1 + "======" + param2);
+			DisplayForm.mainFrame.getOutputinformation().geTextArea().append("不等式组和参数集替换前：" + param1 + "======" + param2+  "\n");
 			replace(param1, param2);
 			System.out.println("不等式组和参数集替换后：" + parameter1 + "======"
 					+ parameter2);
+			DisplayForm.mainFrame.getOutputinformation().geTextArea().append("不等式组和参数集替换后：" + parameter1 + "======"
+					+ parameter2+  "\n");
+			replace(param1, param2);
 			String strResult = ml.evaluateToOutputForm(
 					"SetAccuracy[FindInstance[{" + parameter1 + "}, {"
 							+ parameter2 + "}, 50], 3]", 0);
 			// System.out.println(strResult);
 			// 再将替换的参数标识符替换回原样
 			System.out.println("变量名还原前计算结果：" + strResult);
+			DisplayForm.mainFrame.getOutputinformation().geTextArea().append("变量名还原前计算结果：" + strResult+  "\n");
+			
 			recovery(strResult);
 			System.out.println("变量名还原后计算结果：" + result);
+			DisplayForm.mainFrame.getOutputinformation().geTextArea().append("变量名还原后计算结果：" + result+  "\n");
+			int length = DisplayForm.mainFrame.getOutputinformation().geTextArea().getText().length(); 
+			DisplayForm.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
+			
 			return result;
 
 		} catch (Exception e) {

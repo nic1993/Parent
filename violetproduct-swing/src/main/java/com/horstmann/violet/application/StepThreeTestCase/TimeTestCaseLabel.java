@@ -61,6 +61,12 @@ public class TimeTestCaseLabel extends JLabel{
 			}
 			((NoTimeTestCaseNode)e.getSource()).setFont(new Font("ËÎÌו", Font.BOLD, 16));
     		};
+    		
+    		@Override
+       		public void mouseEntered(MouseEvent e) {
+       			// TODO Auto-generated method stub
+       			mainFrame.renewPanel();
+       		}
 		});
     }
 //	public void clearPanel()

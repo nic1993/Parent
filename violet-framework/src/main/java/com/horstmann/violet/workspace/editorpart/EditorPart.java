@@ -36,6 +36,8 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.Rectangle2D.Double;
 import java.util.List;
+import java.util.concurrent.BlockingDeque;
+import java.util.concurrent.LinkedBlockingDeque;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -277,6 +279,7 @@ public class EditorPart extends JPanel implements IEditorPart
 
     public JComponent getSwingComponent()
     {
+    	lock.push(1);
         return this;
     }
     
@@ -288,7 +291,7 @@ public class EditorPart extends JPanel implements IEditorPart
         super.paintImmediately(x, y, w, h);
     }
     
-
+    
     @Override
     protected void paintComponent(Graphics g)
     {
@@ -348,8 +351,7 @@ public class EditorPart extends JPanel implements IEditorPart
     			zoomstate=false;
     		}
     		
-        }
-        
+        }  
     }
     
     
@@ -400,5 +402,7 @@ public class EditorPart extends JPanel implements IEditorPart
     private int newvbarmax;
     private int newhbarvalue;
     private int newvbarvalue;
+    
+    public static BlockingDeque<Integer> lock = new LinkedBlockingDeque<Integer>();
     
 }

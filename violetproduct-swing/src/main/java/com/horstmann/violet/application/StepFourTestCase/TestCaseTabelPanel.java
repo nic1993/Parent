@@ -71,12 +71,22 @@ public class TestCaseTabelPanel extends JPanel{
               this.setLayout(new GridLayout());
               this.add(jScrollPane);
 	}
-       public TestCaseTabelPanel(String TestCaseID,String State,String ExeState)
+       public TestCaseTabelPanel(String TestCaseID,String State,String ExeState,int flag)
        {
     	   this.TestCaseID = TestCaseID;     
     	   this.State = State;
     	   this.ExeState = ExeState;
-    	   titleinit();
+    	   titleinit(flag);
+    	   this.setLayout(new GridLayout());
+           this.add(jScrollPane);
+       }
+       
+       public TestCaseTabelPanel(String TestCaseID,String State,String ExeState,SelectBox selectBox,int flag)
+       {
+    	   this.TestCaseID = TestCaseID;     
+    	   this.State = State;
+    	   this.ExeState = ExeState;
+    	   titleinit(selectBox,flag);
     	   this.setLayout(new GridLayout());
            this.add(jScrollPane);
        }
@@ -156,14 +166,66 @@ public class TestCaseTabelPanel extends JPanel{
     	   table.setPreferredScrollableViewportSize(new Dimension(table.getWidth(),table.getRowHeight()* table.getRowCount()));
        }
        
-       private void titleinit()
+       private void titleinit(int flag)
        {
-    	   scenceTabelModel = new TestCaseTableMode(TestCaseID,State,ExeState);
+    	   scenceTabelModel = new TestCaseTableMode(TestCaseID,State,ExeState,flag);
     	   table = new JTable(scenceTabelModel);
     	  
-    	   table.getTableHeader().getColumnModel().getColumn(0).setPreferredWidth(50);
-    	   table.getTableHeader().getColumnModel().getColumn(0).setMinWidth(50);
-   		   table.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(50);
+    	   table.getTableHeader().getColumnModel().getColumn(0).setPreferredWidth(30);
+    	   table.getTableHeader().getColumnModel().getColumn(0).setMinWidth(30);
+   		   table.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(30);
+
+   		   table.getTableHeader().getColumnModel().getColumn(1).setPreferredWidth(110);
+   		   table.getTableHeader().getColumnModel().getColumn(1).setMinWidth(101);
+   		   table.getTableHeader().getColumnModel().getColumn(2).setPreferredWidth(90);
+   		   table.getTableHeader().getColumnModel().getColumn(2).setMinWidth(90);
+
+  		   DefaultTableCellRenderer renderer = new DefaultTableCellRenderer()
+  		  {
+  			 public Component getTableCellRendererComponent(JTable table,  
+   		            Object value, boolean isSelected, boolean hasFocus,  
+   		            int row, int column) {  
+   		     if(value.toString().contains("ÓÐÎó") && column == 2)  
+   		     setForeground(Color.red);  
+   		     else  
+   		     setForeground(Color.black);  
+   		     return super.getTableCellRendererComponent(table, value,  
+   		               isSelected, hasFocus, row, column);  
+   		     
+   		     }  
+  			};
+  	       renderer.setBackground(new Color(233, 233, 233));
+//		renderer.setForeground(new Color(255, 255, 255));
+		   renderer.setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 16));
+		   renderer.setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
+		   table.getTableHeader().setDefaultRenderer(renderer);
+		   table.getTableHeader().setPreferredSize(new Dimension(100, 30));
+  		   table.setShowGrid(false);
+  		   table.setShowHorizontalLines(false);
+  		   table.setShowVerticalLines(false);
+  		   table.getTableHeader().setBackground(Color.red);
+  		   table.setGridColor(new Color(233,233,233));
+  		   table.doLayout();
+  		   table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+  		   jScrollPane = new JScrollPane();
+  		   jScrollPane.setBorder(BorderFactory.createEmptyBorder());
+  	       jScrollPane.setViewportView(table);
+  	      
+  	       table.setPreferredScrollableViewportSize(new Dimension(table.getWidth(),table.getRowHeight()* table.getRowCount()));
+//  		   jScrollPane = new JScrollPane(table);
+//  	       jScrollPane.setBorder(null);
+//  	       table.setPreferredScrollableViewportSize(new Dimension(table.getWidth(),table.getRowHeight()* table.getRowCount()));
+       }
+       
+       private void titleinit(SelectBox selectBox,int flag)
+       {
+    	   scenceTabelModel = new TestCaseTableMode(TestCaseID,State,ExeState,flag);
+    	   table = new JTable(scenceTabelModel);
+    	  
+    	   table.getTableHeader().getColumnModel().getColumn(0).setPreferredWidth(20);
+    	   table.getTableHeader().getColumnModel().getColumn(0).setMinWidth(20);
+   		   table.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(20);
+//   		   table.getTableHeader().getColumnModel().getColumn(0).setHeaderRenderer(selectBox);
 
    		   table.getTableHeader().getColumnModel().getColumn(1).setPreferredWidth(100);
    		   table.getTableHeader().getColumnModel().getColumn(1).setMinWidth(100);

@@ -1,5 +1,7 @@
 package cn.edu.hdu.lab.dao.tmc;
 
+import com.horstmann.violet.application.gui.DisplayForm;
+
 import cn.edu.hdu.lab.config.StaticConfig;
 
 public class State {
@@ -58,10 +60,10 @@ public class State {
 		System.out.println("State [TmcID=" + TmcID + ", name=" + name + ", "
 				+"label="+label+"---delayTime="+stopTimeConstraint+",notation="+ notation  + "]");
 		
-		StaticConfig.mainFrame.getOutputinformation().geTextArea().append("State [TmcID=" + TmcID + ", name=" + name + ", "
+		DisplayForm.mainFrame.getOutputinformation().geTextArea().append("State [TmcID=" + TmcID + ", name=" + name + ", "
 				+"label="+label+"---delayTime="+stopTimeConstraint+",notation="+ notation  + "]" + "\n");
-		int length = StaticConfig.mainFrame.getOutputinformation().geTextArea().getText().length(); 
-		StaticConfig.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
+		int length = DisplayForm.mainFrame.getOutputinformation().geTextArea().getText().length(); 
+		DisplayForm.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
 	}
 	public String getStopTimeConstraint() {
 		return stopTimeConstraint;

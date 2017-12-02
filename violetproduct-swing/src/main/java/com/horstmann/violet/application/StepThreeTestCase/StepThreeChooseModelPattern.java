@@ -56,8 +56,8 @@ public class StepThreeChooseModelPattern extends JPanel{
     {
     	timeRadioButtons = new ArrayList<JRadioButton>();
     	label = new JLabel("请选择模型类别");
-    	label1 = new JLabel("请选择需要生成测试用例的Markov链模型");
-    	label2 = new JLabel("请选择需要生成测试用例的Markov链模型");
+    	label1 = new JLabel("请选择需要生成可靠性测试数据生成的Markov链模型");
+    	label2 = new JLabel("请选择需要生成可靠性测试数据生成的Markov链模型");
     	
     	jRadioButton = new JRadioButton("不带时间约束的模型");
     	jRadioButton1 = new JRadioButton("带有时间约束的模型");

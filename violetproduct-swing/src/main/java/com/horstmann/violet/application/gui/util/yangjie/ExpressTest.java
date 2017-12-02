@@ -4,6 +4,8 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
+import com.horstmann.violet.application.gui.DisplayForm;
+
 public class ExpressTest {
 
 	public static void test1() throws ScriptException {
@@ -15,6 +17,11 @@ public class ExpressTest {
 		Object result = engine.eval(str);
 		System.out.println("结果类型:" + result.getClass().getName() + ",计算结果:"
 				+ result);
+		
+		DisplayForm.mainFrame.getOutputinformation().geTextArea().append("结果类型:" + result.getClass().getName() + ",计算结果:"
+				+ result+  "\n");
+		int length = DisplayForm.mainFrame.getOutputinformation().geTextArea().getText().length(); 
+		DisplayForm.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
 	}
 
 	public static void test2() throws ScriptException {
@@ -24,6 +31,10 @@ public class ExpressTest {
 		Object result = engine.eval(str);
 		System.out.println("结果类型:" + result.getClass().getName() + ",计算结果:"
 				+ result);
+		DisplayForm.mainFrame.getOutputinformation().geTextArea().append("结果类型:" + result.getClass().getName() + ",计算结果:"
+				+ result+  "\n");
+		int length = DisplayForm.mainFrame.getOutputinformation().geTextArea().getText().length(); 
+		DisplayForm.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
 	}
 
 	public static void main(String[] args) throws ScriptException {

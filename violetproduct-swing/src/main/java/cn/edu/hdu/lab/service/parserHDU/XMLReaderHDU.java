@@ -11,6 +11,8 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
+import com.horstmann.violet.application.gui.DisplayForm;
+
 import cn.edu.hdu.lab.config.StaticConfig;
 import cn.edu.hdu.lab.dao.uml.Diagram;
 import cn.edu.hdu.lab.dao.uml.DiagramsData;
@@ -59,6 +61,7 @@ public class XMLReaderHDU {
 	 */
 	public XMLReaderHDU(String xmlFile) throws Exception {
 		super();
+		umlAllDiagramData.clear();
 		this.xmlFile = xmlFile;
 		this.fileName=StaticConfig.umlPathPrefixHDU;
 		try
@@ -202,11 +205,16 @@ public class XMLReaderHDU {
 	private void readSequencesInformation(List<UseCase> useCases) throws Throwable 
 	{
 		System.out.println("=================================解析场景===============================");
+		
+		DisplayForm.mainFrame.getOutputinformation().geTextArea().append("=================================解析场景===============================" + "\n");
+		int length1 = DisplayForm.mainFrame.getOutputinformation().geTextArea().getText().length(); 
+		DisplayForm.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length1);
 		for(UseCase uc:useCases)
 		{
 			File file=new File(fileName);
 			File[] tempFileList=file.listFiles(); //获取该包下的所有文件			
-			
+
+			umlAllDiagramData.clear();
 			for(File f:tempFileList)
 			{
 				if(f.isFile()&&f.getName().contains("seq.violet.xml"))
@@ -219,6 +227,11 @@ public class XMLReaderHDU {
 					dd.setName(f.getName().substring(0, f.getName().indexOf(".seq.violet.xml")));
 					umlAllDiagramData.add(dd);
 				}
+			}
+			for(DiagramsData diagramData: umlAllDiagramData)
+			for(Message message : diagramData.getMessageArray())
+			{
+				System.out.println("概率： "+ message.getProb());
 			}
 			
 			/*for(DiagramsData diagramData : umlAllDiagramData) 
@@ -255,10 +268,15 @@ public class XMLReaderHDU {
 				
 				assembleInfo2DiffDiagram(sd);
 				
-				System.out.println("*****************主场景信息**************");				
+				System.out.println("*****************主场景信息**************");		
+				DisplayForm.mainFrame.getOutputinformation().geTextArea().append("*****************主场景信息**************" + "\n");
+				int length = DisplayForm.mainFrame.getOutputinformation().geTextArea().getText().length(); 
+				DisplayForm.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
 				sd.print_SDSet();			
 				
 			}
+			
+			
 		}
 	}
 	
@@ -297,6 +315,7 @@ public class XMLReaderHDU {
 					
 					//获取消息集合
 					dd.setMessageArray(retrieveMessages(sdRoot,dd));	
+					
 					
 					//获取引用片段引用
 					dd.getRefArray().addAll(retrieveRefs(sdRoot));
@@ -897,6 +916,8 @@ public class XMLReaderHDU {
 	{
 		for(DiagramsData diagramData : umlAllDiagramData) 
 		{
+			
+			
 			if(diagramData.getName().equals(sd.getName()))
 			{
 
@@ -919,6 +940,7 @@ public class XMLReaderHDU {
 				sd.setNodes(diagramData.getNodes());
 				break;
 			}
+			
 		}
 	}
 	/**

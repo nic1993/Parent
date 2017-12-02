@@ -172,6 +172,8 @@ import com.horstmann.violet.workspace.IWorkspace;
 import com.horstmann.violet.workspace.IWorkspaceListener;
 import com.horstmann.violet.workspace.Workspace;
 import com.horstmann.violet.workspace.WorkspacePanel;
+import com.horstmann.violet.workspace.editorpart.EditorPart;
+import com.horstmann.violet.workspace.editorpart.IEditorPart;
 import com.horstmann.violet.workspace.editorpart.behavior.EditSelectedBehavior;
 
 /**
@@ -247,6 +249,7 @@ public class MainFrame extends JFrame
     {
     	File[] roots = File.listRoots();
     	String DefaultRoute = roots[1].getAbsolutePath() + "ModelDriverProjectFile\\";
+    	
     	File defaultFile = new File(DefaultRoute);
     	if(!defaultFile.exists())
     		defaultFile.mkdirs();
@@ -287,6 +290,10 @@ public class MainFrame extends JFrame
     	File failTestCase = new File(getBathRoute() + "/FailTestCase");
     	if(!failTestCase.exists())
     		failTestCase.mkdirs();
+    	
+    	File chooseCaseFile = new File(getBathRoute() + "/ChooseTestCase"); 
+        if(!chooseCaseFile.exists())
+        	chooseCaseFile.mkdirs();
     }
     /**
      * Adds a tabbed pane (only if not already added)
@@ -583,13 +590,14 @@ public class MainFrame extends JFrame
         int i = jFileChooser.showSaveDialog(null);
         if(i== jFileChooser.APPROVE_OPTION){ //打开文件
         	File file = jFileChooser.getSelectedFile(); 
-            String path = jFileChooser.getSelectedFile().getAbsolutePath() ;
+            String path = jFileChooser.getSelectedFile().getAbsolutePath();
             String name = jFileChooser.getSelectedFile().getName();
             
             //生成存放用例图的文件夹
             String packagePath = path + "/" +  modelPanel.getTitle().getText();
             this.getModelPanelMap().put(modelPanel, packagePath);
             
+            System.out.println("model: " + modelPanel.getTitle().getText());
             File packagefile =  new File(packagePath);
             if(!packagefile.exists())
             {
@@ -614,8 +622,6 @@ public class MainFrame extends JFrame
             modelPanel.setTemporaryUcaseFile(ucasepath);
             
             XStreamBasedPersistenceService xStreamBasedPersistenceService = new XStreamBasedPersistenceService();
-            
-            
             //保存所有用例图
             for(int j = 0;j < modelPanel.getUseCaseworkspaceList().size();j++)
             {
@@ -678,13 +684,19 @@ public class MainFrame extends JFrame
         try {
         IWorkspace workspace = modelPanel.getUseCaseworkspaceList().get(j);
         File ucaseFile = new File(ucasepath+"/"+workspace.getName()+".ucase.violet.xml");
-		JFileWriter jFileWriter = new JFileWriter(ucaseFile);
+        JFileWriter jFileWriter = new JFileWriter(ucaseFile);
         OutputStream out = jFileWriter.getOutputStream();
+        OutputStreamWriter writer = new OutputStreamWriter(out, "UTF-8");
+        ByteArrayOutputStream graphOutputStream = new ByteArrayOutputStream();
         IGraph graph = workspace.getGraphFile().getGraph();
-        xStreamBasedPersistenceService.write(graph, out);
-        } catch (FileNotFoundException e1) {
+        xStreamBasedPersistenceService.write(graph, graphOutputStream);
+
+        String graphString = graphOutputStream.toString();
+        writer.write(new String(graphString.getBytes()));
+        writer.close();
+        } catch (IOException e) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			e.printStackTrace();
 		}
         }
         
@@ -696,11 +708,17 @@ public class MainFrame extends JFrame
         File ucaseFile = new File(seqpath+"/"+workspace.getName()+".seq.violet.xml");
 		JFileWriter jFileWriter = new JFileWriter(ucaseFile);
         OutputStream out = jFileWriter.getOutputStream();
+        OutputStreamWriter writer = new OutputStreamWriter(out, "UTF-8");
+        ByteArrayOutputStream graphOutputStream = new ByteArrayOutputStream();
         IGraph graph = workspace.getGraphFile().getGraph();
-        xStreamBasedPersistenceService.write(graph, out);
-        } catch (FileNotFoundException e1) {
+        xStreamBasedPersistenceService.write(graph, graphOutputStream);
+
+        String graphString = graphOutputStream.toString();
+        writer.write(new String(graphString.getBytes()));
+        writer.close();
+        } catch (IOException e) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			e.printStackTrace();
 		}
         }
     	
@@ -1126,32 +1144,7 @@ public HomePanel getHomePanel()
             layout.setConstraints(this.getReduceOrEnlargePanel(), new GBC(2,2,1,1).setFill(GBC.BOTH).setWeight(0, 1).setInsets(10, 0, 20, 15));
             layout.setConstraints(this.getworkpanel(), new GBC(1,2,1,1).setFill(GBC.BOTH).setWeight(1, 1));//绘图区域
             
-            new Thread(new Runnable() {
-				
-				@Override
-				public void run() {
-					// TODO Auto-generated method stub
-					while (true) {
-						try {
-							EditSelectedBehavior.Reflock.take();
-							RefNode refNode = (RefNode) ((WorkspacePanel)getCenterTabPanel().getComponent(0)).getWorkspace().getEditorPart().getSelectionHandler().getLastSelectedNode();
-				            String name = refNode.getText().getText();
-				            for(int i = 0;i <getActiveModelPanel().getSequencespaceList().size();i++)
-				            {
-				            	if(getActiveModelPanel().getSequencespaceList().get(i).getName().equals(name)){
-				            		getCenterTabPanel().removeAll();
-				            		getCenterTabPanel().add(getActiveModelPanel().getSequencespaceList().get(i).getAWTComponent());
-				            	}
-				            }
-				            renewPanel();
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-				}
-			}).start();
-
+            initThread();
         }
         return this.mainPanel;
     }
@@ -1165,6 +1158,7 @@ public HomePanel getHomePanel()
 	}
     public void renewPanel()
     {
+    	getStepJLabel().updateUI();
     	getOpreationPart().updateUI();
     	getworkpanel().updateUI();
     	getconsolepartPanel().updateUI();
@@ -1172,6 +1166,54 @@ public HomePanel getHomePanel()
     	getpanel().updateUI();
     }
 
+    public void initThread()
+    {
+    	new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				while (true) {
+					try {
+						EditSelectedBehavior.Reflock.take();
+						RefNode refNode = (RefNode) ((WorkspacePanel)getCenterTabPanel().getComponent(0)).getWorkspace().getEditorPart().getSelectionHandler().getLastSelectedNode();
+			            String name = refNode.getText().getText();
+			            for(int i = 0;i <getActiveModelPanel().getSequencespaceList().size();i++)
+			            {
+			            	if(getActiveModelPanel().getSequencespaceList().get(i).getName().equals(name)){
+			            		getCenterTabPanel().removeAll();
+			            		getCenterTabPanel().add(getActiveModelPanel().getSequencespaceList().get(i).getAWTComponent());
+			            	}
+			            }
+			            renewPanel();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		}).start();
+    	
+    	new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				while (true) {
+					try {
+					EditorPart.lock.take();
+					renewPanel();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				
+			}
+    	}).start();
+    	
+    }
+    
     public StepTwoCenterTabbedPane getStepTwoCenterTabbedPane()
     {
     if (this.stepTwoCenterTabbedPane== null)
@@ -1584,7 +1626,7 @@ public HomePanel getHomePanel()
 	public TimeExpandTabbedPane getTimeExpandTabbedPane() {
 		if(this.timeExpandTabbedPane == null)
 		{
-			timeExpandTabbedPane = new TimeExpandTabbedPane();
+			timeExpandTabbedPane = new TimeExpandTabbedPane(this);
 		}
 		return timeExpandTabbedPane;
 	}
@@ -1719,16 +1761,16 @@ public HomePanel getHomePanel()
     private WelcomePanel welcomePanel;
     private HomePanel homepanel;
     private JPanel stepJLabel=new JPanel(){
-//    	public void paint(Graphics g) {
-//            super.paint(g);
-//            java.awt.Rectangle rect = this.getBounds();
-//            int width = (int) rect.getWidth() - 1;
-//            int height = (int) rect.getHeight() - 1;
-//            Graphics2D g2 = (Graphics2D)g;
-//            g2.setStroke(new BasicStroke(3f));
-//            g2.setColor(new Color(188,188,188));
-//            g2.drawLine(this.getX(), this.getY()+height, this.getX()+width, this.getY()+height);
-//          }
+    	public void paint(Graphics g) {
+            super.paint(g);
+            java.awt.Rectangle rect = this.getBounds();
+            int width = (int) rect.getWidth() - 1;
+            int height = (int) rect.getHeight() - 1;
+            Graphics2D g2 = (Graphics2D)g;
+            g2.setStroke(new BasicStroke(3f));
+            g2.setColor(new Color(188,188,188));
+            g2.drawLine(this.getX(), this.getY()+height, this.getX()+width, this.getY()+height);
+          }
     };
     
     private StepTwoCenterTabbedPane stepTwoCenterTabbedPane;

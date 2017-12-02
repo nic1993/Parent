@@ -10,6 +10,8 @@ import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
+import com.horstmann.violet.application.gui.DisplayForm;
+
 import cn.edu.hdu.lab.dao.uml.Behavior;
 import cn.edu.hdu.lab.dao.uml.Diagram;
 import cn.edu.hdu.lab.dao.uml.DiagramsData;
@@ -46,6 +48,7 @@ public class UMLReader {
     
 	public UMLReader(String xmlFile) {		
 		// TODO Auto-generated constructor stub
+		umlAllDiagramData.clear();
 		this.xmlFile=xmlFile;
 		load();		
 	}
@@ -218,6 +221,9 @@ public class UMLReader {
 								catch(Exception e)
 								{
 									System.out.println("场景概率约束值输入类型有误，请在UML模型对应场景约束中检查修改，将其修正为双精度小数类型！");
+									DisplayForm.mainFrame.getOutputinformation().geTextArea().append("场景概率约束值输入类型有误，请在UML模型对应场景约束中检查修改，将其修正为双精度小数类型！" + "\n");
+			    					int length = DisplayForm.mainFrame.getOutputinformation().geTextArea().getText().length(); 
+			    					DisplayForm.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
 									e.printStackTrace();
 								}
 							}
@@ -967,10 +973,16 @@ public class UMLReader {
 			}
 		}
 		System.out.println("\n*******************完全图信息*********************");		
+		DisplayForm.mainFrame.getOutputinformation().geTextArea().append("*******************完全图信息*********************" + "\n");
+		int length = DisplayForm.mainFrame.getOutputinformation().geTextArea().getText().length(); 
+		DisplayForm.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
 		for(DiagramsData diagramData : umlAllDiagramData) {
 			if(diagramData.getName().equals(sdName))
 			{
 				System.out.println("顺序图名称："+diagramData.getName()+"---"+sdName);
+				DisplayForm.mainFrame.getOutputinformation().geTextArea().append("顺序图名称："+diagramData.getName()+"---"+sdName + "\n");
+				int length1 = DisplayForm.mainFrame.getOutputinformation().geTextArea().getText().length(); 
+				DisplayForm.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length1);
 				for(LifeLine l:diagramData.getLifelineArray())
 				{
 					l.print_LifeLine();
@@ -986,6 +998,9 @@ public class UMLReader {
 				for(REF r:diagramData.getRefArray())
 				{
 					System.out.println(r.toString());
+					DisplayForm.mainFrame.getOutputinformation().geTextArea().append(r.toString() + "\n");
+					int length11 = DisplayForm.mainFrame.getOutputinformation().geTextArea().getText().length(); 
+					DisplayForm.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length11);
 				}				
 				break;
 			}

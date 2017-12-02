@@ -49,7 +49,7 @@ public class CaseExpandNodePanel {
         	   expandCasePanel.add(expandNodeLabel, new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0).setInsets(5, 25, 0, 0));
         	   expandCasePanel.repaint();
     	   }
-    	   
+    	   mainFrame.renewPanel();
        }
 	public List<ExpandNodeLabel> getExpandNodeLabels() {
 		return expandNodeLabels;

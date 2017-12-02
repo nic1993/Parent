@@ -10,6 +10,7 @@ public class Stimulate {
 	private String assignValue;// 激励返回值
 	private String assignType;// 激励返回值类型
 	private String conditions;// 存放各种测试所需条件
+	private boolean isTime = false;// 是否时间扩展出来的
 
 	public String getName() {
 		return name;
@@ -66,6 +67,14 @@ public class Stimulate {
 
 	public void setConditions(String conditions) {
 		this.conditions = conditions;
+	}
+
+	public boolean isTime() {
+		return isTime;
+	}
+
+	public void setTime(boolean isTime) {
+		this.isTime = isTime;
 	}
 
 }

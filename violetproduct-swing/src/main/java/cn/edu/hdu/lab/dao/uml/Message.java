@@ -3,6 +3,8 @@ package cn.edu.hdu.lab.dao.uml;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.horstmann.violet.application.gui.DisplayForm;
+
 public class Message implements Cloneable{
 	@Override
 	public Object clone() {   
@@ -120,6 +122,16 @@ public class Message implements Cloneable{
 				
 				+ "\t是否在组合片段中=" + isInFragment + "\t 所属组合片段Id=" + fragmentId+"\t\t 组合片段类型=" + fragType+"\t所属操作ID="+ operandId
 				+ "\t消息进出组合片段标记=" + fragFlag  + "\tnotation=" + notation +"\t Y="+pointY );
+		
+		DisplayForm.mainFrame.getOutputinformation().geTextArea().append("Message: id=" + id + "\tname=" + name +"\treturnValue="+returnValue+"\treturnValueType="+returnValueType
+				+"\tstimulate="+stimulate+ "\tsenderID=" + senderID
+				+ "\treceiverID=" + receiverID + "\tsender=" + sender + "\treceiver="+ receiver 
+				+"\tprob="+prob+"\texectime="+exectime+"\tfromTimeConstraint="+fromTimeConstraint+"\tisLast="+isLast
+				
+				+ "\t是否在组合片段中=" + isInFragment + "\t 所属组合片段Id=" + fragmentId+"\t\t 组合片段类型=" + fragType+"\t所属操作ID="+ operandId
+				+ "\t消息进出组合片段标记=" + fragFlag  + "\tnotation=" + notation +"\t Y="+pointY  + "\n");
+		int length11 = DisplayForm.mainFrame.getOutputinformation().geTextArea().getText().length(); 
+		DisplayForm.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length11);
 	}
 	public String getId() {
 		return id;

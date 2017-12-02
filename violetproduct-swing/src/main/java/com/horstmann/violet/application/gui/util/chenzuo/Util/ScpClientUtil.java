@@ -62,7 +62,7 @@ public class ScpClientUtil {
                     result=processStdout(session.getStderr(),DEFAULTCHART);
                 }
                 session.close();
-                System.out.println(cmd+" end");
+               
             }
         } catch (IOException e) {
             e.printStackTrace();

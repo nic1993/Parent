@@ -103,11 +103,14 @@ public void setHeight(double height) {
    @Override
    public void draw(Graphics2D g2)    
    {  	  	 	   
-	   g2.setColor(DEFAULT_COLOR);
-       Shape path = getShape();
-
-       g2.setColor(Color.black);//已改          
+	  
+       
+       Shape path = getShape();    
        Rectangle2D bounds = getBounds();
+       g2.setColor(DEFAULT_COLOR);
+       g2.fill(bounds);
+       
+       g2.setColor(Color.black);//已改  
        GeneralPath fold = new GeneralPath();
        fold.moveTo((float) (bounds.getX()+5*d), (float) bounds.getY());  //将鼠标放置在某点
        fold.lineTo((float) bounds.getX()+5*d, (float) bounds.getY()+(2*d));
@@ -120,13 +123,11 @@ public void setHeight(double height) {
        g2.drawString("ref",(int)bounds.getBounds().getX()+10,(int)bounds.getBounds().getY()+15);//绘制ref标志
        
        text.draw(g2, bounds);
+       
        g2.draw(fold);
        g2.draw(path);
        g2.fill(fold);
-//       String SplitProperties[]=type.toString().split("\\.");
-//	   setFragmentType(SplitProperties[8]);
-       
-       
+    
        
    }
  

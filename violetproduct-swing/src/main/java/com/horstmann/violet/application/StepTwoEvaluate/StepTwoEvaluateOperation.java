@@ -101,8 +101,8 @@ public class StepTwoEvaluateOperation extends JPanel {
 		evaluateBar.setPreferredSize(new Dimension(800, 30));
 		evaluateBar.setUI(new GradientProgressBarUI());
 
-		evaluateButton = new JButton("开始评估");
-		reEvaluateButton = new JButton("停止评估");
+		evaluateButton = new JButton("开始验证");
+		reEvaluateButton = new JButton("停止验证");
 		reEvaluateButton.setEnabled(false);
 		gapPanel = new JPanel();
 
@@ -135,6 +135,19 @@ public class StepTwoEvaluateOperation extends JPanel {
 							Thread.sleep(100);
 						}
 					}
+				}
+				if (ispolarity == true && isconfirm == true && isreachable == true){
+					evaluateButton.setEnabled(true);
+					reEvaluateButton.setEnabled(false);
+
+					mainFrame.getStepTwoModelOperation().getStartExpandButton().setEnabled(true);
+					mainFrame.getStepTwoCaseOperation().getStartExpandButton().setEnabled(true);
+					mainFrame.getStepTwoExchangeOperation().getStartExchange().setEnabled(true);
+
+					mainFrame.getsteponeButton().getExpandModelLabel().setEnabled(true);
+					mainFrame.getsteponeButton().getExpandCaseModel().setEnabled(true);
+					mainFrame.getStepTwoExpand().getExchangeLabel().setEnabled(true);
+					mainFrame.renewPanel();
 				}
 				return 1;
 			}
@@ -182,6 +195,7 @@ public class StepTwoEvaluateOperation extends JPanel {
 				Thread.sleep(200);
 				// 首先添加归一性信息
 				worker = mainFrame.getStepTwoModelOperation().getWorker();
+//				System.out.println("evalute ccode: " + worker.hashCode());
 
 				list = worker.transVerify();
 
@@ -193,7 +207,7 @@ public class StepTwoEvaluateOperation extends JPanel {
 
 				topLabel.removeAll();
 				topLabel.setText("正在验证用例中场景概率....");
-				Thread.sleep(100);
+				Thread.sleep(200);
 
 				// 添加用例中场景迁移信息
 				JPanel caseResultPanel = mainFrame.getStepTwoCaseOperation().getMatrixPanel(); // 用例场景概率
@@ -204,7 +218,7 @@ public class StepTwoEvaluateOperation extends JPanel {
 
 				topLabel.removeAll();
 				topLabel.setText("正在验证用例模型中后继用例迁移概率....");
-				Thread.sleep(100);
+				Thread.sleep(200);
 
 				JPanel relationResultPanel = mainFrame.getStepTwoModelOperation().getMatrixPanel(); // 用例迁移概率
 				StepTwoMatrixPanel relationMatrixPanel = new StepTwoMatrixPanel(mainFrame);
@@ -243,7 +257,7 @@ public class StepTwoEvaluateOperation extends JPanel {
 				}
 				topLabel.removeAll();
 				topLabel.setText("正在生成确定性信息.....");
-				Thread.sleep(100);
+				Thread.sleep(200);
 
 				StepTwoTabelPanel confirmPanel = new StepTwoTabelPanel(mainFrame);
 				confirmPanel.getTitleLabel().setText(Model_Name + "用例模型中所有场景后置条件唯一，确定性验证通过！");
@@ -273,11 +287,11 @@ public class StepTwoEvaluateOperation extends JPanel {
 
 				topLabel.removeAll();
 				topLabel.setText("开始验证可达性信息....");
-				Thread.sleep(100);
+				Thread.sleep(200);
 
 				topLabel.removeAll();
 				topLabel.setText("正在生成用例执行关系邻接矩阵....");
-				Thread.sleep(100);
+				Thread.sleep(200);
 
 				// 可达性信息
 				if ((boolean) list.get(0) == true) {
@@ -319,9 +333,6 @@ public class StepTwoEvaluateOperation extends JPanel {
 					mainFrame.getStepTwoEvaluateTabbedPane().getAccessibilityResults().removeAll();
 					mainFrame.getStepTwoEvaluateTabbedPane().getAccessibilityResults().add(AccessibilityPanel);
 					mainFrame.getStepTwoEvaluateTabbedPane().setSelectedIndex(2);
-
-
-
 					mainFrame.renewPanel();
 				}
 				if (isreachable == false) {
@@ -344,17 +355,6 @@ public class StepTwoEvaluateOperation extends JPanel {
 					evaluateNodePanel.insertNodeLabel(evaluateNodeLabel, HomogeneityPanel, CertaintyPanel,
 							AccessibilityPanel);
 					mainFrame.getStepTwoExpand().getEstimatepPanel().repaint();
-					
-					evaluateButton.setEnabled(true);
-					reEvaluateButton.setEnabled(false);
-
-					mainFrame.getStepTwoModelOperation().getStartExpandButton().setEnabled(true);
-					mainFrame.getStepTwoCaseOperation().getStartExpandButton().setEnabled(true);
-					mainFrame.getStepTwoExchangeOperation().getStartExchange().setEnabled(true);
-
-					mainFrame.getsteponeButton().getExpandModelLabel().setEnabled(true);
-					mainFrame.getsteponeButton().getExpandCaseModel().setEnabled(true);
-					mainFrame.getStepTwoExpand().getExchangeLabel().setEnabled(true);
 					mainFrame.renewPanel();
 
 					list.clear();

@@ -119,12 +119,14 @@ public class StepOneCenterRightPanel extends JPanel{
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
+				sidbarbButton.setContentAreaFilled(false);
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
 				sidbarbButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				sidbarbButton.setContentAreaFilled(true);
 				mainFrame.renewPanel();
 			}
 			

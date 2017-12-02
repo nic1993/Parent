@@ -53,15 +53,15 @@ public class StepThreeModelChoosePattern extends JPanel{
     }
     private void init()
     {
-    	label = new JLabel("请选择测试用例生成方式");
-    	label1 = new JLabel("根据轮班赌算法生成测试用例(即根据迁移概率进行后续迁移选择来生成测试用例)");
-    	label2 = new JLabel("根据用户输入的软件可靠性指标与置信度来计算出满足当前充分性指标的所需最少测试用例个数,");
-    	label3 = new JLabel("收集测试路径成为基础测试用例并计算出每条路径的路径概率,根据每条路径的概率和用户输入的");
-    	label4 = new JLabel("测试用例个数分配产生测试用例。");
+    	label = new JLabel("请选择可靠性测试数据生成方式");
+    	label1 = new JLabel("根据轮班赌算法生成可靠性测试数据(即根据迁移概率进行后续迁移选择来生成可靠性测试数据)");
+    	label2 = new JLabel("根据用户输入的软件可靠性指标与置信度来计算出满足当前充分性指标的所需最少可靠性测试数据个数,");
+    	label3 = new JLabel("收集测试路径成为基础可靠性测试数据并计算出每条路径的路径概率,根据每条路径的概率和用户输入的");
+    	label4 = new JLabel("可靠性测试数据个数分配产生可靠性测试数据。");
     	label5 = new JLabel("输入软件可靠性指标:");
     	label6 = new JLabel("置信度:");
     	jRadioButton = new JRadioButton("根据模型相似度生成");
-    	jRadioButton1 = new JRadioButton("自定义测试用例个数生成");
+    	jRadioButton1 = new JRadioButton("自定义可靠性测试数据个数生成");
     	buttonGroup = new ButtonGroup();
     	
     	label1Panel = new JPanel();

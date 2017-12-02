@@ -7,9 +7,12 @@ import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -17,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.TimeUnit;
 
@@ -35,8 +39,11 @@ import javax.swing.tree.TreePath;
 import org.apache.log4j.PropertyConfigurator;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
+import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
+import org.dom4j.io.OutputFormat;
 import org.dom4j.io.SAXReader;
+import org.dom4j.io.XMLWriter;
 import org.jfree.chart.ChartPanel;
 
 import cn.edu.hdu.lab.config.StaticConfig;
@@ -69,16 +76,21 @@ import com.horstmann.violet.workspace.IWorkspace;
 import com.horstmann.violet.workspace.Workspace;
 
 public class StepFourOperation extends JPanel {
+	public static int length;
+
 	private JLabel Exchangelabel;
+	private JLabel fileLabel;
 	private JProgressBar ExchangeProgressBar;
 	private JButton startExchange;
-	private JButton restartExchange;
+	private JButton FileButton;
+	private JButton TestCaseButton;
 	private JPanel gapPanel;
 	private TestCaseReportTableHeaderPanel testCaseReportTableHeaderPanel;
 	private MainFrame mainFrame;
 	private String type;
 	private String modelName;
 	private String route;
+	private String chooseRoute;
 	private File selectFile;
 	private DefaultTableModel attributetablemodel;
 
@@ -99,34 +111,54 @@ public class StepFourOperation extends JPanel {
 	private Callable<Integer> callable;
 	private FutureTask<Integer> task;
 	private Thread thread;
+	private Callable<Integer> callable1;
+	private FutureTask<Integer> task1;
+	private Thread thread1;
 
+	private File file;
+	private boolean close;
+	private List<TestCase> XMLToTestCaseList;
+	private List<SelectBox> selectBoxs;
+	private List<TestCasePanel> TestCasePanels;
 	
+	private List<TestCase> testcaselist;
+
 	public StepFourOperation(MainFrame mainFrame) {
 		this.mainFrame = mainFrame;
 		this.route = mainFrame.getBathRoute() + "/TestCase/";
+		this.chooseRoute = mainFrame.getBathRoute() + "/ChooseTestCase/";
 		init();
 		this.setLayout(new GridBagLayout());
-		this.add(Exchangelabel, new GBC(0, 0, 3, 1).setFill(GBC.BOTH).setWeight(1, 0).setInsets(10, 15, 10, 0));
-		this.add(ExchangeProgressBar, new GBC(0, 1, 3, 1).setFill(GBC.BOTH).setWeight(1, 0).setInsets(0, 15, 10, 15));
+		this.add(Exchangelabel, new GBC(0, 0, 5, 1).setFill(GBC.BOTH).setWeight(1, 0).setInsets(10, 15, 10, 0));
+		this.add(ExchangeProgressBar, new GBC(0, 1, 5, 1).setFill(GBC.BOTH).setWeight(1, 0).setInsets(0, 15, 10, 15));
 		this.add(startExchange, new GBC(0, 2, 1, 1).setFill(GBC.BOTH).setWeight(0, 1).setInsets(0, 15, 10, 0));
-		this.add(gapPanel, new GBC(1, 2, 1, 1).setFill(GBC.BOTH).setWeight(1, 1).setInsets(0, 0, 10, 0));
-		this.add(restartExchange, new GBC(2, 2, 1, 1).setFill(GBC.BOTH).setWeight(0, 1).setInsets(0, 0, 10, 15));
+		this.add(FileButton, new GBC(1, 2, 1, 1).setFill(GBC.BOTH).setWeight(0, 1).setInsets(0, 15, 10, 0));
+		this.add(fileLabel, new GBC(2, 2, 1, 1).setFill(GBC.BOTH).setWeight(0, 1).setInsets(0, 15, 10, 0));
+		this.add(gapPanel, new GBC(3, 2, 1, 1).setFill(GBC.BOTH).setWeight(1, 1).setInsets(0, 0, 10, 0));
+		this.add(TestCaseButton, new GBC(4, 2, 1, 1).setFill(GBC.BOTH).setWeight(0, 1).setInsets(0, 0, 10, 15));
 	}
 
 	public void init() {
 		Exchangelabel = new JLabel();
 		Exchangelabel.setFont(new Font("宋体", Font.PLAIN, 16));
-		Exchangelabel.setText("请选择需要测试用例的模型");
+		Exchangelabel.setText("请选择需要执行的可靠性测试数据的模型");
 
 		ExchangeProgressBar = new JProgressBar();
 		ExchangeProgressBar.setUI(new GradientProgressBarUI());
 		ExchangeProgressBar.setPreferredSize(new Dimension(600, 30));
 
 		startExchange = new JButton("开始验证");
-		restartExchange = new JButton("结束验证");
 		gapPanel = new JPanel();
 
 		testCaseReportTableHeaderPanel = new TestCaseReportTableHeaderPanel();
+
+		FileButton = new JButton("选择文件");
+		fileLabel = new JLabel();
+		fileLabel.setFont(new Font("宋体", Font.PLAIN, 16));
+
+		TestCaseButton = new JButton("读取数据");
+		selectBoxs = new ArrayList<SelectBox>();
+		TestCasePanels = new ArrayList<TestCasePanel>();
 		buttonListen();
 	}
 
@@ -141,38 +173,97 @@ public class StepFourOperation extends JPanel {
 			}
 		});
 
-		restartExchange.addActionListener(new ActionListener() {
+		FileButton.addMouseListener(new MouseListener() {
+			
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void mouseReleased(MouseEvent e) {
 				// TODO Auto-generated method stub
-				mainthread.interrupt();
-				thread.interrupt();
-
-				startExchange.setEnabled(true);
-				mainFrame.getStepFourTestCase().getjRadionPanel().setVisible(true);
-
-				mainFrame.getStepFourTabbedPane().getTestCaseResults().removeAll();
-				mainFrame.getStepFourTabbedPane().getTestCaseResport().removeAll();
-				mainFrame.getStepFourTabbedPane().getWrongtestCaseResults().removeAll();
-				
-				File[] files = new File(System.getProperty("user.dir")+"\\src\\main\\java\\com\\horstmann\\violet\\application\\gui\\util\\chenzuo\\File").listFiles();
-				if(files != null)
-				{
-					for(File file : files)
-					{
-						file.delete();
-					}
-				}
-
-				// 清除分割的xml
-				File file1 = new File(route + modelName + "1#" + type + ".xml");
-				File file2 = new File(route + modelName + "2#" + type + ".xml");
-				if (file1.exists()) {
-					file1.delete();
-					file2.delete();
+				mainFrame.renewPanel();
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				JFileChooser jFileChooser = new JFileChooser();
+				int i = jFileChooser.showSaveDialog(null);
+				if (i == jFileChooser.APPROVE_OPTION) { // 打开文件
+					file = jFileChooser.getSelectedFile();
+					fileLabel.setText(file.getAbsolutePath());
 				}
 				
 				mainFrame.renewPanel();
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				mainFrame.renewPanel();
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				mainFrame.renewPanel();
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				mainFrame.renewPanel();
+			}
+		});
+		
+		TestCaseButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				mainFrame.getStepFourTabbedPane().getTestCaseinformation().removeAll();
+				selectBoxs.clear();
+				TestCasePanels.clear();
+                mainFrame.renewPanel();
+				
+				modelName = mainFrame.getNameRadionPanel().getSelectName();
+				if (modelName == null) {
+					Exchangelabel.removeAll();
+					Exchangelabel.setText("请选择需要读取的可靠性测试数据!");
+					mainFrame.renewPanel(); 
+				} else {
+					File file = new File(route + modelName + ".xml");
+					if (!file.exists()) {
+						Exchangelabel.removeAll();
+						Exchangelabel.setText("读取可靠性测试数据出错!");
+						mainFrame.renewPanel();
+					} else {
+						extractFunctionalTestDataFromXml(file);
+						if (XMLToTestCaseList.size() != 0) {
+							TestCasePanels = CreateTestCaseTable(XMLToTestCaseList);
+							TestCasePagePanel testCasePagePanel = new TestCasePagePanel(mainFrame, selectBoxs);
+							int index = 500;
+							if (TestCasePanels.size() < 500) {
+								index = TestCasePanels.size();
+							}
+							testCasePagePanel.getTestCasePanel().add(new JPanel(),
+									new GBC(0, index).setFill(GBC.BOTH).setWeight(1, 1));
+							for (int i = 0; i < index; i++) {
+								testCasePagePanel.getTestCasePanel().add(TestCasePanels.get(i),
+										new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
+							}
+							testCasePagePanel.setTestCasePanels(TestCasePanels);
+							testCasePagePanel.getPageTestField().setText("1");
+							mainFrame.getStepFourTabbedPane().getTestCaseinformation().add(testCasePagePanel);
+							mainFrame.getStepFourTabbedPane().getTestCaseinformation().repaint();
+							
+							Exchangelabel.removeAll();
+							Exchangelabel.setText("可靠性测试数据共" + TestCasePanels.size() + "条!");
+							mainFrame.renewPanel();
+						} else {
+							Exchangelabel.removeAll();
+							Exchangelabel.setText("可靠性测试数据为空!");
+						}
+					}
+					mainFrame.renewPanel();
+				}
 			}
 		});
 	}
@@ -182,21 +273,25 @@ public class StepFourOperation extends JPanel {
 			@Override
 			public Integer call() throws Exception {
 				// TODO Auto-generated method stub
-
 				progressBarIndex = 0;
 				ExchangeProgressBar.setValue(0);
 				ExchangeProgressBar.setValue(progressBarIndex);
-				while (progressBarIndex < 100) {
+				while (progressBarIndex < 70) {
 					if (task.isDone()) {
 						progressBarIndex++;
 						ExchangeProgressBar.setValue(progressBarIndex);
-						Thread.sleep(10);
+						Thread.sleep(50);
 					} else {
 						progressBarIndex++;
 						ExchangeProgressBar.setValue(progressBarIndex);
-						Thread.sleep(3000);
+						Thread.sleep(5000);	
 					}
 				}
+                if(task.isDone())
+                {
+                	thread1.start();
+                }
+				
 				return 1;
 			}
 		};
@@ -210,342 +305,417 @@ public class StepFourOperation extends JPanel {
 			public Integer call() throws Exception {
 				// TODO Auto-generated method stub
 				try {
-					startExchange.setEnabled(false);
-					mainFrame.getStepFourTestCase().getjRadionPanel().setVisible(false);
-
-					mainFrame.getStepFourTabbedPane().getTestCaseResults().removeAll();
-					mainFrame.getStepFourTabbedPane().getTestCaseResport().removeAll();
-					mainFrame.getStepFourTabbedPane().getWrongtestCaseResults().removeAll();
-
-					mainFrame.renewPanel();
-
-					modelName = mainFrame.getNameRadionPanel().getSelectName();
-
-					Exchangelabel.removeAll();
-					Exchangelabel.setText("正在连接服务器....");
-					Thread.sleep(100);
-					if (modelName == null) {
+					while (true) {
+						File[] files = new File(System.getProperty("user.dir")
+								+ "\\src\\main\\java\\com\\horstmann\\violet\\application\\gui\\util\\chenzuo\\File")
+										.listFiles();
+						if (files.length != 0) {
+							for (File file : files) {
+								file.delete();
+							}
+						}
+						else {
+							break;
+						}
+					}
+					// 生成需要验证的可靠性测试数据xml
+					if (getCurrentTestCase() == null || getCurrentTestCase().size() == 0 || modelName == null) {
+						ExceptionStopRunThread();
 						Exchangelabel.removeAll();
 						Exchangelabel.setText("请选择需要执行的可靠性测试数据!");
-						thread.interrupt();
-						mainthread.interrupt();
-						startExchange.setEnabled(true);
-					}
-
-					type = type1;
-					if (modelName.contains("#3")) {
-						type = type3;
-					}
-
-					PropertyConfigurator.configure("src/log4j.properties");
-
-					File file = new File(route + modelName + ".xml");
-
-					int length = getTestCaseSize(file);
-
-					if (!Controller.Ready(2)) {
+					} else if (file == null) {
+						ExceptionStopRunThread();
 						Exchangelabel.removeAll();
-						Exchangelabel.setText("服务器连接失败,请尝试重新连接!");
-
-						thread.interrupt();
-						mainthread.interrupt();
-						startExchange.setEnabled(true);
+						Exchangelabel.setText("请选择验证的可执行文件!");
 					} else {
-						Controller.Run(new Pair<String, File>(type, file));
-						Exchangelabel.removeAll();
-						Exchangelabel.setText("正在生成测试数据执行结果....");
-						mainFrame.getStepFourTabbedPane().getTestCaseResults().removeAll();
-						 ValidatePagePanel validatePagePanel = new ValidatePagePanel(mainFrame);
-						 mainFrame.getStepFourTabbedPane().getTestCaseResults().add(validatePagePanel);
-						 mainFrame.getStepFourTabbedPane().getTestCaseResults().repaint();
-
-						 int size;
-						 int index = 0;
-						 int flag = 0;
-						while (true) {
-							try {
-//								 size = ResultService.list.size();
-//								
-//								 List<TestCase> testcaselist =
-//								 ResultService.list;
-//								 if (index != size) {
-//								 i = index;
-//								 for (int j = index; j < size; j++) {
-//								 TestCase testCase = testcaselist.get(j);
-//								 testCase.setTestCaseID(String.valueOf(j+1));
-//								 TestCaseMatrixPanel testCaseMatrixPanel = new
-//								 TestCaseMatrixPanel();
-//								 TestCaseTabelPanel titleCaseTabelPanel = new
-//								 TestCaseTabelPanel(
-//								 testCase.getTestCaseID(),
-//								 testCase.getResult().getResultDetail(),
-//								 testCase.getState());
-//								//
-//								 testCaseMatrixPanel.getTitleTabel().add(titleCaseTabelPanel);
-//								//
-//								 processID.clear();
-//								 processName.clear();
-//								 processParam.clear();
-//								 processExec.clear();
-//								 processStatus.clear();
-//								 for (myProcess p : testCase.getProcessList())
-//								 {
-//								 processID.add(p.getProcessID());
-//								 processName.add(p.getProcessName());
-//								 processParam.add(p.getProcessParam());
-//								 processStatus.add(p.getProcessStatus());
-//								 processExec.add(p.isProcessExec());
-//								 }
-//								 TestCaseTabelPanel testCaseTabelPanel = new
-//								 TestCaseTabelPanel(processID,
-//								 processName, processParam, processStatus,
-//								 processExec);
-//								 testCaseMatrixPanel.getTabelPanel().add(testCaseTabelPanel,
-//								 BorderLayout.CENTER);
-//								
-//								 mainFrame.getStepFourTabbedPane().getTestCaseResults().add(testCaseMatrixPanel,
-//								 new GBC(0, i).setFill(GBC.BOTH).setWeight(1,
-//								 0));
-//								
-//								 Exchangelabel.removeAll();
-//								 Exchangelabel.setText("正在验证第" + (j+1)+
-//								 "个测试用例....");
-//								 i++;
-//								 }
-//								 Thread.sleep(10);
-//								 mainFrame.renewPanel();
-//								TimeUnit.SECONDS.sleep(2);
-								
-								//
-								// }
-//								 if(ResultService.list.size() > 500 && flag ==0)
-//								 {
-//								 List<TestCase> testcaselist = ResultService.list;
-//								
-//								 validatePagePanel.getValidatePanel().add(new
-//								 JPanel(),new GBC(0,
-//								 501).setFill(GBC.BOTH).setWeight(1, 1));
-//								 for(i = 0; i < 500;i++)
-//								 {
-//								 TestCase testCase = testcaselist.get(i);
-//								 testCase.setTestCaseID(String.valueOf(i+1));
-//								 TestCaseMatrixPanel testCaseMatrixPanel = new
-//								 TestCaseMatrixPanel();
-//								 TestCaseTabelPanel titleCaseTabelPanel = new
-//								 TestCaseTabelPanel(
-//								 testCase.getTestCaseID(),
-//								 testCase.getResult().getResultDetail(),
-//								 testCase.getState());
-//								
-//								 testCaseMatrixPanel.getTitleTabel().add(titleCaseTabelPanel);
-//								
-//								 processID.clear();
-//								 processName.clear();
-//								 processParam.clear();
-//								 processExec.clear();
-//								 processStatus.clear();
-//								 for (myProcess p : testCase.getProcessList())
-//								 {
-//								 processID.add(p.getProcessID());
-//								 processName.add(p.getProcessName());
-//								 processParam.add(p.getProcessParam());
-//								 processStatus.add(p.getProcessStatus());
-//								 processExec.add(p.isProcessExec());
-//								 }
-//								 TestCaseTabelPanel testCaseTabelPanel = new
-//								 TestCaseTabelPanel(processID,
-//								 processName, processParam, processStatus,
-//								 processExec);
-//								 testCaseMatrixPanel.getTabelPanel().add(testCaseTabelPanel,
-//								 BorderLayout.CENTER);
-//								
-//								 validatePagePanel.getValidatePanel().add(testCaseMatrixPanel,
-//								 new GBC(0, i).setFill(GBC.BOTH).setWeight(1,
-//								 0));
-//								 validatePagePanel.validate();
-//								 Thread.sleep(10);
-//								 mainFrame.renewPanel();
-//								 }
-//								 flag = 1;
-//								 }
-								 TimeUnit.SECONDS.sleep(2);
-								 if(ResultService.list.size() == length){
-								 break;
-								 }
-							}catch (InterruptedException e) {
-								e.printStackTrace();
-							}
-						}
-
-						List<TestCase> testcaselist = ResultService.list;
-						index = 500;
-						if (testcaselist.size() < 500) {
-							index = testcaselist.size();
-						}
+						extractDataToXml(chooseRoute + modelName + ".xml", getCurrentTestCase());
 						
+						File Casefile = new File(chooseRoute + modelName + ".xml");
+
+						startExchange.setEnabled(false);
+						FileButton.setEnabled(false);
+						TestCaseButton.setEnabled(false);
+						mainFrame.getStepFourTestCase().getjRadionPanel().setVisible(false);
+
 						mainFrame.getStepFourTabbedPane().getTestCaseResults().removeAll();
-						ValidatePagePanel validatePagePanel1 = new ValidatePagePanel(mainFrame);
-						mainFrame.getStepFourTabbedPane().getTestCaseResults().add(validatePagePanel1);
-						mainFrame.getStepFourTabbedPane().getTestCaseResults().repaint();
-//						index = testcaselist.size();
-//						if(testcaselist.size() < 500)
-//						{
-							validatePagePanel1.getValidatePanel().add(new JPanel(),
-									new GBC(0, index + 1).setFill(GBC.BOTH).setWeight(1, 1));
-							for (i = 0; i < index; i++) {
-								TestCase testCase = testcaselist.get(i);
-								testCase.setTestCaseID(String.valueOf(i + 1));
-								TestCaseMatrixPanel testCaseMatrixPanel = new TestCaseMatrixPanel(mainFrame);
-								TestCaseTabelPanel titleCaseTabelPanel = new TestCaseTabelPanel(testCase.getTestCaseID(),
-										testCase.getResult().getResultDetail(), testCase.getState());
-								//
-								testCaseMatrixPanel.getTitleTabel().add(titleCaseTabelPanel);
-								//
-								processID.clear();
-								processName.clear();
-								processParam.clear();
-								processExec.clear();
-								processStatus.clear();
-								for (myProcess p : testCase.getProcessList()) {
-									processID.add(p.getProcessID());
-									processName.add(p.getProcessName());
-									processParam.add(p.getProcessParam());
-									processStatus.add(p.getProcessStatus());
-									processExec.add(p.isProcessExec());
-								}
-								TestCaseTabelPanel testCaseTabelPanel = new TestCaseTabelPanel(processID, processName,
-										processParam, processStatus, processExec);
-								testCaseMatrixPanel.getTabelPanel().add(testCaseTabelPanel, BorderLayout.CENTER);
+						mainFrame.getStepFourTabbedPane().getTestCaseResport().removeAll();
+						mainFrame.getStepFourTabbedPane().getWrongtestCaseResults().removeAll();
 
-								validatePagePanel1.getValidatePanel().add(testCaseMatrixPanel,
-										new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
-								Thread.sleep(10);
-								mainFrame.renewPanel();
-							}
-//						}
-						validatePagePanel1.getPageTestField().setText("1");
-
-						validatePagePanel1.setList(testcaselist);
-
-						Exchangelabel.removeAll();
-						Exchangelabel.setText("正在生成验证报告....");
-
-						List<Integer> totalList = ResultService.getResults(testcaselist);
-						// 统计成功失败
-						FailReportTableHeaderPanel failReportTableHeaderPanel = new FailReportTableHeaderPanel();
-						TestCaseTabelPanel testCaseTabelPanel = new TestCaseTabelPanel(totalList.get(0),
-								totalList.get(1), totalList.get(2), mainFrame);
-						CountMatrixPanel countMatrixPanel = new CountMatrixPanel(failReportTableHeaderPanel,
-								testCaseTabelPanel);
-						mainFrame.getStepFourTabbedPane().getTestCaseResport().add(countMatrixPanel,
-								new GBC(0, 0, 2, 1).setFill(GBC.BOTH).setWeight(1, 0));
 						mainFrame.renewPanel();
 
-						// 统计失败类型
-						List<Integer> failList = ResultService.getFailType(testcaselist);
-						TypeFailReportTableHeaderPanel typeFailReportTableHeaderPanel = new TypeFailReportTableHeaderPanel();
-						TestCaseTabelPanel failTypeTable = new TestCaseTabelPanel(failList.get(0), failList.get(1));
-						CountMatrixPanel countFailMatrixPanel = new CountMatrixPanel(typeFailReportTableHeaderPanel,
-								failTypeTable);
-						mainFrame.getStepFourTabbedPane().getTestCaseResport().add(countFailMatrixPanel,
-								new GBC(0, 1, 2, 1).setFill(GBC.BOTH).setWeight(1, 0));
-						//
-						Integer[] integers = { totalList.get(0), totalList.get(1) };
-						ChartPanel chartPanel = createPiePanel(integers);
-						ChartPanel barPanel = createLinePanel(integers);
-
-						mainFrame.getStepFourTabbedPane().getTestCaseResport().add(chartPanel,
-								new GBC(0, 2, 1, 1).setFill(GBC.BOTH).setWeight(1, 1));
-
-						mainFrame.getStepFourTabbedPane().getTestCaseResport().add(barPanel,
-								new GBC(1, 2, 1, 1).setFill(GBC.BOTH).setWeight(1, 1));
-
-						mainFrame.renewPanel();
 						
-						// // 生成失败测试用例
-						List<TestCase> failtestcases = ResultService.getFail(testcaselist);
-						if (failtestcases.size() != 0) {
-							ValidatePagePanel wrongPage = new ValidatePagePanel(mainFrame);
-							mainFrame.getStepFourTabbedPane().getWrongtestCaseResults().add(wrongPage);
-							mainFrame.getStepFourTabbedPane().getWrongtestCaseResults().repaint();
-							i = 0;
-							index = 500;
-							if (failtestcases.size() < 500) {
-								index = failtestcases.size();
+						Thread.sleep(100);
+						if (!Casefile.exists()) {
+							mainFrame.getStepFourTestCase().getjRadionPanel().setVisible(true);
+							thread.interrupt();
+							mainthread.interrupt();
+							startExchange.setEnabled(true);
+							FileButton.setEnabled(true);
+							TestCaseButton.setEnabled(true);
+							Exchangelabel.removeAll();
+							Exchangelabel.setText("请选择需要执行的可靠性测试数据!");
+							mainFrame.renewPanel();
+						} else {
+							type = type1;
+							if (modelName.contains("#3")) {
+								type = type3;
 							}
+
+							PropertyConfigurator.configure("src/log4j.properties");
+
+							File file = new File(route + modelName + ".xml");
+
+							length = getTestCaseSize(Casefile);
+
+							Exchangelabel.removeAll();
+							Exchangelabel.setText("正在连接服务器....");
 							
-							wrongPage.getValidatePanel().add(new JPanel(),
-									new GBC(0, index + 1).setFill(GBC.BOTH).setWeight(1, 1));
-
-							for (int j = 0; j < index; j++) {
-								TestCase testCase = failtestcases.get(j);
-								TestCaseMatrixPanel testCaseMatrixPanel = new TestCaseMatrixPanel(mainFrame);
-								TestCaseTabelPanel titleCaseTabelPanel = new TestCaseTabelPanel(
-										testCase.getTestCaseID(), testCase.getResult().getResultDetail(),
-										testCase.getState());
-
-								testCaseMatrixPanel.getTitleTabel().add(titleCaseTabelPanel);
-								processID.clear();
-								processName.clear();
-								processParam.clear();
-								processExec.clear();
-								processStatus.clear();
-								for (myProcess p : testCase.getProcessList()) {
-									processID.add(p.getProcessID());
-									processName.add(p.getProcessName());
-									processParam.add(p.getProcessParam());
-									processStatus.add(p.getProcessStatus());
-									processExec.add(p.isProcessExec());
-								}
-								TestCaseTabelPanel testCaseTabelPanel1 = new TestCaseTabelPanel(processID, processName,
-										processParam, processStatus, processExec);
-								testCaseMatrixPanel.getTabelPanel().add(testCaseTabelPanel1, BorderLayout.CENTER);
-
-								wrongPage.getValidatePanel().add(testCaseMatrixPanel,
-										new GBC(0, j).setFill(GBC.BOTH).setWeight(1, 0));
+							if (!Controller.Ready(2)) {
 								Exchangelabel.removeAll();
-								Exchangelabel.setText("正在生成失效的测试用例列表....");
+								Exchangelabel.setText("服务器连接失败,请稍等片刻再尝试重新连接!");
+
+								thread.interrupt();
+								mainthread.interrupt();
+								startExchange.setEnabled(true);
+								FileButton.setEnabled(true);
+								TestCaseButton.setEnabled(true);
 								mainFrame.renewPanel();
-								Thread.sleep(10);
+							} else {
+								Exchangelabel.removeAll();
+								Exchangelabel.setText("服务器连接成功,发送可靠性测试数据....");
+								Controller.Run(new Pair<String, File>(type, Casefile), mainFrame);
+								
+								mainFrame.getStepFourTabbedPane().getTestCaseResults().removeAll();
+								ValidatePagePanel validatePagePanel = new ValidatePagePanel(mainFrame);
+								mainFrame.getStepFourTabbedPane().getTestCaseResults().add(validatePagePanel);
+								mainFrame.getStepFourTabbedPane().getTestCaseResults().repaint();
+
 								mainFrame.renewPanel();
+
+								int size;
+								int index = 0;
+								int flag = 0;
+								while (true) {
+									try {
+										// size = ResultService.list.size();
+										//
+										// List<TestCase> testcaselist =
+										// ResultService.list;
+										// if (index != size) {
+										// i = index;
+										// for (int j = index; j < size; j++) {
+										// TestCase testCase =
+										// testcaselist.get(j);
+										// testCase.setTestCaseID(String.valueOf(j+1));
+										// TestCaseMatrixPanel
+										// testCaseMatrixPanel =
+										// new
+										// TestCaseMatrixPanel();
+										// TestCaseTabelPanel
+										// titleCaseTabelPanel =
+										// new
+										// TestCaseTabelPanel(
+										// testCase.getTestCaseID(),
+										// testCase.getResult().getResultDetail(),
+										// testCase.getState());
+										// //
+										// testCaseMatrixPanel.getTitleTabel().add(titleCaseTabelPanel);
+										// //
+										// processID.clear();
+										// processName.clear();
+										// processParam.clear();
+										// processExec.clear();
+										// processStatus.clear();
+										// for (myProcess p :
+										// testCase.getProcessList())
+										// {
+										// processID.add(p.getProcessID());
+										// processName.add(p.getProcessName());
+										// processParam.add(p.getProcessParam());
+										// processStatus.add(p.getProcessStatus());
+										// processExec.add(p.isProcessExec());
+										// }
+										// TestCaseTabelPanel testCaseTabelPanel
+										// =
+										// new
+										// TestCaseTabelPanel(processID,
+										// processName, processParam,
+										// processStatus,
+										// processExec);
+										// testCaseMatrixPanel.getTabelPanel().add(testCaseTabelPanel,
+										// BorderLayout.CENTER);
+										//
+										// mainFrame.getStepFourTabbedPane().getTestCaseResults().add(testCaseMatrixPanel,
+										// new GBC(0,
+										// i).setFill(GBC.BOTH).setWeight(1,
+										// 0));
+										//
+										// Exchangelabel.removeAll();
+										// Exchangelabel.setText("正在验证第" +
+										// (j+1)+
+										// "个可靠性测试数据....");
+										// i++;
+										// }
+										// Thread.sleep(10);
+										// mainFrame.renewPanel();
+										// TimeUnit.SECONDS.sleep(2);
+
+										//
+										// }
+										// if(ResultService.list.size() > 500 &&
+										// flag ==0)
+										// {
+										// List<TestCase> testcaselist =
+										// ResultService.list;
+										//
+										// validatePagePanel.getValidatePanel().add(new
+										// JPanel(),new GBC(0,
+										// 501).setFill(GBC.BOTH).setWeight(1,
+										// 1));
+										// for(i = 0; i < 500;i++)
+										// {
+										// TestCase testCase =
+										// testcaselist.get(i);
+										// testCase.setTestCaseID(String.valueOf(i+1));
+										// TestCaseMatrixPanel
+										// testCaseMatrixPanel =
+										// new
+										// TestCaseMatrixPanel();
+										// TestCaseTabelPanel
+										// titleCaseTabelPanel =
+										// new
+										// TestCaseTabelPanel(
+										// testCase.getTestCaseID(),
+										// testCase.getResult().getResultDetail(),
+										// testCase.getState());
+										//
+										// testCaseMatrixPanel.getTitleTabel().add(titleCaseTabelPanel);
+										//
+										// processID.clear();
+										// processName.clear();
+										// processParam.clear();
+										// processExec.clear();
+										// processStatus.clear();
+										// for (myProcess p :
+										// testCase.getProcessList())
+										// {
+										// processID.add(p.getProcessID());
+										// processName.add(p.getProcessName());
+										// processParam.add(p.getProcessParam());
+										// processStatus.add(p.getProcessStatus());
+										// processExec.add(p.isProcessExec());
+										// }
+										// TestCaseTabelPanel testCaseTabelPanel
+										// =
+										// new
+										// TestCaseTabelPanel(processID,
+										// processName, processParam,
+										// processStatus,
+										// processExec);
+										// testCaseMatrixPanel.getTabelPanel().add(testCaseTabelPanel,
+										// BorderLayout.CENTER);
+										//
+										// validatePagePanel.getValidatePanel().add(testCaseMatrixPanel,
+										// new GBC(0,
+										// i).setFill(GBC.BOTH).setWeight(1,
+										// 0));
+										// validatePagePanel.validate();
+										// Thread.sleep(10);
+										// mainFrame.renewPanel();
+										// }
+										// flag = 1;
+										// }
+
+										try {
+											if (Controller.handFutureList.size() > 0) {
+												for (int i = 0; i < Controller.handFutureList.size(); i++) {
+													if (Controller.handFutureList.get(i).isDone()) {
+														try {
+															Controller.handFutureList.get(i).get();
+														} catch (ExecutionException e) {
+															// TODO
+															// Auto-generated
+															e.printStackTrace();
+															if (e.getMessage().contains("TestCaseException")) {
+																ExceptionStopRunThread();
+																Exchangelabel.removeAll();
+																Exchangelabel.setText("可靠性测试数据执行出错,请稍等片刻再次执行!");
+																flag = 1;
+																mainFrame.renewPanel();
+																break;
+															}
+														}
+													}
+												}
+											}
+										} catch (InterruptedException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
+										TimeUnit.SECONDS.sleep(2);
+										if (ResultService.list.size() == length) {
+											break;
+										}
+									} catch (InterruptedException e) {
+										e.printStackTrace();
+									}
+								}
+
+								// 判断返回可靠性测试数据个数
+								if (ResultService.list.size() != length) {
+									ExceptionStopRunThread();
+									Exchangelabel.removeAll();
+									Exchangelabel.setText("可靠性测试数据执行出错,请稍等片刻再次执行!....");
+									mainFrame.renewPanel();
+								} else {
+									Exchangelabel.removeAll();
+									Exchangelabel.setText("正在生成可靠性测试数据执行结果....");
+									testcaselist = ResultService.list;
+									index = 500;
+									if (testcaselist.size() < 500) {
+										index = testcaselist.size();
+									}
+
+									mainFrame.getStepFourTabbedPane().getTestCaseResults().removeAll();
+									ValidatePagePanel validatePagePanel1 = new ValidatePagePanel(mainFrame);
+									mainFrame.getStepFourTabbedPane().getTestCaseResults().add(validatePagePanel1);
+									mainFrame.getStepFourTabbedPane().getTestCaseResults().repaint();
+									
+									validatePagePanel1.getValidatePanel().add(new JPanel(),
+											new GBC(0, index + 1).setFill(GBC.BOTH).setWeight(1, 1));
+									List<TestCaseMatrixPanel> testCaseMatrixPanels = new ArrayList<TestCaseMatrixPanel>();
+									for (i = 0; i < index; i++) {
+										TestCase testCase = testcaselist.get(i);
+										testCase.setTestCaseID(getCurrentTestCase().get(i).getTestCaseID());
+										TestCaseMatrixPanel testCaseMatrixPanel = new TestCaseMatrixPanel(mainFrame);
+	
+										String str1 = testCase.getState().split("ms")[0] + "ms";
+										
+										
+										String str2 = testCase.getState().split("ms")[1];
+										TestCaseTabelPanel titleCaseTabelPanel = new TestCaseTabelPanel(
+												testCase.getTestCaseID(), testCase.getResult().getResultDetail(),
+												testCase.getExeTime(),0);
+										if(type .equals(type3))
+										{
+											if(testCase.getResult().getResultDetail().contains("失败"))
+												testCaseMatrixPanel.getPredict().setForeground(Color.red);
+											
+											testCaseMatrixPanel.getPredict().setText("被测程序执行结果:电梯停靠在" + str2 + "层");
+										}
+										else {
+											if (str2.equals("1")) {
+												testCaseMatrixPanel.getPredict().setText("被测程序执行结果:无人机成功返航,并完成加锁");
+											}
+											else {
+												testCaseMatrixPanel.getPredict().setText("被测程序执行结果:无人机运行异常");
+												testCaseMatrixPanel.getPredict().setForeground(Color.red);
+											}
+											
+										}
+										//
+										testCaseMatrixPanel.getTitleTabel().add(titleCaseTabelPanel);
+										//
+										processID.clear(); 
+										processName.clear();
+										processParam.clear();
+										processExec.clear();
+										processStatus.clear();
+										for (myProcess p : testCase.getProcessList()) {
+											processID.add(p.getProcessID());
+											processName.add(p.getProcessName());
+											processParam.add(p.getProcessParam());
+											processStatus.add(p.getProcessStatus());
+											processExec.add(p.isProcessExec());
+										}
+										TestCaseTabelPanel testCaseTabelPanel = new TestCaseTabelPanel(processID,
+												processName, processParam, processStatus, processExec);
+										testCaseMatrixPanel.getTabelPanel().add(testCaseTabelPanel,
+												BorderLayout.CENTER);
+
+										validatePagePanel1.getValidatePanel().add(testCaseMatrixPanel,
+												new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
+										Thread.sleep(10);
+										mainFrame.renewPanel();
+										testCaseMatrixPanels.add(testCaseMatrixPanel);
+									}
+									
+									validatePagePanel1.getPageTestField().setText("1");
+									validatePagePanel1.setLists(testCaseMatrixPanels);
+									validatePagePanel1.setList(testcaselist);
+									validatePagePanel1.setType(type);
+									
+									Exchangelabel.removeAll();
+									Exchangelabel.setText("正在生成可靠性测试数据执行报告....");
+									
+									List<Integer> totalList = ResultService.getResults(testcaselist);
+									// 统计成功失败
+									FailReportTableHeaderPanel failReportTableHeaderPanel = new FailReportTableHeaderPanel();
+									TestCaseTabelPanel testCaseTabelPanel = new TestCaseTabelPanel(totalList.get(0),
+											totalList.get(1), totalList.get(2), mainFrame);
+									CountMatrixPanel countMatrixPanel = new CountMatrixPanel(failReportTableHeaderPanel,
+											testCaseTabelPanel);
+									mainFrame.getStepFourTabbedPane().getTestCaseResport().add(countMatrixPanel,
+											new GBC(0, 0, 2, 1).setFill(GBC.BOTH).setWeight(1, 0));
+									mainFrame.renewPanel();
+
+									// 统计失败类型
+									List<Integer> failList = ResultService.getFailType(testcaselist);
+									TypeFailReportTableHeaderPanel typeFailReportTableHeaderPanel = new TypeFailReportTableHeaderPanel();
+									TestCaseTabelPanel failTypeTable = new TestCaseTabelPanel(failList.get(0),
+											failList.get(1));
+									CountMatrixPanel countFailMatrixPanel = new CountMatrixPanel(
+											typeFailReportTableHeaderPanel, failTypeTable);
+									mainFrame.getStepFourTabbedPane().getTestCaseResport().add(countFailMatrixPanel,
+											new GBC(0, 1, 2, 1).setFill(GBC.BOTH).setWeight(1, 0));
+									//
+									Integer[] integers = { totalList.get(0), totalList.get(1) };
+									ChartPanel chartPanel = createPiePanel(integers);
+									ChartPanel barPanel = createLinePanel(integers);
+									
+									chartPanel.setMaximumSize(new Dimension(200, 200));
+									chartPanel.setMaximumSize(new Dimension(120, 200));
+									chartPanel.setPreferredSize(new Dimension(200, 200));
+									barPanel.setMaximumSize(new Dimension(200, 200));
+									barPanel.setMinimumSize(new Dimension(200, 200));
+									barPanel.setPreferredSize(new Dimension(200, 200));
+
+									mainFrame.getStepFourTabbedPane().getTestCaseResport().add(chartPanel,
+											new GBC(0, 2, 1, 1).setFill(GBC.BOTH).setWeight(1, 1));
+
+									mainFrame.getStepFourTabbedPane().getTestCaseResport().add(barPanel,
+											new GBC(1, 2, 1, 1).setFill(GBC.BOTH).setWeight(1, 1));
+
+									mainFrame.renewPanel();
+								}
 							}
-
-							wrongPage.getPageTestField().setText("1");
-							// 生成失败的测试用例xml
-							String failCasePath = mainFrame.getBathRoute() + "/FailTestCase/" + modelName + "_Fail.xml";
-							FailTestCase.writeToXML(failCasePath, failtestcases);
 						}
-
-						// 清除分割的xml
-						File file1 = new File(route + modelName + "1#" + type + ".xml");
-						File file2 = new File(route + modelName + "2#" + type + ".xml");
-						if (file1.exists()) {
-							file1.delete();
-							file2.delete();
-						}
-
-						Exchangelabel.removeAll();
-						Exchangelabel.setText("验证报告生成完毕!");
-						// mainFrame.getStepFourTabbedPane().getTestCaseResport().add(new
-						// JPanel(),new
-						// GBC(1,2,1,1).setFill(GBC.BOTH).setWeight(1, 1));
-						mainFrame.getStepFourTabbedPane().setSelectedIndex(0);
-
-						mainFrame.getStepFourTestCase().getjRadionPanel().setVisible(true);
-						startExchange.setEnabled(true);
-						mainFrame.renewPanel();
 					}
+
 				} catch (Exception e) {
 					// TODO: handle exception
 					e.printStackTrace();
-
 					Exchangelabel.removeAll();
-					Exchangelabel.setText("测试用例验证失败!");
+					Exchangelabel.setText("可靠性测试数据执行失败!");
 
 					mainFrame.getStepFourTestCase().getjRadionPanel().setVisible(true);
-
+					mainFrame.getStepFourTestCase().getjRadionPanel().setVisible(true);
+					startExchange.setEnabled(true);
+					FileButton.setEnabled(true);
+					TestCaseButton.setEnabled(true);
+					
 					thread.interrupt();
 					mainthread.interrupt();
+					
+					File[] files = new File(System.getProperty("user.dir")
+							+ "\\src\\main\\java\\com\\horstmann\\violet\\application\\gui\\util\\chenzuo\\File").listFiles();
+					if (files.length != 0) {
+						for (File file : files) {
+							file.delete();
+						}
+					}
+
+					mainFrame.renewPanel();
 				}
 				return 1;
 			}
@@ -554,6 +724,164 @@ public class StepFourOperation extends JPanel {
 		task = new FutureTask<>(callable);
 		thread = new Thread(task);
 
+		
+		callable1 = new Callable<Integer>() {
+
+			@Override
+			public Integer call() throws Exception {
+				// TODO Auto-generated method stub
+				// // 生成失败可靠性测试数据
+				List<TestCase> failtestcases = ResultService.getFail(testcaselist);
+				if (failtestcases.size() != 0) {
+					ValidatePagePanel wrongPage = new ValidatePagePanel(mainFrame);
+					mainFrame.getStepFourTabbedPane().getWrongtestCaseResults().add(wrongPage);
+					mainFrame.getStepFourTabbedPane().getWrongtestCaseResults().repaint();
+					i = 0;
+					int index = 500;
+					if (failtestcases.size() < 500) {
+						index = failtestcases.size();
+					}
+
+					
+					List<TestCaseMatrixPanel> testCaseMatrixPanels = new ArrayList<TestCaseMatrixPanel>();
+					wrongPage.getValidatePanel().add(new JPanel(),
+							new GBC(0, index + 1).setFill(GBC.BOTH).setWeight(1, 1));					
+
+					for (int j = 0; j < index; j++) {
+						TestCase testCase = failtestcases.get(j);
+						
+						TestCaseMatrixPanel testCaseMatrixPanel = new TestCaseMatrixPanel(
+								mainFrame);
+						
+						TestCaseTabelPanel titleCaseTabelPanel = new TestCaseTabelPanel(
+								testCase.getTestCaseID(), testCase.getResult().getResultDetail(),
+								testCase.getExeTime(),0);
+
+						String str1 = testCase.getState().split("ms")[0] + "ms";
+						
+						String str2 = testCase.getState().split("ms")[1];
+						testCaseMatrixPanel.getTitleTabel().add(titleCaseTabelPanel);
+						testCaseMatrixPanel.getPredict().removeAll();
+						if(type .equals(type3))
+						{
+							testCaseMatrixPanel.getPredict().setText("被测程序执行结果:电梯停靠在" + str2 + "层");
+							testCaseMatrixPanel.getPredict().setForeground(Color.red);
+						}
+						else {
+								testCaseMatrixPanel.getPredict().setText("被测程序执行结果:无人机运行异常");
+								testCaseMatrixPanel.getPredict().setForeground(Color.red);	
+						}
+						processID.clear();
+						processName.clear();
+						processParam.clear();
+						processExec.clear();
+						processStatus.clear();
+						for (myProcess p : testCase.getProcessList()) {
+							processID.add(p.getProcessID());
+							processName.add(p.getProcessName());
+							processParam.add(p.getProcessParam());
+							processStatus.add(p.getProcessStatus());
+							processExec.add(p.isProcessExec());
+						}
+						TestCaseTabelPanel testCaseTabelPanel1 = new TestCaseTabelPanel(processID,
+								processName, processParam, processStatus, processExec);
+						testCaseMatrixPanel.getTabelPanel().add(testCaseTabelPanel1,
+								BorderLayout.CENTER);
+
+						wrongPage.getValidatePanel().add(testCaseMatrixPanel,
+								new GBC(0, j).setFill(GBC.BOTH).setWeight(1, 0));
+						Exchangelabel.removeAll();
+						Exchangelabel.setText("正在生成失效的可靠性测试数据列表....");
+						ExchangeProgressBar.setValue(70 + (int)(((double)(j+1)/index)*30));
+						Thread.sleep(50);
+						mainFrame.renewPanel();
+						testCaseMatrixPanels.add(testCaseMatrixPanel);
+					}
+
+					wrongPage.getPageTestField().setText("1");
+					wrongPage.setList(failtestcases);
+					wrongPage.setType(type);
+					// 生成失败的可靠性测试数据xml
+					String failCasePath = mainFrame.getBathRoute() + "/FailTestCase/" + modelName
+							+ "_Fail.xml";
+					FailTestCase.writeToXML(failCasePath, failtestcases);
+				}else {
+					for(int i = 71; i <= 100;i++)
+					{
+						ExchangeProgressBar.setValue(i);
+						Thread.sleep(50);
+					}
+					
+				}
+
+				// 清除分割的xml
+				String name = modelName.split("#")[0];
+				String type = modelName.split("#")[1];
+
+				String filename1 = name + "_1#" + type + ".xml";
+				String filename2 = name + "_2#" + type + ".xml";
+
+				File file1 = new File(route + filename1);
+				File file2 = new File(route + filename2);
+				if (file1.exists()) {
+					file1.delete();
+					file2.delete();
+				}
+
+				Exchangelabel.removeAll();
+				Exchangelabel.setText("可靠性测试数据执行报告生成完毕!");
+				mainFrame.getStepFourTabbedPane().setSelectedIndex(0);
+				
+				
+				mainFrame.getStepFourTestCase().getjRadionPanel().setVisible(true);
+				startExchange.setEnabled(true);
+				FileButton.setEnabled(true);
+				TestCaseButton.setEnabled(true);
+				mainFrame.renewPanel();
+				return 1;
+			}
+		};
+		task1 = new FutureTask<>(callable1);
+		thread1 = new Thread(task1);
+	}
+
+	public void ExceptionStopRunThread() {
+		mainthread.interrupt();
+		thread.interrupt();
+		mainFrame.getStepFourTabbedPane().getTestCaseResults().removeAll();
+		mainFrame.getStepFourTabbedPane().getTestCaseResport().removeAll();
+		mainFrame.getStepFourTabbedPane().getWrongtestCaseResults().removeAll();
+
+		// 清除分割的xml
+		// 清除分割的xml
+		if (modelName != null) {
+			String name = modelName.split("#")[0];
+			String type = modelName.split("#")[1];
+
+			String filename1 = name + "_1#" + type + ".xml";
+			String filename2 = name + "_2#" + type + ".xml";
+
+			File file1 = new File(route + filename1);
+			File file2 = new File(route + filename2);
+			if (file1.exists()) {
+				file1.delete();
+				file2.delete();
+			}
+		}
+
+		mainFrame.getStepFourTestCase().getjRadionPanel().setVisible(true);
+		startExchange.setEnabled(true);
+		FileButton.setEnabled(true);
+		TestCaseButton.setEnabled(true);
+		
+		File[] files = new File(System.getProperty("user.dir")
+				+ "\\src\\main\\java\\com\\horstmann\\violet\\application\\gui\\util\\chenzuo\\File").listFiles();
+		if (files.length != 0) {
+			for (File file : files) {
+				file.delete();
+			}
+		}
+		mainFrame.renewPanel();
 	}
 
 	private ChartPanel createPiePanel(Integer[] integers) {
@@ -583,4 +911,173 @@ public class StepFourOperation extends JPanel {
 		}
 		return lists.size();
 	}
+
+	public List<TestCase> extractFunctionalTestDataFromXml(File file) {
+		// TODO Auto-generated method stub
+
+		int i = 1, j = 1;
+
+		XMLToTestCaseList = new ArrayList<TestCase>();
+		List<myProcess> processList = new ArrayList<myProcess>();
+
+		SAXReader reader = new SAXReader();
+		try {
+
+			Document dom = reader.read(file);
+
+			Element TCS = dom.getRootElement();
+			List<Element> testcaseElements = TCS.elements("testcase");
+			for (Element testcase : testcaseElements) {
+
+				List<Element> processElements = testcase.elements("process");
+
+				for (Element process : processElements) {
+
+					Element operation = process.element("operation");
+
+					Element input = process.element("input");
+
+					myProcess p = new myProcess();
+					p.setProcessID(j++);
+					p.setProcessName(operation.getData().toString());
+					p.setProcessParam(input.getData().toString());
+					// p.setProcessStatus(processStatus);
+
+					processList.add(p);
+
+				}
+				j = 1;
+				TestCase tc = new TestCase();
+				tc.setTestCaseID(String.valueOf(i++));
+				tc.setProcessList(processList);
+				tc.setExpectResult("预期结果:可靠性测试数据正确");
+				tc.setState("测试耗时:0ms");
+				XMLToTestCaseList.add(tc);
+
+				processList = new ArrayList<myProcess>();
+
+			}
+
+		} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return XMLToTestCaseList;
+	}
+
+	private void extractDataToXml(String path, List<TestCase> list) {
+		// TODO Auto-generated method stub
+
+		Document doc = DocumentHelper.createDocument();
+		Element TCS = doc.addElement("TCS");
+
+		for (TestCase tc : list) {
+			Element testcase = TCS.addElement("testcase");
+			// System.out.println(tc.getProcessList().size());
+			for (myProcess p : tc.getProcessList()) {
+				Element process = testcase.addElement("process");
+				Element operation = process.addElement("operation");
+				Element input = process.addElement("input");
+
+				operation.setText(p.getProcessName());
+				input.setText(p.getProcessParam());
+			}
+		}
+
+		try {
+			// 定义输出流的目的地
+			// String baseUrl =
+			// "D:\\ModelDriverProjectFile\\UPPAL\\4.Real_TestCase";
+			FileWriter fw = new FileWriter(path);
+
+			// 定义输出格式和字符集
+			OutputFormat format = OutputFormat.createPrettyPrint();
+			format.setEncoding("UTF-8");
+
+			// 定义用于输出xml文件的XMLWriter对象
+			XMLWriter xmlWriter = new XMLWriter(fw, format);
+			xmlWriter.write(doc);// *****
+			xmlWriter.close();
+			mainFrame.renewPanel();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private List<TestCasePanel> CreateTestCaseTable(List<TestCase> testcaselist) {
+		List<TestCasePanel> lists = new ArrayList<TestCasePanel>();
+		for (i = 0; i < testcaselist.size(); i++) {
+			TestCase testCase = testcaselist.get(i);
+			testCase.setTestCaseID(String.valueOf(i + 1));
+			SelectBox selectBox = new SelectBox(testCase, mainFrame, testCase.getTestCaseID());
+			selectBoxs.add(selectBox);
+			TestCasePanel testCaseMatrixPanel = new TestCasePanel(mainFrame, selectBox);
+			TestCaseTabelPanel titleCaseTabelPanel = new TestCaseTabelPanel(testCase.getTestCaseID(),
+					testCase.getExpectResult(), testCase.getState(), selectBox,1);
+
+			testCaseMatrixPanel.getTitleTabel().add(titleCaseTabelPanel);
+			//
+			processID.clear();
+			processName.clear();
+			processParam.clear();
+			processExec.clear();
+			processStatus.clear();
+			for (myProcess p : testCase.getProcessList()) {
+				processID.add(p.getProcessID());
+				processName.add(p.getProcessName());
+				processParam.add(p.getProcessParam());
+				processStatus.add(p.getProcessStatus());
+				processExec.add(p.isProcessExec());
+			}
+			TestCaseTabelPanel testCaseTabelPanel = new TestCaseTabelPanel(processID, processName, processParam,
+					processStatus, processExec);
+			testCaseMatrixPanel.getTabelPanel().add(testCaseTabelPanel, BorderLayout.CENTER);
+			lists.add(testCaseMatrixPanel);
+			mainFrame.renewPanel();
+		}
+		return lists;
+	}
+
+	private List<TestCase> getCurrentTestCase() {
+		List<TestCase> lists = new ArrayList<TestCase>();
+		for (SelectBox selectBox : selectBoxs) {
+			if (selectBox.isSelected()) {
+				lists.add(selectBox.getTestCase());
+			}
+		}
+		return lists;
+	}
+
+	public boolean isClose() {
+		return close;
+	}
+
+	public void setClose(boolean close) {
+		this.close = close;
+	}
+
+	public FutureTask<Integer> getTask() {
+		return task;
+	}
+
+	public Thread getThread() {
+		return thread;
+	}
+
+	public FutureTask<Integer> getMaintask() {
+		return maintask;
+	}
+
+	public Thread getMainthread() {
+		return mainthread;
+	}
+
+	public String getModelName() {
+		return modelName;
+	}
+
+	public File getFile() {
+		return file;
+	}
+
 }

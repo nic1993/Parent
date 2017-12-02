@@ -45,6 +45,7 @@ public class NoTimeSeqNodePanel {
         	   int i = SeqNodeLabels.size() - 1;
         	   mainFrame.getStepThreeLeftButton().getNoTimeSeqNode().add(noTimeSeqNode, new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0).setInsets(5, 10, 0, 0));
         	   mainFrame.getStepThreeLeftButton().getNoTimeSeqNode().repaint();
+        	   mainFrame.renewPanel();
     	   }
     	   
        }

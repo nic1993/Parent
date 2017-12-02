@@ -59,7 +59,7 @@ public class TestCaseTableMode extends AbstractTableModel
 
            initData(processID,processName,processParam,processStatus,processExec);
     }
-    public TestCaseTableMode(String TestCaseID,String State,String ExeState)
+    public TestCaseTableMode(String TestCaseID,String State,String ExeState,int flag)
     {
     	this.TestCaseID = TestCaseID;     
  	    this.State = State;
@@ -68,9 +68,18 @@ public class TestCaseTableMode extends AbstractTableModel
  	    TableData = new Vector();
         TableTitle= new Vector();
         
-        TableTitle.add(TestCaseID);
-        TableTitle.add(ExeState);
-        TableTitle.add(State);
+        if(flag == 1)
+        {
+          TableTitle.add("");
+          TableTitle.add(ExeState);
+          TableTitle.add(State);
+        }
+        else {
+        	TableTitle.add(TestCaseID);
+            TableTitle.add("≤‚ ‘∫ƒ ±:" + ExeState + "ms");
+            TableTitle.add(State);
+		}
+        
     }
     
     public TestCaseTableMode(int success,int fail,int total)

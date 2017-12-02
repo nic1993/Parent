@@ -47,6 +47,7 @@ public class ExchangeNodePanel {
         	   evaluatePanel.add(evaluateNodeLabel, new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0).setInsets(5, 25, 0, 0));
         	   evaluatePanel.repaint();
     	   }
+    	   mainFrame.renewPanel();
     	   
        }
 	public List<ExchangeNodeLabel> getExchangeNodeLabels() {

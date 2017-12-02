@@ -110,14 +110,14 @@ public class StepTwoCenterRightPanel extends JPanel{
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
-//				consoleButton.setBorderPainted(false);
+				consoleButton.setContentAreaFilled(false);
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
 				consoleButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				consoleButton.setContentAreaFilled(true);
 				mainFrame.renewPanel();
-//				consoleButton.setBorderPainted(true);
 			}
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -152,13 +152,15 @@ public class StepTwoCenterRightPanel extends JPanel{
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
-
+				zoominButton.setContentAreaFilled(false);
+				mainFrame.renewPanel();
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
 				zoominButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				zoominButton.setContentAreaFilled(true);
 				mainFrame.renewPanel();
 			}
 			
@@ -198,13 +200,14 @@ public class StepTwoCenterRightPanel extends JPanel{
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+				zoomoutButton.setContentAreaFilled(false);
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
 				zoomoutButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				zoomoutButton.setContentAreaFilled(true);
 				mainFrame.renewPanel();
 			}
 			
@@ -341,13 +344,14 @@ public class StepTwoCenterRightPanel extends JPanel{
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
-				
+				graphButton.setContentAreaFilled(false);
 			}
 			
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
 				graphButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				graphButton.setContentAreaFilled(true);
 				mainFrame.renewPanel();
 			}
 			

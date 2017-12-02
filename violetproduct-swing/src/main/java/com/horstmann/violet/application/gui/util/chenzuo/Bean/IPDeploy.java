@@ -63,6 +63,10 @@ public class IPDeploy {
 		}
 	}
 
+	public List<IPNode> getIps() {
+		return ips;
+	}
+
 	//test 
 	public static void main(String[] args) {
 		IPDeploy p = new IPDeploy();

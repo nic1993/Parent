@@ -2,6 +2,8 @@ package cn.edu.hdu.lab.dao.uml;
 
 import java.util.ArrayList;
 
+import com.horstmann.violet.application.gui.DisplayForm;
+
 public class SDSet {
 
 	private String id;
@@ -54,6 +56,10 @@ public class SDSet {
 	{
 		System.out.println("----SDSet----\n[\nid="+id+", name="+name);
 		System.out.println("probablity="+prob+","+"postSD="+postSD);
+		DisplayForm.mainFrame.getOutputinformation().geTextArea().append("----SDSet----\n[\nid="+id+", name="+name + "\n");
+		DisplayForm.mainFrame.getOutputinformation().geTextArea().append("probablity="+prob+","+"postSD="+postSD + "\n");
+		int length1 = DisplayForm.mainFrame.getOutputinformation().geTextArea().getText().length(); 
+		DisplayForm.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length1);
 		if(lifeLines!=null)
 		{
 			print_lifeLines();

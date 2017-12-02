@@ -40,7 +40,7 @@ public class StepThreeTimeTabbedPane extends JTabbedPane{
 	{
 		this.mainFrame = mainFrame;
 		init();
-		this.add("测试用例生成信息",totalPanel);
+		this.add("测试数据",totalPanel);
 	}
 
 	private void init()

@@ -65,7 +65,8 @@ public class CutCopyPasteBehavior extends AbstractEditorPartBehavior
      * @param editorPart
      */
     
-    public static BlockingDeque<Integer> lock = new LinkedBlockingDeque<Integer>();
+    public static BlockingDeque<Integer> pastelock = new LinkedBlockingDeque<Integer>();
+    public static BlockingDeque<Integer> cutlock = new LinkedBlockingDeque<Integer>();
     
     public CutCopyPasteBehavior(IEditorPart editorPart)
     {
@@ -142,7 +143,6 @@ public class CutCopyPasteBehavior extends AbstractEditorPartBehavior
         byteArrayOutputStream.toString();
         String xmlContent = byteArrayOutputStream.toString();
         pushContentToSystemClipboard(xmlContent);
-        
     }
 
     /**
@@ -171,7 +171,16 @@ public class CutCopyPasteBehavior extends AbstractEditorPartBehavior
                 boolean isAdded = graph.addNode(aNode, aNode.getLocationOnGraph());
                 if (isAdded)
                 {
-                    nodesReallyPasted.add(aNode);
+                    nodesReallyPasted.add(aNode);        
+                    if(aNode.getClass().getSimpleName().equals("UseCaseNode"))
+                    {
+                    	try {
+							pastelock.put(1);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+                    }
                 }
             }
 

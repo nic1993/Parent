@@ -280,9 +280,7 @@ public class Write {
 										Element parameter=stimulate.addElement("parameter");
 										Element paramName=parameter.addElement("paramName");
 										paramName.setText(tempStimulate.getParameterNameList().get(i));
-										
-										
-										System.out.println("transition Name: " + transition.getTransFlag().getName());
+
 										Element paramType=parameter.addElement("paramType");
 										paramType.setText(tempStimulate.getParameterTypeList().get(i));
 										

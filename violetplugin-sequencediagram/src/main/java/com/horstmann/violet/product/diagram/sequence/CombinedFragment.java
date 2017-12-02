@@ -161,10 +161,18 @@ public void setFragmentType(String fragmentType) {
 		 } 
        }     
        Rectangle2D bounds = getBounds();
-       Shape fold = getShape(bounds);
+//       Shape fold = getShape(bounds);
+       GeneralPath fold = new GeneralPath();
+       fold.moveTo((float) (bounds.getX()), (float) bounds.getY());  //将鼠标放置在某点
+       fold.lineTo((float) bounds.getX()+5*d, (float) bounds.getY());
+       fold.lineTo((float) bounds.getX()+5*d, (float) bounds.getY()+(2*d));
+       fold.lineTo((float) bounds.getX()+4*d, (float) bounds.getY()+(2.5*d));
+       fold.lineTo((float) bounds.getX(), (float) bounds.getY()+(2.5*d));
+       fold.closePath();
        Rectangle2D foldBounds = fold.getBounds2D();
+       
        g2.setColor(DEFAULT_COLOR);
-       g2.fill(foldBounds);
+       g2.fill(fold);
        g2.setColor(Color.BLACK);
        g2.draw(fold);
        type.drawType(g2, bounds);

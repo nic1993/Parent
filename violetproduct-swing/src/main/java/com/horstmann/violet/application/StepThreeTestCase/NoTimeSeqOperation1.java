@@ -126,7 +126,7 @@ public class NoTimeSeqOperation1 extends JPanel{
        private void init()
        {
     	   topLabel = new JLabel("");
-    	   label1 = new JLabel("生成测试用例条数:");
+    	   label1 = new JLabel("生成可靠性测试数据条数:");
     	   label2= new JLabel("");
     	   
     	   progressBar = new JProgressBar();
@@ -142,12 +142,17 @@ public class NoTimeSeqOperation1 extends JPanel{
            numbers = new ArrayList<Integer>();
     	   
     	   textField.setPreferredSize(new Dimension(40,30));
+    	   textField.setMinimumSize(new Dimension(40,30));
+    	   textField.setMaximumSize(new Dimension(40,30));
+    	   
     	   topLabel.setFont(new Font("宋体", Font.PLAIN, 16));
     	   label1.setFont(new Font("宋体", Font.PLAIN, 16));
     	   label2.setFont(new Font("宋体", Font.PLAIN, 16));
     	   
     	   progressBar.setUI(new ProgressUI(progressBar, Color.green));
     	   progressBar.setPreferredSize(new Dimension(800, 30));
+    	   progressBar.setMinimumSize(new Dimension(800, 30));
+    	   progressBar.setMaximumSize(new Dimension(800, 30));
     	   progressBar.setUI(new GradientProgressBarUI());
     	   progressBar.setValue(0);
     	  	   
@@ -255,7 +260,6 @@ public class NoTimeSeqOperation1 extends JPanel{
       				topLabel.removeAll();
     				topLabel.setText("正在读取生成的markov链信息........");
     				Thread.sleep(200);
-					Calculate.getAllTransValues(markov);
                     
 					dom = DocumentHelper.createDocument();
 					root = dom.addElement("TCS");
@@ -295,34 +299,13 @@ public class NoTimeSeqOperation1 extends JPanel{
 				public Integer call() throws Exception {
 					// TODO Auto-generated method stub
 					try{
+						topLabel.removeAll();
+						topLabel.setText("正在生成抽象测试序列(该过程需要较久时间,请耐心等待)....");
+						Thread.sleep(150);
 						// 获取抽象测试序列
 						// showTestSequence(markov);
-						for (Route r : markov.getRouteList()) {
-
-							String testSequence = "";
-							for (int i = 0; i < r.getTransitionList().size(); i++) {
-								if (i != r.getTransitionList().size() - 1) {
-									testSequence = testSequence
-											+ r.getTransitionList().get(i).getName() + "-->>";
-									// System.out.print(oneCaseExtend.get(i).toString() +
-									// "-->>");
-								} else {
-									testSequence = testSequence
-											+ r.getTransitionList().get(i).getName();
-									// System.out.println(oneCaseExtend.get(i).toString());
-								}
-							}
-							r.setTcSequence(testSequence);
-						}
-						
-						topLabel.removeAll();
-						topLabel.setText("正在生成抽象测试序列.....");
-						
 						List<String> lists = new ArrayList<String>();
-						for(Route r : markov.getRouteList())
-						{
-							lists.add(r.getTcSequence());
-						}
+						showTestSequence(markov,lists);
 						
 						AbstractPagePanel abstractPagePanel = new AbstractPagePanel(lists, mainFrame);
 						mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().removeAll();
@@ -331,8 +314,6 @@ public class NoTimeSeqOperation1 extends JPanel{
 						JPanel seqPanel = new JPanel();
 						seqPanel.setLayout(new GridBagLayout());
 
-//						for(Route r : markov.getRouteList())
-//						{
 						int index = 500;
 						if(lists.size() < 500)
 						{
@@ -342,21 +323,21 @@ public class NoTimeSeqOperation1 extends JPanel{
 						abstractPagePanel.getAbstractPanel().add(new JPanel(), new GBC(0, index).setFill(GBC.BOTH).setWeight(1, 1));
 						
 						for(int k = 0;k < index;k++){
-							Route r = markov.getRouteList().get(k);
+//							Route r = markov.getRouteList().get(k);
 
-							StepThreeTabelPanel testTabelPanel = new StepThreeTabelPanel(r.getTcSequence(), 1,mainFrame);
+							StepThreeTabelPanel testTabelPanel = new StepThreeTabelPanel(lists.get(k), 1,mainFrame);
 //							mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().add(testTabelPanel, new GBC(0, k).setFill(GBC.BOTH).setWeight(1, 0));
 							abstractPagePanel.getAbstractPanel().add(testTabelPanel, new GBC(0, k).setFill(GBC.BOTH).setWeight(1, 0));
 							abstractPagePanel.getAbstractPanel().repaint();
 							mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().repaint();
 
-							for(int j = 0;j < r.getTransitionList().size();j++){
-								mainFrame.getOutputinformation().geTextArea().append("迁移序列 " + r.getTransitionList().get(j).toString() + "\n");
-								int length = mainFrame.getOutputinformation().geTextArea().getText().length(); 
-				                mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
-							}
+//							for(int j = 0;j < r.getTransitionList().size();j++){
+//								mainFrame.getOutputinformation().geTextArea().append("迁移序列 " + r.getTransitionList().get(j).toString() + "\n");
+//								int length = mainFrame.getOutputinformation().geTextArea().getText().length(); 
+//				                mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
+//							}
 
-							progressBar.setValue(40 + (int)(((double)(k+1)/index)*50));
+							progressBar.setValue(40 + (int)(((double)(k+1)/index)*60));
 							abstractPagePanel.getAbstractPanel().repaint();
 							Thread.sleep(10);
 						}
@@ -364,18 +345,18 @@ public class NoTimeSeqOperation1 extends JPanel{
 						mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().removeAll();
 						mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().add(abstractPagePanel);
 						mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().repaint();
-						int j = 0;
-						for(Route r : markov.getRouteList())
-						{
-							mainFrame.getOutputinformation().geTextArea().append("路径测试序列 " + r.getTcSequence() + " 路径概率: " + r.getRouteProbability() + " 固定测试用例个数时，此路径所占个数 " + r.getNumber()+ "\n");
-							int length = mainFrame.getOutputinformation().geTextArea().getText().length(); 
-			                mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
-			                
-			                progressBar.setValue(90 + (int)(((double)(j+1)/index)*10));
-							abstractPagePanel.getAbstractPanel().repaint();
-							Thread.sleep(10);
-							j++;
-						}
+
+//						for(Route r : markov.getRouteList())
+//						{
+//							mainFrame.getOutputinformation().geTextArea().append("路径测试序列 " + r.getTcSequence() + " 路径概率: " + r.getRouteProbability() + " 固定测试用例个数时，此路径所占个数 " + r.getNumber()+ "\n");
+//							int length = mainFrame.getOutputinformation().geTextArea().getText().length(); 
+//			                mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
+//			                
+//			                progressBar.setValue(90 + (int)(((double)(j+1)/index)*10));
+//							abstractPagePanel.getAbstractPanel().repaint();
+//							Thread.sleep(10);
+//							j++;
+//						}
 						
 						button.setEnabled(true);
 	       				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
@@ -385,12 +366,13 @@ public class NoTimeSeqOperation1 extends JPanel{
 						
 						NoTimeSeqNode noTimeSeqNode = new NoTimeSeqNode(ModelName+"_自定义", mainFrame);
 						noTimeSeqNode.setAbstractPagePanel(abstractPagePanel);
+						noTimeSeqNode.setQuota("抽象测试序列生成完成，共生成" + lists.size()+"条抽象测试序列");
 						
 						mainFrame.getStepThreeLeftButton().getNoTimeSeqNodePanel().insertNodeLabel(noTimeSeqNode, abstractPagePanel);
 						mainFrame.getStepThreeLeftButton().getNoTimeSeqNode().repaint();
 						
 						topLabel.removeAll();
-						topLabel.setText("抽象测试序列生成完成，共生成" + markov.getRouteList().size()+"条抽象测试序列");
+						topLabel.setText("抽象测试序列生成完成，共生成" + lists.size()+"条抽象测试序列");
 						
 						mainFrame.renewPanel();
 				    } catch (RuntimeException e) {
@@ -411,6 +393,36 @@ public class NoTimeSeqOperation1 extends JPanel{
 			task2 = new FutureTask<>(callable2);
 			thread2 = new Thread(task2);
        }
+       
+    // 获取所有的抽象测试序列mode2
+    		private static void showTestSequence(Markov markov,List<String> lists) {
+    			for (Route r : markov.getRouteList()) {
+
+    				String testSequence = "";
+    				for (int i = 0; i < r.getTransitionList().size(); i++) {
+    					if (i != r.getTransitionList().size() - 1) {
+    						testSequence = testSequence
+    								+ r.getTransitionList().get(i).getName() + "-->>";
+    						// System.out.print(oneCaseExtend.get(i).toString() +
+    						// "-->>");
+    					} else {
+    						testSequence = testSequence
+    								+ r.getTransitionList().get(i).getName();
+    						// System.out.println(oneCaseExtend.get(i).toString());
+    					}
+    				}
+    				r.setTcSequence(testSequence);
+    				if(r.getNumber()==0){
+    					lists.add(testSequence);
+    				}
+
+    				for (int i = 0; i < r.getNumber(); i++) {
+    					// 显示抽象测试序列testSequence至列表
+    					lists.add(testSequence);
+    				}
+    			}
+    		}
+       
     private static boolean isSufficient(Markov markov) {
 
 	for (State state : markov.getStates()) {

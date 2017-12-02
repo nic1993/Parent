@@ -1,5 +1,7 @@
 package cn.edu.hdu.lab.dao.tmc;
 
+import com.horstmann.violet.application.gui.DisplayForm;
+
 public class Transition {
     private	State from;
     private State to;
@@ -104,6 +106,14 @@ public class Transition {
 				+", messageName="+ this.transFlag.getName()+"\t出入边标记="+this.getNotation()
 				+ "\tsender=" + this.transFlag.getSender()  + "\treceiver=" + this.transFlag.getReceiver() 
 				+ ", prob=" + this.transFlag.getProb() 	+ ", transTime=" + transTime+" "+ this.transFlag.getStimulate()+",执行条件:"+this.transFlag.getNotation()+"]");
+		
+		DisplayForm.mainFrame.getOutputinformation().geTextArea().append("Transition [from=" + this.getFrom().getName() + ", to=" + this.getTo().getName()
+				+"\tto---label="+this.to.getLabel()+"\tto---postSD="+this.to.getNotation()
+				+", messageName="+ this.transFlag.getName()+"\t出入边标记="+this.getNotation()
+				+ "\tsender=" + this.transFlag.getSender()  + "\treceiver=" + this.transFlag.getReceiver() 
+				+ ", prob=" + this.transFlag.getProb() 	+ ", transTime=" + transTime+" "+ this.transFlag.getStimulate()+",执行条件:"+this.transFlag.getNotation()+"]" + "\n");
+		int length1 = DisplayForm.mainFrame.getOutputinformation().geTextArea().getText().length(); 
+		DisplayForm.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length1);
 	}
     
 	

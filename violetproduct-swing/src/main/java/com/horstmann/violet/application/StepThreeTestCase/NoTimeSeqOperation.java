@@ -50,6 +50,7 @@ import com.horstmann.violet.application.gui.util.yangjie.Markov;
 import com.horstmann.violet.application.gui.util.yangjie.Parameter;
 import com.horstmann.violet.application.gui.util.yangjie.RandomCase;
 import com.horstmann.violet.application.gui.util.yangjie.ReadMarkov2;
+import com.horstmann.violet.application.gui.util.yangjie.Route;
 import com.horstmann.violet.application.gui.util.yangjie.State;
 import com.horstmann.violet.application.gui.util.yangjie.Stimulate;
 import com.horstmann.violet.application.gui.util.yangjie.TCDetail;
@@ -130,6 +131,9 @@ public class NoTimeSeqOperation extends JPanel{
     	   paramterValueList = new ArrayList<String>();
     	   
     	   textField.setPreferredSize(new Dimension(40,30));
+    	   textField.setMinimumSize(new Dimension(40,30));
+    	   textField.setMaximumSize(new Dimension(40,30));
+    	   
     	   topLabel.setFont(new Font("宋体", Font.PLAIN, 16));
     	   label1.setFont(new Font("宋体", Font.PLAIN, 16));
     	   
@@ -138,6 +142,8 @@ public class NoTimeSeqOperation extends JPanel{
     	   textField.setEditable(false);
     	   
     	   progressBar.setPreferredSize(new Dimension(800, 30));
+    	   progressBar.setMinimumSize(new Dimension(800, 30));
+    	   progressBar.setMaximumSize(new Dimension(800, 30));
     	   progressBar.setUI(new GradientProgressBarUI());
     	   progressBar.setValue(0);
     	   
@@ -185,7 +191,7 @@ public class NoTimeSeqOperation extends JPanel{
    					else{
    						progressBarIndex++;
    						progressBar.setValue(progressBarIndex);
-   						Thread.sleep(1500);
+   						Thread.sleep(500);
    					}
    				}
    			    
@@ -217,6 +223,7 @@ public class NoTimeSeqOperation extends JPanel{
    				progressBarIndex = 0;
    				
    				mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().removeAll();
+   				mainFrame.renewPanel();
    				
 				File files = new File(NoTimeMarkovRoute);
 				for(File selectFile : files.listFiles())
@@ -226,14 +233,16 @@ public class NoTimeSeqOperation extends JPanel{
 				}
 				
 				topLabel.removeAll();
-				topLabel.setText("正在读取生成的markov链信息........");
+				topLabel.setText("正在读取生成的markov链信息....");
 				Thread.sleep(200);
 				
    				ReadMarkov2 rm = new ReadMarkov2();
 				markov = rm.readMarkov(route);
+				mainFrame.renewPanel();
 				
 				dom = DocumentHelper.createDocument();
 				root = dom.addElement("TCS");
+				
 				
 				double[] PI = CalculateDistribution.stationaryDistribution(markov);
 				
@@ -241,7 +250,8 @@ public class NoTimeSeqOperation extends JPanel{
 				{
 					topLabel.removeAll();
 					topLabel.setText("markov链的平稳分布:" + PI[i]);
-					Thread.sleep(100);
+					Thread.sleep(50);
+					mainFrame.renewPanel();
 				}
 
 				double similarity = 999991;
@@ -259,11 +269,13 @@ public class NoTimeSeqOperation extends JPanel{
 					// 迁移或者状态覆盖百分百
 
 					if (!sufficiency) {
-						continue;
+						similarity = CalculateSimilarity.discriminant(markov, PI);
+						
 					}
-                    
-					flag = false;
-					similarity = CalculateSimilarity.statistic(markov, PI);
+                    else {
+                    	similarity = CalculateSimilarity.statistic(markov, PI);
+    					flag = false;
+					}
 					
 					topLabel.removeAll();
 					topLabel.setText("markov链的使用链和测试链的相似度:" + similarity);
@@ -305,7 +317,9 @@ public class NoTimeSeqOperation extends JPanel{
 					mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().add(abstractPagePanel);
 					
 					topLabel.removeAll();
-					topLabel.setText("正在生成抽象测试序列.....");
+					topLabel.setText("正在生成抽象测试序列(该过程需要较久时间,请耐心等待)....");
+					Thread.sleep(150);
+					
 
 					int index = 500;
 					if(gc.abstractTS.size() < 500)
@@ -323,32 +337,32 @@ public class NoTimeSeqOperation extends JPanel{
 
 						progressBar.setValue(40 + (int)(((double)(j+1)/index)*60));
 						
-						gc.testCasesExtend.get(j);
-						//输出激励序列
-						String stimulateSequence = "";
-						if (j != gc.testCasesExtend.size() - 1) {
-							stimulateSequence = stimulateSequence
-									+ gc.testCasesExtend.get(j).toString() + "-->>";
-							// System.out.print(oneCaseExtend.get(i).toString() + "-->>");
-						} else {
-							stimulateSequence = stimulateSequence
-									+ gc.testCasesExtend.get(j).toString();
-							// System.out.println(oneCaseExtend.get(i).toString());
-						}
-						mainFrame.getOutputinformation().geTextArea().append("激励序列 " + stimulateSequence + "\n");
-						int length = mainFrame.getOutputinformation().geTextArea().getText().length(); 
-		                mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
-						
-						//输出测试路径
-						String  testPath = "";
-						if (j != gc.testPaths.size() - 1) {
-							testPath = gc.testPaths.get(j) + "-->>";
-						} else {
-							testPath = gc.testPaths.get(j) + ""; 
-						}
-						mainFrame.getOutputinformation().geTextArea().append("测试路径: " + testPath + "\n\n");
-		                int length2 = mainFrame.getOutputinformation().geTextArea().getText().length(); 
-		                mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
+//						gc.testCasesExtend.get(j);
+//						//输出激励序列
+//						String stimulateSequence = "";
+//						if (j != gc.testCasesExtend.size() - 1) {
+//							stimulateSequence = stimulateSequence
+//									+ gc.testCasesExtend.get(j).toString() + "-->>";
+//							// System.out.print(oneCaseExtend.get(i).toString() + "-->>");
+//						} else {
+//							stimulateSequence = stimulateSequence
+//									+ gc.testCasesExtend.get(j).toString();
+//							// System.out.println(oneCaseExtend.get(i).toString());
+//						}
+//						mainFrame.getOutputinformation().geTextArea().append("激励序列 " + stimulateSequence + "\n");
+//						int length = mainFrame.getOutputinformation().geTextArea().getText().length(); 
+//		                mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
+//						
+//						//输出测试路径
+//						String  testPath = "";
+//						if (j != gc.testPaths.size() - 1) {
+//							testPath = gc.testPaths.get(j) + "-->>";
+//						} else {
+//							testPath = gc.testPaths.get(j) + ""; 
+//						}
+//						mainFrame.getOutputinformation().geTextArea().append("测试路径: " + testPath + "\n\n");
+//		                int length2 = mainFrame.getOutputinformation().geTextArea().getText().length(); 
+//		                mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
 
 						Thread.sleep(10);
 						abstractPagePanel.getAbstractPanel().repaint();
@@ -369,6 +383,7 @@ public class NoTimeSeqOperation extends JPanel{
 					
 					NoTimeSeqNode noTimeSeqNode = new NoTimeSeqNode(ModelName+"_相似度", mainFrame);
 					noTimeSeqNode.setAbstractPagePanel(abstractPagePanel);
+					noTimeSeqNode.setQuota("抽象测试序列生成完成，共生成" + gc.abstractTS.size()+"条抽象测试序列");
 					
 					mainFrame.getStepThreeLeftButton().getNoTimeSeqNodePanel().insertNodeLabel(noTimeSeqNode, abstractPagePanel);
 					mainFrame.getStepThreeLeftButton().getNoTimeSeqNode().repaint();
@@ -408,6 +423,39 @@ private static boolean isSufficient(Markov markov) {
 	}
 	return true;
 }
+
+         //获取所有的抽象测试序列mode2
+		private static void showTestSequence(Markov markov,List<String> lists) {
+			for (Route r : markov.getRouteList()) {
+
+				String testSequence = "";
+				for (int i = 0; i < r.getTransitionList().size(); i++) {
+					if (i != r.getTransitionList().size() - 1) {
+						testSequence = testSequence
+								+ r.getTransitionList().get(i).getName() + "-->>";
+						// System.out.print(oneCaseExtend.get(i).toString() +
+						// "-->>");
+					} else {
+						testSequence = testSequence
+								+ r.getTransitionList().get(i).getName();
+						// System.out.println(oneCaseExtend.get(i).toString());
+					}
+				}
+				r.setTcSequence(testSequence);
+				if(r.getNumber()==0){
+					lists.add(testSequence);
+					System.out.println(testSequence);
+				}
+
+				for (int i = 0; i < r.getNumber(); i++) {
+					// 显示抽象测试序列testSequence至列表
+					lists.add(testSequence);
+					System.out.println(testSequence);
+				}
+			}
+			System.out.println("size: "  + lists.size());
+		}
+		
 public JLabel getTopLabel() {
 	return topLabel;
 }

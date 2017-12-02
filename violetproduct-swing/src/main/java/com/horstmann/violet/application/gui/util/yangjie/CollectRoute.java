@@ -27,7 +27,7 @@ public class CollectRoute {
 		markov.setRouteList(routeList);
 		int actualTcNum = getActualTcNum(routeList);
 		// 当测试用例个数差距超过100个并且绕环次数没超过10环
-		if (tcNumber - actualTcNum > 100 && Constant.maxCircle < 11) {
+		if (tcNumber - actualTcNum > 10 && Constant.maxCircle < 11) {
 			Constant.maxCircle++;
 			collect(markov);
 		}

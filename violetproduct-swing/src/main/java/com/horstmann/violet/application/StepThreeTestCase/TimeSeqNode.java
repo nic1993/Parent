@@ -16,6 +16,7 @@ import com.horstmann.violet.application.gui.MainFrame;
 public class TimeSeqNode extends JLabel{
        private Icon icon;
        private String title;
+       private String quota;
        private AbstractPagePanel abstractPagePanel;
        private MainFrame mainFrame;
        public TimeSeqNode(String name,MainFrame mainFrame)
@@ -54,7 +55,11 @@ public class TimeSeqNode extends JLabel{
                 ((TimeSeqNode)e.getSource()).setFont(new Font("ËÎÌו", Font.BOLD, 16));
                 mainFrame.renewPanel();
     		}
-    	
+    		@Override
+       		public void mouseEntered(MouseEvent e) {
+       			// TODO Auto-generated method stub
+       			mainFrame.renewPanel();
+       		}
 		});
     }
 	
@@ -66,6 +71,12 @@ public class TimeSeqNode extends JLabel{
 	}
 	public String getTitle() {
 		return title;
+	}
+	public String getQuota() {
+		return quota;
+	}
+	public void setQuota(String quota) {
+		this.quota = quota;
 	}
     
 }

@@ -119,10 +119,13 @@ public class SteponeBottomPanel extends JPanel{
 				{
 					stepTwo = 1;
 					mainFrame.getStepTwoExpand().getEstimateLabel().setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 18));
+					mainFrame.getStepTwoExpand().getExchangepPanel().setVisible(false);
+					mainFrame.renewPanel();
 				}
 				
 				switch (stepTwo) {
                 case 1:
+                	mainFrame.getStepTwoExpand().getEstimateLabel().setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 18));
                 	mainFrame.getpanel().add(mainFrame.getStepTwoEvaluateOperation());
 					mainFrame.getpanel().setVisible(true);
 					mainFrame.getpanel().updateUI();
@@ -148,6 +151,7 @@ public class SteponeBottomPanel extends JPanel{
 					mainFrame.renewPanel();
 	                break;
                 case 2:
+                	mainFrame.getStepTwoExpand().getExchangeLabel().setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 18));
                 	mainFrame.getpanel().add(mainFrame.getStepTwoExchangeOperation());
 					mainFrame.getpanel().setVisible(true);
 					mainFrame.getpanel().updateUI();

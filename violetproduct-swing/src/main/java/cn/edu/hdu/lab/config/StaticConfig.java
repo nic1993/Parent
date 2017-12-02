@@ -50,5 +50,4 @@ public class StaticConfig {
 	
 	public static String[] fragmentsTypes={"loop","opt","alt","par"};//顺序不可改变 {"loop"}{"opt"}{"alt","par"}
 
-	public static MainFrame mainFrame;
 }

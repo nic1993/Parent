@@ -230,8 +230,12 @@ public class StepTwoCaseExpandOperation extends JPanel{
 					}
   					Thread.sleep(10); 
 				}
-  				return progressBarIndex;
+  				
+  				startExpandButton.setEnabled(true);
+				mainFrame.getsteponeButton().getExpandModelLabel().setEnabled(true);
+  				return 1;
   			}
+  			
   		};
   		maintask = new FutureTask<>(maincallable);
   		mainthread = new Thread(maintask);
@@ -241,119 +245,134 @@ public class StepTwoCaseExpandOperation extends JPanel{
 			@Override
 			public Integer call() throws Exception {
 				// TODO Auto-generated method stub
-				toplabel.removeAll();
-			    toplabel.setText("正在初始化数据....");
-			    Thread.sleep(500);
+				try {
+					toplabel.removeAll();
+				    toplabel.setText("正在初始化数据....");
+				    Thread.sleep(500);
 
-			    stepTwoCaseExpandTabbedPane.getValidationResults().removeAll();
-			    stepTwoCaseExpandTabbedPane.getValidationResults().updateUI();
-			    MatrixPanels.clear();
-			    EvaluateMatrixPanels.clear();				
-			    
-				for(InterfaceIsogenySD interfaceIsogenySD : IISDList)
-				{
-					List<InterfaceSD> ISDList = interfaceIsogenySD.getISDList();
-					relations.clear();
-					relationsData.clear();
-					if(ISDList.size() == 1)
-					{						
-						relations.add(ISDList.get(0).getName());
-						ISDList.get(0).setPro(1.0);
-						relationsData.add(1.0);
-						
-						toplabel.removeAll();
-					    toplabel.setText("正在计算" + ISDList.get(0).getName()+"场景发生概率....");
-					    
-					    StepTwoMatrixPanel stepTwoMatrixPanel = new StepTwoMatrixPanel(mainFrame);
-						stepTwoMatrixPanel.getTitleLabel().setText("用例名称: "+ interfaceIsogenySD.getUcName());
-						
-						StepTwoMatrixPanel stepTwoMatrixPanel1 = new StepTwoMatrixPanel(mainFrame);
-						stepTwoMatrixPanel1.getTitleLabel().setText("用例名称: "+interfaceIsogenySD.getUcName());
-					    
-					    ScenceTabelPanel scenceTabelPanel = new ScenceTabelPanel(relations, relationsData, 2, mainFrame);
-					    stepTwoMatrixPanel.getTabelPanel().add(scenceTabelPanel);
-					    MatrixPanels.add(stepTwoMatrixPanel);
-					    
-					    ScenceTabelPanel scenceTabelPanel1 = new ScenceTabelPanel(relations, relationsData, 2, mainFrame);
-					    stepTwoMatrixPanel1.getTabelPanel().add(scenceTabelPanel1);
-					    EvaluateMatrixPanels.add(stepTwoMatrixPanel1);
-					    Thread.sleep(200);
-					    
-					}
-					else 
-					{    
-						for(InterfaceSD interfaceSD:ISDList)
-						{
-							relations.add(interfaceSD.getName());
-						}
-					   	 for(int i = 0;i <number;i++)
-					   	 {
-					   		 int location = getplace(interfaceIsogenySD.getUcName());
-					   		 if(location != -1)
-					   		 {
-					   			JPanel panel = ((StepTwoTabelPanel) stepTwoCaseExpandTabbedPane.getCaseExpandPanel().getComponent(i)).getTabelPanel();
-					   			JPanel tabelPanel = ((StepTwoMatrixPanel)panel.getComponent(location)).getTabelPanel();
-					   			JTable table = ((CaseExpandTable)tabelPanel.getComponent(0)).getTable();
-					   			int rows = table.getRowCount();
-					   			int columns = table.getColumnCount();
-					   			double a[][] = new double[rows][columns-1];
-					   			for(int row = 0;row < rows;row++)
-					   			{
-					   				for(int column = 1;column < columns;column++)
-					   				{
-					   					if(!isDouble(table.getValueAt(row, column).toString()))
-					   					{
-					   						toplabel.removeAll();
-					   						toplabel.setText("计算扩展矩阵出错,请检查填写的扩展矩阵!");
-										    startVerificationButton.setEnabled(true);
-										    thread1.interrupt();
-										    mainthread.interrupt(); 
-										    mainFrame.renewPanel();
-										    break;
-					   					}
-					   					else {
-					   						a[row][column-1] = Double.parseDouble(table.getValueAt(row, column).toString());
-										}
-					   				}
-					   				
-					   			}
-					   			tableDatas.add(a);
-					   		 }
-					   	 }
-					}
-//					if(thread1.interrupted())
-//						break;
-					if(tableDatas.size() > 0)
+				    stepTwoCaseExpandTabbedPane.getValidationResults().removeAll();
+				    stepTwoCaseExpandTabbedPane.getValidationResults().updateUI();
+				    MatrixPanels.clear();
+				    EvaluateMatrixPanels.clear();				
+				    
+					for(InterfaceIsogenySD interfaceIsogenySD : IISDList)
 					{
-						List list=worker.calculateProb(tableDatas); 
-						double[] datas = (double[]) list.get(1);
-						for(int k = 0; k < datas.length;k++)
-						{
-							ISDList.get(k).setPro(datas[k]);
-							relationsData.add(datas[k]);
+						List<InterfaceSD> ISDList = interfaceIsogenySD.getISDList();
+						relations.clear();
+						relationsData.clear();
+						tableDatas.clear();
+						if(ISDList.size() == 1)
+						{						
+							relations.add(ISDList.get(0).getName());
+							ISDList.get(0).setPro(1.0);
+							relationsData.add(1.0);
 							
 							toplabel.removeAll();
-						    toplabel.setText("正在计算" + ISDList.get(k).getName()+"场景发生概率.....");
+						    toplabel.setText("正在计算" + ISDList.get(0).getName()+"场景发生概率....");
+						    
+						    StepTwoMatrixPanel stepTwoMatrixPanel = new StepTwoMatrixPanel(mainFrame);
+							stepTwoMatrixPanel.getTitleLabel().setText("用例名称: "+ interfaceIsogenySD.getUcName());
+							
+							StepTwoMatrixPanel stepTwoMatrixPanel1 = new StepTwoMatrixPanel(mainFrame);
+							stepTwoMatrixPanel1.getTitleLabel().setText("用例名称: "+interfaceIsogenySD.getUcName());
+						    
+						    ScenceTabelPanel scenceTabelPanel = new ScenceTabelPanel(relations, relationsData, 2, mainFrame);
+						    stepTwoMatrixPanel.getTabelPanel().add(scenceTabelPanel);
+						    MatrixPanels.add(stepTwoMatrixPanel);
+						    
+						    ScenceTabelPanel scenceTabelPanel1 = new ScenceTabelPanel(relations, relationsData, 2, mainFrame);
+						    stepTwoMatrixPanel1.getTabelPanel().add(scenceTabelPanel1);
+						    EvaluateMatrixPanels.add(stepTwoMatrixPanel1);
 						    Thread.sleep(200);
-						    mainFrame.renewPanel();
+						    
 						}
-						
-						StepTwoMatrixPanel stepTwoMatrixPanel = new StepTwoMatrixPanel(mainFrame);
-						stepTwoMatrixPanel.getTitleLabel().setText("用例名称:"+interfaceIsogenySD.getUcName());
-						ScenceTabelPanel scenceTabelPanel = new ScenceTabelPanel(relations, relationsData, 2, mainFrame);
-						stepTwoMatrixPanel.getTabelPanel().add(scenceTabelPanel);
-						MatrixPanels.add(stepTwoMatrixPanel);
-						
-						StepTwoMatrixPanel stepTwoMatrixPanel1 = new StepTwoMatrixPanel(mainFrame);
-						stepTwoMatrixPanel1.getTitleLabel().setText("用例名称:"+interfaceIsogenySD.getUcName());
-						ScenceTabelPanel scenceTabelPanel1 = new ScenceTabelPanel(relations, relationsData, 2, mainFrame);
-						stepTwoMatrixPanel1.getTabelPanel().add(scenceTabelPanel1);
-						EvaluateMatrixPanels.add(stepTwoMatrixPanel1);
-						
-						tableDatas.clear();
+						else 
+						{    
+							for(InterfaceSD interfaceSD:ISDList)
+							{
+								relations.add(interfaceSD.getName());
+							}
+						   	 for(int i = 0;i <number;i++)
+						   	 {
+						   		 int location = getplace(interfaceIsogenySD.getUcName());
+						   		 if(location != -1)
+						   		 {
+						   			JPanel panel = ((StepTwoTabelPanel) stepTwoCaseExpandTabbedPane.getCaseExpandPanel().getComponent(i)).getTabelPanel();
+						   			JPanel tabelPanel = ((StepTwoMatrixPanel)panel.getComponent(location)).getTabelPanel();
+						   			JTable table = ((CaseExpandTable)tabelPanel.getComponent(0)).getTable();
+						   			int rows = table.getRowCount();
+						   			int columns = table.getColumnCount();
+						   			double a[][] = new double[rows][columns-1];
+						   			for(int row = 0;row < rows;row++)
+						   			{
+						   				for(int column = 1;column < columns;column++)
+						   				{
+						   					if(!isDouble(table.getValueAt(row, column).toString()))
+						   					{
+						   						toplabel.removeAll();
+						   						toplabel.setText("计算扩展矩阵出错,请检查填写的扩展矩阵!");
+											    startVerificationButton.setEnabled(true);
+											    startExpandButton.setEnabled(true);
+											    
+											    thread2.stop();
+						   					    thread1.stop();
+											    mainthread.interrupt();
+											    verificationProgressBar.setValue(0);
+											    mainFrame.renewPanel();
+											    break;
+						   					}
+						   					else {
+						   						a[row][column-1] = Double.parseDouble(table.getValueAt(row, column).toString());
+											}
+						   				}
+						   				
+						   			}
+						   			tableDatas.add(a);
+						   		 }
+						   	 }
+						}
+
+						if(tableDatas.size() > 0)
+						{
+							List list=worker.calculateProb(tableDatas); 
+							double[] datas = (double[]) list.get(1);
+							for(int k = 0; k < datas.length;k++)
+							{
+								ISDList.get(k).setPro(datas[k]);
+								relationsData.add(datas[k]);
+								
+								toplabel.removeAll();
+							    toplabel.setText("正在计算" + ISDList.get(k).getName()+"场景发生概率.....");
+							    Thread.sleep(200);
+							    mainFrame.renewPanel();
+							}
+							
+							StepTwoMatrixPanel stepTwoMatrixPanel = new StepTwoMatrixPanel(mainFrame);
+							stepTwoMatrixPanel.getTitleLabel().setText("用例名称:"+interfaceIsogenySD.getUcName());
+							ScenceTabelPanel scenceTabelPanel = new ScenceTabelPanel(relations, relationsData, 2, mainFrame);
+							stepTwoMatrixPanel.getTabelPanel().add(scenceTabelPanel);
+							MatrixPanels.add(stepTwoMatrixPanel);
+							
+							StepTwoMatrixPanel stepTwoMatrixPanel1 = new StepTwoMatrixPanel(mainFrame);
+							stepTwoMatrixPanel1.getTitleLabel().setText("用例名称:"+interfaceIsogenySD.getUcName());
+							ScenceTabelPanel scenceTabelPanel1 = new ScenceTabelPanel(relations, relationsData, 2, mainFrame);
+							stepTwoMatrixPanel1.getTabelPanel().add(scenceTabelPanel1);
+							EvaluateMatrixPanels.add(stepTwoMatrixPanel1);
+							
+							tableDatas.clear();
+						}
+						 mainFrame.renewPanel();
 					}
-					 mainFrame.renewPanel();
+				} catch (Exception e) {
+					// TODO: handle exception
+					e.printStackTrace();
+					toplabel.removeAll();
+				    toplabel.setText("场景扩展出错!");
+					
+					startExpandButton.setEnabled(true);
+					mainFrame.getsteponeButton().getExpandModelLabel().setEnabled(true);
 				}
+				
 				return 1;
 			}
 		};
@@ -365,80 +384,90 @@ public class StepTwoCaseExpandOperation extends JPanel{
 			@Override
 			public Integer call() throws Exception {
 				// TODO Auto-generated method stub
-				toplabel.removeAll();
-				toplabel.setText("正在生成场景概率列表....");
-				if(relations.size() > 0)
-				{
-					JPanel panel = new JPanel();
-					panel.setLayout(new GridBagLayout());
-					MatrixPanel = new JPanel();
-					MatrixPanel.setLayout(new GridBagLayout());
-					for(int i = 0;i < MatrixPanels.size();i++)
+				try {
+					toplabel.removeAll();
+					toplabel.setText("正在生成场景概率列表....");
+					if(relations.size() > 0)
 					{
-						panel.add(MatrixPanels.get(i),new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
-						MatrixPanel.add(EvaluateMatrixPanels.get(i),new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
-					}
-					panel.add(new JPanel(),new GBC(0, MatrixPanels.size()).setFill(GBC.BOTH).setWeight(1, 1));
-					MatrixPanel.add(new JPanel(),new GBC(0, EvaluateMatrixPanels.size()).setFill(GBC.BOTH).setWeight(1, 1));
-					
-					stepTwoCaseExpandTabbedPane.getValidationResults().removeAll();
-					stepTwoCaseExpandTabbedPane.getValidationResults().add(panel);
-					stepTwoCaseExpandTabbedPane.getValidationResults().updateUI();
-					stepTwoCaseExpandTabbedPane.setSelectedIndex(1);
-					
-					isFinish = true;
-					for(InterfaceIsogenySD interfaceIsogenySD : IISDList)
-					{
-						List<InterfaceSD> ISDList = interfaceIsogenySD.getISDList();
-						for(InterfaceSD interfaceSD : ISDList)
+						JPanel panel = new JPanel();
+						panel.setLayout(new GridBagLayout());
+						MatrixPanel = new JPanel();
+						MatrixPanel.setLayout(new GridBagLayout());
+						for(int i = 0;i < MatrixPanels.size();i++)
 						{
-							if(interfaceSD.getPro() <= 0.0 || interfaceSD.getPro() > 1.0)
-								isFinish = false;
+							panel.add(MatrixPanels.get(i),new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
+							MatrixPanel.add(EvaluateMatrixPanels.get(i),new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
 						}
-					}
-
-					if(isFinish == false)
-					{
-						toplabel.removeAll();
-						toplabel.setText("对"+Model_Name+"场景扩展验证不通过,请重新填写扩展矩阵!");
-						mainFrame.getStepTwoExpand().getEstimateLabel().setEnabled(false);
-						mainFrame.getStepTwoExpand().getExpandCasePanel().repaint();
+						panel.add(new JPanel(),new GBC(0, MatrixPanels.size()).setFill(GBC.BOTH).setWeight(1, 1));
+						MatrixPanel.add(new JPanel(),new GBC(0, EvaluateMatrixPanels.size()).setFill(GBC.BOTH).setWeight(1, 1));
 						
-						startExpandButton.setEnabled(true);
-						mainFrame.getsteponeButton().getExpandModelLabel().setEnabled(true);
-						mainFrame.renewPanel();
-					}
-					else {
-//						caseTabelMap.put(Model_Name, scenceTabelPanel);
+						stepTwoCaseExpandTabbedPane.getValidationResults().removeAll();
+						stepTwoCaseExpandTabbedPane.getValidationResults().add(panel);
+						stepTwoCaseExpandTabbedPane.getValidationResults().updateUI();
+						stepTwoCaseExpandTabbedPane.setSelectedIndex(1);
 						
-						toplabel.removeAll();
-						toplabel.setText("对"+Model_Name+"场景扩展验证完成,可以对该模型进行一致性验证!");
-						mainFrame.getStepTwoExpand().getEstimateLabel().setEnabled(true);
-						mainFrame.getStepTwoEvaluateOperation().getEvaluateButton().setEnabled(true);
-						
-						worker.assignmentPro(IISDList);
-						ExpandNodeLabel expandNodeLabel = new ExpandNodeLabel(Model_Name,mainFrame);
-
-						caseExpandNodePanel.insertNodeLabel(expandNodeLabel,panel);
-						mainFrame.getsteponeButton().getExpandCasePanel().repaint();
-						
-						mainFrame.getStepTwoCaseExpandTabbedPane().setSelectedIndex(1);
-						
+						isFinish = true;
 						for(InterfaceIsogenySD interfaceIsogenySD : IISDList)
-    					{
-    						for(InterfaceSD interfaceSD : interfaceIsogenySD.getISDList())
-    						{
-    							
-    							mainFrame.getOutputinformation().geTextArea().append(interfaceSD.getName() + "场景概率: " + interfaceSD.getPro() + "\n");
-    	    					int length = mainFrame.getOutputinformation().geTextArea().getText().length(); 
-    			                mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
-    						}
-    					}
-						mainFrame.renewPanel();
-					}		
+						{
+							List<InterfaceSD> ISDList = interfaceIsogenySD.getISDList();
+							for(InterfaceSD interfaceSD : ISDList)
+							{
+								if(interfaceSD.getPro() <= 0.0 || interfaceSD.getPro() > 1.0)
+									isFinish = false;
+							}
+						}
+
+						if(isFinish == false)
+						{
+							toplabel.removeAll();
+							toplabel.setText("对"+Model_Name+"场景扩展验证不通过,请重新填写扩展矩阵!");
+							mainFrame.getStepTwoExpand().getEstimateLabel().setEnabled(false);
+							mainFrame.getStepTwoExpand().getExpandCasePanel().repaint();
+							
+							startExpandButton.setEnabled(true);
+							mainFrame.getsteponeButton().getExpandModelLabel().setEnabled(true);
+							mainFrame.renewPanel();
+						}
+						else {
+//							caseTabelMap.put(Model_Name, scenceTabelPanel);
+							
+							toplabel.removeAll();
+							toplabel.setText("对"+Model_Name+"场景扩展验证完成,可以对该模型进行一致性验证!");
+							mainFrame.getStepTwoExpand().getEstimateLabel().setEnabled(true);
+							mainFrame.getStepTwoEvaluateOperation().getEvaluateButton().setEnabled(true);
+							
+							worker.assignmentPro(IISDList);
+							ExpandNodeLabel expandNodeLabel = new ExpandNodeLabel(Model_Name,mainFrame);
+
+							caseExpandNodePanel.insertNodeLabel(expandNodeLabel,panel);
+							mainFrame.getsteponeButton().getExpandCasePanel().repaint();
+							
+							mainFrame.getStepTwoCaseExpandTabbedPane().setSelectedIndex(1);
+							
+							for(InterfaceIsogenySD interfaceIsogenySD : IISDList)
+	    					{
+	    						for(InterfaceSD interfaceSD : interfaceIsogenySD.getISDList())
+	    						{
+	    							
+	    							mainFrame.getOutputinformation().geTextArea().append(interfaceSD.getName() + "场景概率: " + interfaceSD.getPro() + "\n");
+	    	    					int length = mainFrame.getOutputinformation().geTextArea().getText().length(); 
+	    			                mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
+	    						}
+	    					}
+							mainFrame.renewPanel();
+						}		
+					}
+					
+				} catch (Exception e) {
+					// TODO: handle exception
+					e.printStackTrace();
+					toplabel.removeAll();
+				    toplabel.setText("场景扩展出错!");
+					
+					startExpandButton.setEnabled(true);
+					mainFrame.getsteponeButton().getExpandModelLabel().setEnabled(true);
 				}
-				startExpandButton.setEnabled(true);
-				mainFrame.getsteponeButton().getExpandModelLabel().setEnabled(true);
+				
 				return 1;
 			}
 		};
@@ -460,77 +489,85 @@ public class StepTwoCaseExpandOperation extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				isFinish = false;
-				isNeedExpand = false;
-				relations.clear();
-                IISDList=mainFrame.getStepTwoModelOperation().getIISDList();//获取用例场景信息
-                worker = mainFrame.getStepTwoModelOperation().getWorker();
-                
-               if(numberTextField.getText().equals(""))
-				{ 
-					toplabel.removeAll();
-					toplabel.setText("请填写正确的用户数量!");
-					mainFrame.getStepTwoModelOperation().updateUI();
-					mainFrame.renewPanel();
-				}
-				else {
-					stepTwoCaseExpandTabbedPane.getCaseExpandPanel().removeAll();
-					number = Integer.parseInt(numberTextField.getText());
-                    int j = 0;
-					for(j = 0;j < number;++j){
-						int i = 0; //标记位置
-						StepTwoTabelPanel stepTwoTabelPanel = new StepTwoTabelPanel(mainFrame);
-						stepTwoTabelPanel.getTitleLabel().setText("用户"+(j+1));
-						stepTwoTabelPanel.getTabelPanel().setLayout(new GridBagLayout());
-						for(InterfaceIsogenySD interfaceIsogenySD : IISDList)
-						{
-							if(interfaceIsogenySD.getISDList().size() > 1)
-							{
-								isNeedExpand = true;
-								relations.add(interfaceIsogenySD.getUcName());  //添加用例名称
-								List<InterfaceSD> ISDList = interfaceIsogenySD.getISDList();
-								for(InterfaceSD interfaceSD : ISDList)
-								{
-									relations.add(interfaceSD.getName()); //添加用例场景名称
-								}
-								CaseExpandTable scenceTabelPanel = new CaseExpandTable(relations);
-								StepTwoMatrixPanel stepTwoMatrixPanel = new StepTwoMatrixPanel(mainFrame);
-								stepTwoMatrixPanel.getTitleLabel().setText("用例名称:"+interfaceIsogenySD.getUcName());
-								stepTwoMatrixPanel.getTabelPanel().add(scenceTabelPanel);
-								stepTwoTabelPanel.getTabelPanel().add(stepTwoMatrixPanel, new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
-								i++;
-								relations.clear();
-								mainFrame.renewPanel();
-							}
-						}
-					    stepTwoCaseExpandTabbedPane.getCaseExpandPanel().add(stepTwoTabelPanel,new GBC(0, j).setFill(GBC.BOTH).setWeight(1, 0));
-					}
-					stepTwoCaseExpandTabbedPane.getCaseExpandPanel().add(new JPanel(), new GBC(0, j).setFill(GBC.BOTH).setWeight(1, 1));
-					stepTwoCaseExpandTabbedPane.getCaseExpandPanel().updateUI();
-					startVerificationButton.setEnabled(true);
-					toplabel.removeAll();
-					toplabel.setText(Model_Name+"用例模型进行场景扩展,填写矩阵即对同源场景进行两两对比打分,填写完成后进行验证!");	
-					if(isNeedExpand == false)
-					{
-						stepTwoCaseExpandTabbedPane.getCaseExpandPanel().removeAll();
+				try {
+					isFinish = false;
+					isNeedExpand = false;
+					relations.clear();
+	                IISDList=mainFrame.getStepTwoModelOperation().getIISDList();//获取用例场景信息
+	                worker = mainFrame.getStepTwoModelOperation().getWorker();
+	                
+	                verificationProgressBar.setValue(0);
+	                
+	               if(numberTextField.getText().equals(""))
+					{ 
 						toplabel.removeAll();
-						toplabel.setText(Model_Name+"模型不需要进行场景扩展，可以直接进行验证"); 
+						toplabel.setText("请填写正确的用户数量!");
+						mainFrame.getStepTwoModelOperation().updateUI();
+						mainFrame.renewPanel();
 					}
-					mainFrame.getStepTwoCaseExpandTabbedPane().setSelectedIndex(0);
-					mainFrame.getStepTwoCaseExpandTabbedPane().getValidationResults().removeAll();
-					mainFrame.getStepTwoEvaluateTabbedPane().getHomogeneityResults().removeAll();
-					mainFrame.getStepTwoExchangeTabbedPane().getExchangeResults().removeAll();
-					mainFrame.getStepTwoExchangeTabbedPane().getExchangeResport().removeAll();
-					mainFrame.getStepTwoEvaluateOperation().getTopLabel().setText("当前模型为:"+Model_Name);
-					mainFrame.getStepTwoExchangeOperation().getToplabel().setText("当前模型为:"+Model_Name);
-					
-					startExpandButton.setEnabled(false);
-					startVerificationButton.setEnabled(true);
-					
-					mainFrame.getStepTwoExpand().getEstimateLabel().setEnabled(false);
-					mainFrame.getStepTwoExpand().getExchangeLabel().setEnabled(false);
-					
-					mainFrame.renewPanel();
+					else {
+						stepTwoCaseExpandTabbedPane.getCaseExpandPanel().removeAll();
+						number = Integer.parseInt(numberTextField.getText());
+	                    int j = 0;
+						for(j = 0;j < number;++j){
+							int i = 0; //标记位置
+							StepTwoTabelPanel stepTwoTabelPanel = new StepTwoTabelPanel(mainFrame);
+							stepTwoTabelPanel.getTitleLabel().setText("用户"+(j+1));
+							stepTwoTabelPanel.getTabelPanel().setLayout(new GridBagLayout());
+							for(InterfaceIsogenySD interfaceIsogenySD : IISDList)
+							{
+								if(interfaceIsogenySD.getISDList().size() > 1)
+								{
+									isNeedExpand = true;
+									relations.add(interfaceIsogenySD.getUcName());  //添加用例名称
+									List<InterfaceSD> ISDList = interfaceIsogenySD.getISDList();
+									for(InterfaceSD interfaceSD : ISDList)
+									{
+										relations.add(interfaceSD.getName()); //添加用例场景名称
+									}
+									CaseExpandTable scenceTabelPanel = new CaseExpandTable(relations);
+									StepTwoMatrixPanel stepTwoMatrixPanel = new StepTwoMatrixPanel(mainFrame);
+									stepTwoMatrixPanel.getTitleLabel().setText("用例名称:"+interfaceIsogenySD.getUcName());
+									stepTwoMatrixPanel.getTabelPanel().add(scenceTabelPanel);
+									stepTwoTabelPanel.getTabelPanel().add(stepTwoMatrixPanel, new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
+									i++;
+									relations.clear();
+									mainFrame.renewPanel();
+								}
+							}
+						    stepTwoCaseExpandTabbedPane.getCaseExpandPanel().add(stepTwoTabelPanel,new GBC(0, j).setFill(GBC.BOTH).setWeight(1, 0));
+						}
+						stepTwoCaseExpandTabbedPane.getCaseExpandPanel().add(new JPanel(), new GBC(0, j).setFill(GBC.BOTH).setWeight(1, 1));
+						stepTwoCaseExpandTabbedPane.getCaseExpandPanel().updateUI();
+						startVerificationButton.setEnabled(true);
+						toplabel.removeAll();
+						toplabel.setText(Model_Name+"用例模型进行场景扩展,填写矩阵即对同源场景进行两两对比打分,填写完成后进行验证!");	
+						if(isNeedExpand == false)
+						{
+							stepTwoCaseExpandTabbedPane.getCaseExpandPanel().removeAll();
+							toplabel.removeAll();
+							toplabel.setText(Model_Name+"模型不需要进行场景扩展，可以直接进行验证"); 
+						}
+						mainFrame.getStepTwoCaseExpandTabbedPane().setSelectedIndex(0);
+						mainFrame.getStepTwoCaseExpandTabbedPane().getValidationResults().removeAll();
+						mainFrame.getStepTwoEvaluateTabbedPane().getHomogeneityResults().removeAll();
+						mainFrame.getStepTwoExchangeTabbedPane().getExchangeResults().removeAll();
+						mainFrame.getStepTwoExchangeTabbedPane().getExchangeResport().removeAll();
+						mainFrame.getStepTwoEvaluateOperation().getTopLabel().setText("当前模型为:"+Model_Name);
+						mainFrame.getStepTwoExchangeOperation().getToplabel().setText("当前模型为:"+Model_Name);
+						
+						startExpandButton.setEnabled(false);
+						startVerificationButton.setEnabled(true);
+						
+						mainFrame.getStepTwoExpand().getEstimateLabel().setEnabled(false);
+						mainFrame.getStepTwoExpand().getExchangeLabel().setEnabled(false);
+						
+						mainFrame.renewPanel();
+					}
+				} catch (Exception e2) {
+					// TODO: handle exception
+					toplabel.removeAll();
+					toplabel.setText("场景扩展出错!");
 				}
 			}
 		});
@@ -589,7 +626,7 @@ public class StepTwoCaseExpandOperation extends JPanel{
 	            return;
 	        }
 	        char ch = text.charAt(text.length() - 1);
-	        if (!(ch >= '0' && ch <= '9') 
+	        if (!(ch >= '1' && ch <= '9') 
 	               ) { 
 	            SwingUtilities.invokeLater(new Runnable() {
 	                @Override

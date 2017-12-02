@@ -1,5 +1,7 @@
 package cn.edu.hdu.lab.dao.uml;
 import java.util.ArrayList;
+
+import com.horstmann.violet.application.gui.DisplayForm;
 public class LifeLine {
 	/* 
 	 * 生命线的id 和 name，以及本身包含的位点结点；
@@ -64,6 +66,9 @@ public class LifeLine {
 	
 	public void print_LifeLine() {
 		System.out.println("Lifeline: name=" +this.name +"\tID="+this.id+"\t生命线下位点没有输出"); 
+		DisplayForm.mainFrame.getOutputinformation().geTextArea().append("Lifeline: name=" +this.name +"\tID="+this.id+"\t生命线下位点没有输出" + "\n");
+		int length11 = DisplayForm.mainFrame.getOutputinformation().geTextArea().getText().length(); 
+		DisplayForm.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length11);
 		//print_nodes();
 	}
 	

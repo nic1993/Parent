@@ -58,6 +58,12 @@ public class ExpandNodeLabel extends JLabel{
     			mainFrame.renewPanel();
     		};
     		
+    		@Override
+       		public void mouseEntered(MouseEvent e) {
+       			// TODO Auto-generated method stub
+       			mainFrame.renewPanel();
+       		}
+    		
 		});
     }
 	public void clearPanel()

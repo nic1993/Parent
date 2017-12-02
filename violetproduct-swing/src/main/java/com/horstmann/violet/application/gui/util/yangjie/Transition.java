@@ -15,13 +15,14 @@ public class Transition {
 	private double probability; // 迁移概率
 	private String sender; // 迁移对应消息的发送对象
 	private String receiver; // 迁移对应消息的接收对象
-	private int accessTimes = 0; // 迁移的访问次数
+	private double accessTimes = 0; // 迁移的访问次数
 	private String nextStateName; // 迁移的目标状态名称
 	private State nextState; // 迁移的目标状态
 	private boolean visited = false;// 设置迁移访问标记
 	private String assignValue;// 迁移返回值
 	private String assignType;// 迁移返回值类型
 	private String conditions;// 存放各种测试所需条件
+	private boolean isTime = false;// 是否时间扩展出来的
 
 	@Override
 	public String toString() {
@@ -69,11 +70,11 @@ public class Transition {
 		this.receiver = receiver;
 	}
 
-	public int getAccessTimes() {
+	public double getAccessTimes() {
 		return accessTimes;
 	}
 
-	public void setAccessTimes(int accessTimes) {
+	public void setAccessTimes(double accessTimes) {
 		this.accessTimes = accessTimes;
 	}
 
@@ -131,6 +132,14 @@ public class Transition {
 
 	public void setConditions(String conditions) {
 		this.conditions = conditions;
+	}
+
+	public boolean isTime() {
+		return isTime;
+	}
+
+	public void setTime(boolean isTime) {
+		this.isTime = isTime;
 	}
 
 }

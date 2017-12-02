@@ -6,6 +6,8 @@ import java.util.ArrayList;
  * 组合片段ID，类型，所依附生命线ID，组合片段面所有执行路径对应的操作域
  */
 
+import com.horstmann.violet.application.gui.DisplayForm;
+
 public class Fragment implements Cloneable{
 	@Override
 	public Object clone() {   
@@ -56,6 +58,9 @@ public class Fragment implements Cloneable{
 	public void print_Fragment()
 	{
 		System.out.println("Fragment:Id=" +id+ "\t name="+name +"\t type="+ type+" "+"\n"+rectangle.toString());
+		DisplayForm.mainFrame.getOutputinformation().geTextArea().append("Fragment:Id=" +id+ "\t name="+name +"\t type="+ type+" "+"\n"+rectangle.toString() + "\n");
+		int length11 = DisplayForm.mainFrame.getOutputinformation().geTextArea().getText().length(); 
+		DisplayForm.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length11);
 		for(Operand operand:operands)
 		{
 			operand.print_Operand();

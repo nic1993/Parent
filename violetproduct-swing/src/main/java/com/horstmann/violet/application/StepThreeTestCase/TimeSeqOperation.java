@@ -130,6 +130,8 @@ public class TimeSeqOperation extends JPanel{
     	   paramterValueList = new ArrayList<String>();
     	   
     	   textField.setPreferredSize(new Dimension(40,30));
+    	   textField.setMinimumSize(new Dimension(40,30));
+    	   textField.setMaximumSize(new Dimension(40,30));
     	   topLabel.setFont(new Font("宋体", Font.PLAIN, 16));
     	   label1.setFont(new Font("宋体", Font.PLAIN, 16));
     	   
@@ -138,10 +140,12 @@ public class TimeSeqOperation extends JPanel{
     	   textField.setEditable(false);
     	   
     	   progressBar.setPreferredSize(new Dimension(800, 30));
+    	   progressBar.setMinimumSize(new Dimension(800, 30));
+    	   progressBar.setMaximumSize(new Dimension(800, 30));
     	   progressBar.setUI(new GradientProgressBarUI());
     	   progressBar.setValue(0);
     	   
-    	   TimeMarkovRoute = mainFrame.getBathRoute()+"/TimeMarkov/";
+    	   TimeMarkovRoute = mainFrame.getBathRoute()+"/extendMarkov/";
     	   //初始化线程
     	   initThread();
     	   listen();
@@ -213,13 +217,12 @@ public class TimeSeqOperation extends JPanel{
 				File files = new File(TimeMarkovRoute);
 				for(File selectFile : files.listFiles())
 				{
-					if(selectFile.getName().replace(".xml", "").equals(ModelName))
+					if(selectFile.getName().replace("_TimeExtend.xml", "").equals(ModelName))
 						route = selectFile.getAbsolutePath();
 				}
-				
 				topLabel.removeAll();
 				topLabel.setText("正在读取生成的markov链信息........");
-				Thread.sleep(100);
+				Thread.sleep(200);
 				
    				ReadMarkov2 rm = new ReadMarkov2();
 				markov = rm.readMarkov(route);
@@ -243,6 +246,7 @@ public class TimeSeqOperation extends JPanel{
 
 				do {
 					int numberOfTestCases = gc.generate(markov, root);
+					
 					// System.out.println(numberOfTestCases);
 					if (flag) {
 						sufficiency = isSufficient(markov);
@@ -250,11 +254,13 @@ public class TimeSeqOperation extends JPanel{
 					// 迁移或者状态覆盖百分百
 
 					if (!sufficiency) {
-						continue;
+						similarity = CalculateSimilarity.discriminant(markov, PI);
 					}
-
-					flag = false;
-					similarity = CalculateSimilarity.statistic(markov, PI);
+					else {
+						similarity = CalculateSimilarity.statistic(markov, PI);
+						flag = false;
+					}
+					
 					
 					topLabel.removeAll();
 					topLabel.setText("markov链的使用链和测试链的相似度:" + similarity);
@@ -306,14 +312,16 @@ public class TimeSeqOperation extends JPanel{
 						index = 500;
 					}
 					
+					
 					AbstractPagePanel abstractPagePanel = new AbstractPagePanel(gc.abstractTS, mainFrame);
+					abstractPagePanel.getAbstractPanel().add(new JPanel(), new GBC(0, index).setFill(GBC.BOTH).setWeight(1, 1));
 					mainFrame.getStepThreeTimeSeqTabbedPane().getAbstractSequence().removeAll();
 					mainFrame.getStepThreeTimeSeqTabbedPane().getAbstractSequence().add(abstractPagePanel);
 					mainFrame.getStepThreeTimeSeqTabbedPane().getAbstractSequence().repaint();
+					
 					mainFrame.renewPanel();
 					for(int j = 0; j < index;j++)
 					{
-						
 						StepThreeTabelPanel testTabelPanel = new StepThreeTabelPanel(gc.abstractTS.get(j), 1,mainFrame);
 //						mainFrame.getStepThreeTimeSeqTabbedPane().getAbstractSequence().add(testTabelPanel, new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
 						abstractPagePanel.getAbstractPanel().add(testTabelPanel, new GBC(0, j).setFill(GBC.BOTH).setWeight(1, 0));
@@ -321,32 +329,31 @@ public class TimeSeqOperation extends JPanel{
 						mainFrame.getStepThreeTimeSeqTabbedPane().getAbstractSequence().repaint();
 						
 						
-						gc.testCasesExtend.get(j);
 						//输出激励序列
-						String stimulateSequence = "";
-						if (j != gc.testCasesExtend.size() - 1) {
-							stimulateSequence = stimulateSequence
-									+ gc.testCasesExtend.get(j).toString() + "-->>";
-							// System.out.print(oneCaseExtend.get(i).toString() + "-->>");
-						} else {
-							stimulateSequence = stimulateSequence
-									+ gc.testCasesExtend.get(j).toString();
-							// System.out.println(oneCaseExtend.get(i).toString());
-						}
-						mainFrame.getOutputinformation().geTextArea().append("激励序列 " + stimulateSequence + "\n");
-						int length = mainFrame.getOutputinformation().geTextArea().getText().length(); 
-		                mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
-						
-						//输出测试路径
-						String  testPath = "";
-						if (j != gc.testPaths.size() - 1) {
-							testPath = gc.testPaths.get(j) + "-->>";
-						} else {
-							testPath = gc.testPaths.get(j) + ""; 
-						}
-						mainFrame.getOutputinformation().geTextArea().append("测试路径: " + testPath + "\n\n");
-		                int length2 = mainFrame.getOutputinformation().geTextArea().getText().length(); 
-		                mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
+//						String stimulateSequence = "";
+//						if (j != gc.testCasesExtend.size() - 1) {
+//							stimulateSequence = stimulateSequence
+//									+ gc.testCasesExtend.get(j).toString() + "-->>";
+//							// System.out.print(oneCaseExtend.get(i).toString() + "-->>");
+//						} else {
+//							stimulateSequence = stimulateSequence
+//									+ gc.testCasesExtend.get(j).toString();
+//							// System.out.println(oneCaseExtend.get(i).toString());
+//						}
+//						mainFrame.getOutputinformation().geTextArea().append("激励序列 " + stimulateSequence + "\n");
+//						int length = mainFrame.getOutputinformation().geTextArea().getText().length(); 
+//		                mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
+//						
+//						//输出测试路径
+//						String  testPath = "";
+//						if (j != gc.testPaths.size() - 1) {
+//							testPath = gc.testPaths.get(j) + "-->>";
+//						} else {
+//							testPath = gc.testPaths.get(j) + ""; 
+//						}
+//						mainFrame.getOutputinformation().geTextArea().append("测试路径: " + testPath + "\n\n");
+//		                int length2 = mainFrame.getOutputinformation().geTextArea().getText().length(); 
+//		                mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
 		                
 
 						progressBar.setValue(40 + (int)(((double)(j+1)/index)*60));
@@ -370,6 +377,7 @@ public class TimeSeqOperation extends JPanel{
 					
 					TimeSeqNode timeSeqNode = new TimeSeqNode(ModelName+"_相似度", mainFrame);
 					timeSeqNode.setAbstractPagePanel(abstractPagePanel);
+					timeSeqNode.setQuota("抽象测试序列生成完成，共生成" + gc.abstractTS.size()+"条抽象测试序列");
 					
 					mainFrame.getStepThreeLeftButton().getTimeSeqNodePanel().insertNodeLabel(timeSeqNode, abstractPagePanel);
 					mainFrame.getStepThreeLeftButton().getTimeSeqNode().repaint();

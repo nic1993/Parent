@@ -211,7 +211,7 @@ public class TimeExpandOperation extends JPanel {
 					} else {
 						progressBarIndex++;
 						ExpandProgressBar.setValue(progressBarIndex);
-						Thread.sleep(100);
+						Thread.sleep(10);
 					}
 				}
 				return 1;
@@ -241,7 +241,7 @@ public class TimeExpandOperation extends JPanel {
 					progressBarIndex = 0;
 					expandlabel.removeAll();
 					expandlabel.setText("正在初始化" + modelName + "模型.....");
-					Thread.sleep(500);
+					Thread.sleep(200);
 					File RootFile = new File(TimeMarkovRoute);
 					File files[] = RootFile.listFiles();
 					for (File file : files) {
@@ -335,7 +335,7 @@ public class TimeExpandOperation extends JPanel {
 				try {
 					expandlabel.removeAll();
 					expandlabel.setText("正在获取扩展的" + modelName + "模型信息.....");
-					Thread.sleep(500);
+					Thread.sleep(200);
 					IWorkspace workspace = new Workspace(graphFile);
 
 					Collection<IEdge> edges = workspace.getGraphFile().getGraph().getAllEdges();
@@ -456,7 +456,7 @@ public class TimeExpandOperation extends JPanel {
 
 					expandlabel.removeAll();
 					expandlabel.setText("正在生成转换XML信息.....");
-					Thread.sleep(500);
+					Thread.sleep(200);
 					XMLPanel = XMLToTree.getTree(ExtendRoute + modelName + "_TimeExtendLayout.markov.violet.xml");
 					expandNode.setXMLPanel(XMLPanel);
 					mainFrame.getTimeExpandTabbedPane().getExpandResport().add(XMLPanel);

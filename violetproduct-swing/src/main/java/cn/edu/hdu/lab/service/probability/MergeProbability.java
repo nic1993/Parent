@@ -3,6 +3,8 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.horstmann.violet.application.gui.DisplayForm;
+
 import Jama.Matrix;
 public class MergeProbability {
 
@@ -37,6 +39,10 @@ public class MergeProbability {
 		if(M.getCR()>0.1)//CR不达标则添加CR提示和概率为0的
 		{
 			resultList.add("判断矩阵一致性指标CR="+f.format(M.getCR())+">0.1,超标！");
+			
+			DisplayForm.mainFrame.getOutputinformation().geTextArea().append("判断矩阵一致性指标CR="+f.format(M.getCR())+">0.1,超标！" + "\n");
+			int length = DisplayForm.mainFrame.getOutputinformation().geTextArea().getText().length(); 
+			DisplayForm.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
 			for(int i=0;i<proArray.length;i++)
 			{
 				proArray[i]=0;
@@ -47,6 +53,9 @@ public class MergeProbability {
 		{
 			proArray=M.getProList();
 			resultList.add("计算结果正常,CR="+M.getCR()+",概率值为一维数组结果：");
+			DisplayForm.mainFrame.getOutputinformation().geTextArea().append("计算结果正常,CR="+M.getCR()+  "\n");
+			int length = DisplayForm.mainFrame.getOutputinformation().geTextArea().getText().length(); 
+			DisplayForm.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
 			resultList.add(proArray);
 		}
 		return resultList;//计算结果提示+结算概率

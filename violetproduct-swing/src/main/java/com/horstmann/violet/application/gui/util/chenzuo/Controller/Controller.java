@@ -19,6 +19,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 
+import com.horstmann.violet.application.gui.MainFrame;
 import com.horstmann.violet.application.gui.util.chenzuo.Bean.Constants;
 import com.horstmann.violet.application.gui.util.chenzuo.Bean.IPDeploy;
 import com.horstmann.violet.application.gui.util.chenzuo.Bean.IPNode;
@@ -35,6 +36,8 @@ import com.horstmann.violet.application.gui.util.chenzuo.Service.ResultService;
  */
 public class Controller {
 
+	public static MainFrame mainFrame; 
+	
     private static Logger logger = Logger.getLogger(Controller.class);
 
     private static long MAX_FILE_SIZE = 5 * 1024 * 1024;
@@ -51,7 +54,10 @@ public class Controller {
     
     private static ResultService resultService;
     
-//	private static ThreadPoolExecutor executorService ;
+    public static boolean isNeedSplit;
+    public static int SplitNum;
+    
+//	private static ThreadPoolExecutor executorService;
 
 //    private static void printException(Runnable r, Throwable t){
 //		if (t == null && r instanceof Future<?>) {
@@ -87,13 +93,18 @@ public class Controller {
         String type = data.getFirst();
         File[] files = {data.getSecond()};
         //big testcase deply to 2 servers
-        System.out.println("files[0].length() > MAX_FILE_SIZE  "+(files[0].length() > MAX_FILE_SIZE));
+        System.out.println(files[0].length() > MAX_FILE_SIZE);
         if (files[0].length() > MAX_FILE_SIZE) {
+        	Controller.isNeedSplit = true;
+        	Controller.SplitNum = 2;
+        	
             //1.spilt file
             files = fileSpilt(data);
             //2.choose server
             execute(type, 2, files);
         } else {
+        	Controller.isNeedSplit = false;
+        	Controller.SplitNum = 1;
             execute(type, 1, files);
         }
     }
@@ -118,7 +129,6 @@ public class Controller {
         
         if ((nodes = IP_TYPE_DEPLOY.findNodeFree(num)) != null) {
         	
-        	System.out.println("nodes length: " + nodes.size());
             for (IPNode node : nodes) {
                 node.setType(type);
                 
@@ -146,7 +156,12 @@ public class Controller {
                 executorService.submit(handFuture);
                 
 //              handfuture.get();
-                
+                try {
+					Thread.sleep(10000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
                 i++;
                 if(i==1){
                 	resultService = new ResultService(node.getType());
@@ -157,6 +172,8 @@ public class Controller {
             }
         }
     }
+
+   
 
 
     public static void Close() {
@@ -170,7 +187,8 @@ public class Controller {
 //        Run(data);
 //    }
 
-    public static void Run(Pair<String, File> data){
+    public static void Run(Pair<String, File> data,MainFrame mainFrame){
+        Controller.mainFrame = mainFrame;
     	ResultService.list.removeAll(ResultService.list);
     	Constants.ISFINISH.set(false);
     	
@@ -187,6 +205,7 @@ public class Controller {
     	
         try {
             // deploy, distribute and accept
+        	System.out.println("*************");
             handleMapping(data);
         } catch (Exception e) {
             logger.error(e.getMessage());

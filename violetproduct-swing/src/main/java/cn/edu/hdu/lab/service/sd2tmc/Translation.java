@@ -160,6 +160,10 @@ public class Translation {
 					}
 					
 					System.out.println("\n~~~~~~~~~MC~~~~~~~~~~~~~~");
+					
+					DisplayForm.mainFrame.getOutputinformation().geTextArea().append("\n~~~~~~~~~MC~~~~~~~~~~~~~~"+  "\n");
+					int length = DisplayForm.mainFrame.getOutputinformation().geTextArea().getText().length(); 
+					DisplayForm.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
 					Tmc seqTmc=new Tmc();
 					this.assignmentTmc(seqTmc, tmc);
 					
@@ -2114,6 +2118,7 @@ public class Translation {
 //		String fileName="UC_MarkovChainModel"+tmc.getNames()+ucCount+".xml";
 		
 		String fileName=tmc.getNames()+".xml";
+		ucNames.add(fileName);
 		Write.writeMarkov2XML(tmc, fileName,DisplayForm.mainFrame);
 		ucCount++;
 	}

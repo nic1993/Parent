@@ -45,6 +45,33 @@ public class ApplicationStopper
         		}
         	}
         	
+        	File[] files1 = new File(System.getProperty("user.dir")
+					+ "\\src\\main\\java\\com\\horstmann\\violet\\application\\gui\\util\\chenzuo\\File")
+							.listFiles();
+			if (files1.length != 0) {
+				for (File file : files1) {
+					file.delete();
+				}
+			}
+        	
+			// Çå³ý·Ö¸îµÄxml
+			if(mainFrame.getStepFourOperation().getModelName() != null)
+			{
+				String name = mainFrame.getStepFourOperation().getModelName().split("#")[0];
+				String type = mainFrame.getStepFourOperation().getModelName().split("#")[1];
+
+				String filename1 = name + "_1#" + type + ".xml";
+				String filename2 = name + "_2#" + type + ".xml";
+
+				File file1 = new File(mainFrame.getBathRoute() + "/TestCase/" + filename1);
+				File file2 = new File(mainFrame.getBathRoute() + "/TestCase/" + filename2);
+				if (file1.exists()) {
+					file1.delete();
+					file2.delete();
+				}
+			}
+			
+			
         	
 //        	File ucaseEAFile = new File(mainFrame.getBathRoute() + "/UseCaseDiagram"); 
 //        	if(ucaseEAFile.listFiles() != null){

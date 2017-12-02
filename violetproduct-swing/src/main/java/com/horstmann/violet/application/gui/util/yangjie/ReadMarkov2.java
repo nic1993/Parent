@@ -65,6 +65,9 @@ public class ReadMarkov2 {
 			State headState = new State(); // 每遍历到一个状态就将其封装成一个表头节点
 			// 给表头结点相应属性赋值
 			headState.setStateName(name.getText());
+			if (name.getText().contains("extend")) {
+				headState.setTime(true);
+			}
 			headState.setStateNum(i);
 			headState.setStateAccessTimes(0);
 
@@ -88,11 +91,16 @@ public class ReadMarkov2 {
 				Element arcName = arc.element("owned");// 激励名称节点
 				Element nextState = arc.element("to");
 				Element probability = arc.element("prob");
+
+				if (probability.getText().trim().equals("0.0")) {
+					continue;
+				}
 				Element assignValue = arc.element("assignValue");
 				Element assignType = arc.element("assignType");
 				Element conditions = arc.element("conditions");
 				// 每遍历到一个出迁移，就创建一个迁移对象，并将从xml中读到的值赋值给其相应变量
 				Transition t = new Transition();
+				t.setTime(headState.isTime());
 				t.setName(arcName.getText().trim());
 				if (t.getName().equals("")) {
 					throw new RuntimeException("状态" + headState.getStateName()
@@ -109,6 +117,9 @@ public class ReadMarkov2 {
 				
 				System.out.println("状态" + headState.getStateName() + "的迁移"
 						+ t.getName() + "的概率为：" + t.getProbability());
+				
+				
+				
 				outTransProb += t.getProbability();// 出迁移总概率
 
 				t.setAccessTimes(0);
@@ -128,6 +139,7 @@ public class ReadMarkov2 {
 
 				// 封装transition上的激励stimulate，并赋值给transition上面的stimulate属性
 				Stimulate stimulate = new Stimulate();
+				stimulate.setTime(headState.isTime());
 				stimulate.setName(arcName.getText().trim());
 				if (assignValue != null) {
 					stimulate.setAssignValue(assignValue.getText());
@@ -156,7 +168,7 @@ public class ReadMarkov2 {
 								+ parameterElement.element("paramName")
 										.getText()+"\n");
 						int length2 = DisplayForm.mainFrame.getOutputinformation().geTextArea().getText().length(); 
-						DisplayForm.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
+						DisplayForm.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length2);
 						
 						System.out.println("当前读到的状态名："
 								+ headState.getStateName()

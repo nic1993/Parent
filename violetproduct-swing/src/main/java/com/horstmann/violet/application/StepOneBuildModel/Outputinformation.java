@@ -140,7 +140,7 @@ public class Outputinformation extends JPanel{
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-				mainFrame.getbotoomJSplitPane().setDividerLocation(0);
+				mainFrame.getbotoomJSplitPane().setDividerLocation(0.15);
 				mainFrame.renewPanel();
 			}
 			

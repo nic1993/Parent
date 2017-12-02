@@ -65,7 +65,7 @@ public class TimeCaseOperation1 extends JPanel {
 
 	private String testSequence;// 测试序列
 	private String excitation; // 激励序列
-	private String testCase; // 测试用例
+	private String testCase; // 可靠性测试数据
 
 	private List<String> paramterNameList;
 	private List<String> paramterValueList;
@@ -123,8 +123,8 @@ public class TimeCaseOperation1 extends JPanel {
 	}
 
 	private void init() {
-		topLabel = new JLabel("测试用例生成完成");
-		label1 = new JLabel("测试用例条数:");
+		topLabel = new JLabel("可靠性测试数据生成完成");
+		label1 = new JLabel("可靠性测试数据条数:");
 //		label2 = new JLabel("(不少于185条)");
 
 		progressBar = new JProgressBar();
@@ -142,6 +142,8 @@ public class TimeCaseOperation1 extends JPanel {
 		numbers = new ArrayList<Integer>();
 
 		textField.setPreferredSize(new Dimension(30, 30));
+		textField.setMinimumSize(new Dimension(40, 30));
+		textField.setMaximumSize(new Dimension(40, 30));
 		textField.setText("230");
 		topLabel.setFont(new Font("宋体", Font.PLAIN, 16));
 		label1.setFont(new Font("宋体", Font.PLAIN, 16));
@@ -149,7 +151,9 @@ public class TimeCaseOperation1 extends JPanel {
 
 		progressBar.setUI(new ProgressUI(progressBar, Color.green));
 		progressBar.setUI(new GradientProgressBarUI());
-		progressBar.setPreferredSize(new Dimension(830, 30));
+		progressBar.setPreferredSize(new Dimension(800, 30));
+		progressBar.setMinimumSize(new Dimension(800, 30));
+		progressBar.setMaximumSize(new Dimension(800, 30));
 
 		TimeMarkovRoute = mainFrame.getBathRoute() + "/ExtendMarkov/";
 
@@ -179,7 +183,7 @@ public class TimeCaseOperation1 extends JPanel {
 					progressBarIndex = 0;
 					progressBar.setValue(0);
 					progressBar.setValue(progressBarIndex);
-					while (progressBarIndex < 40) {
+					while (progressBarIndex < 60) {
 						if (task1.isDone()) {
 							progressBarIndex++;
 							progressBar.setValue(progressBarIndex);
@@ -187,7 +191,7 @@ public class TimeCaseOperation1 extends JPanel {
 						} else {
 							progressBarIndex++;
 							progressBar.setValue(progressBarIndex);
-							Thread.sleep(5000);
+							Thread.sleep(10000);
 						}
 					}
 
@@ -209,7 +213,7 @@ public class TimeCaseOperation1 extends JPanel {
 					mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
 
 					topLabel.removeAll();
-					topLabel.setText("生成测试用例出错!");
+					topLabel.setText("生成可靠性测试数据出错!");
 					mainFrame.renewPanel();
 				}
 				return 1;
@@ -240,26 +244,22 @@ public class TimeCaseOperation1 extends JPanel {
 					dom = mainFrame.getTimeSeqOperation1().getDom();
 					root = mainFrame.getTimeSeqOperation1().getRoot();
 					PI = mainFrame.getTimeSeqOperation1().getPI();
-					min = mainFrame.getStepThreeLeftButton().getMin();
 					minSeq = mainFrame.getTimeSeqOperation1().getMinSeq();
 
-					min = mainFrame.getStepThreeLeftButton().getMin();
-					markov.setTcNumber(Integer.valueOf(minSeq));
-
 					topLabel.removeAll();
-					topLabel.setText("正在获取生成的抽象测试用例.....");
-					Thread.sleep(100);
-					
-					
-					Calculate.getAllTransValues(markov);
+					topLabel.setText("正在生成可靠性测试数据(该过程需要较久时间,请耐心等待)....");
+					Thread.sleep(150);
 
-					new CollectRoute().collect(markov);
+					Calculate.getAllTransValues(markov);
+					
 					new BestAssign().assign(markov, root);
 
+					markov.setDeviation(CalculateSimilarity.statistic(markov, PI));
+					
 					OutputFormat format = OutputFormat.createPrettyPrint();
 					
 					writer = new XMLWriter(
-							new FileOutputStream(mainFrame.getBathRoute() + "/TestCase/" + ModelName + "__Custom#3.xml"),
+							new FileOutputStream(mainFrame.getBathRoute() + "/TestCase/" + ModelName + "_Custom#3.xml"),
 							format);
 					writer.write(dom);
 					writer.close();
@@ -275,7 +275,7 @@ public class TimeCaseOperation1 extends JPanel {
 					mainFrame.getStepThreeLeftButton().getTimeSeq().setEnabled(true);
 
 					topLabel.removeAll();
-					topLabel.setText("生成测试用例出错!");
+					topLabel.setText("生成可靠性测试数据出错!");
 
 					mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
 					
@@ -308,9 +308,6 @@ public class TimeCaseOperation1 extends JPanel {
 
 					StepThreeTabelPanel stepThreeTabelPanel = new StepThreeTabelPanel(constraintNameString,
 							actualPercentsDoubles, pros, numbers);
-					
-					
-					
 					StepThreeTabelPanel testRoute = new StepThreeTabelPanel(constraintNameString, actualPercentsDoubles,
 							pros, numbers);
 
@@ -320,9 +317,9 @@ public class TimeCaseOperation1 extends JPanel {
 					mainFrame.getStepThreeTimeTabbedPane().getTestData().removeAll();
 					CasePagePanel casePagePanel = new CasePagePanel(lists, mainFrame);
 					mainFrame.getStepThreeTimeTabbedPane().getTestData().add(casePagePanel);
+					
 
-					topLabel.removeAll();
-					topLabel.setText("正在生成测试数据信息........");
+					
 
 					JPanel TestDataPanel = new JPanel();
 					TestDataPanel.setLayout(new GridBagLayout());
@@ -343,8 +340,9 @@ public class TimeCaseOperation1 extends JPanel {
 								new GBC(0, k).setFill(GBC.BOTH).setWeight(1, 0));
 						casePagePanel.getCasePanel().repaint();
 						mainFrame.getStepThreeTimeTabbedPane().getTestData().updateUI();
-						progressBar.setValue(60 + (int) (((double)(k+1) / index) * 40));
-
+						progressBar.setValue(40 + (int) (((double)(k+1) / index) * 60));
+						topLabel.removeAll();
+						topLabel.setText("正在生成第" + (k + 1) + "个可靠性测试数据....");
 						Thread.sleep(10);
 						mainFrame.renewPanel();
 					}
@@ -355,28 +353,28 @@ public class TimeCaseOperation1 extends JPanel {
 					mainFrame.getStepThreeTimeTabbedPane().getTestData().repaint();
 					mainFrame.renewPanel();
 					
-					for (Route route : routeList) {
-						mainFrame.getOutputinformation().geTextArea()
-								.append("			测试序列：" + testSequence + "	 路径概率(指标-可靠性测试用例生成比率"
-										+ route.getActualPercent() + "):   " + route.getRouteProbability() + "	此类用例包含"
-										+ route.getNumber() + "个" + "\n");
-
-						int length = DisplayForm.mainFrame.getOutputinformation().geTextArea().getText().length();
-						DisplayForm.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
-						Thread.sleep(10);
-					}
-					mainFrame.renewPanel();
+//					for (Route route : routeList) {
+//						mainFrame.getOutputinformation().geTextArea()
+//								.append("			测试序列：" + testSequence + "	 路径概率(指标-可靠性可靠性测试数据生成比率"
+//										+ route.getActualPercent() + "):   " + route.getRouteProbability() + "	此类用例包含"
+//										+ route.getNumber() + "个" + "\n");
+//
+//						int length = DisplayForm.mainFrame.getOutputinformation().geTextArea().getText().length();
+//						DisplayForm.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
+//						Thread.sleep(10);
+//					}
+					
 					
 					bigDecimal = new BigDecimal(markov.getDeviation());
 					String ii = bigDecimal.toPlainString();
 					double d = Double.valueOf(ii);					
 					
 					topLabel.removeAll();
-					topLabel.setText("测试用例生成完成, 实际共生成" + lists.size() + "条!" + "可靠性测试用例数据库覆盖率:"
+					topLabel.setText("可靠性测试数据生成完成, 实际共生成" + lists.size() + "条!" + "可靠性测试用例数据库覆盖率:"
 							+ df.format(markov.getDbCoverage()) + "  可靠性测试用例生成比率与使用模型实际使用概率平均偏差:" + df.format(d));
 
 					TimeTestCaseNode timeTestCaseLabel = new TimeTestCaseNode(ModelName + "_自定义", mainFrame);
-					quota = "测试用例生成完成, 实际共生成" + lists.size() + "条!" + "可靠性测试用例数据库覆盖率:"
+					quota = "可靠性测试数据生成完成, 实际共生成" + lists.size() + "条!" + "可靠性测试用例数据库覆盖率:"
 							+ df.format(markov.getDbCoverage()) + "  可靠性测试用例生成比率与使用模型实际使用概率平均偏差:" + df.format(d);
 					timeTestCaseLabel.setQuota(quota);
 					timeTestCaseLabel.setTestRoute(testRoute);
@@ -394,6 +392,7 @@ public class TimeCaseOperation1 extends JPanel {
 
 				} catch (Exception e2) {
 					// TODO Auto-generated catch block
+					e2.printStackTrace();
 					button.setEnabled(true);
 					mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
 					mainFrame.getStepThreeLeftButton().getModelExpand().setEnabled(true);
@@ -402,7 +401,7 @@ public class TimeCaseOperation1 extends JPanel {
 					mainFrame.getStepThreeLeftButton().getTimeSeq().setEnabled(true);
 
 					topLabel.removeAll();
-					topLabel.setText("生成测试用例出错!");
+					topLabel.setText("生成可靠性测试数据出错!");
 
 					mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
 					

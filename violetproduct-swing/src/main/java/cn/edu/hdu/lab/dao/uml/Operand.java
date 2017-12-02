@@ -3,6 +3,8 @@ package cn.edu.hdu.lab.dao.uml;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import com.horstmann.violet.application.gui.DisplayForm;
+
 /*
  * 操作域
  * 每个组合片段下面有多条执行路径
@@ -77,6 +79,12 @@ public class Operand implements Cloneable{
 		}
 		System.out.println("Operand: id="+id+",执行条件="+condition+",\tIsHasFragment="+isHasFragment
 				+"\n坐标："+this.rectangle.toString());
+		
+		DisplayForm.mainFrame.getOutputinformation().geTextArea().append("Operand: id="+id+",执行条件="+condition+",\tIsHasFragment="+isHasFragment
+				+"\n坐标："+this.rectangle.toString() + "\n");
+		int length11 = DisplayForm.mainFrame.getOutputinformation().geTextArea().getText().length(); 
+		DisplayForm.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length11);
+		
 		for(Node node:nodes)
 		{
 			node.print_node();
@@ -102,6 +110,10 @@ public class Operand implements Cloneable{
 			if(ref!=null)
 			{
 				System.out.println("---------操作内引用片段："+ref.toString());
+				
+				DisplayForm.mainFrame.getOutputinformation().geTextArea().append("---------操作内引用片段："+ref.toString() + "\n");
+				int length111 = DisplayForm.mainFrame.getOutputinformation().geTextArea().getText().length(); 
+				DisplayForm.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length111);
 			}
 	}
 	

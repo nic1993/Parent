@@ -30,8 +30,6 @@ import org.dom4j.Element;
 import org.dom4j.io.OutputFormat;
 import org.dom4j.io.XMLWriter;
 
-
-
 import com.horstmann.violet.application.StepTwoModelExpand.GradientProgressBarUI;
 import com.horstmann.violet.application.StepTwoModelExpand.ProgressUI;
 import com.horstmann.violet.application.StepTwoModelExpand.StepTwoMatrixPanel;
@@ -53,439 +51,456 @@ import com.horstmann.violet.application.gui.util.yangjie.TCDetail;
 import com.horstmann.violet.application.gui.util.yangjie.Transition;
 import com.horstmann.violet.application.menu.util.zhangjian.Database.DataBaseUtil;
 
-public class TimeSeqOperation1 extends JPanel{
-       private JLabel topLabel;
-       private JLabel label1;
-       private JLabel label2;
+public class TimeSeqOperation1 extends JPanel {
+	private JLabel topLabel;
+	private JLabel label1;
+	private JLabel label2;
 
-       private JProgressBar progressBar;
-       private JTextField textField;
-       private JButton button;
-       
-       private JPanel gapPanel;
-       private MainFrame mainFrame;
-       
-       private String excitation;  //激励序列
-       
-       private List<String> paramterNameList;
-       private List<String> paramterValueList;
-       
-       private int min;
-       private int N;
-       private double p;
-   	   private double c;
-   	   private int i;
-   	   
-   	   private List<String> constraintNameString;
-       private List<Double> pros;
-       private List<Integer> numbers;
-       private List<Double> actualPercentsDoubles;
-       
-       private ReadMarkov2 rm;
-       private Document dom;
-       private Markov markov;
-       private Element root;
-       private double[] PI;
-       private int minSeq;
-       private XMLWriter writer;
-       
-       private int progressBarIndex = 0;
-       private Callable<Integer> maincallable;
-       private FutureTask<Integer> maintask;
-   	   private Thread mainthread; 
-       private Callable<Integer> callable1;
-	   private FutureTask<Integer> task1;
-	   private Thread thread1;
-	   private Callable<Integer> callable2;
-	   private FutureTask<Integer> task2;
-	   private Thread thread2;
+	private JProgressBar progressBar;
+	private JTextField textField;
+	private JButton button;
 
-	   
-	   private List<FutureTask<Integer>> futuretasklist;
-	   private List<Thread> threadlist;
-	   
-	   private String ModelName;
-	   private String TimeMarkovRoute;
-	   private String route;
-	   
-	   private String quota;
-       public TimeSeqOperation1(MainFrame mainFrame)
-       {
-    	   this.mainFrame = mainFrame;
-    	   init();
-    	   this.setBackground(new Color(233,233,233));
-    	   this.setLayout(new GridBagLayout());
-    	   this.add(topLabel,new GBC(0, 0, 5, 1).setFill(GBC.BOTH).setWeight(1, 0).setInsets(10, 15, 10, 0));
-    	   this.add(progressBar,new GBC(0, 1, 5, 1).setFill(GBC.BOTH).setWeight(1, 0).setInsets(0, 15, 10, 15));
-    	   this.add(label1,new GBC(0, 2, 1, 1).setFill(GBC.BOTH).setWeight(0, 0).setInsets(0, 15, 10, 5));
-    	   this.add(textField,new GBC(1, 2, 1, 1).setFill(GBC.BOTH).setWeight(0, 0).setInsets(0, 0, 10, 5));
-    	   this.add(label2,new GBC(2, 2, 1, 1).setFill(GBC.BOTH).setWeight(0, 0).setInsets(0, 0, 10, 5));
-    	   this.add(gapPanel,new GBC(3, 2, 1, 1).setFill(GBC.BOTH).setWeight(1, 0).setInsets(0, 0, 10, 5));
-    	   this.add(button,new GBC(4, 2, 1, 1).setFill(GBC.BOTH).setWeight(0, 1).setInsets(0, 0, 10, 15));
-       }
-       private void init()
-       {
-    	   topLabel = new JLabel("");
-    	   label1 = new JLabel("生成测试用例条数:");
-    	   label2= new JLabel("");
-    	   
-    	   progressBar = new JProgressBar();
-    	   textField = new JTextField();
-    	   button = new JButton("开始生成");
-    	   gapPanel = new JPanel();
+	private JPanel gapPanel;
+	private MainFrame mainFrame;
 
-    	   paramterNameList = new ArrayList<String>();
-    	   paramterValueList = new ArrayList<String>();
-           constraintNameString = new ArrayList<String>();
-           actualPercentsDoubles = new ArrayList<Double>();
-           pros = new ArrayList<Double>();
-           numbers = new ArrayList<Integer>();
-    	   
-    	   textField.setPreferredSize(new Dimension(40,30));
-    	   topLabel.setFont(new Font("宋体", Font.PLAIN, 16));
-    	   label1.setFont(new Font("宋体", Font.PLAIN, 16));
-    	   label2.setFont(new Font("宋体", Font.PLAIN, 16));
-    	   
-    	   progressBar.setUI(new ProgressUI(progressBar, Color.green));
-    	   progressBar.setPreferredSize(new Dimension(800, 30));
-    	   progressBar.setUI(new GradientProgressBarUI());
-    	   progressBar.setValue(0);
-    	  	   
-    	   TimeMarkovRoute = mainFrame.getBathRoute()+"/TimeMarkov/";
-    	   initThread();
-    	   listen();
-       }
-       private void listen()
-       {
-    	   button.addActionListener(new ActionListener() {
+	private String excitation; // 激励序列
+
+	private List<String> paramterNameList;
+	private List<String> paramterValueList;
+
+	private int min;
+	private int N;
+	private double p;
+	private double c;
+	private int i;
+
+	private List<String> constraintNameString;
+	private List<Double> pros;
+	private List<Integer> numbers;
+	private List<Double> actualPercentsDoubles;
+
+	private ReadMarkov2 rm;
+	private Document dom;
+	private Markov markov;
+	private Element root;
+	private double[] PI;
+	private int minSeq;
+	private XMLWriter writer;
+
+	private int progressBarIndex = 0;
+	private Callable<Integer> maincallable;
+	private FutureTask<Integer> maintask;
+	private Thread mainthread;
+	private Callable<Integer> callable1;
+	private FutureTask<Integer> task1;
+	private Thread thread1;
+	private Callable<Integer> callable2;
+	private FutureTask<Integer> task2;
+	private Thread thread2;
+
+	private List<FutureTask<Integer>> futuretasklist;
+	private List<Thread> threadlist;
+
+	private String ModelName;
+	private String TimeMarkovRoute;
+	private String route;
+
+	private String quota;
+
+	public TimeSeqOperation1(MainFrame mainFrame) {
+		this.mainFrame = mainFrame;
+		init();
+		this.setBackground(new Color(233, 233, 233));
+		this.setLayout(new GridBagLayout());
+		this.add(topLabel, new GBC(0, 0, 5, 1).setFill(GBC.BOTH).setWeight(1, 0).setInsets(10, 15, 10, 0));
+		this.add(progressBar, new GBC(0, 1, 5, 1).setFill(GBC.BOTH).setWeight(1, 0).setInsets(0, 15, 10, 15));
+		this.add(label1, new GBC(0, 2, 1, 1).setFill(GBC.BOTH).setWeight(0, 0).setInsets(0, 15, 10, 5));
+		this.add(textField, new GBC(1, 2, 1, 1).setFill(GBC.BOTH).setWeight(0, 0).setInsets(0, 0, 10, 5));
+		this.add(label2, new GBC(2, 2, 1, 1).setFill(GBC.BOTH).setWeight(0, 0).setInsets(0, 0, 10, 5));
+		this.add(gapPanel, new GBC(3, 2, 1, 1).setFill(GBC.BOTH).setWeight(1, 0).setInsets(0, 0, 10, 5));
+		this.add(button, new GBC(4, 2, 1, 1).setFill(GBC.BOTH).setWeight(0, 1).setInsets(0, 0, 10, 15));
+	}
+
+	private void init() {
+		topLabel = new JLabel("");
+		label1 = new JLabel("生成可靠性测试数据条数:");
+		label2 = new JLabel("");
+
+		progressBar = new JProgressBar();
+		textField = new JTextField();
+		button = new JButton("开始生成");
+		gapPanel = new JPanel();
+
+		paramterNameList = new ArrayList<String>();
+		paramterValueList = new ArrayList<String>();
+		constraintNameString = new ArrayList<String>();
+		actualPercentsDoubles = new ArrayList<Double>();
+		pros = new ArrayList<Double>();
+		numbers = new ArrayList<Integer>();
+
+		textField.setPreferredSize(new Dimension(40, 30));
+		textField.setMinimumSize(new Dimension(40, 30));
+		textField.setMaximumSize(new Dimension(40, 30));
+		topLabel.setFont(new Font("宋体", Font.PLAIN, 16));
+		label1.setFont(new Font("宋体", Font.PLAIN, 16));
+		label2.setFont(new Font("宋体", Font.PLAIN, 16));
+
+		progressBar.setUI(new ProgressUI(progressBar, Color.green));
+		progressBar.setPreferredSize(new Dimension(800, 30));
+		progressBar.setMinimumSize(new Dimension(800, 30));
+		progressBar.setMaximumSize(new Dimension(800, 30));
+		progressBar.setUI(new GradientProgressBarUI());
+		progressBar.setValue(0);
+
+		TimeMarkovRoute = mainFrame.getBathRoute() + "/extendMarkov/";
+		initThread();
+		listen();
+	}
+
+	private void listen() {
+		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				
+
 				File files = new File(TimeMarkovRoute);
-				for(File selectFile : files.listFiles())
-				{
-					if(selectFile.getName().replace(".xml", "").equals(ModelName))
+				for (File selectFile : files.listFiles()) {
+					if (selectFile.getName().replace(".xml", "").equals(ModelName))
 						route = selectFile.getAbsolutePath();
 				}
-				ReadMarkov2 rm = new ReadMarkov2();
 				try {
-				markov = rm.readMarkov(route);
-				min = mainFrame.getStepThreeLeftButton().getMin();
-				if(isInt(textField.getText().toString()))
-				{
-					minSeq = Integer.parseInt(textField.getText().toString());
-					if(minSeq < min)
-					{
+					markov = mainFrame.getStepThreeLeftButton().getMarkov();
+					min = mainFrame.getStepThreeLeftButton().getMin();
+					if (isInt(textField.getText().toString())) {
+						minSeq = Integer.parseInt(textField.getText().toString());
+						if (minSeq < min) {
+							topLabel.removeAll();
+							topLabel.setText("请输入正确的测试用例个数!");
+						} else {
+							
+							initThread();
+							mainthread.start();
+							thread1.start();
+						}
+					} else {
 						topLabel.removeAll();
 						topLabel.setText("请输入正确的测试用例个数!");
 					}
-					else {
-						initThread();
-						mainthread.start();
-						thread1.start();
-					}
-				}
-				else {
-					topLabel.removeAll();
-					topLabel.setText("请输入正确的测试用例个数!");
-				}
-				}catch (Exception e2) {
+				} catch (Exception e2) {
 					// TODO Auto-generated catch block
 					topLabel.removeAll();
 					topLabel.setText("生成抽象测试序列出错!");
-				}		
-				mainFrame.renewPanel();
 				}
+				mainFrame.renewPanel();
+			}
 		});
-       }
-       private void initThread()
-       {
-    	   maincallable = new Callable<Integer>() {
-      			@Override
-      			public Integer call() throws Exception {
-      				
-      				progressBarIndex = 0;
-       				progressBar.setValue(0);
-       				progressBar.setValue(progressBarIndex);
-       				while (progressBarIndex < 40) {
-       					if(task1.isDone())
-       					{
-       						progressBarIndex++;
-       						progressBar.setValue(progressBarIndex);
-       						Thread.sleep(100);
-       					}
-       					else{
-       						progressBarIndex++;
-       						progressBar.setValue(progressBarIndex);
-       						Thread.sleep(500);
-       					}
-       				}
-       				if(task1.isDone())
-       				{
-       					thread2.start();
-       				}
-    				return 1;
-      			}
-      		};
-      		maintask = new FutureTask<>(maincallable);
-      		mainthread = new Thread(maintask);
-      		
-      		callable1 = new Callable<Integer>() {
+	}
 
-				@Override
-				public Integer call() throws Exception {
-					// TODO Auto-generated method stub
-					try{
+	private void initThread() {
+		maincallable = new Callable<Integer>() {
+			@Override
+			public Integer call() throws Exception {
+
+				progressBarIndex = 0;
+				progressBar.setValue(0);
+				progressBar.setValue(progressBarIndex);
+				while (progressBarIndex < 40) {
+					if (task1.isDone()) {
+						progressBarIndex++;
+						progressBar.setValue(progressBarIndex);
+						Thread.sleep(100);
+					} else {
+						progressBarIndex++;
+						progressBar.setValue(progressBarIndex);
+						Thread.sleep(500);
+					}
+				}
+				if (task1.isDone()) {
+					thread2.start();
+				}
+				return 1;
+			}
+		};
+		maintask = new FutureTask<>(maincallable);
+		mainthread = new Thread(maintask);
+
+		callable1 = new Callable<Integer>() {
+
+			@Override
+			public Integer call() throws Exception {
+				// TODO Auto-generated method stub
+				try {
 					button.setEnabled(false);
-       				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(false);
-       				mainFrame.getStepThreeLeftButton().getTimeModelLabel().setEnabled(false);
-       				mainFrame.getStepThreeLeftButton().getModelExpand().setEnabled(false);
-       				mainFrame.getStepThreeLeftButton().getTimeCase().setEnabled(false);
-       				
-       				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(false);
-      				
-      				JPanel mainPanel = new JPanel();
-       				mainPanel.setLayout(new GridBagLayout());
-      				
-      				progressBarIndex = 0;
-      				progressBar.setValue(0);
-    				
-      				markov.setTcNumber(Integer.valueOf(textField.getText().toString()));
-      				
-      				topLabel.removeAll();
-    				topLabel.setText("正在读取生成的markov链信息........");
-    				Thread.sleep(100);
-      				
-					Calculate.getAllTransValues(markov);
-					   
-					dom = DocumentHelper.createDocument();
-					root = dom.addElement("TCS");
+					mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(false);
+					mainFrame.getStepThreeLeftButton().getTimeModelLabel().setEnabled(false);
+					mainFrame.getStepThreeLeftButton().getModelExpand().setEnabled(false);
+					mainFrame.getStepThreeLeftButton().getTimeCase().setEnabled(false);
+
+					mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(false);
+
+					JPanel mainPanel = new JPanel();
+					mainPanel.setLayout(new GridBagLayout());
+
+					progressBarIndex = 0;
+					progressBar.setValue(0);
+
+					markov.setTcNumber(minSeq);
+
 					// 计算markov链的平稳分布
 					PI = CalculateDistribution.stationaryDistribution(markov);
-					
-					for(int i = 0;i < PI.length;i++)
-					{
-						topLabel.removeAll();	
+
+					for (int i = 0; i < PI.length; i++) {
+						topLabel.removeAll();
 						topLabel.setText("markov链的平稳分布:" + PI[i]);
 						Thread.sleep(100);
 					}
 					
+					topLabel.removeAll();
+					topLabel.setText("正在读取生成的markov链信息........");
+					Thread.sleep(100);
 					new CollectRoute().collect(markov);
+
+					dom = DocumentHelper.createDocument();
+					root = dom.addElement("TCS");
 					mainFrame.renewPanel();
-				    } catch (RuntimeException e) {
-						// TODO: handle exception
-                  	topLabel.removeAll();
-                  	topLabel.setText("生成抽象测试序列出错!");
-     					
-     				button.setEnabled(true);
-         			mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
-         			mainFrame.getStepThreeLeftButton().getModelExpand().setEnabled(true);
-         			mainFrame.getStepThreeLeftButton().getTimeModelLabel().setEnabled(true);
-         			
-         			mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
-         			
-         			mainthread.suspend();
-         			thread1.suspend();
-         			thread2.suspend();
-         			mainFrame.renewPanel();
-					}
-					return 1;
+				} catch (RuntimeException e) {
+					// TODO: handle exception
+					topLabel.removeAll();
+					topLabel.setText("生成抽象测试序列出错!");
+
+					button.setEnabled(true);
+					mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
+					mainFrame.getStepThreeLeftButton().getModelExpand().setEnabled(true);
+					mainFrame.getStepThreeLeftButton().getTimeModelLabel().setEnabled(true);
+
+					mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
+
+					mainthread.suspend();
+					thread1.suspend();
+					thread2.suspend();
+					mainFrame.renewPanel();
 				}
-			};
-			task1 = new FutureTask<>(callable1);
-			thread1 = new Thread(task1);
-			
-			callable2 = new Callable<Integer>() {
+				return 1;
+			}
+		};
+		task1 = new FutureTask<>(callable1);
+		thread1 = new Thread(task1);
 
-				@Override
-				public Integer call() throws Exception {
-					// TODO Auto-generated method stub
-					try{
-						topLabel.removeAll();
-	    				topLabel.setText("正在生成第抽象测试序列(该过程需要较久时间,请耐心等待)........");
-						
-						// 获取抽象测试序列
-						// showTestSequence(markov);
-						for (Route r : markov.getRouteList()) {
-							String testSequence = "";
-							for (int i = 0; i < r.getTransitionList().size(); i++) {
-								if (i != r.getTransitionList().size() - 1) {
-									testSequence = testSequence
-											+ r.getTransitionList().get(i).getName() + "-->>";
-									// System.out.print(oneCaseExtend.get(i).toString() +
-									// "-->>");
-								} else {
-									testSequence = testSequence
-											+ r.getTransitionList().get(i).getName();
-									// System.out.println(oneCaseExtend.get(i).toString());
-								}
-							}
-							r.setTcSequence(testSequence);
-							for (int i = 0; i < r.getNumber(); i++) {
-								// 显示抽象测试序列testSequence至列表
-							}
-						}
-						
-						List<String> lists = new ArrayList<String>();
-						for(Route r : markov.getRouteList())
-						{
-							lists.add(r.getTcSequence());
-						}
-						
-						AbstractPagePanel abstractPagePanel = new AbstractPagePanel(lists, mainFrame);
-						
-						mainFrame.getStepThreeTimeSeqTabbedPane().getAbstractSequence().removeAll();
-						mainFrame.getStepThreeTimeSeqTabbedPane().getAbstractSequence().add(abstractPagePanel);
-						mainFrame.getStepThreeTimeSeqTabbedPane().getAbstractSequence().repaint();
-						mainFrame.renewPanel();
-						
-						int index = 500;
-						if(lists.size() < 500)
-						{
-							index =lists.size();
-						}
-						
-						abstractPagePanel.getAbstractPanel().add(new JPanel(), new GBC(0, index).setFill(GBC.BOTH).setWeight(1, 1));
-						
-						for(int k = 0;k < index;k++){
-							Route r = markov.getRouteList().get(k);
-							StepThreeTabelPanel testTabelPanel = new StepThreeTabelPanel(lists.get(k), 1,mainFrame);
-//							mainFrame.getStepThreeTimeSeqTabbedPane().getAbstractSequence().add(testTabelPanel, new GBC(0, k).setFill(GBC.BOTH).setWeight(1, 0));
-							abstractPagePanel.getAbstractPanel().add(testTabelPanel, new GBC(0, k).setFill(GBC.BOTH).setWeight(1, 0));
-							abstractPagePanel.getAbstractPanel().repaint();
-							mainFrame.getStepThreeTimeSeqTabbedPane().getAbstractSequence().repaint();
-							
-							for(int j = 0;j < r.getTransitionList().size();j++){
-								mainFrame.getOutputinformation().geTextArea().append("迁移序列 " + r.getTransitionList().get(j).toString() + "\n");
-								int length = mainFrame.getOutputinformation().geTextArea().getText().length(); 
-				                mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
-				                mainFrame.renewPanel();
-							}
-							
-							progressBar.setValue(40 + (int)(((double)(k+1)/index)*60));
-							
-							Thread.sleep(10);
-							mainFrame.renewPanel();
-						}
-						
-						abstractPagePanel.getPageTestField().setText("1");
-						mainFrame.getStepThreeTimeSeqTabbedPane().getAbstractSequence().removeAll();
-						mainFrame.getStepThreeTimeSeqTabbedPane().getAbstractSequence().add(abstractPagePanel);
-						mainFrame.getStepThreeTimeSeqTabbedPane().getAbstractSequence().repaint();
-						mainFrame.renewPanel();
-						
-						for(Route r : markov.getRouteList())
-						{
-							mainFrame.getOutputinformation().geTextArea().append("路径测试序列 " + r.getTcSequence() + " 路径概率: " + r.getRouteProbability() + " 固定测试用例个数时，此路径所占个数 " + r.getNumber()+ "\n");
-							int length = mainFrame.getOutputinformation().geTextArea().getText().length(); 
-			                mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
-			                Thread.sleep(10);
-			                
-			                mainFrame.renewPanel();
-						}
-						
-						button.setEnabled(true);
-	       				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
-	       				mainFrame.getStepThreeLeftButton().getTimeModelLabel().setEnabled(true);
-	       				mainFrame.getStepThreeLeftButton().getModelExpand().setEnabled(true);
-	       				mainFrame.getStepThreeLeftButton().getTimeCase().setEnabled(true);
-						mainFrame.getTimeCaseOperation1().setModelName(ModelName);
-						
-						TimeSeqNode timeSeqNode = new TimeSeqNode(ModelName+"_自定义", mainFrame);
-						timeSeqNode.setAbstractPagePanel(abstractPagePanel);
-						
-						mainFrame.getStepThreeLeftButton().getTimeSeqNodePanel().insertNodeLabel(timeSeqNode, abstractPagePanel);
-						mainFrame.getStepThreeLeftButton().getTimeSeqNode().repaint();
-						
-						topLabel.removeAll();
-						topLabel.setText("抽象测试序列生成完成，共生成" + lists.size()+"条抽象测试序列");
-						mainFrame.renewPanel();
-				    } catch (RuntimeException e) {
-						// TODO: handle exception
-                  	    topLabel.removeAll();
-     					topLabel.setText("生成抽象测试序列出错!");
-     					
-     					button.setEnabled(true);
-         				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
-         				mainFrame.getStepThreeLeftButton().getModelExpand().setEnabled(true);
-         				mainFrame.getStepThreeLeftButton().getTimeModelLabel().setEnabled(true);
-         				
-         				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
-         				
-         				mainthread.suspend();
-             			thread1.suspend();
-             			thread2.suspend();
-             			mainFrame.renewPanel();
+		callable2 = new Callable<Integer>() {
+
+			@Override
+			public Integer call() throws Exception {
+				// TODO Auto-generated method stub
+				try {
+					topLabel.removeAll();
+					topLabel.setText("正在生成第抽象测试序列(该过程需要较久时间,请耐心等待)....");
+					Thread.sleep(150);
+
+					// 获取抽象测试序列
+					List<String> lists = new ArrayList<String>();
+					showTestSequence(markov,lists);
+
+					AbstractPagePanel abstractPagePanel = new AbstractPagePanel(lists, mainFrame);
+
+					mainFrame.getStepThreeTimeSeqTabbedPane().getAbstractSequence().removeAll();
+					mainFrame.getStepThreeTimeSeqTabbedPane().getAbstractSequence().add(abstractPagePanel);
+					mainFrame.getStepThreeTimeSeqTabbedPane().getAbstractSequence().repaint();
+					mainFrame.renewPanel();
+
+					int index = 500;
+					if (lists.size() < 500) {
+						index = lists.size();
 					}
-					return 1;
+
+					abstractPagePanel.getAbstractPanel().add(new JPanel(),
+							new GBC(0, index).setFill(GBC.BOTH).setWeight(1, 1));
+
+					for (int k = 0; k < index; k++) {
+//						Route r = markov.getRouteList().get(k);
+						StepThreeTabelPanel testTabelPanel = new StepThreeTabelPanel(lists.get(k), 1, mainFrame);
+						// mainFrame.getStepThreeTimeSeqTabbedPane().getAbstractSequence().add(testTabelPanel,
+						// new GBC(0, k).setFill(GBC.BOTH).setWeight(1, 0));
+						abstractPagePanel.getAbstractPanel().add(testTabelPanel,
+								new GBC(0, k).setFill(GBC.BOTH).setWeight(1, 0));
+						abstractPagePanel.getAbstractPanel().repaint();
+						mainFrame.getStepThreeTimeSeqTabbedPane().getAbstractSequence().repaint();
+
+//						for (int j = 0; j < r.getTransitionList().size(); j++) {
+//							mainFrame.getOutputinformation().geTextArea()
+//									.append("迁移序列 " + r.getTransitionList().get(j).toString() + "\n");
+//							int length = mainFrame.getOutputinformation().geTextArea().getText().length();
+//							mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
+//							mainFrame.renewPanel();
+//						}
+
+						progressBar.setValue(40 + (int) (((double) (k + 1) / index) * 60));
+						Thread.sleep(10);
+						mainFrame.renewPanel();
+					}
+
+					abstractPagePanel.getPageTestField().setText("1");
+					mainFrame.getStepThreeTimeSeqTabbedPane().getAbstractSequence().removeAll();
+					mainFrame.getStepThreeTimeSeqTabbedPane().getAbstractSequence().add(abstractPagePanel);
+					mainFrame.getStepThreeTimeSeqTabbedPane().getAbstractSequence().repaint();
+					mainFrame.renewPanel();
+
+//					for (Route r : markov.getRouteList()) {
+//						mainFrame.getOutputinformation().geTextArea().append("路径测试序列 " + r.getTcSequence() + " 路径概率: "
+//								+ r.getRouteProbability() + " 固定测试用例个数时，此路径所占个数 " + r.getNumber() + "\n");
+//						int length = mainFrame.getOutputinformation().geTextArea().getText().length();
+//						mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
+//						Thread.sleep(10);
+//
+//						mainFrame.renewPanel();
+//					}
+
+					button.setEnabled(true);
+					mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
+					mainFrame.getStepThreeLeftButton().getTimeModelLabel().setEnabled(true);
+					mainFrame.getStepThreeLeftButton().getModelExpand().setEnabled(true);
+					mainFrame.getStepThreeLeftButton().getTimeCase().setEnabled(true);
+					mainFrame.getTimeCaseOperation1().setModelName(ModelName);
+
+					TimeSeqNode timeSeqNode = new TimeSeqNode(ModelName + "_自定义", mainFrame);
+					timeSeqNode.setAbstractPagePanel(abstractPagePanel);
+					timeSeqNode.setQuota("抽象测试序列生成完成，共生成" + lists.size()+"条抽象测试序列");
+
+					mainFrame.getStepThreeLeftButton().getTimeSeqNodePanel().insertNodeLabel(timeSeqNode,
+							abstractPagePanel);
+					mainFrame.getStepThreeLeftButton().getTimeSeqNode().repaint();
+
+					topLabel.removeAll();
+					topLabel.setText("抽象测试序列生成完成，共生成" + lists.size() + "条抽象测试序列");
+					mainFrame.renewPanel();
+				} catch (RuntimeException e) {
+					// TODO: handle exception
+					e.printStackTrace();
+					topLabel.removeAll();
+					topLabel.setText("生成抽象测试序列出错!");
+
+					button.setEnabled(true);
+					mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
+					mainFrame.getStepThreeLeftButton().getModelExpand().setEnabled(true);
+					mainFrame.getStepThreeLeftButton().getTimeModelLabel().setEnabled(true);
+
+					mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
+
+					mainthread.suspend();
+					thread1.suspend();
+					thread2.suspend();
+					mainFrame.renewPanel();
 				}
-			};
-			task2 = new FutureTask<>(callable2);
-			thread2 = new Thread(task2);
-       }
-private static boolean isSufficient(Markov markov) {
+				return 1;
+			}
+		};
+		task2 = new FutureTask<>(callable2);
+		thread2 = new Thread(task2);
+	}
 
-	for (State state : markov.getStates()) {
+	// 获取所有的抽象测试序列mode2
+		private static void showTestSequence(Markov markov,List<String> lists) {
+			for (Route r : markov.getRouteList()) {
 
-		for (Transition outTransition : state.getOutTransitions()) {
+				String testSequence = "";
+				for (int i = 0; i < r.getTransitionList().size(); i++) {
+					if (i != r.getTransitionList().size() - 1) {
+						testSequence = testSequence
+								+ r.getTransitionList().get(i).getName() + "-->>";
+						// System.out.print(oneCaseExtend.get(i).toString() +
+						// "-->>");
+					} else {
+						testSequence = testSequence
+								+ r.getTransitionList().get(i).getName();
+						// System.out.println(oneCaseExtend.get(i).toString());
+					}
+				}
+				r.setTcSequence(testSequence);
+				if(r.getNumber()==0){
+					lists.add(testSequence);
+					System.out.println(testSequence);
+				}
 
-			if (outTransition.getAccessTimes() == 0) {
-				return false;
+				for (int i = 0; i < r.getNumber(); i++) {
+					// 显示抽象测试序列testSequence至列表
+					lists.add(testSequence);
+					System.out.println(testSequence);
+				}
+			}
+			System.out.println("size: "  + lists.size());
+		}
+	
+	private static boolean isSufficient(Markov markov) {
+
+		for (State state : markov.getStates()) {
+
+			for (Transition outTransition : state.getOutTransitions()) {
+
+				if (outTransition.getAccessTimes() == 0) {
+					return false;
+				}
 			}
 		}
+		return true;
 	}
-	return true;
-}
-private boolean isInt(String str)
-{
-	   try
-	   {
-	      Integer.parseInt(str);
-	      return true;
-	   }
-	   catch(NumberFormatException ex){}
-	   return false;
+
+	private boolean isInt(String str) {
+		try {
+			Integer.parseInt(str);
+			return true;
+		} catch (NumberFormatException ex) {
+		}
+		return false;
 	}
-public JLabel getLabel2() {
-	return label2;
-}
 
-public JLabel getTopLabel() {
-	return topLabel;
-}
-public String getModelName() {
-	return ModelName;
-}
-public void setModelName(String modelName) {
-	ModelName = modelName;
-}
-public String getRoute() {
-	return route;
-}
-public void setRoute(String route) {
-	this.route = route;
-}
-public JButton getButton() {
-	return button;
-}
+	public JLabel getLabel2() {
+		return label2;
+	}
 
-public ReadMarkov2 getRm() {
-	return rm;
-}
-public Markov getMarkov() {
-	return markov;
-}
-public Document getDom() {
-	return dom;
-}
-public Element getRoot() {
-	return root;
-}
-public double[] getPI() {
-	return PI;
-}
-public int getMinSeq() {
-	return minSeq;
-}
+	public JLabel getTopLabel() {
+		return topLabel;
+	}
+
+	public String getModelName() {
+		return ModelName;
+	}
+
+	public void setModelName(String modelName) {
+		ModelName = modelName;
+	}
+
+	public String getRoute() {
+		return route;
+	}
+
+	public void setRoute(String route) {
+		this.route = route;
+	}
+
+	public JButton getButton() {
+		return button;
+	}
+
+	public ReadMarkov2 getRm() {
+		return rm;
+	}
+
+	public Markov getMarkov() {
+		return markov;
+	}
+
+	public Document getDom() {
+		return dom;
+	}
+
+	public Element getRoot() {
+		return root;
+	}
+
+	public double[] getPI() {
+		return PI;
+	}
+
+	public int getMinSeq() {
+		return minSeq;
+	}
 }

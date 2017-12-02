@@ -160,6 +160,7 @@ public class UsecaseTreePanel extends JPanel implements Cloneable{
 					});	
 				}
 					
+				
 				if(((DefaultMutableTreeNode)usecaseTree.getLastSelectedPathComponent()).getLevel() == 2)
 				{
 					if(((DefaultMutableTreeNode)usecaseTree.getLastSelectedPathComponent()).getParent().getParent().equals(usecasetreerootnode))
@@ -249,7 +250,6 @@ public class UsecaseTreePanel extends JPanel implements Cloneable{
 											mainFrame.getCenterTabPanel().removeAll();
 										}
 									}
-									
 								}
 							}
 							if(removeworkspace != null)
@@ -282,7 +282,23 @@ public class UsecaseTreePanel extends JPanel implements Cloneable{
 					});
 				
 				}
-				
+				if(((DefaultMutableTreeNode)usecaseTree.getLastSelectedPathComponent()).getLevel() == 3)
+				{
+					System.out.println(1234);
+					popupMenu = new JPopupMenu();
+					newDiagram = new JMenuItem("删除     ",new ImageIcon("resources/icons/16x16/De.png"));
+					popupMenu.add(newDiagram);
+					popupMenu.show(e.getComponent(), e.getX(), e.getY());
+					newDiagram.addActionListener(new ActionListener() {
+
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							// TODO Auto-generated method stub
+							DefaultMutableTreeNode node = (DefaultMutableTreeNode)usecaseTree.getLastSelectedPathComponent();
+							usecasetreemodel.removeNodeFromParent(node);
+						}
+					});
+				}
 				mainFrame.renewPanel();
 				}
 
@@ -414,7 +430,6 @@ public class UsecaseTreePanel extends JPanel implements Cloneable{
 						INode removeNode = null;
 						AbstractGraph.lock.take();
 						if(modelPanel.hashCode() == mainFrame.getActiveModelPanel().hashCode()){
-							
 							currentUsecaseWorkspace = ((WorkspacePanel)mainFrame.getCenterTabPanel().getComponent(0)).getWorkspace();//获取当前用例图workspace
 							currentUsecaseNode = getKey(getHashMap(), currentUsecaseWorkspace); //获取当前用例图树节点
 							nodes = mainFrame.getActiveWorkspace().getGraphFile().getGraph().getAllNodes();
@@ -423,8 +438,7 @@ public class UsecaseTreePanel extends JPanel implements Cloneable{
 								Map.Entry entry = (Map.Entry) iter.next();
 								DefaultMutableTreeNode useceseTreeNode = (DefaultMutableTreeNode) entry.getKey();
 								UseCaseNode useceseNode = (UseCaseNode) entry.getValue();
-								
-								System.out.println("name: " + useceseNode.getName().getText());
+
                                 if(!nodes.contains(useceseNode))
                                 {
                                 	removeTreeNode = useceseTreeNode;
@@ -447,6 +461,75 @@ public class UsecaseTreePanel extends JPanel implements Cloneable{
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}				
+				}
+			}
+		}).start();
+        
+        new Thread(new Runnable() {
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				while(true)
+				{
+					try {
+						CutCopyPasteBehavior.pastelock.take();
+						if(modelPanel.hashCode() == mainFrame.getActiveModelPanel().hashCode()){
+							currentUsecaseWorkspace = ((WorkspacePanel)mainFrame.getCenterTabPanel().getComponent(0)).getWorkspace();//获取当前用例图workspace
+							currentUsecaseNode = getKey(hashMap, currentUsecaseWorkspace); //获取当前用例图树节点
+							nodes = currentUsecaseWorkspace.getGraphFile().getGraph().getAllNodes();
+				            List<UseCaseNode> allnodes=new ArrayList<UseCaseNode>();
+				            for(INode node: nodes)
+				            {
+				                if(node.getClass().getSimpleName().equals("UseCaseNode"))
+				                {
+				                	allnodes.add((UseCaseNode)node);
+				                }
+				            }
+				            
+				            boolean flag = true;
+				            List<UseCaseNode> caseNodes = new ArrayList<UseCaseNode>();
+				            int count = currentUsecaseNode.getChildCount();
+				            for(UseCaseNode node : allnodes)
+				            {
+				            	for(int i = 0;i < count;i++)
+				            	{
+				            		DefaultMutableTreeNode aChild = (DefaultMutableTreeNode) currentUsecaseNode.getChildAt(i);
+				            		
+				            		if(node.getName().getText().equals(aChild.toString()))
+				            		{
+				            			if(node.hashCode() == NodeMap.get(aChild).hashCode())
+				            			{
+				            				flag = false;
+				            				break;
+				            			}
+				            		}
+				            	}
+				            	if(flag == true)
+				            	{
+				            		caseNodes.add(node);
+				            	}
+				            }
+				            
+				            if(caseNodes.size() != 0)
+				            {
+				            	for(UseCaseNode node : caseNodes)
+				            	{
+				            		DefaultMutableTreeNode child = new DefaultMutableTreeNode(node.getName().getText());
+				            		usecasetreemodel.insertNodeInto(child, currentUsecaseNode, currentUsecaseNode.getChildCount());
+				            		NodeMap.put(child, node);
+				            	}
+				            }
+				            mainFrame.renewPanel();
+						}
+						else {
+							CutCopyPasteBehavior.pastelock.push(1);
+						}
+						
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
 				}
 			}
 		}).start();

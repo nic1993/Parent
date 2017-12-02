@@ -31,6 +31,7 @@ import java.util.Locale;
 
 import javax.swing.UIManager;
 
+import com.horstmann.violet.application.gui.DisplayForm;
 import com.horstmann.violet.application.gui.MainFrame;
 import com.horstmann.violet.application.gui.SplashScreen;
 import com.horstmann.violet.framework.dialog.DialogFactory;
@@ -201,6 +202,8 @@ public class UMLEditorApplication
         mainFrame.setVisible(true);
         splashScreen.setVisible(false);
         splashScreen.dispose();
+        
+        DisplayForm.mainFrame = mainFrame;
     }
 
     /**

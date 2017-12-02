@@ -191,18 +191,21 @@ public class AbstractPagePanel extends JPanel{
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-				if(list.size() > 500){
-					abstractPanel.removeAll();
-					for(int i = 0;i < 500;i++)
-					{
-						StepThreeTabelPanel testTabelPanel = new StepThreeTabelPanel(list.get(i), 1,
-        						mainFrame);
-						abstractPanel.add(testTabelPanel,
-							new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
-						mainFrame.renewPanel();
+				if(!pageTestField.getText().equals(""))
+				{
+					if(list.size() > 500){
+						abstractPanel.removeAll();
+						for(int i = 0;i < 500;i++)
+						{
+							StepThreeTabelPanel testTabelPanel = new StepThreeTabelPanel(list.get(i), 1,
+	        						mainFrame);
+							abstractPanel.add(testTabelPanel,
+								new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
+							mainFrame.renewPanel();
+						}
+						pageTestField.removeAll();
+						pageTestField.setText("1");
 					}
-					pageTestField.removeAll();
-					pageTestField.setText("1");
 				}
 			}
 		});
@@ -210,44 +213,75 @@ public class AbstractPagePanel extends JPanel{
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-				if(list.size() > 500){
-					abstractPanel.removeAll();
-					int Remainder = list.size() % 500;
-					if(Remainder == 0){
-						for(int i = (totalPage - 1) *500;i < list.size();i++)
-						{
-							StepThreeTabelPanel testTabelPanel = new StepThreeTabelPanel(list.get(i), 1,
-	        						mainFrame);
-							abstractPanel.add(testTabelPanel,
-								new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
-							mainFrame.renewPanel();
+				if(!pageTestField.getText().equals(""))
+				{
+					if(list.size() > 500){
+						abstractPanel.removeAll();
+						int Remainder = list.size() % 500;
+						if(Remainder == 0){
+							for(int i = (totalPage - 1) *500;i < list.size();i++)
+							{
+								StepThreeTabelPanel testTabelPanel = new StepThreeTabelPanel(list.get(i), 1,
+		        						mainFrame);
+								abstractPanel.add(testTabelPanel,
+									new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
+								mainFrame.renewPanel();
+							}
+							pageTestField.removeAll();
+							pageTestField.setText(String.valueOf(totalPage));
 						}
-						pageTestField.removeAll();
-						pageTestField.setText(String.valueOf(totalPage));
-					}
-					else {
-						for(int i = (totalPage -1)*500;i < list.size();i++)
-						{
-							StepThreeTabelPanel testTabelPanel = new StepThreeTabelPanel(list.get(i), 1,
-	        						mainFrame);
-							abstractPanel.add(testTabelPanel,
-								new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
-							mainFrame.renewPanel();
+						else {
+							for(int i = (totalPage -1)*500;i < list.size();i++)
+							{
+								StepThreeTabelPanel testTabelPanel = new StepThreeTabelPanel(list.get(i), 1,
+		        						mainFrame);
+								abstractPanel.add(testTabelPanel,
+									new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
+								mainFrame.renewPanel();
+							}
+							pageTestField.removeAll();
+							pageTestField.setText(String.valueOf(totalPage));
 						}
-						pageTestField.removeAll();
-						pageTestField.setText(String.valueOf(totalPage));
 					}
 				}
+				
 			}
 		});
 		next.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-				int index = Integer.valueOf(pageTestField.getText());
-				if(list.size() > 500 && index != totalPage){
-					abstractPanel.removeAll();
-						for(int i = 500 * index;i < 500 * (index + 1);i++)
+				if(!pageTestField.getText().equals(""))
+				{
+					int index = Integer.valueOf(pageTestField.getText());
+					if(list.size() > 500 && index != totalPage){
+						abstractPanel.removeAll();
+							for(int i = 500 * index;i < 500 * (index + 1);i++)
+							{
+								StepThreeTabelPanel testTabelPanel = new StepThreeTabelPanel(list.get(i),1,
+			        					mainFrame);
+								abstractPanel.add(testTabelPanel,
+									new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
+								mainFrame.renewPanel();
+						    }
+							pageTestField.removeAll();
+							pageTestField.setText(String.valueOf(index + 1));
+					}
+				}
+				
+			}
+		});
+		previous.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				if(!pageTestField.getText().equals(""))
+				{
+					int index = Integer.valueOf(pageTestField.getText());
+					if(list.size() > 500 && index != 1)
+					{
+						abstractPanel.removeAll();
+						for(int i = 500 * (index - 2);i < 500 * (index - 1);i++)
 						{
 							StepThreeTabelPanel testTabelPanel = new StepThreeTabelPanel(list.get(i),1,
 		        					mainFrame);
@@ -256,29 +290,10 @@ public class AbstractPagePanel extends JPanel{
 							mainFrame.renewPanel();
 					    }
 						pageTestField.removeAll();
-						pageTestField.setText(String.valueOf(index + 1));
+						pageTestField.setText(String.valueOf(index - 1));
+					}
 				}
-			}
-		});
-		previous.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				int index = Integer.valueOf(pageTestField.getText());
-				if(list.size() > 500 && index != 1)
-				{
-					abstractPanel.removeAll();
-					for(int i = 500 * (index - 2);i < 500 * (index - 1);i++)
-					{
-						StepThreeTabelPanel testTabelPanel = new StepThreeTabelPanel(list.get(i),1,
-	        					mainFrame);
-						abstractPanel.add(testTabelPanel,
-							new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
-						mainFrame.renewPanel();
-				    }
-					pageTestField.removeAll();
-					pageTestField.setText(String.valueOf(index - 1));
-				}
+				
 			}
 		});
 	}

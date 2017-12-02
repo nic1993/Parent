@@ -28,7 +28,11 @@ public class TestCaseMatrixPanel extends JPanel{
 	   private JPanel titleTabel;
 	   private JPanel gapPanel;
 	   private JLabel reduceTabel; 
+	   private JPanel panel;
 	   private JPanel tabelPanel;
+	   private JLabel Predict;
+	   private TestCaseTabelPanel titleCaseTabelPanel;
+	   private TestCaseTabelPanel testCaseTabelPanel;
 	   private MainFrame mainFrame;
 	   public TestCaseMatrixPanel(MainFrame mainFrame)
 	   {
@@ -37,11 +41,13 @@ public class TestCaseMatrixPanel extends JPanel{
 //		  this.setBackground(Color.green);
 		  this.setLayout(new GridBagLayout());
 		  this.add(titlePanel, new GBC(0, 0).setFill(GBC.BOTH).setWeight(1, 0));
-		  this.add(tabelPanel, new GBC(0, 1).setFill(GBC.BOTH).setWeight(0, 1).setInsets(10, 0, 0, 0));
+		  this.add(panel, new GBC(0, 1).setFill(GBC.BOTH).setWeight(1, 1).setInsets(10, 0, 0, 0));
 		  this.setBackground(Color.white);
 	   }
 	   private void initComponent()
 	   {
+		   Predict = new JLabel("被测程序执行结果:");
+		   Predict.setFont(new Font("微软雅黑", Font.BOLD, 16));
 		   titlePanel = new JPanel()
 		   {
 			   public void paint(Graphics g) {
@@ -64,8 +70,18 @@ public class TestCaseMatrixPanel extends JPanel{
 		   reduceTabel = new JLabel();
 		   reduceTabel.setFont(new Font("宋体", Font.PLAIN, 18));
 		   tabelPanel = new JPanel();
-		   tabelPanel.setLayout(new GridLayout(1, 1));
-		   tabelPanel.setVisible(false);
+		   tabelPanel.setLayout(new BorderLayout());
+		   
+		   JPanel panel1 = new JPanel();
+		   panel1.setBackground(Color.white);
+		   panel = new JPanel();
+		   panel.setLayout(new GridBagLayout());
+		   panel.add(Predict,new GBC(0, 0,1,1).setFill(GBC.BOTH).setWeight(0, 0).setInsets(0, 5, 8, 0));
+		   panel.add(panel1,new GBC(1, 0,1,1).setFill(GBC.BOTH).setWeight(1, 0));
+		   panel.add(tabelPanel, new GBC(0, 1,2,1).setFill(GBC.BOTH).setWeight(1, 1));
+		   panel.setBackground(Color.white);
+		   panel.setVisible(false);
+		   
 		   reduceTabel.setIcon(new ImageIcon("resources/icons/16x16/smallDown.png"));
 		   reduceTabel.setMinimumSize(new Dimension(13, 13));
 		   reduceTabel.setMaximumSize(new Dimension(13, 13));
@@ -75,12 +91,12 @@ public class TestCaseMatrixPanel extends JPanel{
 			   @Override
 			public void mousePressed(MouseEvent e) {
 				// TODO Auto-generated method stub
-				   if(tabelPanel.isVisible())
+				   if(panel.isVisible())
 				   {
-					   tabelPanel.setVisible(false);
+					   panel.setVisible(false);
 				   }
 				   else {
-					   tabelPanel.setVisible(true);
+					   panel.setVisible(true);
 				}
 				   mainFrame.renewPanel();
  
@@ -88,7 +104,6 @@ public class TestCaseMatrixPanel extends JPanel{
 		});   
 		   titlePanel.setLayout(new GridBagLayout());
 		   titlePanel.add(titleTabel,new GBC(0, 0).setFill(GBC.BOTH).setWeight(1, 0).setInsets(5));
-//		   titlePanel.add(gapPanel,new GBC(1, 0).setFill(GBC.BOTH).setWeight(1, 0));
 		   titlePanel.add(reduceTabel,new GBC(1, 0).setFill(GBC.NONE).setWeight(0, 1).setInsets(5));
 	   }
     
@@ -98,5 +113,19 @@ public class TestCaseMatrixPanel extends JPanel{
 	public JPanel getTabelPanel() {
 		return tabelPanel;
 	}
-       
+	public TestCaseTabelPanel getTitleCaseTabelPanel() {
+		return titleCaseTabelPanel;
+	}
+	public void setTitleCaseTabelPanel(TestCaseTabelPanel titleCaseTabelPanel) {
+		this.titleCaseTabelPanel = titleCaseTabelPanel;
+	}
+	public TestCaseTabelPanel getTestCaseTabelPanel() {
+		return testCaseTabelPanel;
+	}
+	public void setTestCaseTabelPanel(TestCaseTabelPanel testCaseTabelPanel) {
+		this.testCaseTabelPanel = testCaseTabelPanel;
+	}
+	public JLabel getPredict() {
+		return Predict;
+	}
 }

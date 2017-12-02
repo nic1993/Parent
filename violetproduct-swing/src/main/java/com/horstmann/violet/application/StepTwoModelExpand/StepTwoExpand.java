@@ -75,7 +75,7 @@ public class StepTwoExpand extends JPanel{
 	public void init()
 	{
 		this.setBackground(new Color(233,233,233));	
-		estimateLabel = new JLabel("模型评估");
+		estimateLabel = new JLabel("模型检验");
 		exchangeLabel = new JLabel("Markov转换");
 		
 		estimateLabel.setFont(new Font("微软雅黑", Font.PLAIN, 18));

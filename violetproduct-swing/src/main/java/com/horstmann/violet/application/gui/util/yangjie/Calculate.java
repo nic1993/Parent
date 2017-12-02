@@ -150,6 +150,10 @@ public class Calculate {
 
 	private static Map<String, List<String>> parse(String solution) {
 		System.out.println("solution---" + solution);
+		DisplayForm.mainFrame.getOutputinformation().geTextArea().append("solution---" + solution+  "\n");
+		int length = DisplayForm.mainFrame.getOutputinformation().geTextArea().getText().length(); 
+		DisplayForm.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
+		
 		Map<String, List<String>> map = new HashMap<String, List<String>>();
 		String[] results = solution.substring(2, solution.length() - 2).split(
 				"\\}, \\{");

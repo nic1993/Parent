@@ -31,6 +31,8 @@ import com.horstmann.violet.workspace.IWorkspace;
 
 public class StepFourTabbedPane extends JTabbedPane{
 	private MainFrame mainFrame;
+	private JPanel testCasePanel;
+	private JPanel testCaseinformation;
 	private JPanel testCaseResults;
 	private JPanel testCaseResport;
 	private JPanel results;
@@ -41,14 +43,16 @@ public class StepFourTabbedPane extends JTabbedPane{
     private JScrollPane jScrollPane3;
     
     private TestCaseReportTableHeaderPanel tableHeaderPanel;
+    private TestCaseReportTableHeaderPanel testcaseHeaderPanel;
     private TestCaseReportTableHeaderPanel wrongtableHeaderPanel;
 	public StepFourTabbedPane(MainFrame mainFrame)
 	{
 		this.mainFrame = mainFrame;
 		init();
-		this.addTab("验证信息",results);
-		this.addTab("验证报告",jScrollPane2);
-		this.addTab("验证错误信息", wrongResults);
+		this.addTab("可靠性测试数据", testCasePanel);
+		this.addTab("执行信息",results);
+		this.addTab("执行报告",jScrollPane2);
+		this.addTab("失效数据", wrongResults);	
 	}
 	
 	private void init()
@@ -64,7 +68,7 @@ public class StepFourTabbedPane extends JTabbedPane{
 		jScrollPane2 = new JScrollPane(testCaseResport);
 		jScrollPane2.setBorder(null);
 		
-		//总测试用例
+		//总可靠性测试数据
 		JPanel gapPanel = new JPanel();
 		gapPanel.setMinimumSize(new Dimension(1, 1));
 		gapPanel.setMaximumSize(new Dimension(1, 1));
@@ -76,7 +80,7 @@ public class StepFourTabbedPane extends JTabbedPane{
 		results.add(tableHeaderPanel,BorderLayout.NORTH);
 		results.add(testCaseResults,BorderLayout.CENTER);
 
-		//错误的测试用例
+		//错误的可靠性测试数据
 		JPanel gapPanel1 = new JPanel();
 		gapPanel1.setMinimumSize(new Dimension(1, 1));
 		gapPanel1.setMaximumSize(new Dimension(1, 1));
@@ -87,6 +91,15 @@ public class StepFourTabbedPane extends JTabbedPane{
 		wrongResults.setLayout(new BorderLayout());
 		wrongResults.add(wrongtableHeaderPanel,BorderLayout.NORTH);
 		wrongResults.add(wrongtestCaseResults, BorderLayout.CENTER);
+		
+		testcaseHeaderPanel = new TestCaseReportTableHeaderPanel();
+		testCaseinformation = new JPanel();
+		testCaseinformation.setLayout(new GridLayout());
+		
+		testCasePanel = new JPanel();
+		testCasePanel.setLayout(new BorderLayout());
+		testCasePanel.add(testcaseHeaderPanel,BorderLayout.NORTH);
+		testCasePanel.add(testCaseinformation,BorderLayout.CENTER);
 		
 		listen();
 	}
@@ -154,6 +167,9 @@ public class StepFourTabbedPane extends JTabbedPane{
 	public JScrollPane getjScrollPane3() {
 		return jScrollPane3;
 	}
-	
+
+	public JPanel getTestCaseinformation() {
+		return testCaseinformation;
+	}
 }
 

@@ -144,7 +144,7 @@ public class StepTwoExchangeOperation extends JPanel {
 						} else {
 							progressBarIndex++;
 							ExchangeProgressBar.setValue(progressBarIndex);
-							Thread.sleep(12000);
+							Thread.sleep(1000);
 						}
 					}
 				}
@@ -176,10 +176,9 @@ public class StepTwoExchangeOperation extends JPanel {
 					mainFrame.getStepTwoModelOperation().getStartExpandButton().setEnabled(false);
 					mainFrame.getStepTwoCaseOperation().getStartExpandButton().setEnabled(false);
 					startExchange.setEnabled(false);
+					mainFrame.renewPanel();
 					
 					mainFrame.getStepTwoCenterRightPanel().setVisible(false);
-					
-					
 
 					mainFrame.getStepTwoExchangeTabbedPane().getExchangeResults().removeAll();
 					mainFrame.getStepTwoExchangeTabbedPane().getExchangeResport().removeAll();
@@ -190,6 +189,7 @@ public class StepTwoExchangeOperation extends JPanel {
 					mainFrame.renewPanel();
 
 					Work worker = mainFrame.getStepTwoModelOperation().getWorker();
+					
 					UCRMap = mainFrame.getStepTwoModelOperation().getUcMap();
 					IISDList = mainFrame.getStepTwoModelOperation().getIISDList();
 
@@ -198,6 +198,7 @@ public class StepTwoExchangeOperation extends JPanel {
 					Thread.sleep(200);
 
 					worker.assignmentPro(IISDList);
+					
 					mainFrame.renewPanel();
 					List<Object> verList = worker.transVerify();
 
@@ -317,7 +318,7 @@ public class StepTwoExchangeOperation extends JPanel {
 
 					toplabel.removeAll();
 					toplabel.setText("正在获取Markov节点信息.....");
-					Thread.sleep(100);
+					Thread.sleep(250);
 
 
 					// //添加节点信息
@@ -345,7 +346,7 @@ public class StepTwoExchangeOperation extends JPanel {
 
 					toplabel.removeAll();
 					toplabel.setText("正在获取Markov迁移信息.....");
-					Thread.sleep(100);
+					Thread.sleep(250);
 
 					// 修改边的信息
 					mainFrame.getStepTwoCenterRightPanel().getEdgeTextMap().clear();
@@ -361,10 +362,10 @@ public class StepTwoExchangeOperation extends JPanel {
 							((MarkovTransitionEdge) edge).setPro("");
 						}
 					}
-
 					
 					toplabel.removeAll();
 					toplabel.setText("正在获取Markov链XML信息.....");
+					Thread.sleep(250);
 					mainFrame.getStepTwoExchangeTabbedPane().getExchangeResport().removeAll();
 					mainFrame.getStepTwoExchangeTabbedPane().getExchangeResport()
 							.add(XMLToTree.getTree(MarkovRoute + Model_Name + "layout.markov.violet.xml"));
@@ -378,14 +379,12 @@ public class StepTwoExchangeOperation extends JPanel {
 						if (file.getName().contains(".markov.violet.xml")) {
 							file.delete();
 						}
-						
 						for (String seqName : seqNames) {
 							 if(file.getName().equals(seqName))
 							 {
 								 file.delete();
 							 }
 						}
-						
 						for(String ucName : ucNames)
 						{
 							if(file.getName().equals(ucName))
@@ -394,7 +393,7 @@ public class StepTwoExchangeOperation extends JPanel {
 							 }
 						}
 					}
-                    
+
 					ExchangeNodeLabel nodeLabel = new ExchangeNodeLabel(Model_Name, mainFrame);
 					nodeLabel.setWorkspace(workspace);
 					nodeLabel.setXMLPanel(XMLPanel);
@@ -425,6 +424,7 @@ public class StepTwoExchangeOperation extends JPanel {
 
 					mainFrame.getStepThreeLeftButton().setModelName(Model_Name);
 					mainFrame.getStepThreeLeftButton().setNew(true);
+					
 					toplabel.removeAll();
 					toplabel.setText("Markov转换成功,可以生成测试用例!");
 					
@@ -453,9 +453,6 @@ public class StepTwoExchangeOperation extends JPanel {
 					mainFrame.getStepTwoCaseOperation().getStartExpandButton().setEnabled(false);
 					startExchange.setEnabled(false);
 					restartExchange.setEnabled(false);
-
-					mainFrame.getStepThreeLeftButton().setModelName(Model_Name);
-					mainFrame.getStepThreeLeftButton().setNew(true);
 					
 					mainFrame.renewPanel();
 				}

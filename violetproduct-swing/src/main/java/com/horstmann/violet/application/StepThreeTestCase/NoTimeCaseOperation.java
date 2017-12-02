@@ -136,10 +136,14 @@ public class NoTimeCaseOperation extends JPanel{
     	   textField.setText("0.1");
     	   textField.setEditable(false);
     	   textField.setPreferredSize(new Dimension(40,30));
+    	   textField.setMinimumSize(new Dimension(40,30));
+    	   textField.setMaximumSize(new Dimension(40,30));
     	   topLabel.setFont(new Font("宋体", Font.PLAIN, 16));
     	   label1.setFont(new Font("宋体", Font.PLAIN, 16));
     	   
     	   progressBar.setPreferredSize(new Dimension(800, 30));
+    	   progressBar.setMinimumSize(new Dimension(800, 30));
+    	   progressBar.setMaximumSize(new Dimension(800, 30));
     	   progressBar.setUI(new GradientProgressBarUI());
     	   progressBar.setValue(0);
     	   
@@ -168,7 +172,7 @@ public class NoTimeCaseOperation extends JPanel{
    				// TODO Auto-generated method stub			
    				progressBarIndex = 0;
    				progressBar.setValue(0);
-   				while (progressBarIndex < 40) {
+   				while (progressBarIndex < 60) {
    					if(task1.isDone())
    					{
    						progressBarIndex++;
@@ -178,7 +182,7 @@ public class NoTimeCaseOperation extends JPanel{
    					else{
    						progressBarIndex++;
    						progressBar.setValue(progressBarIndex);
-   						Thread.sleep(5000);
+   						Thread.sleep(10000);
    					}
    				}
    				while(true){
@@ -213,7 +217,8 @@ public class NoTimeCaseOperation extends JPanel{
 	   				progressBarIndex = 0;
 					
 	   				topLabel.removeAll();
-					topLabel.setText("正在生成测试数据信息.....");
+					topLabel.setText("正在生成可靠性测试数据(该过程需要较久时间,请耐心等待)....");
+					Thread.sleep(100);
 					
 					RandomCase randomCase = new RandomCase();
 					Calculate.getAllTransValues(markov);
@@ -234,8 +239,8 @@ public class NoTimeCaseOperation extends JPanel{
 				    mainFrame.renewPanel();
 				}catch (RuntimeException e) {
 						// TODO: handle exception
-	   					topLabel.removeAll();
-	   					topLabel.setText(e.getLocalizedMessage());
+					topLabel.removeAll();
+   					topLabel.setText("生成可靠性测试数据出错!");
 	   					
 	   					mainthread.interrupt();
 	   					thread1.interrupt();
@@ -268,10 +273,6 @@ public class NoTimeCaseOperation extends JPanel{
 				CasePagePanel casePagePanel = new CasePagePanel(lists,mainFrame);
 				mainFrame.getStepThreeNoTimeTabbedPane().getTestData().add(casePagePanel);
 				
-				//生成测试数据
-				topLabel.removeAll();
-				topLabel.setText("正在生成测试数据信息........");
-				
 				JPanel TestDataPanel = new JPanel();
 				TestDataPanel.setLayout(new GridBagLayout());
 
@@ -293,7 +294,7 @@ public class NoTimeCaseOperation extends JPanel{
                     		casePagePanel.getCasePanel().repaint();
                     		mainFrame.getStepThreeNoTimeTabbedPane().getTestData().updateUI();
                     		
-                    		progressBar.setValue(60 + (int) (((double) (j+1) / 500) * 60));
+                    		progressBar.setValue(60 + (int) (((double) (j+1) / 500) * 40));
                     		Thread.sleep(10);
                     		mainFrame.renewPanel();
                     	}
@@ -312,10 +313,12 @@ public class NoTimeCaseOperation extends JPanel{
 				String ii = bigDecimal.toPlainString();
 				double d = Double.valueOf(ii);
 				topLabel.removeAll();
-				topLabel.setText("测试用例生成完成, 共生成"+lists.size() + "条测试用例。"+"  可靠性测试用例生成比率与使用模型实际使用概率平均偏差:"+df.format(d));
+				topLabel.setText("可靠性测试数据生成完成, 共生成"+lists.size() + "条可靠性测试数据。" + " 可靠性测试用例数据库覆盖率:"
+						+ df.format(markov.getDbCoverage()) + "  可靠性测试用例生成比率与使用模型实际使用概率平均偏差:"+df.format(d));
 				
 				NoTimeTestCaseNode noTimeTestCaseLabel = new NoTimeTestCaseNode(ModelName+"_相似度", mainFrame);
-				quota = "测试用例生成完成, 共生成"+lists.size() + "条测试用例。"+"  可靠性测试用例生成比率与使用模型实际使用概率平均偏差:"+df.format(d);
+				quota = "可靠性测试数据生成完成, 共生成"+lists.size() + "条可靠性测试数据。"+ " 可靠性测试用例库覆盖率:"
+						+ df.format(markov.getDbCoverage()) + "  可靠性测试用例生成比率与使用模型实际使用概率平均偏差:"+df.format(d);
 				noTimeTestCaseLabel.setQuota(quota);
 				noTimeTestCaseLabel.setCasePagePanel(casePagePanel);
 				mainFrame.getStepThreeLeftButton().getNoTimeCaseNodePanel().insertNodeLabel(noTimeTestCaseLabel,casePagePanel,quota);
@@ -323,7 +326,7 @@ public class NoTimeCaseOperation extends JPanel{
 				}catch (Exception e) {
 					// TODO: handle exception
 					topLabel.removeAll();
-   					topLabel.setText(e.getLocalizedMessage());
+   					topLabel.setText("生成可靠性测试数据出错!");
    					
    					button.setEnabled(true);
    	   				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);

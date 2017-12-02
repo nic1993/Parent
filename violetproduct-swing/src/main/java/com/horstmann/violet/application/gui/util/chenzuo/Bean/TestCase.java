@@ -25,6 +25,9 @@ public class TestCase implements Serializable{
 	//时间约束不等式
 	List<String> limit;
 	
+	String expectResult;
+	
+	String exeTime;
 	public TestCase() {
 	}
 
@@ -83,6 +86,22 @@ public class TestCase implements Serializable{
 
 	public void setLimit(List<String> limit) {
 		this.limit = limit;
+	}
+
+	public String getExpectResult() {
+		return expectResult;
+	}
+
+	public void setExpectResult(String expectResult) {
+		this.expectResult = expectResult;
+	}
+
+	public String getExeTime() {
+		return exeTime;
+	}
+
+	public void setExeTime(String exeTime) {
+		this.exeTime = exeTime;
 	}
 
 	@Override

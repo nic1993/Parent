@@ -91,7 +91,11 @@ public class ResultService {
                 
             	if(Constants.ISFINISH.get()){
 					logger.debug("scheduledService close");
-					scheduledService.shutdown();
+					if(ResultService.list.size() == Controller.mainFrame.getStepFourOperation().length || file.listFiles().length == 0)
+					{
+						scheduledService.shutdown();
+					}
+					
 				}
             }
 

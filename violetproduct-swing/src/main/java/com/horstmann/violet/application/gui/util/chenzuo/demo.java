@@ -32,7 +32,7 @@ public class demo extends JFrame {
 
 
         File file = new File(System.getProperty("user.dir")+"//src//EATimeDemo#3.xml");
-        Controller.Run(new Pair<String, File>("Time", file));
+//        Controller.Run(new Pair<String, File>("Time", file));
 //        while(true){
 //            try {
 //                if(Constants.ISFINISH.get()){
@@ -107,7 +107,7 @@ public class demo extends JFrame {
                 jfc.showDialog(new JLabel(), "select");
                 File file = jfc.getSelectedFile();
                 if (file != null) {
-                    Controller.Run(new Pair<String, File>("Function", file));
+//                    Controller.Run(new Pair<String, File>("Function", file));
                 }
             }
         });

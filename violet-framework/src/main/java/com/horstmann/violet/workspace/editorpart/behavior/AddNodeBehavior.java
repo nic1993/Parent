@@ -36,7 +36,6 @@ public class AddNodeBehavior extends AbstractEditorPartBehavior
     }  
     public void onMouseClicked(MouseEvent event)
     {
-       
         if (event.getClickCount() > 1)
         {
             return;

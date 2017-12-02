@@ -126,16 +126,16 @@ public class StepThreeLeftButton extends JPanel{
 	public void init()
 	{
 		this.setBackground(new Color(233,233,233));	
-		choosePatternLabel = new JLabel("生成测试用例模式");
+		choosePatternLabel = new JLabel("生成可靠性测试数据模式");
 		noTimeModelLabel = new JLabel("不带时间约束模型");
 		timeModelLabel = new JLabel("带时间约束模型");
 		
 		noTimeSeq = new JLabel("抽象测试序列生成");
-		noTimeCase = new JLabel("测试用例生成");
+		noTimeCase = new JLabel("可靠性测试数据生成");
 		
 		modelExpand = new JLabel("模型扩展");
 		timeSeq = new JLabel("抽象测试序列生成");
-		timeCase = new JLabel("测试用例生成");
+		timeCase = new JLabel("可靠性测试数据生成");
 		
 		choosePatternLabel.setFont(new Font("微软雅黑", Font.BOLD, 18));
 		noTimeModelLabel.setFont(new Font("微软雅黑", Font.PLAIN, 18));
@@ -304,7 +304,7 @@ public class StepThreeLeftButton extends JPanel{
 							mainFrame.getStepTwoCenterRightPanel().getZoominButton().setVisible(false);
 							mainFrame.getStepTwoCenterRightPanel().getZoomoutButton().setVisible(false);
 						}
-						else if(mainFrame.getStepThreeChoosePattern().getselectString().equals("自定义测试用例个数生成"))
+						else if(mainFrame.getStepThreeChoosePattern().getselectString().equals("自定义可靠性测试数据个数生成"))
 						{
 							try {
 							stepThree = 3;
@@ -322,7 +322,12 @@ public class StepThreeLeftButton extends JPanel{
 										mainFrame.getStepThreeChoosePattern().getConfidence() == null)
 								{
 									mainFrame.getNoTimeSeqOperation1().getLabel2().removeAll();
-								    mainFrame.getNoTimeSeqOperation1().getLabel2().setText("请在自定义生成测试用例方式中填写置信度与可靠性指标！");
+								    mainFrame.getNoTimeSeqOperation1().getLabel2().setText("请在自定义生成可靠性测试数据方式中填写置信度与可靠性指标！");
+								    mainFrame.getNoTimeSeqOperation1().getButton().setEnabled(false);
+								}
+								else if (mainFrame.getStepThreeChoosePattern().getFile() == null) {
+									mainFrame.getNoTimeSeqOperation1().getLabel2().removeAll();
+								    mainFrame.getNoTimeSeqOperation1().getLabel2().setText("请在自定义生成可靠性测试数据方式中选择程序源码文件！");
 								    mainFrame.getNoTimeSeqOperation1().getButton().setEnabled(false);
 								}
 								else {
@@ -451,14 +456,15 @@ public class StepThreeLeftButton extends JPanel{
 							
 							for(File selectFile : files.listFiles())
 							{
-								if(selectFile.getName().contains(ModelName))
+								if(selectFile.getName().replaceAll(".xml", "").equals(ModelName))
 									route = selectFile.getAbsolutePath();
 							}
 							if(mainFrame.getStepThreeChoosePattern().getReliabilityIndex() == null || 
-									mainFrame.getStepThreeChoosePattern().getConfidence() == null)
+									mainFrame.getStepThreeChoosePattern().getConfidence() == null ||
+									 mainFrame.getStepThreeChoosePattern().getFile() == null)
 							{
 								mainFrame.getNoTimeSeqOperation1().getLabel2().removeAll();
-							    mainFrame.getNoTimeSeqOperation1().getLabel2().setText("请在自定义生成测试用例方式中填写置信度与可靠性指标！");
+							    mainFrame.getNoTimeSeqOperation1().getLabel2().setText("请在自定义生成可靠性测试数据方式中填写置信度与可靠性指标！");
 							    mainFrame.getNoTimeSeqOperation1().getButton().setEnabled(false);
 							}
 							else {
@@ -524,14 +530,15 @@ public class StepThreeLeftButton extends JPanel{
 						mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeNoTimeTabbedPane());
 						mainFrame.renewPanel();
 					}
-					else if(mainFrame.getStepThreeChoosePattern().getselectString().equals("自定义测试用例个数生成")){
+					else if(mainFrame.getStepThreeChoosePattern().getselectString().equals("自定义可靠性测试数据个数生成")){
 						try {
 							stepThree = 5;
 							if(isNew == true && ModelName != null){
 								mainFrame.getNoTimeCaseOperation1().getTopLabel().setText("当前选择的模型为:"+ModelName);
 									mainFrame.getNoTimeCaseOperation1().getButton().setEnabled(true);
 									int minCase = mainFrame.getNoTimeSeqOperation1().getMinSeq();
-									mainFrame.getTimeCaseOperation1().getTextField().setText(String.valueOf(minCase));
+									System.out.println("minCase: " + minCase);
+									mainFrame.getNoTimeCaseOperation1().getTextField().setText(String.valueOf(minCase));
 								}
 							
 							else if(ModelName == null){
@@ -710,28 +717,35 @@ public class StepThreeLeftButton extends JPanel{
 					else{
 						try {
 						stepThree = 8;
-						File files = new File(mainFrame.getBathRoute()+"/TimeMarkov/");
+						File files = new File(mainFrame.getBathRoute()+"/extendMarkov/");
 						if(isNew == true && ModelName != null){
 							mainFrame.getTimeSeqOperation1().getTopLabel().setText("当前选择的模型为:"+ModelName);
-							
+							System.out.println(mainFrame.getStepThreeChoosePattern().getFile());
+							System.out.println(mainFrame.getStepThreeChoosePattern().getFile() == null);
 							for(File selectFile : files.listFiles())
 							{
-								if(selectFile.getName().replaceAll(".xml", "").equals(ModelName))
+								if(selectFile.getName().replaceAll("_TimeExtend.xml", "").equals(ModelName))
 									route = selectFile.getAbsolutePath();
 							}
 							if(mainFrame.getStepThreeChoosePattern().getReliabilityIndex() == null || 
 									mainFrame.getStepThreeChoosePattern().getConfidence() == null)
 							{
 								mainFrame.getTimeSeqOperation1().getLabel2().removeAll();      
-							    mainFrame.getTimeSeqOperation1().getLabel2().setText("请在自定义生成测试用例方式中填写置信度与可靠性指标！");
+							    mainFrame.getTimeSeqOperation1().getLabel2().setText("请在自定义生成可靠性测试数据方式中填写置信度与可靠性指标！");
+							    mainFrame.getTimeSeqOperation1().getButton().setEnabled(false);
+							    
+							}
+							else if (mainFrame.getStepThreeChoosePattern().getFile() == null) {
+								mainFrame.getTimeSeqOperation1().getLabel2().removeAll();
+							    mainFrame.getTimeSeqOperation1().getLabel2().setText("请在自定义生成可靠性测试数据方式中选择程序源码文件！");
 							    mainFrame.getTimeSeqOperation1().getButton().setEnabled(false);
 							}
 							else {
 								mainFrame.getTimeSeqOperation1().getButton().setEnabled(true);
 								p = mainFrame.getStepThreeChoosePattern().getReliabilityIndex();
 								c = mainFrame.getStepThreeChoosePattern().getConfidence();
-								
-								
+
+								System.out.println("route: " + route);
 								rm = new ReadMarkov2();
 								markov = rm.readMarkov(route);
 								min = getMinTCNum(markov,p,c);
@@ -791,7 +805,7 @@ public class StepThreeLeftButton extends JPanel{
 						mainFrame.getStepTwoCenterRightPanel().getZoomoutButton().setVisible(false);
 						mainFrame.renewPanel();
 					}
-					else if(mainFrame.getStepThreeChoosePattern().getselectString().equals("自定义测试用例个数生成"))
+					else if(mainFrame.getStepThreeChoosePattern().getselectString().equals("自定义可靠性测试数据个数生成"))
 					{
 						
 						stepThree = 10;
@@ -818,11 +832,11 @@ public class StepThreeLeftButton extends JPanel{
 			}
 		});
 	}
-	private static int getMinTCNum(Markov markov, double p,double c) throws Exception {
-		// 按照pc公式计算最小测试用例数目
+	private  int getMinTCNum(Markov markov, double p,double c) throws Exception {
+		// 按照pc公式计算最小可靠性测试数据数目
 //		int min_pc = (int) Math.ceil(Math.log10(1 - c) / Math.log10(1 - p));
 //
-//		// 按照固定最小概率路径个数为一来计算最小测试用例数目
+//		// 按照固定最小概率路径个数为一来计算最小可靠性测试数据数目
 //		new CollectRoute().collect(markov);
 //		double prob = 1;
 //		for (Route r : markov.getRouteList()) {
@@ -832,17 +846,25 @@ public class StepThreeLeftButton extends JPanel{
 //		}
 //		int min_routePro = (int) Math.round(1.0 / prob);
 //
-//		// 按照DO-178B MCDC准则计算最小测试用例数目(条件数+1)
+//		// 按照DO-178B MCDC准则计算最小可靠性测试数据数目(条件数+1)
 //		int min_mcdc = SearchConditions.findConditionNum() + 1;
 //
 //		int temp = Math.max(min_pc, min_routePro);
 //
 //		
 //		return Math.max(temp, min_mcdc);
+//		int min_pc = (int) Math.ceil(Math.log10(1 - c) / Math.log10(1 - p));
+//
+//		// 按照DO-178B MCDC准则计算最小可靠性测试数据数目(条件数+1)
+//		int min_mcdc = SearchConditions.findConditionNum(mainFrame.getStepThreeChoosePattern().getFile()) + 1;
+//		
+//		return Math.max(min_pc, min_mcdc);
+		
 		int min_pc = (int) Math.ceil(Math.log10(1 - c) / Math.log10(1 - p));
 
-		// 按照DO-178B MCDC准则计算最小测试用例数目(条件数+1)
-		int min_mcdc = SearchConditions.findConditionNum() + 1;
+		System.out.println(min_pc);
+		// 按照DO-178B MCDC准则计算最小可靠性测试数据数目(条件数+1)
+		int min_mcdc = SearchConditions.findConditionNum(mainFrame.getStepThreeChoosePattern().getFile()) + 1;
 		
 		return Math.max(min_pc, min_mcdc);
 	}

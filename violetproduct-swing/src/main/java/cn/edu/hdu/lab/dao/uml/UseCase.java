@@ -2,6 +2,8 @@ package cn.edu.hdu.lab.dao.uml;
 
 import java.util.ArrayList;
 
+import com.horstmann.violet.application.gui.DisplayForm;
+
 public class UseCase {
 
 	private String useCaseID;
@@ -68,13 +70,19 @@ public class UseCase {
 	{
 		System.out.println("\n******useCaseName="+useCaseName+"---useCaseID="+useCaseID+"\n" +
 				"\tpreCondition="+preCondition+"\n\tUseCaseProbability="+useCasePro);
+		DisplayForm.mainFrame.getOutputinformation().geTextArea().append("\n******useCaseName="+useCaseName+"---useCaseID="+useCaseID+"\n" +
+				"\tpreCondition="+preCondition+"\n\tUseCaseProbability="+useCasePro + "\n");
+		
+		
 		if(behaviors!=null)
 		{
 			System.out.println("\tbehaviors="+behaviors.toString());
+			DisplayForm.mainFrame.getOutputinformation().geTextArea().append("\tbehaviors="+behaviors.toString() + "\n");
 		}
 		if(diagrams!=null)
 		{
 			System.out.println("\tdiagrams="+diagrams.toString());
+			DisplayForm.mainFrame.getOutputinformation().geTextArea().append("\tdiagrams="+diagrams.toString() + "\n");
 			
 		}
 		
@@ -85,7 +93,8 @@ public class UseCase {
 				sd.print_SDSet();
 			}
 		}
-		
+		int length1 = DisplayForm.mainFrame.getOutputinformation().geTextArea().getText().length(); 
+		DisplayForm.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length1);
 		
 	}
 	

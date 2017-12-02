@@ -3,6 +3,7 @@ package com.horstmann.violet.application.gui.util.chenzuo.Service;
 
 import org.apache.log4j.Logger;
 
+import com.horstmann.violet.application.gui.DisplayForm;
 import com.horstmann.violet.application.gui.util.chenzuo.Bean.Constants;
 import com.horstmann.violet.application.gui.util.chenzuo.Bean.IPNode;
 import com.horstmann.violet.application.gui.util.chenzuo.Bean.TestCaseException;
@@ -76,35 +77,45 @@ public class HandelService implements Callable {
 
     
     //send compilefiles by cai
-    public void sendcompilefile()
-    {
-//    	try {
-//            dos = new DataOutputStream(socket.getOutputStream());
-            //send compile file by cai
-            File[] compilefiles = null;
-            if(node.getType().equals("Time"))
-            {
-            	compilefiles = new File("resources/Time/obj").listFiles();
-            	 for(File compile : compilefiles)
-                 {
-            		 
-                 	scpclient.putFile(compile.getAbsolutePath(), compile.getName(), FileUtil.COMPILE_TIME_PATH, null);
-                 }
-            }
-            else {
-            	compilefiles = new File("resources/Coptermaster/obj").listFiles();
-            	 for(File compile : compilefiles)
-                 {
-                 	scpclient.putFile(compile.getAbsolutePath(), compile.getName(), FileUtil.COMPILE_COP_PATH, null);
-                 }
-			}
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+//    public void sendcompilefile()
+//    {
+////    	try {
+////            dos = new DataOutputStream(socket.getOutputStream());
+//            //send compile file by cai
+//            File[] compilefiles = null;
+//            System.out.println("node : " + node.getType() == null);
+//            if(node.getType().equals("Time"))
+//            {
+//            	compilefiles = new File("resources/Time/obj").listFiles();
+//            	 for(File compile : compilefiles)
+//                 {
+//            		 
+//                 	scpclient.putFile(compile.getAbsolutePath(), compile.getName(), FileUtil.COMPILE_TIME_PATH, null);
+//                 }
+//            }
+//            else {
+//            	compilefiles = new File("resources/Coptermaster/obj").listFiles();
+//            	 for(File compile : compilefiles)
+//                 {
+//                 	scpclient.putFile(compile.getAbsolutePath(), compile.getName(), FileUtil.COMPILE_COP_PATH, null);
+//                 }
+//			}
+////        } catch (IOException e) {
+////            e.printStackTrace();
+////        }
+//    }
+    public void sendcompilefile(){
+    	File file = DisplayForm.mainFrame.getStepFourOperation().getFile();
+    	if(node.getType().equals("Time"))
+          {
+    		scpclient.putFile(file.getAbsolutePath(), file.getName(), FileUtil.COMPILE_TIME_PATH, null);
+          }
+    	else {
+    		scpclient.putFile(file.getAbsolutePath(), file.getName(), FileUtil.COMPILE_COP_PATH, null);
+		}
     }
-    
     // send xml files
-    public void send() {
+    public void send() throws TestCaseException{
         try {
             dos = new DataOutputStream(socket.getOutputStream());
             
@@ -119,14 +130,13 @@ public class HandelService implements Callable {
             }
         } catch (IOException e) {
             e.printStackTrace();
+            throw new TestCaseException("send file error");
         }
     }
 
     // receive result
     public void recv() throws TestCaseException {
-    	
-    	
-    	
+
         int bufferSize = 500;
         byte[] buf = new byte[bufferSize];
         String data = "";
@@ -140,10 +150,16 @@ public class HandelService implements Callable {
                 //get index of result file and convert
                 if (data.contains("index")) {
                     String index = data.split("#")[1];
+                    if(index.contains("exit")){
+                    	index=index.replaceAll("exit", "");
+                    }
                     fIndex++;
+                    
                     receiveService.submit(new RecvTransService(node,index));
+                    
 //                  logger.debug(receiveService.take().get());
-                } else if ("exit".equals(data)) {
+                } 
+                if ("exit".equals(data)) {
                 	
                 	logger.debug(node.getIp()+" success receive all files");
                 	
@@ -173,6 +189,9 @@ public class HandelService implements Callable {
             socket.close();
             scpclient.close();
             logger.debug(node.getIp()+" socket close");
+            
+            System.out.println("length: " + resultService.list.size());
+            Controller.SplitNum--;
         } catch (IOException e) {
         	
             logger.error(node.getIp()+" close socket error ,cause by " + e.getMessage());

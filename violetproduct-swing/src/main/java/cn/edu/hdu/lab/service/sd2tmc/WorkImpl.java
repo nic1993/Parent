@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.horstmann.violet.application.gui.DisplayForm;
 import com.horstmann.violet.application.gui.MainFrame;
 
 import cn.edu.hdu.lab.config.StaticConfig;
@@ -376,10 +377,16 @@ public class WorkImpl implements Work  {
 			if((boolean)verifyReList.get(0)==true)
 			{
 				System.out.println("该UML模型满足一致性要求！可转化为对应的Markov链使用模型！");
+				DisplayForm.mainFrame.getOutputinformation().geTextArea().append("该UML模型满足一致性要求！可转化为对应的Markov链使用模型！" + "\n");
+				int length1 = DisplayForm.mainFrame.getOutputinformation().geTextArea().getText().length(); 
+				DisplayForm.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length1);
 			}
 			else
 			{
 				System.out.println("UML模型不满足一致性要求！");
+				DisplayForm.mainFrame.getOutputinformation().geTextArea().append("UML模型不满足一致性要求！" + "\n");
+				int length1 = DisplayForm.mainFrame.getOutputinformation().geTextArea().getText().length(); 
+				DisplayForm.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length1);
 			}
 			System.out.println((String)verifyReList.get(1));//输出验证结果提示
 		}

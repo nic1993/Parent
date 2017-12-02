@@ -33,7 +33,7 @@ public class StepFourTestCase extends JPanel{
 	public void init()
 	{
 		this.setBackground(new Color(233,233,233));	
-		testCaseLabel = new JLabel("测试用例验证");
+		testCaseLabel = new JLabel("可靠性测试数据执行");
      	testCaseLabel.setFont(new Font("微软雅黑", Font.BOLD, 18));
 		testCasePanel = new JPanel();		
 		testCasePanel.setBackground(new Color(233,233,233));	

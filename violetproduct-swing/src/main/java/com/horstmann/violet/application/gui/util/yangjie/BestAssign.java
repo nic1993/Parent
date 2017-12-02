@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.dom4j.Element;
 
+import com.horstmann.violet.application.gui.DisplayForm;
+
 
 public class BestAssign {
 	int actualTcNumber = 0;
@@ -14,14 +16,20 @@ public class BestAssign {
 		List<Route> routeList = markov.getRouteList();
 		RandomCase randomCase = new RandomCase();
 		for (Route route : routeList) {
-			actualTcNumber += route.getNumber();
+			// 将概率特别小只被分配0个的测试路径至少分配一个用例
+
+			actualTcNumber += (route.getNumber() == 0 ? 1 : route.getNumber());
 			List<Transition> transitionList = route.getTransitionList();
-			List<Stimulate> stimulateList = transform(transitionList,
-					route.getNumber());
+			List<Stimulate> stimulateList = transform(transitionList, route);
 			String testSequence = getTestSequence(stimulateList);
 			String stimulateSequence = getStimulateSequence(stimulateList);
 			TCDetail.getInstance().setTestSequence(testSequence);
 			TCDetail.getInstance().setStimulateSequence(stimulateSequence);
+
+			if (route.getNumber() == 0) {
+				route.setNumber(1);
+			}
+
 			for (int i = 0; i < route.getNumber(); i++) {
 //				System.out.print("测试用例：");
 				randomCase.getCase(stimulateList, root);
@@ -29,6 +37,10 @@ public class BestAssign {
 		}
 		markov.setActualNum(actualTcNumber);
 		System.out.println("\n实际生成的总测试用例个数为：" + actualTcNumber);
+		
+		DisplayForm.mainFrame.getOutputinformation().geTextArea().append("\n实际生成的总测试用例个数为：" + actualTcNumber+  "\n");
+		int length = DisplayForm.mainFrame.getOutputinformation().geTextArea().getText().length(); 
+		DisplayForm.mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
 
 		printBaseTestSequence(routeList);
 
@@ -112,12 +124,14 @@ public class BestAssign {
 	 * @return
 	 */
 	private List<Stimulate> transform(List<Transition> transitionList,
-			int routeNumber) {
+			Route route) {
+		int routeNumber = route.getNumber();
 		List<Stimulate> stimulateList = new ArrayList<Stimulate>();
 		for (Transition transition : transitionList) {
 			stimulateList.add(transition.getStimulate());
-			transition
-					.setAccessTimes(transition.getAccessTimes() + routeNumber);
+			transition.setAccessTimes(transition.getAccessTimes()
+					+ (routeNumber == 0 ? route.getRouteProbability()
+							: routeNumber));
 		}
 		return stimulateList;
 	}

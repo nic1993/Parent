@@ -16,6 +16,7 @@ import com.horstmann.violet.application.gui.MainFrame;
 public class NoTimeSeqNode extends JLabel{
        private Icon icon;
        private String title;
+       private String quota;
        private AbstractPagePanel abstractPagePanel;
        private MainFrame mainFrame;
        public NoTimeSeqNode(String name,MainFrame mainFrame)
@@ -48,6 +49,7 @@ public class NoTimeSeqNode extends JLabel{
                 mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().add(abstractPagePanel);
                 mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().repaint();
                 
+                
                 for(NoTimeSeqNode noTimeSeqNode : mainFrame.getStepThreeLeftButton().getNoTimeSeqNodePanel().getTestCaseNodeLabels())
                 {
                 	noTimeSeqNode.setFont(new Font("ËÎÌו", Font.PLAIN, 16));
@@ -55,7 +57,11 @@ public class NoTimeSeqNode extends JLabel{
                 ((NoTimeSeqNode)e.getSource()).setFont(new Font("ËÎÌו", Font.BOLD, 16));
                 mainFrame.renewPanel();
     		}
-    	
+    		@Override
+       		public void mouseEntered(MouseEvent e) {
+       			// TODO Auto-generated method stub
+       			mainFrame.renewPanel();
+       		}
 		});
     }
 
@@ -69,6 +75,12 @@ public class NoTimeSeqNode extends JLabel{
 	}
 	public String getTitle() {
 		return title;
+	}
+	public String getQuota() {
+		return quota;
+	}
+	public void setQuota(String quota) {
+		this.quota = quota;
 	}
     
 }
