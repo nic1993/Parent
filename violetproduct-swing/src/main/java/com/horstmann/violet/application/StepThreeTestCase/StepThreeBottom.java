@@ -171,6 +171,12 @@ public class StepThreeBottom extends JPanel{
 				
 				mainFrame.getconsolepartPanel().add(mainFrame.getStepFourBottom());
 				mainFrame.getconsolepartPanel().updateUI();
+				
+				mainFrame.getStepTwoCenterRightPanel().getGraphButton().setVisible(false);
+				mainFrame.getStepTwoCenterRightPanel().getZoominButton().setVisible(false);
+				mainFrame.getStepTwoCenterRightPanel().getZoomoutButton().setVisible(false);
+				
+				mainFrame.renewPanel();
 			}
 		});
 	}

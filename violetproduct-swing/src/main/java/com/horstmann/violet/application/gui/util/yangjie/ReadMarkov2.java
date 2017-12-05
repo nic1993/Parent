@@ -21,7 +21,13 @@ import com.horstmann.violet.application.gui.MainFrame;
 
 public class ReadMarkov2 {
 
-	private Markov markov = new Markov();
+	private Markov markov;
+
+	
+	
+	public ReadMarkov2() {
+		super();
+	}
 
 	/**
 	 * 获取指定的xml文件的dom树对象。
@@ -46,6 +52,7 @@ public class ReadMarkov2 {
 	 * */
 	public Markov readMarkov(String route) throws Exception {
 		Document dom = getDom(route);
+		markov = new Markov();
 		Element root = dom.getRootElement();
 		List stateList = root.selectNodes("//state"); // xpath语法
 														// 获取到xml中所有的state标签
@@ -274,6 +281,9 @@ public class ReadMarkov2 {
 		 * markov.getStates().size() - 1));
 		 */
 
+		System.out.println("states: " + states.size());
+		
+		
 		// System.out.println(markov.getTransitions().size());
 		return markov; // 将构造成功的邻接表结构的markov链对象返回
 	}

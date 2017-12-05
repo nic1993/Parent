@@ -37,7 +37,7 @@ public class HandelService implements Callable {
     private ResultService resultService;
 
     //executor to deal with receive
-    ExecutorService receiveService = Executors.newCachedThreadPool();
+    ExecutorService receiveService = Executors.newSingleThreadExecutor();
 
     // Stream based on socket
     DataOutputStream dos = null;
@@ -191,7 +191,6 @@ public class HandelService implements Callable {
             logger.debug(node.getIp()+" socket close");
             
             System.out.println("length: " + resultService.list.size());
-            Controller.SplitNum--;
         } catch (IOException e) {
         	
             logger.error(node.getIp()+" close socket error ,cause by " + e.getMessage());

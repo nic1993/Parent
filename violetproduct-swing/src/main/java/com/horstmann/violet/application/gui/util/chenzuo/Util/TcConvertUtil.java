@@ -257,8 +257,11 @@ public class TcConvertUtil {
 		List<TestCase> list = new ArrayList<>();
 		try {
 		String str = readFileByLines(fileName);
+//		System.out.println(str);
 		// 1.按*号将测试用例划分
 		String[] tmp = str.split("\\*");
+		
+//		System.out.println("size: " + tmp.length);
 		// 2.对每个测试用例字符串进行解析封装
 		for (String s : tmp) {
 			TestCase testCase = new TestCase();
@@ -470,6 +473,7 @@ private static void CalculateAllExeTime(TestCase testCase, String type) {
 				line++;
 				sb.append(tempString);
 				sb.append("\n");
+			
 			}
 			reader.close();
 		} catch (IOException e) {
@@ -487,22 +491,21 @@ private static void CalculateAllExeTime(TestCase testCase, String type) {
 
 	public static void main(String[] args) {
 		// System.out.println(TestCaseConvertUtil.class.getResource("/").getPath());//user.dir指定了当前的路径
-		String str = readFileByLines(
-				"E://项目//SVN//虚拟仿真平台进度//Lab603Projects//violetproduct-swing//src//main//java//com//horstmann//violet//application//gui//util//chengzuo//Util//result.txt");
+//		String str = readFileByLines(
+//				"C:\\Users\\ccc\\Desktop\\result_89_Time_1.txt");
 
 		List<TestCase> list = new ArrayList();
-		// buildTestCaseList("time",list, str);
-		for (TestCase t : list) {
-			System.out.println(t);
-		}
-		Map m = testCaseStatistics(list);
-		Map<String, List<Pair>> hb = (Map<String, List<Pair>>) m.get("high-battery");
-		for (Map.Entry<String, List<Pair>> entry : hb.entrySet()) {
-			System.out.println(entry.getKey());
-			for (Pair pair : entry.getValue()) {
-				System.out.println("\t" + pair);
-			}
+		list = buildTestCaseList("time","C:\\Users\\ccc\\Desktop\\demo.txt");
+		System.out.println(list.size());
 
-		}
+//		Map m = testCaseStatistics(list);
+//		Map<String, List<Pair>> hb = (Map<String, List<Pair>>) m.get("high-battery");
+//		for (Map.Entry<String, List<Pair>> entry : hb.entrySet()) {
+//			System.out.println(entry.getKey());
+//			for (Pair pair : entry.getValue()) {
+//				System.out.println("\t" + pair);
+//			}
+//
+//		}
 	}
 }

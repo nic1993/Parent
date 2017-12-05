@@ -195,7 +195,7 @@ public class StepTwoExchangeOperation extends JPanel {
 
 					toplabel.removeAll();
 					toplabel.setText("正在获取用例迁移概率.....");
-					Thread.sleep(200);
+					Thread.sleep(400);
 
 					worker.assignmentPro(IISDList);
 					
@@ -204,7 +204,7 @@ public class StepTwoExchangeOperation extends JPanel {
 
 					toplabel.removeAll();
 					toplabel.setText("正在获取场景概率.....");
-					Thread.sleep(200);
+					Thread.sleep(400);
 
 					List<String> seqNames = new ArrayList<String>();
 					List<String> ucNames = new ArrayList<String>();
@@ -346,7 +346,7 @@ public class StepTwoExchangeOperation extends JPanel {
 
 					toplabel.removeAll();
 					toplabel.setText("正在获取Markov迁移信息.....");
-					Thread.sleep(250);
+					Thread.sleep(400);
 
 					// 修改边的信息
 					mainFrame.getStepTwoCenterRightPanel().getEdgeTextMap().clear();
@@ -365,7 +365,7 @@ public class StepTwoExchangeOperation extends JPanel {
 					
 					toplabel.removeAll();
 					toplabel.setText("正在获取Markov链XML信息.....");
-					Thread.sleep(250);
+					Thread.sleep(400);
 					mainFrame.getStepTwoExchangeTabbedPane().getExchangeResport().removeAll();
 					mainFrame.getStepTwoExchangeTabbedPane().getExchangeResport()
 							.add(XMLToTree.getTree(MarkovRoute + Model_Name + "layout.markov.violet.xml"));

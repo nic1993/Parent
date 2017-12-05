@@ -460,15 +460,19 @@ public class StepThreeLeftButton extends JPanel{
 									route = selectFile.getAbsolutePath();
 							}
 							if(mainFrame.getStepThreeChoosePattern().getReliabilityIndex() == null || 
-									mainFrame.getStepThreeChoosePattern().getConfidence() == null ||
-									 mainFrame.getStepThreeChoosePattern().getFile() == null)
+									mainFrame.getStepThreeChoosePattern().getConfidence() == null )
 							{
 								mainFrame.getNoTimeSeqOperation1().getLabel2().removeAll();
 							    mainFrame.getNoTimeSeqOperation1().getLabel2().setText("请在自定义生成可靠性测试数据方式中填写置信度与可靠性指标！");
 							    mainFrame.getNoTimeSeqOperation1().getButton().setEnabled(false);
 							}
+							else if (mainFrame.getStepThreeChoosePattern().getFile() == null) {
+								mainFrame.getNoTimeSeqOperation1().getLabel2().removeAll();
+							    mainFrame.getNoTimeSeqOperation1().getLabel2().setText("请在自定义生成可靠性测试数据方式中选择程序源码文件！");
+							    mainFrame.getNoTimeSeqOperation1().getButton().setEnabled(false);
+							}
 							else {
-								mainFrame.getNoTimeSeqOperation1().getButton().setEnabled(true);
+								mainFrame.getNoTimeSeqOperation1().getButton().setEnabled(true);	
 								p = mainFrame.getStepThreeChoosePattern().getReliabilityIndex();
 								c = mainFrame.getStepThreeChoosePattern().getConfidence();
 								rm = new ReadMarkov2();
@@ -537,7 +541,6 @@ public class StepThreeLeftButton extends JPanel{
 								mainFrame.getNoTimeCaseOperation1().getTopLabel().setText("当前选择的模型为:"+ModelName);
 									mainFrame.getNoTimeCaseOperation1().getButton().setEnabled(true);
 									int minCase = mainFrame.getNoTimeSeqOperation1().getMinSeq();
-									System.out.println("minCase: " + minCase);
 									mainFrame.getNoTimeCaseOperation1().getTextField().setText(String.valueOf(minCase));
 								}
 							
@@ -676,6 +679,11 @@ public class StepThreeLeftButton extends JPanel{
 					mainFrame.getOutputinformation().setVisible(true);
 					mainFrame.getReduceOrEnlargePanel().setVisible(true);
 					mainFrame.getpanel().setVisible(true);
+					
+					mainFrame.getStepTwoCenterRightPanel().getGraphButton().setVisible(false);
+					mainFrame.getStepTwoCenterRightPanel().getZoominButton().setVisible(false);
+					mainFrame.getStepTwoCenterRightPanel().getZoomoutButton().setVisible(false);
+					markov = null;
 					clearPanel();		
 					
 					if(mainFrame.getStepThreeChoosePattern().getselectString() == null)
@@ -686,9 +694,6 @@ public class StepThreeLeftButton extends JPanel{
 						mainFrame.getTimeSeqOperation().getTopLabel().setText("请选择测试数据生成方式!");
 						mainFrame.getTimeSeqOperation().getButton().setEnabled(false);
 						mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeTimeSeqTabbedPane());
-						mainFrame.getStepTwoCenterRightPanel().getGraphButton().setVisible(false);
-						mainFrame.getStepTwoCenterRightPanel().getZoominButton().setVisible(false);
-						mainFrame.getStepTwoCenterRightPanel().getZoomoutButton().setVisible(false);
 						
 					}
 					else if(mainFrame.getStepThreeChoosePattern().getselectString().equals("根据模型相似度生成"))
@@ -710,9 +715,6 @@ public class StepThreeLeftButton extends JPanel{
 						}
 						
 						mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeTimeSeqTabbedPane());
-						mainFrame.getStepTwoCenterRightPanel().getGraphButton().setVisible(false);
-						mainFrame.getStepTwoCenterRightPanel().getZoominButton().setVisible(false);
-						mainFrame.getStepTwoCenterRightPanel().getZoomoutButton().setVisible(false);
 					}
 					else{
 						try {
@@ -720,8 +722,6 @@ public class StepThreeLeftButton extends JPanel{
 						File files = new File(mainFrame.getBathRoute()+"/extendMarkov/");
 						if(isNew == true && ModelName != null){
 							mainFrame.getTimeSeqOperation1().getTopLabel().setText("当前选择的模型为:"+ModelName);
-							System.out.println(mainFrame.getStepThreeChoosePattern().getFile());
-							System.out.println(mainFrame.getStepThreeChoosePattern().getFile() == null);
 							for(File selectFile : files.listFiles())
 							{
 								if(selectFile.getName().replaceAll("_TimeExtend.xml", "").equals(ModelName))
@@ -745,7 +745,6 @@ public class StepThreeLeftButton extends JPanel{
 								p = mainFrame.getStepThreeChoosePattern().getReliabilityIndex();
 								c = mainFrame.getStepThreeChoosePattern().getConfidence();
 
-								System.out.println("route: " + route);
 								rm = new ReadMarkov2();
 								markov = rm.readMarkov(route);
 								min = getMinTCNum(markov,p,c);
@@ -788,6 +787,10 @@ public class StepThreeLeftButton extends JPanel{
 					TimeSeqNode.setVisible(false);
 					TimeNode.setVisible(true);
 					
+					mainFrame.getStepTwoCenterRightPanel().getGraphButton().setVisible(false);
+					mainFrame.getStepTwoCenterRightPanel().getZoominButton().setVisible(false);
+					mainFrame.getStepTwoCenterRightPanel().getZoomoutButton().setVisible(false);
+					
 					if(mainFrame.getStepThreeChoosePattern().getselectString().equals("根据模型相似度生成"))
 					{					
 						stepThree = 9;
@@ -800,9 +803,7 @@ public class StepThreeLeftButton extends JPanel{
 						}
 						mainFrame.getpanel().updateUI();
 						mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeTimeTabbedPane());
-						mainFrame.getStepTwoCenterRightPanel().getGraphButton().setVisible(false);
-						mainFrame.getStepTwoCenterRightPanel().getZoominButton().setVisible(false);
-						mainFrame.getStepTwoCenterRightPanel().getZoomoutButton().setVisible(false);
+
 						mainFrame.renewPanel();
 					}
 					else if(mainFrame.getStepThreeChoosePattern().getselectString().equals("自定义可靠性测试数据个数生成"))
@@ -823,9 +824,6 @@ public class StepThreeLeftButton extends JPanel{
 						}
 						mainFrame.getpanel().updateUI();	
 						mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeTimeTabbedPane());
-						mainFrame.getStepTwoCenterRightPanel().getGraphButton().setVisible(false);
-						mainFrame.getStepTwoCenterRightPanel().getZoominButton().setVisible(false);
-						mainFrame.getStepTwoCenterRightPanel().getZoomoutButton().setVisible(false);
 						mainFrame.renewPanel();
 					}	
 				}
@@ -862,7 +860,7 @@ public class StepThreeLeftButton extends JPanel{
 		
 		int min_pc = (int) Math.ceil(Math.log10(1 - c) / Math.log10(1 - p));
 
-		System.out.println(min_pc);
+//		System.out.println(min_pc);
 		// 按照DO-178B MCDC准则计算最小可靠性测试数据数目(条件数+1)
 		int min_mcdc = SearchConditions.findConditionNum(mainFrame.getStepThreeChoosePattern().getFile()) + 1;
 		
@@ -889,8 +887,6 @@ public class StepThreeLeftButton extends JPanel{
 	public JLabel getChoosePatternLabel() {
 		return choosePatternLabel;
 	}
-
-
 	public JLabel getNoTimeModelLabel() {
 		return noTimeModelLabel;
 	}

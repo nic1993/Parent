@@ -306,14 +306,14 @@ public class TimeCaseOperation extends JPanel {
 					bigDecimal = new BigDecimal(markov.getDeviation());
 					String ii = bigDecimal.toPlainString();
 					double d = Double.valueOf(ii);
-					topLabel.setText("可靠性测试数据信息生成完成,共生成" + lists.size() + "条可靠性测试数据。" + " 可靠性测试用例库覆盖率:"
-							+ df.format(markov.getDbCoverage()) + "  可靠性可靠性测试数据生成比率与使用模型实际使用概率平均偏差:"
+					topLabel.setText("可靠性测试数据生成完成,共生成" + lists.size() + "条可靠性测试数据。" + " 可靠性测试用例数据库覆盖率:"
+							+ df.format(markov.getDbCoverage()) + " 可靠性测试数据生成比率与使用模型实际使用概率平均偏差:"
 							+ df.format(d));
 					mainFrame.getStepThreeTimeTabbedPane().setSelectedIndex(0);
 
 					TimeTestCaseNode timeTestCaseLabel = new TimeTestCaseNode(ModelName + "_相似度", mainFrame);
-					quota = "可靠性测试数据信息生成完成,共生成" + lists.size() + "条可靠性测试数据。" + " 可靠性测试用例库覆盖率:"
-							+ df.format(markov.getDbCoverage()) + "  可靠性测试用例生成比率与使用模型实际使用概率平均偏差:" + df.format(d);
+					quota = "可靠性测试数据生成完成,共生成" + lists.size() + "条可靠性测试数据。" + " 可靠性测试用例数据库覆盖率:"
+							+ df.format(markov.getDbCoverage()) + " 可靠性测试用例生成比率与使用模型实际使用概率平均偏差:" + df.format(d);
 					timeTestCaseLabel.setQuota(quota);
 					timeTestCaseLabel.setCasePagePanel(casePagePanel);
 

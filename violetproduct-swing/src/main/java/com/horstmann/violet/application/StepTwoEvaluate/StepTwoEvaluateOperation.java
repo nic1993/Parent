@@ -383,12 +383,14 @@ public class StepTwoEvaluateOperation extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				if (!isAlive) {
-					reEvaluateButton.setText("停止评估");
+					reEvaluateButton.setText("停止验证");
 					mainthread.resume();
+					thread1.resume();
 					isAlive = true;
 				} else {
-					reEvaluateButton.setText("开始评估");
+					reEvaluateButton.setText("开始验证");
 					mainthread.suspend();
+					thread1.suspend();
 					isAlive = false;
 				}
 			}

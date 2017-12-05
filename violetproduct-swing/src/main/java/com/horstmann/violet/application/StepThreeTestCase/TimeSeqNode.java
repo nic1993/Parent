@@ -17,6 +17,7 @@ public class TimeSeqNode extends JLabel{
        private Icon icon;
        private String title;
        private String quota;
+       private int type;
        private AbstractPagePanel abstractPagePanel;
        private MainFrame mainFrame;
        public TimeSeqNode(String name,MainFrame mainFrame)
@@ -48,6 +49,16 @@ public class TimeSeqNode extends JLabel{
                 mainFrame.getStepThreeTimeSeqTabbedPane().getAbstractSequence().add(abstractPagePanel);
                 mainFrame.getStepThreeTimeSeqTabbedPane().getAbstractSequence().repaint();
                 
+                if(type == 1)
+                {
+                	mainFrame.getTimeSeqOperation().getTopLabel().removeAll();
+                	mainFrame.getTimeSeqOperation().getTopLabel().setText(quota);
+                }
+                else {
+                	mainFrame.getTimeSeqOperation1().getTopLabel().removeAll();
+                	mainFrame.getTimeSeqOperation1().getTopLabel().setText(quota);
+				}
+                
                 for(TimeSeqNode TimeSeqNode : mainFrame.getStepThreeLeftButton().getTimeSeqNodePanel().getTestCaseNodeLabels())
                 {
                 	TimeSeqNode.setFont(new Font("ËÎÌו", Font.PLAIN, 16));
@@ -78,5 +89,10 @@ public class TimeSeqNode extends JLabel{
 	public void setQuota(String quota) {
 		this.quota = quota;
 	}
-    
+	public int getType() {
+		return type;
+	}
+	public void setType(int type) {
+		this.type = type;
+	}
 }

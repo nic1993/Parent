@@ -78,8 +78,9 @@ public class CollectRoute {
 
 					route.setNumber((int) Math.round(tcNumber
 							* routeProbability));
-
-					// route.setNumber((int) (tcNumber * routeProbability));
+					// int routeNum = (int) Math
+					// .round(tcNumber * routeProbability);
+					// route.setNumber(routeNum == 0 ? 1 : routeNum);
 					routeList.add(route);
 				}
 				dfs(nextState);

@@ -360,7 +360,7 @@ public class NoTimeCaseOperation1 extends JPanel {
 					String ii = bigDecimal.toPlainString();
 					double d = Double.valueOf(ii);
 					topLabel.removeAll();
-					topLabel.setText("可靠性测试数据生成完成, 实际共生成" + lists.size() + "条!" + "可靠性测试用例库覆盖率:"
+					topLabel.setText("可靠性测试数据生成完成, 实际共生成" + lists.size() + "条!" + "可靠性测试用例数据库覆盖率:"
 							+ df.format(markov.getDbCoverage()) + "  可靠性测试用例生成比率与使用模型实际使用概率平均偏差:" + df.format(markov.getDeviation()));
 
 					

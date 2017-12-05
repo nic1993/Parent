@@ -67,7 +67,7 @@ public class ResultService {
                 	
                     String fileName = FileUtil.LOCAL_TARGET_PATH + filelist[i];
                         try {
-                        	
+                        	System.out.println("fileName: " + fileName);
                         	List<TestCase> testcaselist=TcConvertUtil.buildTestCaseList(type, fileName);
                         	
                         	//IDƫ��
@@ -94,6 +94,7 @@ public class ResultService {
 					if(ResultService.list.size() == Controller.mainFrame.getStepFourOperation().length || file.listFiles().length == 0)
 					{
 						scheduledService.shutdown();
+						Controller.isFinish = true;
 					}
 					
 				}

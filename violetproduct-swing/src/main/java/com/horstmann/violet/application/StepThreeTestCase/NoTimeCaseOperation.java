@@ -317,7 +317,7 @@ public class NoTimeCaseOperation extends JPanel{
 						+ df.format(markov.getDbCoverage()) + "  可靠性测试用例生成比率与使用模型实际使用概率平均偏差:"+df.format(d));
 				
 				NoTimeTestCaseNode noTimeTestCaseLabel = new NoTimeTestCaseNode(ModelName+"_相似度", mainFrame);
-				quota = "可靠性测试数据生成完成, 共生成"+lists.size() + "条可靠性测试数据。"+ " 可靠性测试用例库覆盖率:"
+				quota = "可靠性测试数据生成完成, 共生成"+lists.size() + "条可靠性测试数据。"+ " 可靠性测试用例数据库覆盖率:"
 						+ df.format(markov.getDbCoverage()) + "  可靠性测试用例生成比率与使用模型实际使用概率平均偏差:"+df.format(d);
 				noTimeTestCaseLabel.setQuota(quota);
 				noTimeTestCaseLabel.setCasePagePanel(casePagePanel);

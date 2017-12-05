@@ -220,7 +220,6 @@ public class ConditionEditor extends PropertyEditorSupport
 
 	private void addCondition(ActionEvent evt)
     {
-	
     	((StringTableModel)conditiontable.getModel()).addEntry("");
     }	   
     private Condition condition=new Condition(); 

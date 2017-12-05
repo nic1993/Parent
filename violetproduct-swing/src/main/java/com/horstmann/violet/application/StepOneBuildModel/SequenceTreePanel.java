@@ -14,10 +14,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.BorderFactory;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTree;
@@ -138,10 +140,12 @@ public class SequenceTreePanel extends JPanel{
 						popupMenu = new JPopupMenu();
 						newDiagram = new JMenuItem("删除     ",new ImageIcon("resources/icons/16x16/De.png"));
 						JMenuItem saveDiagram = new JMenuItem("保存     ",new ImageIcon("resources/icons/16x16/saveas.png"));
+						JMenuItem changeName = new JMenuItem("改名");
 						newDiagram.setAccelerator(KeyStroke.getKeyStroke('D', InputEvent.CTRL_MASK));
 						saveDiagram.setAccelerator(KeyStroke.getKeyStroke('S', InputEvent.CTRL_MASK));
 						popupMenu.add(newDiagram);
 						popupMenu.add(saveDiagram);
+						popupMenu.add(changeName);
 						popupMenu.show(e.getComponent(), e.getX(), e.getY());
 						newDiagram.addActionListener(new ActionListener() {
 							@Override
@@ -203,6 +207,25 @@ public class SequenceTreePanel extends JPanel{
 								if(saveWorkSpace != null)
 								fileMenu.initFileSaveAsItem(saveWorkSpace);
 								mainFrame.renewPanel();
+							}
+						});
+						changeName.addActionListener(new ActionListener() {
+							
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								// TODO Auto-generated method stub
+								Icon icon = new ImageIcon("resources/icons/22x22/open.png");
+								String str = (String) JOptionPane.showInputDialog(null,"请输入名称:\n","名称",JOptionPane.PLAIN_MESSAGE,icon,null,"在这输入");
+								if(str.equals("") || str == null)
+								{
+									JOptionPane.showMessageDialog(null, "工程名称不能为空!","标题",JOptionPane.WARNING_MESSAGE); 
+								}
+								else {
+									((DefaultMutableTreeNode)sequencetree.getLastSelectedPathComponent()).setUserObject(str);
+									
+									sequencetreemodel.reload();
+									sequencetree.setSelectionPath(sequencetree.getSelectionPath());
+								}
 							}
 						});
 					}

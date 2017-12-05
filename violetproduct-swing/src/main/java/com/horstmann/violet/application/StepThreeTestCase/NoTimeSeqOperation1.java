@@ -255,7 +255,7 @@ public class NoTimeSeqOperation1 extends JPanel{
       				progressBar.setValue(0);
       				mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().removeAll();
     				
-      				markov.setTcNumber(Integer.valueOf(textField.getText().toString()));
+      				markov.setTcNumber(minSeq);
       				
       				topLabel.removeAll();
     				topLabel.setText("正在读取生成的markov链信息........");

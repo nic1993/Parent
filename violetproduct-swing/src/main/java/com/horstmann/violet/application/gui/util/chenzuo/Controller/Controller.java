@@ -44,7 +44,9 @@ public class Controller {
     // deploy
     private static IPDeploy IP_TYPE_DEPLOY = new IPDeploy();
     // thread pool
-    private static ExecutorService executorService = Executors.newCachedThreadPool();
+    private static ExecutorService executorService = new ThreadPoolExecutor(0, Integer.MAX_VALUE,
+            60L, TimeUnit.SECONDS,
+            new SynchronousQueue<Runnable>());
     
     public static List<FutureTask<Integer>> handFutureList=new ArrayList<>();
     
@@ -54,8 +56,9 @@ public class Controller {
     
     private static ResultService resultService;
     
-    public static boolean isNeedSplit;
     public static int SplitNum;
+    
+    public static boolean isFinish;
     
 //	private static ThreadPoolExecutor executorService;
 
@@ -95,7 +98,6 @@ public class Controller {
         //big testcase deply to 2 servers
         System.out.println(files[0].length() > MAX_FILE_SIZE);
         if (files[0].length() > MAX_FILE_SIZE) {
-        	Controller.isNeedSplit = true;
         	Controller.SplitNum = 2;
         	
             //1.spilt file
@@ -103,7 +105,6 @@ public class Controller {
             //2.choose server
             execute(type, 2, files);
         } else {
-        	Controller.isNeedSplit = false;
         	Controller.SplitNum = 1;
             execute(type, 1, files);
         }
@@ -157,7 +158,7 @@ public class Controller {
                 
 //              handfuture.get();
                 try {
-					Thread.sleep(10000);
+					Thread.sleep(20000);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -191,6 +192,7 @@ public class Controller {
         Controller.mainFrame = mainFrame;
     	ResultService.list.removeAll(ResultService.list);
     	Constants.ISFINISH.set(false);
+    	isFinish = false;
     	
 //    	executorService = new ThreadPoolExecutor(0, Integer.MAX_VALUE,
 //                60L, TimeUnit.SECONDS,

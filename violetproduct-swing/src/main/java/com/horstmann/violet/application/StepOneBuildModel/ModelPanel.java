@@ -100,7 +100,7 @@ public class ModelPanel extends JPanel{
     			}
     			else if (e.getButton() == e.BUTTON3) {
     				popupMenu = new JPopupMenu();
-					deleteDiagram = new JMenuItem("É¾³ý     ",new ImageIcon("resources/icons/16x16/new.png"));
+					deleteDiagram = new JMenuItem("É¾³ý     ",new ImageIcon("resources/icons/16x16/De.png"));
 					saveDiagram = new JMenuItem("±£´æ    ",new ImageIcon("resources/icons/16x16/save.png"));
 					changeName = new JMenuItem("¸ÄÃû");
 					deleteDiagram.setAccelerator(KeyStroke.getKeyStroke('N', InputEvent.CTRL_MASK));

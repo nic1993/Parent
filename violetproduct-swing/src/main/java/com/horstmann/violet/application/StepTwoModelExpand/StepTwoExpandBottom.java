@@ -183,27 +183,30 @@ public class StepTwoExpandBottom extends JPanel{
 				
 				
 			    stepThree = mainFrame.getStepThreeLeftButton().getStepThree();
-			    if(stepThree == 2 || stepThree == 3 ||stepThree == 4 || stepThree == 5
-			    		 && !mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().isEnabled())
-			    {
-			    	stepThree = 1;
-			    	mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 18));
-			    	mainFrame.getStepThreeLeftButton().getNoTimeModelPanel().setVisible(false);
-			    	mainFrame.getStepThreeLeftButton().getNoTimeModelPanel().setVisible(false);
-			    }
-			    else if(!mainFrame.getStepThreeLeftButton().getTimeModelLabel().isEnabled()){
-			    	stepThree = 1;
-			    	mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 18));
-			    	mainFrame.getStepThreeLeftButton().getTimeModelPanel().setVisible(false);
-			    	mainFrame.getStepThreeLeftButton().getTimeModelPanel().setVisible(false);
-			    	
-				}
+//			    if(stepThree == 2 || stepThree == 3 ||stepThree == 4 || stepThree == 5
+//			    		 && !mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().isEnabled())
+//			    {
+//			    	stepThree = 1;
+//			    	mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 18));
+//			    	mainFrame.getStepThreeLeftButton().getNoTimeModelPanel().setVisible(false);
+//			    	mainFrame.getStepThreeLeftButton().getNoTimeModelPanel().setVisible(false);
+//			    }
+//			    else if(!mainFrame.getStepThreeLeftButton().getTimeModelLabel().isEnabled() 
+//			    		&& stepThree == 6 || stepThree == 7 ||stepThree == 8 || stepThree == 9 || stepThree == 10){
+//			    	stepThree = 1;
+//			    	mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 18));
+//			    	mainFrame.getStepThreeLeftButton().getTimeModelPanel().setVisible(false);
+//			    	mainFrame.getStepThreeLeftButton().getTimeModelPanel().setVisible(false);
+//			    	
+//				}
 			    
 			    if(mainFrame.getStepTwoExchangeOperation().getModel_Name() != null){
 					if(mainFrame.getStepTwoExchangeOperation().isTime())
 					{
 						mainFrame.getStepThreeLeftButton().getTimeModelLabel().setEnabled(true);
 						mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(false);
+				    	mainFrame.getStepThreeLeftButton().getNoTimeModelPanel().setVisible(false);
+				    	mainFrame.getStepThreeLeftButton().getNoTimeModelPanel().setVisible(false);
 						
 						if(stepThree == 2 || stepThree == 3 ||stepThree == 4 ||stepThree == 5){
 							stepThree = 1;
@@ -222,6 +225,7 @@ public class StepTwoExpandBottom extends JPanel{
 					mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(false);
 					mainFrame.getStepThreeLeftButton().getTimeModelLabel().setEnabled(false);
 				}
+			    mainFrame.getStepThreeLeftButton().repaint();
 				JPanel mainPanel = mainFrame.getMainPanel();
 				
 				switch (stepThree) {
@@ -414,7 +418,7 @@ public class StepTwoExpandBottom extends JPanel{
     				mainFrame.getReduceOrEnlargePanel().setVisible(true);
     				mainFrame.getpanel().setVisible(true);
 					mainFrame.getpanel().add(mainFrame.getTimeCaseOperation1());
-					mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeTimeSeqTabbedPane());
+					mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeTimeTabbedPane());
 					mainFrame.renewPanel();
 					break;
 				default:

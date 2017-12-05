@@ -214,18 +214,18 @@ public class StepTwoCaseExpandOperation extends JPanel{
   						if(futuretasklist.get(step-1).isDone()){
 							step++;
 							progressBarIndex++;
-							verificationProgressBar.setValue(verificationProgressBar.getValue()+1);
+							verificationProgressBar.setValue(progressBarIndex);
 							threadlist.get(step - 1).start();
 						}		
   					}
   					else if( !futuretasklist.get(step-1).isDone()){
 							progressBarIndex++;
-							verificationProgressBar.setValue(verificationProgressBar.getValue()+1);	
+							verificationProgressBar.setValue(progressBarIndex);	
 							Thread.sleep(100);
 					}
   					else {
   						progressBarIndex++;
-						verificationProgressBar.setValue(verificationProgressBar.getValue()+1);	
+						verificationProgressBar.setValue(progressBarIndex);	
 						Thread.sleep(10);
 					}
   					Thread.sleep(10); 
@@ -237,7 +237,7 @@ public class StepTwoCaseExpandOperation extends JPanel{
   			}
   			
   		};
-  		maintask = new FutureTask<>(maincallable);
+  		maintask = new FutureTask<Integer>(maincallable);
   		mainthread = new Thread(maintask);
   		
   		callable1 = new Callable<Integer>() {
@@ -248,13 +248,15 @@ public class StepTwoCaseExpandOperation extends JPanel{
 				try {
 					toplabel.removeAll();
 				    toplabel.setText("正在初始化数据....");
-				    Thread.sleep(500);
+				    Thread.sleep(300);
 
 				    stepTwoCaseExpandTabbedPane.getValidationResults().removeAll();
 				    stepTwoCaseExpandTabbedPane.getValidationResults().updateUI();
 				    MatrixPanels.clear();
 				    EvaluateMatrixPanels.clear();				
 				    
+				    toplabel.removeAll();
+				    toplabel.setText("正在计算场景执行概率....");
 					for(InterfaceIsogenySD interfaceIsogenySD : IISDList)
 					{
 						List<InterfaceSD> ISDList = interfaceIsogenySD.getISDList();
@@ -266,10 +268,6 @@ public class StepTwoCaseExpandOperation extends JPanel{
 							relations.add(ISDList.get(0).getName());
 							ISDList.get(0).setPro(1.0);
 							relationsData.add(1.0);
-							
-							toplabel.removeAll();
-						    toplabel.setText("正在计算" + ISDList.get(0).getName()+"场景发生概率....");
-						    
 						    StepTwoMatrixPanel stepTwoMatrixPanel = new StepTwoMatrixPanel(mainFrame);
 							stepTwoMatrixPanel.getTitleLabel().setText("用例名称: "+ interfaceIsogenySD.getUcName());
 							
@@ -282,9 +280,7 @@ public class StepTwoCaseExpandOperation extends JPanel{
 						    
 						    ScenceTabelPanel scenceTabelPanel1 = new ScenceTabelPanel(relations, relationsData, 2, mainFrame);
 						    stepTwoMatrixPanel1.getTabelPanel().add(scenceTabelPanel1);
-						    EvaluateMatrixPanels.add(stepTwoMatrixPanel1);
-						    Thread.sleep(200);
-						    
+						    EvaluateMatrixPanels.add(stepTwoMatrixPanel1);		    
 						}
 						else 
 						{    
@@ -314,10 +310,10 @@ public class StepTwoCaseExpandOperation extends JPanel{
 											    startVerificationButton.setEnabled(true);
 											    startExpandButton.setEnabled(true);
 											    
-											    thread2.stop();
-						   					    thread1.stop();
+										    thread2.interrupt();
+					   					    thread1.interrupt();
 											    mainthread.interrupt();
-											    verificationProgressBar.setValue(0);
+//											    verificationProgressBar.setValue(0);
 											    mainFrame.renewPanel();
 											    break;
 						   					}
@@ -340,10 +336,6 @@ public class StepTwoCaseExpandOperation extends JPanel{
 							{
 								ISDList.get(k).setPro(datas[k]);
 								relationsData.add(datas[k]);
-								
-								toplabel.removeAll();
-							    toplabel.setText("正在计算" + ISDList.get(k).getName()+"场景发生概率.....");
-							    Thread.sleep(200);
 							    mainFrame.renewPanel();
 							}
 							

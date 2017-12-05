@@ -163,21 +163,25 @@ public class TimeSeqOperation1 extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 
+				System.out.println("timeseq1");
+				
 				File files = new File(TimeMarkovRoute);
 				for (File selectFile : files.listFiles()) {
-					if (selectFile.getName().replace(".xml", "").equals(ModelName))
+					if (selectFile.getName().replace("_TimeExtend.xml", "").equals(ModelName))
 						route = selectFile.getAbsolutePath();
 				}
 				try {
-					markov = mainFrame.getStepThreeLeftButton().getMarkov();
+					rm = new ReadMarkov2();
+					System.out.println("route: " + route);
+					markov = rm.readMarkov(route);
 					min = mainFrame.getStepThreeLeftButton().getMin();
+					System.out.println("min: " + min);
 					if (isInt(textField.getText().toString())) {
 						minSeq = Integer.parseInt(textField.getText().toString());
 						if (minSeq < min) {
 							topLabel.removeAll();
 							topLabel.setText("请输入正确的测试用例个数!");
 						} else {
-							
 							initThread();
 							mainthread.start();
 							thread1.start();
@@ -188,6 +192,7 @@ public class TimeSeqOperation1 extends JPanel {
 					}
 				} catch (Exception e2) {
 					// TODO Auto-generated catch block
+					e2.printStackTrace();
 					topLabel.removeAll();
 					topLabel.setText("生成抽象测试序列出错!");
 				}
@@ -215,9 +220,13 @@ public class TimeSeqOperation1 extends JPanel {
 						Thread.sleep(500);
 					}
 				}
-				if (task1.isDone()) {
-					thread2.start();
-				}
+				while (true) {
+					if(task1.isDone())
+   	   				{
+   	   					thread2.start();
+   	   					break;
+   	   				}
+				} 
 				return 1;
 			}
 		};
@@ -258,6 +267,11 @@ public class TimeSeqOperation1 extends JPanel {
 					topLabel.removeAll();
 					topLabel.setText("正在读取生成的markov链信息........");
 					Thread.sleep(100);
+					System.out.println("final: " + markov.getFinalState().getStateName());
+					System.out.println("begin: " + markov.getInitialState().getStateName());
+					
+					System.out.println("next: " + markov.getInitialState().getOutTransitions().get(0).getNextStateName());
+					
 					new CollectRoute().collect(markov);
 
 					dom = DocumentHelper.createDocument();
@@ -399,6 +413,8 @@ public class TimeSeqOperation1 extends JPanel {
 
 	// 获取所有的抽象测试序列mode2
 		private static void showTestSequence(Markov markov,List<String> lists) {
+			System.out.println("size: " + markov.getRouteList().size());
+			
 			for (Route r : markov.getRouteList()) {
 
 				String testSequence = "";

@@ -177,7 +177,7 @@ public class TimeExpandOperation extends JPanel {
 					thread4.resume();
 					isAlive = true;
 				} else {
-					restartExchange.setText("开始");
+					restartExchange.setText("开始扩展");
 					mainthread.suspend();
 					thread1.suspend();
 					thread2.suspend();

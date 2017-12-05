@@ -17,6 +17,7 @@ public class NoTimeSeqNode extends JLabel{
        private Icon icon;
        private String title;
        private String quota;
+       private int type;
        private AbstractPagePanel abstractPagePanel;
        private MainFrame mainFrame;
        public NoTimeSeqNode(String name,MainFrame mainFrame)
@@ -49,6 +50,15 @@ public class NoTimeSeqNode extends JLabel{
                 mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().add(abstractPagePanel);
                 mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().repaint();
                 
+                if(type == 1)
+                {
+                	mainFrame.getNoTimeSeqOperation().getTopLabel().removeAll();
+                	mainFrame.getNoTimeSeqOperation().getTopLabel().setText(quota);
+                }
+                else {
+                	mainFrame.getNoTimeSeqOperation1().getTopLabel().removeAll();
+                	mainFrame.getNoTimeSeqOperation1().getTopLabel().setText(quota);
+				}
                 
                 for(NoTimeSeqNode noTimeSeqNode : mainFrame.getStepThreeLeftButton().getNoTimeSeqNodePanel().getTestCaseNodeLabels())
                 {
