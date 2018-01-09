@@ -147,23 +147,23 @@ public class StepFourOperation extends JPanel {
 
 	public void init() {
 		Exchangelabel = new JLabel();
-		Exchangelabel.setFont(new Font("å®‹ä½“", Font.PLAIN, 16));
-		Exchangelabel.setText("è¯·é€‰æ‹©éœ€è¦æ‰§è¡Œçš„å¯é æ€§æµ‹è¯•æ•°æ®çš„æ¨¡å‹");
+		Exchangelabel.setFont(new Font("ËÎÌå", Font.PLAIN, 16));
+		Exchangelabel.setText("ÇëÑ¡ÔñĞèÒªÖ´ĞĞµÄ¿É¿¿ĞÔ²âÊÔÊı¾İµÄÄ£ĞÍ");
 
 		ExchangeProgressBar = new JProgressBar();
 		ExchangeProgressBar.setUI(new GradientProgressBarUI());
 		ExchangeProgressBar.setPreferredSize(new Dimension(600, 30));
 
-		startExchange = new JButton("å¼€å§‹æ‰§è¡Œ");                 
+		startExchange = new JButton("¿ªÊ¼Ö´ĞĞ");                 
 		gapPanel = new JPanel();
 
 		testCaseReportTableHeaderPanel = new TestCaseReportTableHeaderPanel();
 
-		FileButton = new JButton("é€‰æ‹©æ–‡ä»¶");
+		FileButton = new JButton("Ñ¡ÔñÎÄ¼ş");
 		fileLabel = new JLabel();
-		fileLabel.setFont(new Font("å®‹ä½“", Font.PLAIN, 16));
+		fileLabel.setFont(new Font("ËÎÌå", Font.PLAIN, 16));
 
-		TestCaseButton = new JButton("è¯»å–æ•°æ®");
+		TestCaseButton = new JButton("¶ÁÈ¡Êı¾İ");
 		selectBoxs = new ArrayList<SelectBox>();
 		TestCasePanels = new ArrayList<TestCasePanel>();
 		buttonListen();
@@ -193,7 +193,7 @@ public class StepFourOperation extends JPanel {
 				// TODO Auto-generated method stub
 				JFileChooser jFileChooser = new JFileChooser();
 				int i = jFileChooser.showSaveDialog(null);
-				if (i == jFileChooser.APPROVE_OPTION) { // æ‰“å¼€æ–‡ä»¶
+				if (i == jFileChooser.APPROVE_OPTION) { // ´ò¿ªÎÄ¼ş
 					file = jFileChooser.getSelectedFile();
 					fileLabel.setText(file.getAbsolutePath());
 				}
@@ -233,13 +233,13 @@ public class StepFourOperation extends JPanel {
 				modelName = mainFrame.getNameRadionPanel().getSelectName();
 				if (modelName == null) {
 					Exchangelabel.removeAll();
-					Exchangelabel.setText("è¯·é€‰æ‹©éœ€è¦è¯»å–çš„å¯é æ€§æµ‹è¯•æ•°æ®!");
+					Exchangelabel.setText("ÇëÑ¡ÔñĞèÒª¶ÁÈ¡µÄ¿É¿¿ĞÔ²âÊÔÊı¾İ!");
 					mainFrame.renewPanel(); 
 				} else {
 					File file = new File(route + modelName + ".xml");
 					if (!file.exists()) {
 						Exchangelabel.removeAll();
-						Exchangelabel.setText("è¯»å–å¯é æ€§æµ‹è¯•æ•°æ®å‡ºé”™!");
+						Exchangelabel.setText("¶ÁÈ¡¿É¿¿ĞÔ²âÊÔÊı¾İ³ö´í!");
 						mainFrame.renewPanel();
 					} else {
 						extractFunctionalTestDataFromXml(file);
@@ -262,11 +262,11 @@ public class StepFourOperation extends JPanel {
 							mainFrame.getStepFourTabbedPane().getTestCaseinformation().repaint();
 							
 							Exchangelabel.removeAll();
-							Exchangelabel.setText("å¯é æ€§æµ‹è¯•æ•°æ®å…±" + TestCasePanels.size() + "æ¡!");
+							Exchangelabel.setText("¿É¿¿ĞÔ²âÊÔÊı¾İ¹²" + TestCasePanels.size() + "Ìõ!");
 							mainFrame.renewPanel();
 						} else {
 							Exchangelabel.removeAll();
-							Exchangelabel.setText("å¯é æ€§æµ‹è¯•æ•°æ®ä¸ºç©º!");
+							Exchangelabel.setText("¿É¿¿ĞÔ²âÊÔÊı¾İÎª¿Õ!");
 						}
 					}
 					mainFrame.renewPanel();
@@ -328,15 +328,15 @@ public class StepFourOperation extends JPanel {
 							break;
 						}
 					}
-					// ç”Ÿæˆéœ€è¦éªŒè¯çš„å¯é æ€§æµ‹è¯•æ•°æ®xml
+					// Éú³ÉĞèÒªÑéÖ¤µÄ¿É¿¿ĞÔ²âÊÔÊı¾İxml
 					if (getCurrentTestCase() == null || getCurrentTestCase().size() == 0 || modelName == null) {
 						ExceptionStopRunThread();
 						Exchangelabel.removeAll();
-						Exchangelabel.setText("è¯·é€‰æ‹©éœ€è¦æ‰§è¡Œçš„å¯é æ€§æµ‹è¯•æ•°æ®!");
+						Exchangelabel.setText("ÇëÑ¡ÔñĞèÒªÖ´ĞĞµÄ¿É¿¿ĞÔ²âÊÔÊı¾İ!");
 					} else if (file == null) {
 						ExceptionStopRunThread();
 						Exchangelabel.removeAll();
-						Exchangelabel.setText("è¯·é€‰æ‹©éªŒè¯çš„å¯æ‰§è¡Œæ–‡ä»¶!");
+						Exchangelabel.setText("ÇëÑ¡ÔñÑéÖ¤µÄ¿ÉÖ´ĞĞÎÄ¼ş!");
 					} else {
 						extractDataToXml(chooseRoute + modelName + ".xml", getCurrentTestCase());
 						
@@ -363,7 +363,7 @@ public class StepFourOperation extends JPanel {
 							FileButton.setEnabled(true);
 							TestCaseButton.setEnabled(true);
 							Exchangelabel.removeAll();
-							Exchangelabel.setText("è¯·é€‰æ‹©éœ€è¦æ‰§è¡Œçš„å¯é æ€§æµ‹è¯•æ•°æ®!");
+							Exchangelabel.setText("ÇëÑ¡ÔñĞèÒªÖ´ĞĞµÄ¿É¿¿ĞÔ²âÊÔÊı¾İ!");
 							mainFrame.renewPanel();
 						} else {
 							type = type1;
@@ -378,11 +378,11 @@ public class StepFourOperation extends JPanel {
 							length = getTestCaseSize(Casefile);
 
 							Exchangelabel.removeAll();
-							Exchangelabel.setText("æ­£åœ¨è¿æ¥æœåŠ¡å™¨....");
+							Exchangelabel.setText("ÕıÔÚÁ¬½Ó·şÎñÆ÷....");
 							
 							if (!Controller.Ready(2)) {
 								Exchangelabel.removeAll();
-								Exchangelabel.setText("æœåŠ¡å™¨è¿æ¥å¤±è´¥,è¯·ç¨ç­‰ç‰‡åˆ»å†å°è¯•é‡æ–°è¿æ¥!");
+								Exchangelabel.setText("·şÎñÆ÷Á¬½ÓÊ§°Ü,ÇëÉÔµÈÆ¬¿ÌÔÙ³¢ÊÔÖØĞÂÁ¬½Ó!");
 
 								thread.interrupt();
 								mainthread.interrupt();
@@ -392,11 +392,11 @@ public class StepFourOperation extends JPanel {
 								mainFrame.renewPanel();
 							} else {
 								Exchangelabel.removeAll();
-								Exchangelabel.setText("æœåŠ¡å™¨è¿æ¥æˆåŠŸ,å‘é€å¯é æ€§æµ‹è¯•æ•°æ®....");
+								Exchangelabel.setText("·şÎñÆ÷Á¬½Ó³É¹¦,·¢ËÍ¿É¿¿ĞÔ²âÊÔÊı¾İ....");
 								Thread.sleep(400);
 								Controller.Run(new Pair<String, File>(type, Casefile), mainFrame);
 								Exchangelabel.removeAll();
-								Exchangelabel.setText("æ­£åœ¨éªŒè¯å¯é æ€§æµ‹è¯•æ•°æ®,è¯·è€å¿ƒç­‰å¾…....");
+								Exchangelabel.setText("ÕıÔÚÑéÖ¤¿É¿¿ĞÔ²âÊÔÊı¾İ,ÇëÄÍĞÄµÈ´ı....");
 								
 								mainFrame.getStepFourTabbedPane().getTestCaseResults().removeAll();
 								ValidatePagePanel validatePagePanel = new ValidatePagePanel(mainFrame);
@@ -423,7 +423,7 @@ public class StepFourOperation extends JPanel {
 															if (e.getMessage().contains("TestCaseException")) {
 																ExceptionStopRunThread();
 																Exchangelabel.removeAll();
-																Exchangelabel.setText("å¯é æ€§æµ‹è¯•æ•°æ®æ‰§è¡Œå‡ºé”™,è¯·ç¨ç­‰ç‰‡åˆ»å†æ¬¡æ‰§è¡Œ!");
+																Exchangelabel.setText("¿É¿¿ĞÔ²âÊÔÊı¾İÖ´ĞĞ³ö´í,ÇëÉÔµÈÆ¬¿ÌÔÙ´ÎÖ´ĞĞ!");
 																flag = 1;
 																mainFrame.renewPanel();
 																break;
@@ -448,17 +448,17 @@ public class StepFourOperation extends JPanel {
 									}
 								}
 
-								// åˆ¤æ–­è¿”å›å¯é æ€§æµ‹è¯•æ•°æ®ä¸ªæ•°
+								// ÅĞ¶Ï·µ»Ø¿É¿¿ĞÔ²âÊÔÊı¾İ¸öÊı
 								if (ResultService.list.size() != length) {
 									ExceptionStopRunThread();
 									Exchangelabel.removeAll();
-									Exchangelabel.setText("å¯é æ€§æµ‹è¯•æ•°æ®æ‰§è¡Œå‡ºé”™,è¯·ç¨ç­‰ç‰‡åˆ»å†æ¬¡æ‰§è¡Œ!....");
+									Exchangelabel.setText("¿É¿¿ĞÔ²âÊÔÊı¾İÖ´ĞĞ³ö´í,ÇëÉÔµÈÆ¬¿ÌÔÙ´ÎÖ´ĞĞ!....");
 									mainFrame.renewPanel();
 								} else {
 									Exchangelabel.removeAll();
-									Exchangelabel.setText("æ­£åœ¨ç”Ÿæˆå¯é æ€§æµ‹è¯•æ•°æ®æ‰§è¡Œç»“æœ....");
+									Exchangelabel.setText("ÕıÔÚÉú³É¿É¿¿ĞÔ²âÊÔÊı¾İÖ´ĞĞ½á¹û....");
 									testcaselist = ResultService.list;
-									//è¿›è¡Œç¼–å·
+									//½øĞĞ±àºÅ
 									for (i = 0; i < testcaselist.size(); i++) {
 										TestCase testCase = testcaselist.get(i);
 										testCase.setTestCaseID(getCurrentTestCase().get(i).getTestCaseID());
@@ -491,17 +491,17 @@ public class StepFourOperation extends JPanel {
 												testCase.getExeTime(),0);
 										if(type .equals(type3))
 										{
-											if(testCase.getResult().contains("æœ‰è¯¯"))
+											if(testCase.getResult().contains("ÓĞÎó"))
 												testCaseMatrixPanel.getPredict().setForeground(Color.red);
 											
-											testCaseMatrixPanel.getPredict().setText("è¢«æµ‹ç¨‹åºæ‰§è¡Œç»“æœ:ç”µæ¢¯åœé åœ¨" + str2 + "å±‚");
+											testCaseMatrixPanel.getPredict().setText("±»²â³ÌĞòÖ´ĞĞ½á¹û:µçÌİÍ£¿¿ÔÚ" + str2 + "²ã");
 										}
 										else {
 											if (str2.equals("1")) {
-												testCaseMatrixPanel.getPredict().setText("è¢«æµ‹ç¨‹åºæ‰§è¡Œç»“æœ:æ— äººæœºæˆåŠŸè¿”èˆª,å¹¶å®ŒæˆåŠ é”");
+												testCaseMatrixPanel.getPredict().setText("±»²â³ÌĞòÖ´ĞĞ½á¹û:ÎŞÈË»ú³É¹¦·µº½,²¢Íê³É¼ÓËø");
 											}
 											else {
-												testCaseMatrixPanel.getPredict().setText("è¢«æµ‹ç¨‹åºæ‰§è¡Œç»“æœ:æ— äººæœºè¿è¡Œå¼‚å¸¸");
+												testCaseMatrixPanel.getPredict().setText("±»²â³ÌĞòÖ´ĞĞ½á¹û:ÎŞÈË»úÔËĞĞÒì³£");
 												testCaseMatrixPanel.getPredict().setForeground(Color.red);
 											}
 											
@@ -539,13 +539,13 @@ public class StepFourOperation extends JPanel {
 									validatePagePanel1.setType(type);
 									
 									Exchangelabel.removeAll();
-									Exchangelabel.setText("æ­£åœ¨ç”Ÿæˆå¯é æ€§æµ‹è¯•æ•°æ®æ‰§è¡ŒæŠ¥å‘Š....");
+									Exchangelabel.setText("ÕıÔÚÉú³É¿É¿¿ĞÔ²âÊÔÊı¾İÖ´ĞĞ±¨¸æ....");
 									
 
 									List<Integer> totalList = ResultService.getResults(testcaselist);
 									
 									
-									// ç»Ÿè®¡æˆåŠŸå¤±è´¥
+									// Í³¼Æ³É¹¦Ê§°Ü
 									FailReportTableHeaderPanel failReportTableHeaderPanel = new FailReportTableHeaderPanel();
 									TestCaseTabelPanel testCaseTabelPanel = new TestCaseTabelPanel(totalList.get(0),
 											totalList.get(1), totalList.get(2), mainFrame);
@@ -555,7 +555,7 @@ public class StepFourOperation extends JPanel {
 											new GBC(0, 0, 2, 1).setFill(GBC.BOTH).setWeight(1, 0));
 									mainFrame.renewPanel();
 
-									// ç»Ÿè®¡å¤±è´¥ç±»å‹
+									// Í³¼ÆÊ§°ÜÀàĞÍ
 //									List<Integer> failList = ResultService.getFailType(testcaselist);
 //									TypeFailReportTableHeaderPanel typeFailReportTableHeaderPanel = new TypeFailReportTableHeaderPanel();
 //									TestCaseTabelPanel failTypeTable = new TestCaseTabelPanel(failList.get(0),
@@ -594,7 +594,7 @@ public class StepFourOperation extends JPanel {
 					// TODO: handle exception
 					e.printStackTrace();
 					Exchangelabel.removeAll();
-					Exchangelabel.setText("å¯é æ€§æµ‹è¯•æ•°æ®æ‰§è¡Œå¤±è´¥!");
+					Exchangelabel.setText("¿É¿¿ĞÔ²âÊÔÊı¾İÖ´ĞĞÊ§°Ü!");
 
 					mainFrame.getStepFourTestCase().getjRadionPanel().setVisible(true);
 					startExchange.setEnabled(true);
@@ -628,11 +628,11 @@ public class StepFourOperation extends JPanel {
 			@Override
 			public Integer call() throws Exception {
 				// TODO Auto-generated method stub
-				//  ç”Ÿæˆå¤±è´¥å¯é æ€§æµ‹è¯•æ•°æ®
+				//  Éú³ÉÊ§°Ü¿É¿¿ĞÔ²âÊÔÊı¾İ
 				
 				try {
 				Exchangelabel.removeAll();
-				Exchangelabel.setText("æ­£åœ¨ç”Ÿæˆå¤±æ•ˆæ•°æ®....");
+				Exchangelabel.setText("ÕıÔÚÉú³ÉÊ§Ğ§Êı¾İ....");
 				List<TestCase> failtestcases = ResultService.getFail(testcaselist);
                 
 			
@@ -683,11 +683,11 @@ public class StepFourOperation extends JPanel {
 						testCaseMatrixPanel.getPredict().removeAll();
 						if(type.equals(type3))
 						{
-							testCaseMatrixPanel.getPredict().setText("è¢«æµ‹ç¨‹åºæ‰§è¡Œç»“æœ:ç”µæ¢¯åœé åœ¨" + str2 + "å±‚");
+							testCaseMatrixPanel.getPredict().setText("±»²â³ÌĞòÖ´ĞĞ½á¹û:µçÌİÍ£¿¿ÔÚ" + str2 + "²ã");
 							testCaseMatrixPanel.getPredict().setForeground(Color.red);
 						}
 						else {
-								testCaseMatrixPanel.getPredict().setText("è¢«æµ‹ç¨‹åºæ‰§è¡Œç»“æœ:æ— äººæœºè¿è¡Œå¼‚å¸¸");
+								testCaseMatrixPanel.getPredict().setText("±»²â³ÌĞòÖ´ĞĞ½á¹û:ÎŞÈË»úÔËĞĞÒì³£");
 								testCaseMatrixPanel.getPredict().setForeground(Color.red);	
 						}
 						processID.clear();
@@ -710,7 +710,7 @@ public class StepFourOperation extends JPanel {
 						wrongPage.getValidatePanel().add(testCaseMatrixPanel,
 								new GBC(0, j).setFill(GBC.BOTH).setWeight(1, 0));
 						Exchangelabel.removeAll();
-						Exchangelabel.setText("æ­£åœ¨ç”Ÿæˆå¤±æ•ˆçš„å¯é æ€§æµ‹è¯•æ•°æ®åˆ—è¡¨....");
+						Exchangelabel.setText("ÕıÔÚÉú³ÉÊ§Ğ§µÄ¿É¿¿ĞÔ²âÊÔÊı¾İÁĞ±í....");
 						ExchangeProgressBar.setValue(50 + (int)(((double)(j+1)/index)*30));
 						Thread.sleep(50);
 						mainFrame.renewPanel();
@@ -720,7 +720,7 @@ public class StepFourOperation extends JPanel {
 					wrongPage.getPageTestField().setText("1");
 					wrongPage.setList(failtestcases);
 					wrongPage.setType(type);
-					// ç”Ÿæˆå¤±è´¥çš„å¯é æ€§æµ‹è¯•æ•°æ®xml
+					// Éú³ÉÊ§°ÜµÄ¿É¿¿ĞÔ²âÊÔÊı¾İxml
 					String failCasePath = mainFrame.getBathRoute() + "/FailTestCase/" + modelName
 							+ "_Fail.xml";
 					FailTestCase.writeToXML(failCasePath, failtestcases);
@@ -740,8 +740,8 @@ public class StepFourOperation extends JPanel {
 //				        }             
 //				    }); 
 					Exchangelabel.removeAll();
-					Exchangelabel.setText("æ­£åœ¨å­˜å‚¨å¤±æ•ˆæ•°æ®....");
-					saveFailTestCase(failtestcases); //å­˜å‚¨å¤±æ•ˆæ•°æ®
+					Exchangelabel.setText("ÕıÔÚ´æ´¢Ê§Ğ§Êı¾İ....");
+					saveFailTestCase(failtestcases); //´æ´¢Ê§Ğ§Êı¾İ
 				}else {
 					for(int i = 51; i <= 100;i++)
 					{
@@ -750,7 +750,7 @@ public class StepFourOperation extends JPanel {
 					}
 				}
 
-				// æ¸…é™¤åˆ†å‰²çš„xml
+				// Çå³ı·Ö¸îµÄxml
 //				String name = modelName.split("#")[0];
 //				String type = modelName.split("#")[1];
 //
@@ -770,7 +770,7 @@ public class StepFourOperation extends JPanel {
 					Thread.sleep(20);
 				}
 				Exchangelabel.removeAll();
-				Exchangelabel.setText("å¯é æ€§æµ‹è¯•æ•°æ®æ‰§è¡ŒæŠ¥å‘Šç”Ÿæˆå®Œæ¯•!");
+				Exchangelabel.setText("¿É¿¿ĞÔ²âÊÔÊı¾İÖ´ĞĞ±¨¸æÉú³ÉÍê±Ï!");
 				mainFrame.getStepFourTabbedPane().setSelectedIndex(0);
 				
 				mainFrame.getStepFourTestCase().getjRadionPanel().setVisible(true);
@@ -782,7 +782,7 @@ public class StepFourOperation extends JPanel {
 					// TODO: handle exception
 					e.printStackTrace();
 					Exchangelabel.removeAll();
-					Exchangelabel.setText("å¯é æ€§æµ‹è¯•æ•°æ®æ‰§è¡Œå¤±è´¥!");
+					Exchangelabel.setText("¿É¿¿ĞÔ²âÊÔÊı¾İÖ´ĞĞÊ§°Ü!");
 
 					mainFrame.getStepFourTestCase().getjRadionPanel().setVisible(true);
 					startExchange.setEnabled(true);
@@ -803,7 +803,7 @@ public class StepFourOperation extends JPanel {
 		mainFrame.getStepFourTabbedPane().getTestCaseResport().removeAll();
 		mainFrame.getStepFourTabbedPane().getWrongtestCaseResults().removeAll();
 
-		// æ¸…é™¤åˆ†å‰²çš„xml
+		// Çå³ı·Ö¸îµÄxml
 //		if (modelName != null) {
 //			String name = modelName.split("#")[0];
 //			String type = modelName.split("#")[1];
@@ -900,8 +900,8 @@ public class StepFourOperation extends JPanel {
 				TestCase tc = new TestCase();
 				tc.setTestCaseID(String.valueOf(i++));
 				tc.setProcessList(processList);
-				tc.setExpectResult("é¢„æœŸç»“æœ:å¯é æ€§æµ‹è¯•æ•°æ®æ­£ç¡®");
-				tc.setState("æµ‹è¯•è€—æ—¶:0ms");
+				tc.setExpectResult("Ô¤ÆÚ½á¹û:¿É¿¿ĞÔ²âÊÔÊı¾İÕıÈ·");
+				tc.setState("²âÊÔºÄÊ±:0ms");
 				XMLToTestCaseList.add(tc);
 
 				processList = new ArrayList<myProcess>();
@@ -935,16 +935,16 @@ public class StepFourOperation extends JPanel {
 		}
 
 		try {
-			// å®šä¹‰è¾“å‡ºæµçš„ç›®çš„åœ°
+			// ¶¨ÒåÊä³öÁ÷µÄÄ¿µÄµØ
 			// String baseUrl =
 			// "D:\\ModelDriverProjectFile\\UPPAL\\4.Real_TestCase";
 			FileWriter fw = new FileWriter(path);
 
-			// å®šä¹‰è¾“å‡ºæ ¼å¼å’Œå­—ç¬¦é›†
+			// ¶¨ÒåÊä³ö¸ñÊ½ºÍ×Ö·û¼¯
 			OutputFormat format = OutputFormat.createPrettyPrint();
 			format.setEncoding("UTF-8");
 
-			// å®šä¹‰ç”¨äºè¾“å‡ºxmlæ–‡ä»¶çš„XMLWriterå¯¹è±¡
+			// ¶¨ÒåÓÃÓÚÊä³öxmlÎÄ¼şµÄXMLWriter¶ÔÏó
 			XMLWriter xmlWriter = new XMLWriter(fw, format);
 			xmlWriter.write(doc);// *****
 			xmlWriter.close();
@@ -1010,7 +1010,7 @@ public class StepFourOperation extends JPanel {
 		}
 	}
 	
-	//å»é™¤é‡å¤çš„ID
+	//È¥³ıÖØ¸´µÄID
 	private List<TestCase> delet(List<TestCase> testCases)
 	{
 		List<TestCase> newcases = testCases;

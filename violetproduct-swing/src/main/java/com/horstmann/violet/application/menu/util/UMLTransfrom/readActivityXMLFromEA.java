@@ -25,8 +25,8 @@ public class readActivityXMLFromEA {
 	 */
 	private  void getInformationFormXML(String path) {
 		Document document =XMLUtils.load(path);
-		Element root=document.getRootElement();//鑾峰彇鏍硅妭鐐�
-		Element extension= root.element("Extension");//鑾峰彇Extension鑺傜�?
+		Element root=document.getRootElement();
+		Element extension= root.element("Extension");
 		List<Element> nodes= extension.element("elements").elements();
 		for(Element element:nodes){
 			String type=element.attributeValue("type");
@@ -77,7 +77,7 @@ public class readActivityXMLFromEA {
 		}
 		
 	
-		List<Element> diagrams =extension.element("diagrams").element("diagram").element("elements").elements();//为元锟截节碉拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷准锟斤拷
+		List<Element> diagrams =extension.element("diagrams").element("diagram").element("elements").elements();
 			for(Element diagram:diagrams){
 				for(Node node:nodeList){
 					String id=diagram.attributeValue("subject");

@@ -70,7 +70,7 @@ public class ResultService {
                         	System.out.println("fileName: " + fileName);
                         	List<TestCase> testcaselist=TcConvertUtil.buildTestCaseList(type, fileName);
                         	
-                        	//IDÆ«ï¿½ï¿½
+                        
                         	if(Controller.offsetIP!=null&&filelist[i].contains(Controller.offsetIP)){
                         		for(TestCase testCase:testcaselist){
                         			testCase.setTestCaseID(String.valueOf(Integer.parseInt(testCase.getTestCaseID())+Controller.offsetTestCaseId));
@@ -112,7 +112,7 @@ public class ResultService {
     	
     	for(int i = 0;i < testcaselist.size();i++)
     	{
-    		if(testcaselist.get(i).getResult().contains("æˆåŠŸ"))
+    		if(testcaselist.get(i).getResult().contains("³É¹¦"))
     		{
     			success++;
     		}
@@ -139,10 +139,10 @@ public class ResultService {
     	int failtype = 0;
     	for(int i = 0;i < testcaselist.size();i++)
     	{
-    		if(!testcaselist.get(i).getResult().contains("æˆåŠŸ"))
+    		if(!testcaselist.get(i).getResult().contains("³É¹¦"))
     		{
     			fail++;
-    			if(testcaselist.get(i).getResult().contains("ç¨‹åºæ‰§è¡Œè¿‡ç¨‹ä¸­å‡ºçŽ°æ­»å¾ªçŽ¯æˆ–è€…æŠ›å‡ºå¼‚å¸¸!"))
+    			if(testcaselist.get(i).getResult().contains("³ÌÐòÖ´ÐÐ¹ý³ÌÖÐ³öÏÖËÀÑ­»·»òÕßÅ×³öÒì³£!"))
     			{
     				failtype++;
     			}
@@ -160,7 +160,7 @@ public class ResultService {
     	
     	for(int i = 0;i < testcaselist.size();i++)
     	{
-    		if(testcaselist.get(i).getResult().contains("æˆåŠŸ"))
+    		if(testcaselist.get(i).getResult().contains("³É¹¦"))
     		{
     			
     		}

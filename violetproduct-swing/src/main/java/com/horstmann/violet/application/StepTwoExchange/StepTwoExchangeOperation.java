@@ -115,15 +115,15 @@ public class StepTwoExchangeOperation extends JPanel {
 	public void init() {
 		exchangeNodePanel = new ExchangeNodePanel(mainFrame);
 		toplabel = new JLabel();
-		toplabel.setFont(new Font("å®‹ä½“", Font.PLAIN, 16));
+		toplabel.setFont(new Font("ËÎÌå", Font.PLAIN, 16));
 
 		ExchangeProgressBar = new JProgressBar();
 		ExchangeProgressBar.setUI(new ProgressUI(ExchangeProgressBar, Color.green));
 		ExchangeProgressBar.setPreferredSize(new Dimension(600, 30));
 		ExchangeProgressBar.setUI(new GradientProgressBarUI());
 
-		startExchange = new JButton("å¼€å§‹è½¬æ¢");
-		restartExchange = new JButton("åœæ­¢è½¬æ¢");
+		startExchange = new JButton("¿ªÊ¼×ª»»");
+		restartExchange = new JButton("Í£Ö¹×ª»»");
 		restartExchange.setEnabled(false);
 		gapPanel = new JPanel();
 		buttonListen();
@@ -231,7 +231,7 @@ public class StepTwoExchangeOperation extends JPanel {
 					IISDList = mainFrame.getStepTwoModelOperation().getIISDList();
 
 					toplabel.removeAll();
-					toplabel.setText("æ­£åœ¨è·å–ç”¨ä¾‹è¿ç§»æ¦‚ç‡.....");
+					toplabel.setText("ÕıÔÚ»ñÈ¡ÓÃÀıÇ¨ÒÆ¸ÅÂÊ.....");
 					Thread.sleep(1000);
 
 					worker.assignmentPro(IISDList);
@@ -240,7 +240,7 @@ public class StepTwoExchangeOperation extends JPanel {
 					List<Object> verList = worker.transVerify();
 
 					toplabel.removeAll();
-					toplabel.setText("æ­£åœ¨è·å–åœºæ™¯æ¦‚ç‡.....");
+					toplabel.setText("ÕıÔÚ»ñÈ¡³¡¾°¸ÅÂÊ.....");
 					Thread.sleep(1000);
 
 					List<String> seqNames = new ArrayList<String>();
@@ -269,7 +269,6 @@ public class StepTwoExchangeOperation extends JPanel {
 					}
 					mainFrame.renewPanel();
 
-					// ç”ŸæˆMarkové“¾
 					GraphFile graphFile = null;
 
 					for (InterfaceIsogenySD key : IISDList) {
@@ -277,7 +276,7 @@ public class StepTwoExchangeOperation extends JPanel {
 
 							for (String seqName : seqNames) {
 								if (seqName.replace(".xml", "").equals(seq.getName())) {
-									toplabel.setText("æ­£åœ¨ç”Ÿæˆ" + key.getUcName() + "ç”¨ä¾‹çš„" + seq.getName() + "åœºæ™¯Markové“¾....");
+									toplabel.setText("ÕıÔÚÉú³É" + key.getUcName() + "ÓÃÀıµÄ" + seq.getName() + "³¡¾°MarkovÁ´....");
 									seqName = seqName.replace(".xml", "");
 									TianWriteToVioletMarkov tian = new TianWriteToVioletMarkov();
 									tian.find(MarkovRoute + seqName + ".xml");
@@ -308,7 +307,7 @@ public class StepTwoExchangeOperation extends JPanel {
 						}
 
 						toplabel.removeAll();
-						toplabel.setText("æ­£åœ¨ç”Ÿæˆ" + key.getUcName() + "ç”¨ä¾‹Markové“¾.....");
+						toplabel.setText("ÕıÔÚÉú³É" + key.getUcName() + "ÓÃÀıMarkovÁ´.....");
 						String ucName = key.getUcName();
 						TianWriteToVioletMarkov tian = new TianWriteToVioletMarkov();
 						tian.find(MarkovRoute + ucName + ".xml");
@@ -332,7 +331,7 @@ public class StepTwoExchangeOperation extends JPanel {
 					}
 
 					toplabel.removeAll();
-					toplabel.setText("æ­£åœ¨ç”Ÿæˆ" + Model_Name + "æ¨¡å‹Markové“¾.....");
+					toplabel.setText("ÕıÔÚÉú³É" + Model_Name + "Ä£ĞÍMarkovÁ´.....");
 					TianWriteToVioletMarkov tian = new TianWriteToVioletMarkov();
 					tian.find(MarkovRoute + Model_Name + ".xml");
 					tian.writeVioletMarkov(MarkovRoute + Model_Name + ".markov.violet.xml");
@@ -354,12 +353,12 @@ public class StepTwoExchangeOperation extends JPanel {
 					Thread.sleep(1500);
 
 					toplabel.removeAll();
-					toplabel.setText("æ­£åœ¨è·å–MarkovèŠ‚ç‚¹ä¿¡æ¯.....");
+					toplabel.setText("ÕıÔÚ»ñÈ¡Markov½ÚµãĞÅÏ¢.....");
 					Thread.sleep(1500);
 
 
-					// //æ·»åŠ èŠ‚ç‚¹ä¿¡æ¯
-					mainFrame.getStepTwoCenterRightPanel().getNodeTextMap().clear(); // é¦–å…ˆæ¸…é™¤map
+			
+					mainFrame.getStepTwoCenterRightPanel().getNodeTextMap().clear();
 					nodeTextMap = new HashMap<Object, String>();
 					Collection<INode> nodes = graphFile.getGraph().getAllNodes();
 					for (INode node : nodes) {
@@ -382,10 +381,10 @@ public class StepTwoExchangeOperation extends JPanel {
 					}
 
 					toplabel.removeAll();
-					toplabel.setText("æ­£åœ¨è·å–Markovè¿ç§»ä¿¡æ¯.....");
+					toplabel.setText("ÕıÔÚ»ñÈ¡MarkovÇ¨ÒÆĞÅÏ¢.....");
 					Thread.sleep(1500);
 
-					// ä¿®æ”¹è¾¹çš„ä¿¡æ¯
+					
 					mainFrame.getStepTwoCenterRightPanel().getEdgeTextMap().clear();
 					edgeTextMap = new HashMap<Object, String>();
 					Collection<IEdge> edges = graphFile.getGraph().getAllEdges();
@@ -401,7 +400,7 @@ public class StepTwoExchangeOperation extends JPanel {
 					}
 					
 					toplabel.removeAll();
-					toplabel.setText("æ­£åœ¨è·å–Markové“¾XMLä¿¡æ¯.....");
+					toplabel.setText("ÕıÔÚ»ñÈ¡MarkovÁ´XMLĞÅÏ¢.....");
 					Thread.sleep(1500);
 					mainFrame.getStepTwoExchangeTabbedPane().getExchangeResport().removeAll();
 					mainFrame.getStepTwoExchangeTabbedPane().getExchangeResport()
@@ -410,8 +409,7 @@ public class StepTwoExchangeOperation extends JPanel {
 					mainFrame.renewPanel();
 
 					
-                    // æ¸…é™¤å¸ƒå±€XML
-					//æ¸…é™¤ç”¨ä¾‹ä»¥åŠåœºæ™¯Markov
+                    
 					for (File file : new File(MarkovRoute).listFiles()) {
 						if (file.getName().contains(".markov.violet.xml")) {
 							file.delete();
@@ -436,7 +434,7 @@ public class StepTwoExchangeOperation extends JPanel {
 					nodeLabel.setXMLPanel(XMLPanel);
 					nodeLabel.setNodeTextMap(nodeTextMap);
 					nodeLabel.setEdgeTextMap(edgeTextMap);
-					nodeLabel.setQuota("Markovè½¬æ¢æˆåŠŸ,å¯ä»¥ç”Ÿæˆå¯é æ€§æµ‹è¯•æ•°æ®!");
+					nodeLabel.setQuota("Markov×ª»»³É¹¦,¿ÉÒÔÉú³É¿É¿¿ĞÔ²âÊÔÊı¾İ!");
 
 					exchangeNodePanel.insertNodeLabel(nodeLabel,workspace,XMLPanel,nodeTextMap,edgeTextMap);
 					mainFrame.getStepTwoExpand().getExchangepPanel().repaint();
@@ -446,7 +444,7 @@ public class StepTwoExchangeOperation extends JPanel {
 					mainFrame.getStepThreeLeftButton().setNew(true);
 					isNew = true;
 					toplabel.removeAll();
-					toplabel.setText("Markovè½¬æ¢æˆåŠŸ,å¯ä»¥ç”Ÿæˆå¯é æ€§æµ‹è¯•æ•°æ®!");
+					toplabel.setText("Markov×ª»»³É¹¦,¿ÉÒÔÉú³É¿É¿¿ĞÔ²âÊÔÊı¾İ!");
 					
 					mainFrame.getStepTwoExpandBottom().enable();
 					mainFrame.renewPanel();
@@ -456,7 +454,7 @@ public class StepTwoExchangeOperation extends JPanel {
 					e2.printStackTrace();
 
 					toplabel.removeAll();
-					toplabel.setText("ç”ŸæˆMarkové“¾å‡ºé”™!è¯·é‡æ–°æ‰©å±•æˆ–æ£€æŸ¥UMLæ¨¡å‹!");
+					toplabel.setText("Éú³ÉMarkovÁ´³ö´í!ÇëÖØĞÂÀ©Õ¹»ò¼ì²éUMLÄ£ĞÍ!");
 					
 					startExchange.setEnabled(true);
 					mainFrame.getStepTwoExpand().getEstimatepPanel().setVisible(true);
@@ -521,12 +519,12 @@ public class StepTwoExchangeOperation extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				if (!isAlive) {
-					restartExchange.setText("åœæ­¢è½¬æ¢");
+					restartExchange.setText("Í£Ö¹×ª»»");
 					mainthread.resume();
 					thread1.resume();
 					isAlive = true;
 				} else {
-					restartExchange.setText("å¼€å§‹è½¬æ¢");
+					restartExchange.setText("¿ªÊ¼×ª»»");
 					mainthread.suspend();
 					thread1.suspend();
 					isAlive = false;

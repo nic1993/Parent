@@ -18,18 +18,13 @@ public class WriteToXML {
 	
 	public WriteToXML(){}
 
-	/**
-	 * 传入扩展和概率转化后的模型，生成相应的XMl文件
-	 * @param mm Markov模型
-	 * @param fileName 新生成的XMl文件名
-	 * @throws Exception
-	 */
+
 	public void writeMarkov2XML(Model mm, String fileName) throws Exception{
 		
-		//1.创建document对象，代表整个文档
+
 		Document document=DocumentHelper.createDocument();
 				
-		//2.创建根节点并未根节点添加属性
+	
 		Element model=document.addElement("Model");
 		model.addAttribute("version", "1.0");
 		model.addAttribute("type", "uml:Model");
@@ -37,19 +32,19 @@ public class WriteToXML {
 		model.addAttribute("visibility", "public");
 		model.addAttribute("authorNmae", "SN");
 				
-		//3.添加子节点，设置模型名
+		
 		Element modelName=model.addElement("name");
 		modelName.setText(mm.getName());
 		
-		//遍历并添加State节点及其属性
+	
 		for(State stateEntity:mm.getStateList()){
 			
-			Element state = model.addElement("state");                 //创建子节点state
-			if (stateEntity.getLabel()!=null) {                        //设置state的属性label
+			Element state = model.addElement("state");                 
+			if (stateEntity.getLabel()!=null) {                        
 				state.addAttribute("label", stateEntity.getLabel());   
 			}
 
-			Element stateName=state.addElement("name");                //state的子节点name
+			Element stateName=state.addElement("name");                
 			stateName.setText(stateEntity.getName());  
 			
 			if (stateEntity.getTime()!=null) {
@@ -57,19 +52,18 @@ public class WriteToXML {
 				stateTime.setText(stateEntity.getTime());
 			}
 			
-			//设置迁移arc节点
 			for(Arc arcEntity:stateEntity.getArcList()){
-					Element arc=state.addElement("arc");                //添加迁移节点
-					arc.addAttribute("label", "prob");                  //所有迁移都添加属性label，并设为prob
-					arc.addAttribute("type", arcEntity.getType());      //设置type属性
+					Element arc=state.addElement("arc");                
+					arc.addAttribute("label", "prob");                
+					arc.addAttribute("type", arcEntity.getType());      
 					
-					Element arcName = arc.addElement("name");           //增加并设置子节点name
+					Element arcName = arc.addElement("name");           
 					arcName.setText(arcEntity.getName());
 					
 					Element arcProb = arc.addElement("prob");
-					//prob为double类型，转化为String类型后才能在xml中输出
+				
 					arcProb.setText(Double.toString(arcEntity.getProb()));
-					//arcProb.setData(arcEntity.getProb());
+				
 					
 					if(arcEntity.getTime()!=null){
 						Element arcTime = arc.addElement("time");
@@ -94,14 +88,14 @@ public class WriteToXML {
 						arcConditions.setText(newConditions);
 					}
 					
-					//设置激励stimulate
+			
 					if (arcEntity.getStimulate()!=null && arcEntity.getStimulate().getParameterList()!=null) {
 						Element stimulate = arc.addElement("stimulate");              
 						Stimulate stimulateEntity = arcEntity.getStimulate();
 						
 						if(stimulateEntity.getParameterList()!=null){
 							for(int i=0; i<stimulateEntity.getParameterList().size();i++){
-								Parameter parameterEntity = stimulateEntity.getParameterList().get(i);   //当前Parameter实体
+								Parameter parameterEntity = stimulateEntity.getParameterList().get(i);   
 								
 								Element parameter = stimulate.addElement("parameter");
 								
@@ -134,7 +128,7 @@ public class WriteToXML {
 								}
 							}
 							
-							//遍历参数约束表达式的个数，加入约束表达式信息；
+					
 							if (stimulateEntity.getConstraintList() != null) {
 								for(Iterator<String> it = stimulateEntity.getConstraintList().iterator();it.hasNext();){
 									String consStr = it.next();

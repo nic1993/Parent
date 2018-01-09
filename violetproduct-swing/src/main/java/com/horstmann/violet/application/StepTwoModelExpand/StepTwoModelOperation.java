@@ -85,7 +85,7 @@ public class StepTwoModelOperation extends JPanel{
 	private List verList;
 	private List<InterfaceIsogenySD> IISDList;
 	
-	private List<String> relations;  //è·å–å…³ç³»é›†åˆ
+	private List<String> relations;  
 	private List<Double> relationsData;
 	private List<double[][]> tableDatas;
 	private Work worker;
@@ -94,8 +94,8 @@ public class StepTwoModelOperation extends JPanel{
 	private boolean isSameName = false;
 	private Map<String, ScenceTabelPanel> tabelResultMap;
 	private ScenceTabelPanel evaluatePanel;
-	private List<StepTwoMatrixPanel> MatrixPanels;  //åœºæ™¯æ‰©å±•
-	private List<StepTwoMatrixPanel> EvaluateMatrixPanels;  //æ¨¡å‹è¯„ä¼°
+	private List<StepTwoMatrixPanel> MatrixPanels; 
+	private List<StepTwoMatrixPanel> EvaluateMatrixPanels;  
 	private JPanel MatrixPanel;
 	private boolean isNeedExpand = false;
 	private boolean isFinish;
@@ -181,18 +181,18 @@ public class StepTwoModelOperation extends JPanel{
 		relations = new ArrayList<String>();
 		relationsData = new ArrayList<Double>();
 		tableDatas = new ArrayList<double[][]>();
-		numberLabel = new JLabel("ç”¨æˆ·æ•°:");
-		numberLabel.setFont(new Font("å®‹ä½“", Font.PLAIN, 16));
+		numberLabel = new JLabel("ÓÃ»§Êı:");
+		numberLabel.setFont(new Font("ËÎÌå", Font.PLAIN, 16));
 		
 		numberTextField = new JTextField();
-		numberTextField.setFont(new Font("å®‹ä½“", Font.PLAIN, 16));
+		numberTextField.setFont(new Font("ËÎÌå", Font.PLAIN, 16));
 		numberTextField.setPreferredSize(new Dimension(30, 20));
 		numberTextField.setMinimumSize(new Dimension(100, 20));
 		numberTextField.setMaximumSize(new Dimension(100, 20));
 		numberTextField.addCaretListener(new TextFieldInputListener());
 		
-		startExpandButton = new JButton("å¼€å§‹æ‰©å±•");
-		startVerificationButton = new JButton("å¼€å§‹éªŒè¯");
+		startExpandButton = new JButton("¿ªÊ¼À©Õ¹");
+		startVerificationButton = new JButton("¿ªÊ¼ÑéÖ¤");
 		startVerificationButton.setEnabled(false);
 		
 		verificationProgressBar = new JProgressBar();
@@ -220,8 +220,8 @@ public class StepTwoModelOperation extends JPanel{
 		};
 		 
 		label = new JLabel();
-		label.setFont(new Font("å®‹ä½“", Font.PLAIN, 16));
-		label.setText("è¯·åœ¨å·¦ä¾§é€‰æ‹©ç”¨ä¾‹æ¨¡å‹å¹¶å¡«å†™ç”¨æˆ·æ•°è¿›è¡Œæ‰©å±•ï¼");
+		label.setFont(new Font("ËÎÌå", Font.PLAIN, 16));
+		label.setText("ÇëÑ¡ÔñĞèÒªÀ©Õ¹µÄÄ£ĞÍ!");
 		labelPanel = new JPanel();
 
 		otherPanel.setLayout(new GridBagLayout());
@@ -283,7 +283,7 @@ public class StepTwoModelOperation extends JPanel{
 		// TODO Auto-generated method stub
 		 try {
 			 label.removeAll();
-			    label.setText("æ­£åœ¨åˆå§‹åŒ–æ•°æ®.....");
+			    label.setText("ÕıÔÚ³õÊ¼»¯Êı¾İ....");
 			    Thread.sleep(300);
 				stepTwoModelExpandTabbedPane.getValidationResults().removeAll();
 				stepTwoModelExpandTabbedPane.getValidationResults().updateUI();
@@ -291,8 +291,8 @@ public class StepTwoModelOperation extends JPanel{
 			    EvaluateMatrixPanels.clear();
 			    
 			    label.removeAll();
-			    label.setText("æ­£åœ¨è®¡ç®—åç»§ç”¨ä¾‹è¿ç§»å…³ç³»æ¦‚ç‡.....");
-				for(String key : ucMap.keySet()) //æ±‚è§£ ç”Ÿæˆ
+			    label.setText("ÕıÔÚ¼ÆËãºó¼ÌÓÃÀıÇ¨ÒÆ¹ØÏµ¸ÅÂÊ.....");
+				for(String key : ucMap.keySet())
 				{
 					
 				    relations.clear();
@@ -308,10 +308,10 @@ public class StepTwoModelOperation extends JPanel{
 						relationsData.add(1.000);
 						
 						StepTwoMatrixPanel stepTwoMatrixPanel = new StepTwoMatrixPanel(mainFrame);
-						stepTwoMatrixPanel.getTitleLabel().setText("æ‰§è¡Œç”¨ä¾‹:"+ key);
+						stepTwoMatrixPanel.getTitleLabel().setText("Ö´ĞĞÓÃÀı:"+ key);
 						
 						StepTwoMatrixPanel stepTwoMatrixPanel1 = new StepTwoMatrixPanel(mainFrame);
-						stepTwoMatrixPanel1.getTitleLabel().setText("æ‰§è¡Œç”¨ä¾‹:"+ key);
+						stepTwoMatrixPanel1.getTitleLabel().setText("Ö´ĞĞÓÃÀı:"+ key);
 					    
 					    ScenceTabelPanel scenceTabelPanel = new ScenceTabelPanel(relations, relationsData, 1, mainFrame);
 					    stepTwoMatrixPanel.getTabelPanel().add(scenceTabelPanel);
@@ -346,7 +346,7 @@ public class StepTwoModelOperation extends JPanel{
 					   					{
 										    
 					   						label.removeAll();
-					   						label.setText("è®¡ç®—æ‰©å±•çŸ©é˜µå‡ºé”™ï¼Œè¯·æ£€æŸ¥å¡«å†™çš„æ‰©å±•çŸ©é˜µ!");
+					   						label.setText("¼ÆËãÀ©Õ¹¾ØÕó³ö´í£¬Çë¼ì²éÌîĞ´µÄÀ©Õ¹¾ØÕó!");
 					   						
 //					   						startExpandButton.setEnabled(true);
 					   						startVerificationButton.setEnabled(true);
@@ -367,7 +367,7 @@ public class StepTwoModelOperation extends JPanel{
 					}
 					if(tableDatas.size() > 0)
 					{
-						List list=worker.calculateProb(tableDatas); //å¸¦å…¥ç•Œé¢å¡«å†™çš„çŸ©é˜µæ•°ç»„é›†åˆï¼Œè¿”å›è®¡ç®—ç»“æœ
+						List list=worker.calculateProb(tableDatas); 
 						double[] datas = (double[]) list.get(1);
 						for(int k = 0; k < datas.length;k++)
 						{
@@ -378,13 +378,13 @@ public class StepTwoModelOperation extends JPanel{
 						stepTwoModelExpandTabbedPane.getValidationResults().updateUI();
 						
 						StepTwoMatrixPanel stepTwoMatrixPanel = new StepTwoMatrixPanel(mainFrame);
-						stepTwoMatrixPanel.getTitleLabel().setText("æ‰§è¡Œç”¨ä¾‹:"+key);
+						stepTwoMatrixPanel.getTitleLabel().setText("Ö´ĞĞÓÃÀı:"+key);
 						ScenceTabelPanel scenceTabelPanel = new ScenceTabelPanel(relations, relationsData, 1, mainFrame);
 						stepTwoMatrixPanel.getTabelPanel().add(scenceTabelPanel);
 						MatrixPanels.add(stepTwoMatrixPanel);
 						
 						StepTwoMatrixPanel stepTwoMatrixPanel1 = new StepTwoMatrixPanel(mainFrame);
-						stepTwoMatrixPanel1.getTitleLabel().setText("æ‰§è¡Œç”¨ä¾‹:"+key);
+						stepTwoMatrixPanel1.getTitleLabel().setText("Ö´ĞĞÓÃÀı:"+key);
 						ScenceTabelPanel scenceTabelPanel1 = new ScenceTabelPanel(relations, relationsData, 1, mainFrame);
 						stepTwoMatrixPanel1.getTabelPanel().add(scenceTabelPanel1);
 						EvaluateMatrixPanels.add(stepTwoMatrixPanel1);
@@ -396,7 +396,7 @@ public class StepTwoModelOperation extends JPanel{
 			// TODO: handle exception
 			e.printStackTrace();
 			label.removeAll();
-			label.setText("ç”¨ä¾‹æ‰©å±•å‡ºé”™ï¼Œè¯·é‡æ–°æ‰©å±•!");
+			label.setText("ÓÃÀıÀ©Õ¹³ö´í£¬ÇëÖØĞÂÀ©Õ¹!");
 			
 			startExpandButton.setEnabled(true);
 			startVerificationButton.setEnabled(false);
@@ -415,10 +415,10 @@ public class StepTwoModelOperation extends JPanel{
 		// TODO Auto-generated method stub
 		 try {
 			 label.removeAll();
-			  label.setText("æ­£åœ¨ç”Ÿæˆåç»§ç”¨ä¾‹æ¦‚ç‡åˆ—è¡¨.....");
+			  label.setText("ÕıÔÚÉú³Éºó¼ÌÓÃÀı¸ÅÂÊÁĞ±í.....");
 			  if(relations.size() > 0)
 			  {
-				    //è®¾ç½®ç¬¬ä¸€ä¸ªçŸ©é˜µå±•å¼€
+				
 				    MatrixPanels.get(0).getTabelPanel().setVisible(true);
 				    
 				    JPanel panel = new JPanel();
@@ -440,16 +440,16 @@ public class StepTwoModelOperation extends JPanel{
 					mainFrame.renewPanel();					
 
 					isFinish = true;
-					for(String key : ucMap.keySet()) //æ±‚è§£ ç”Ÿæˆ
+					for(String key : ucMap.keySet()) 
 						{
 							List<InterfaceUCRelation> interfaceUCRelations = ucMap.get(key);
 							for(InterfaceUCRelation interfaceUCRelation : interfaceUCRelations){	
-//		    					System.out.println(key+"ç”¨ä¾‹: " + "å…³ç³»: " + interfaceUCRelation.getUCRelation() + "æ¦‚ç‡: " + interfaceUCRelation.getUCRelProb());
+
 		    					if(interfaceUCRelation.getUCRelProb() <= 0.0 || interfaceUCRelation.getUCRelProb() > 1)
 		    					{
 		    						isFinish = false;
 		    					}
-		    					mainFrame.getOutputinformation().geTextArea().append(key+"ç”¨ä¾‹: " + "å…³ç³»: " + interfaceUCRelation.getUCRelation() + "æ¦‚ç‡: " + interfaceUCRelation.getUCRelProb() + "\n");
+		    					mainFrame.getOutputinformation().geTextArea().append(key+"ÓÃÀı: " + "¹ØÏµ: " + interfaceUCRelation.getUCRelation() + "¸ÅÂÊ: " + interfaceUCRelation.getUCRelProb() + "\n");
 		    					int length = mainFrame.getOutputinformation().geTextArea().getText().length(); 
 				                mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
 		    					}
@@ -461,7 +461,7 @@ public class StepTwoModelOperation extends JPanel{
 							if(string.equals(Model_Name))
 							{
 								mainFrame.getjRadionPanel().getRadios().get(string).setScenceTabelPanel(panel);
-								mainFrame.getjRadionPanel().getRadios().get(string).setQuota(Model_Name+"æ¨¡å‹ç”¨ä¾‹æ‰©å±•éªŒè¯é€šè¿‡ï¼Œå¯ä»¥è¿›è¡Œåœºæ™¯æ‰©å±•ï¼");
+								mainFrame.getjRadionPanel().getRadios().get(string).setQuota(Model_Name+"Ä£ĞÍÓÃÀıÀ©Õ¹ÑéÖ¤Í¨¹ı£¬¿ÉÒÔ½øĞĞ³¡¾°À©Õ¹£¡");
 							}
 						}
 					}
@@ -470,7 +470,7 @@ public class StepTwoModelOperation extends JPanel{
 			    if(isFinish == false) 
 			    {
 			    	label.removeAll();
-					label.setText(Model_Name+"æ¨¡å‹ç”¨ä¾‹æ‰©å±•éªŒè¯ä¸é€šè¿‡ï¼Œè¯·é‡æ–°å¡«å†™æ‰©å±•çŸ©é˜µ!");
+					label.setText(Model_Name+"Ä£ĞÍÓÃÀıÀ©Õ¹ÑéÖ¤²»Í¨¹ı£¬ÇëÖØĞÂÌîĞ´À©Õ¹¾ØÕó!");
 					stepTwoModelExpandTabbedPane.setSelectedIndex(1);
 					stepTwoModelExpandTabbedPane.getValidationResults().updateUI();
 					mainFrame.getsteponeButton().getExpandCaseModel().setEnabled(false);
@@ -478,7 +478,7 @@ public class StepTwoModelOperation extends JPanel{
 			    }
 			    else {
 			    	label.removeAll();
-				    label.setText(Model_Name+"ç”¨ä¾‹æ‰©å±•éªŒè¯é€šè¿‡ï¼Œå¯ä»¥è¿›è¡Œåœºæ™¯æ‰©å±•ï¼");
+				    label.setText(Model_Name+"ÓÃÀıÀ©Õ¹ÑéÖ¤Í¨¹ı£¬¿ÉÒÔ½øĞĞ³¡¾°À©Õ¹£¡");
 					stepTwoModelExpandTabbedPane.getValidationResults().updateUI();
 					stepTwoModelExpandTabbedPane.setSelectedIndex(1);
 					mainFrame.getsteponeButton().getExpandCaseModel().setEnabled(true);
@@ -490,7 +490,7 @@ public class StepTwoModelOperation extends JPanel{
 		} catch (Exception e) {
 			// TODO: handle exception
 			label.removeAll();
-			label.setText("ç”¨ä¾‹æ‰©å±•å‡ºé”™ï¼Œè¯·é‡æ–°æ‰©å±•!");
+			label.setText("ÓÃÀıÀ©Õ¹³ö´í£¬ÇëÖØĞÂÀ©Õ¹!");
 			
 			startExpandButton.setEnabled(true);
 			startVerificationButton.setEnabled(false);
@@ -539,15 +539,15 @@ public class StepTwoModelOperation extends JPanel{
 					
 					if(Model_Name == null){
 						label.removeAll();
-						label.setText("è¯·åœ¨ç”¨ä¾‹æ‰©å±•ä¸­é€‰æ‹©æ¨¡å‹æˆ–åœ¨å¯é æ€§æµ‹è¯•æ‰©å±•ä¸­å»ºç«‹æ¨¡å‹!");
+						label.setText("ÇëÔÚÓÃÀıÀ©Õ¹ÖĞÑ¡ÔñÄ£ĞÍ»òÔÚ¿É¿¿ĞÔ²âÊÔÀ©Õ¹ÖĞ½¨Á¢Ä£ĞÍ!");
 						mainFrame.getStepTwoModelOperation().updateUI();
 						mainFrame.renewPanel();
 					}
 					else if(numberTextField.getText().equals(""))
 					{ 
-					   //æ·»åŠ å¼¹å‡ºï¿½?
+					
 						label.removeAll();
-						label.setText("è¯·å¡«å†™æ­£ç¡®çš„ç”¨æˆ·æ•°é‡!");
+						label.setText("ÇëÌîĞ´ÕıÈ·µÄÓÃ»§ÊıÁ¿!");
 						mainFrame.getStepTwoModelOperation().updateUI();
 						mainFrame.renewPanel();
 					}
@@ -579,17 +579,17 @@ public class StepTwoModelOperation extends JPanel{
 							}
 
 						    relations.clear();
-							//ç‘™ï½†ç€½UMLå¦¯ï¿½?ï¿½ï¿½?ï¿½é¨åˆ‹MLé‚å›¦ï¿½?
-			                ucMap=worker.provideUCRelation(); //é‘¾å³°å½‡é¢ã„¤ç·¥éµÑ†î”‘æ¤¤å“„ç°­éå´‡éƒ´
-							IISDList=worker.provideIsogencySD();//é‘¾å³°å½‡é¢ã„¤ç·¥é¦çƒ˜æ«™æ·‡â„ƒä¼…	
+							
+			                ucMap=worker.provideUCRelation(); 
+							IISDList=worker.provideIsogencySD();	
 							
 							stepTwoModelExpandTabbedPane.getmodelExpandPanel().removeAll();
 							number = Integer.parseInt(numberTextField.getText());
 		                    int j;
 							for(j = 0;j < number;++j){
-								int i = 0; //æ ‡è®°ä½ç½®
+								int i = 0;
 								StepTwoTabelPanel stepTwoTabelPanel = new StepTwoTabelPanel(mainFrame);
-								stepTwoTabelPanel.getTitleLabel().setText("ç”¨æˆ·"+(j+1));
+								stepTwoTabelPanel.getTitleLabel().setText("ÓÃ»§"+(j+1));
 								stepTwoTabelPanel.getTabelPanel().setLayout(new GridBagLayout());
 								for(String key : ucMap.keySet())
 								{
@@ -597,15 +597,15 @@ public class StepTwoModelOperation extends JPanel{
 									if(interfaceUCRelations.size() > 1)
 									{
 										isNeedExpand = true;
-										relations.add(key+"è¿ç§»å…³ç³»");
+										relations.add(key+"Ç¨ÒÆ¹ØÏµ");
 										for(InterfaceUCRelation interfaceUCRelation : interfaceUCRelations)
 										{
 											relations.add(interfaceUCRelation.getUCRelation());
 										}
-										ScenceTabelPanel scenceTabelPanel = new ScenceTabelPanel(relations); //çŸ©é˜µ
+										ScenceTabelPanel scenceTabelPanel = new ScenceTabelPanel(relations); 
 										StepTwoMatrixPanel stepTwoMatrixPanel = new StepTwoMatrixPanel(mainFrame);
-										stepTwoMatrixPanel.getTitleLabel().setText("ç”¨ä¾‹åç§°:"+key);
-										stepTwoMatrixPanel.getTitleLabel().setFont(new Font("å¾®è½¯é›…é»‘", Font.BOLD, 16));
+										stepTwoMatrixPanel.getTitleLabel().setText("ÓÃÀıÃû³Æ:"+key);
+										stepTwoMatrixPanel.getTitleLabel().setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 16));
 										stepTwoMatrixPanel.getTabelPanel().add(scenceTabelPanel);
 										stepTwoTabelPanel.getTabelPanel().add(stepTwoMatrixPanel, new GBC(0,i).setFill(GBC.BOTH).setWeight(1, 0));
 										i++;
@@ -617,12 +617,12 @@ public class StepTwoModelOperation extends JPanel{
 							stepTwoModelExpandTabbedPane.getmodelExpandPanel().add(new JPanel(), new GBC(0, ++j).setFill(GBC.BOTH).setWeight(1, 1));
 							stepTwoModelExpandTabbedPane.getmodelExpandPanel().updateUI();
 							
-							label.setText(Model_Name+"ç”¨ä¾‹æ¨¡å‹è¿›è¡Œæ‰©å±•,å¡«å†™çŸ©é˜µå³å¯¹åç»§ç”¨ä¾‹è¿›è¡Œä¸¤ä¸¤å¯¹æ¯”æ‰“åˆ†,å¡«å†™å®Œæˆåè¿›è¡ŒéªŒè¯!");	
+							label.setText(Model_Name+"ÓÃÀıÄ£ĞÍ½øĞĞÀ©Õ¹,ÌîĞ´¾ØÕó¼´¶Ôºó¼ÌÓÃÀı½øĞĞÁ½Á½¶Ô±È´ò·Ö,ÌîĞ´Íê³Éºó½øĞĞÑéÖ¤!");	
 							if(isNeedExpand == false)
 							{
 								stepTwoModelExpandTabbedPane.getmodelExpandPanel().removeAll();
 								label.removeAll();
-								label.setText(Model_Name+"æ¨¡å‹ä¸éœ€è¦è¿›è¡Œæ¨¡å‹æ‰©å±•,å¯ä»¥ç›´æ¥è¿›è¡ŒéªŒè¯!"); 
+								label.setText(Model_Name+"Ä£ĞÍ²»ĞèÒª½øĞĞÄ£ĞÍÀ©Õ¹,¿ÉÒÔÖ±½Ó½øĞĞÑéÖ¤!"); 
 							}
 							mainFrame.getStepTwoModelExpandTabbedPane().getValidationResults().removeAll();
 							mainFrame.getStepTwoModelExpandTabbedPane().setSelectedIndex(0);
@@ -645,19 +645,19 @@ public class StepTwoModelOperation extends JPanel{
 					    e1.printStackTrace();
 						if(Model_Name == null){
 							label.removeAll();
-							label.setText("è¯·åœ¨å·¦ä¾§ç”¨ä¾‹åˆ—è¡¨ä¸­é€‰æ‹©ç”¨ä¾‹æ¨¡å‹æˆ–åœ¨ç¬¬ä¸€æ­¥ä¸­å»ºç«‹ç”¨ä¾‹æ¨¡å‹!");
+							label.setText("ÇëÔÚ×ó²àÓÃÀıÁĞ±íÖĞÑ¡ÔñÓÃÀıÄ£ĞÍ»òÔÚµÚÒ»²½ÖĞ½¨Á¢ÓÃÀıÄ£ĞÍ!");
 							mainFrame.getStepTwoModelOperation().updateUI();
 						}
 						else if(numberTextField.getText().equals(""))
 						{ 
-						   //æ·»åŠ å¼¹å‡ºï¿½?
+						   
 							label.removeAll();
-							label.setText("è¯·å¡«å†™æ­£ç¡®çš„ç”¨æˆ·æ•°é‡!");
+							label.setText("ÇëÌîĞ´ÕıÈ·µÄÓÃ»§ÊıÁ¿!");
 							mainFrame.getStepTwoModelOperation().updateUI();
 						}
 						else {
 							label.removeAll();
-							label.setText("è¯·æ£€æŸ¥æ¨¡å‹æ˜¯å¦ç»˜åˆ¶æ­£ç¡®æˆ–æ¨¡å‹æ˜¯å¦å­˜åœ¨!");
+							label.setText("Çë¼ì²éÄ£ĞÍÊÇ·ñ»æÖÆÕıÈ·»òÄ£ĞÍÊÇ·ñ´æÔÚ!");
 						}
 						}
 				}	
@@ -713,7 +713,7 @@ public class StepTwoModelOperation extends JPanel{
 		});
 		}
 
-	private static boolean isNumeric(String str){  //åˆ¤æ–­è¾“å…¥çš„æ˜¯å¦ä¸ºæ•°å­—å‡½æ•°
+	private static boolean isNumeric(String str){ 
 		  for (int i = str.length();--i>=0;){    
 		   if (!Character.isDigit(str.charAt(i))){ 
 		    return false; 
@@ -832,7 +832,7 @@ public class StepTwoModelOperation extends JPanel{
 		 
 	    @Override
 	    public void caretUpdate(CaretEvent e) {
-	        JTextField textField = (JTextField) e.getSource(); // è·å¾—è§¦å‘äº‹ä»¶çš„ JTextField
+	        JTextField textField = (JTextField) e.getSource(); 
 	        final String text = textField.getText();
 	        if (text.length() == 0) {
 	            return;
@@ -843,18 +843,18 @@ public class StepTwoModelOperation extends JPanel{
 	        	SwingUtilities.invokeLater(new Runnable() {
 	                @Override
 	                public void run() {
-	                    // å»æ‰ JTextField ä¸­çš„æœ«å°¾å­—ç¬¦
+	                
 	                    numberTextField.setText(text.substring(0, text.length() - 1));
 	                }
 	            });
 	        }
 	        
-	        else if(!(ch >= '1' && ch <= '9') // æ•°å­—
-	               ) { // ä¸­æ–‡ï¼Œæœ€å¸¸ç”¨çš„èŒƒå›´æ˜¯ U+4E00ï½U+9FA5ï¼Œä¹Ÿæœ‰ä½¿ç”¨ U+4E00ï½ U+9FFF çš„ï¼Œä½†ç›®å‰ U+9FA6ï½U+9FFF ä¹‹é—´çš„å­—ç¬¦è¿˜å±äºç©ºç ï¼Œæš‚æ—¶è¿˜æœªå®šä¹‰ï¼Œä½†ä¸èƒ½ä¿è¯ä»¥åä¸ä¼šè¢«å®šä¹‰
+	        else if(!(ch >= '1' && ch <= '9') 
+	               ) { 
 	            SwingUtilities.invokeLater(new Runnable() {
 	                @Override
 	                public void run() {
-	                    // å»æ‰ JTextField ä¸­çš„æœ«å°¾å­—ç¬¦
+	                    
 	                    numberTextField.setText(text.substring(0, text.length() - 1));
 	                }
 	            });

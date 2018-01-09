@@ -7,8 +7,8 @@ public class Model {
 	private List<State> stateList;
 	private State initialState;							
 	private State finalState;		
-	private List<State> timeStateList;   //用来存放和时间约束有关的状态，包括带有时间约束的状态及其扩展状态
-	private List<Arc> timeArcList;       //用来存放有时间约束的迁移
+	private List<State> timeStateList;   
+	private List<Arc> timeArcList;     
 	
 	public Model(){ }
 	

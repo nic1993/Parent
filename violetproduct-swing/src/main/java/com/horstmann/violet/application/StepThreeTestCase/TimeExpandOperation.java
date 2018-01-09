@@ -135,7 +135,7 @@ public class TimeExpandOperation extends JPanel {
 	public void init() {
 		df.applyPattern(pattern);
 		;
-		expandlabel = new JLabel("å½“å‰æ‰©å±•çš„æ¨¡å‹ä¸º:" + modelName);
+		expandlabel = new JLabel("µ±Ç°À©Õ¹µÄÄ£ĞÍÎª:" + modelName);
 		expandlabel.setFont(new Font("å®‹ä½“", Font.PLAIN, 16));
 
 		ExpandProgressBar = new JProgressBar();
@@ -143,8 +143,8 @@ public class TimeExpandOperation extends JPanel {
 		ExpandProgressBar.setPreferredSize(new Dimension(600, 30));
 		ExpandProgressBar.setUI(new GradientProgressBarUI());
 
-		ModelExchange = new JButton("å¼€å§‹æ‰©å±•");
-		restartExchange = new JButton("åœæ­¢æ‰©å±•");
+		ModelExchange = new JButton("¿ªÊ¼À©Õ¹");
+		restartExchange = new JButton("¿ªÊ¼ÑéÖ¤");
 		restartExchange.setEnabled(false);
 		gapPanel = new JPanel();
 		buttonListen();
@@ -166,7 +166,7 @@ public class TimeExpandOperation extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				if (!isAlive) {
-					restartExchange.setText("åœæ­¢æ‰©å±•");
+					restartExchange.setText("Í£Ö¹À©Õ¹");
 					mainthread.resume();
 					thread1.resume();
 					thread2.resume();
@@ -174,7 +174,7 @@ public class TimeExpandOperation extends JPanel {
 					thread4.resume();
 					isAlive = true;
 				} else {
-					restartExchange.setText("å¼€å§‹æ‰©å±•");
+					restartExchange.setText("¿ªÊ¼À©Õ¹");
 					mainthread.suspend();
 					thread1.suspend();
 					thread2.suspend();
@@ -237,7 +237,7 @@ public class TimeExpandOperation extends JPanel {
 
 					progressBarIndex = 0;
 					expandlabel.removeAll();
-					expandlabel.setText("æ­£åœ¨åˆå§‹åŒ–" + modelName + "æ¨¡å‹.....");
+					expandlabel.setText("ÕıÔÚ³õÊ¼»¯" + modelName + "Ä£ĞÍ.....");
 					Thread.sleep(200);
 					File RootFile = new File(TimeMarkovRoute);
 					File files[] = RootFile.listFiles();
@@ -249,7 +249,7 @@ public class TimeExpandOperation extends JPanel {
 					XMLParser xParser = new XMLParser(currentFile);
 					StateTimeExtend sTimeExtend = new StateTimeExtend();
 					expandlabel.removeAll();
-					expandlabel.setText("æ­£åœ¨æ‰©å±•å¸¦æœ‰æ—¶é—´çº¦æŸçš„èŠ‚ç‚¹.....");
+					expandlabel.setText("ÕıÔÚÀ©Õ¹´øÓĞÊ±¼äÔ¼ÊøµÄ½Úµã.....");
 
 					ArcTimeToProb arcTimeToProb = new ArcTimeToProb();
 					Model extendModel = sTimeExtend.resolveStateTime(xParser.readXML());
@@ -261,7 +261,7 @@ public class TimeExpandOperation extends JPanel {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 					expandlabel.removeAll();
-					expandlabel.setText("æ‰©å±•Markové“¾å‡ºé”™!è¯·æ£€æŸ¥æ¨¡å‹!");
+					expandlabel.setText("À©Õ¹MarkovÁ´³ö´í!Çë¼ì²éÄ£ĞÍ!");
 
 					ModelExchange.setEnabled(true);
 
@@ -287,7 +287,7 @@ public class TimeExpandOperation extends JPanel {
 				// TODO Auto-generated method stub
 				try {
 					expandlabel.removeAll();
-					expandlabel.setText("æ­£åœ¨ç”Ÿæˆæ‰©å±•åçš„" + modelName + "æ¨¡å‹.....");
+					expandlabel.setText("ÕıÔÚÉú³ÉÀ©Õ¹ºóµÄ" + modelName + "Ä£ĞÍ.....");
 					WriteToXML wtXML = new WriteToXML();
 					wtXML.writeMarkov2XML(model, ExtendRoute + modelName + "_TimeExtend.xml");
 
@@ -307,7 +307,7 @@ public class TimeExpandOperation extends JPanel {
 					// TODO: handle exception
 					e.printStackTrace();
 					expandlabel.removeAll();
-					expandlabel.setText("æ‰©å±•Markové“¾å‡ºé”™!è¯·æ£€æŸ¥æ¨¡å‹!");
+					expandlabel.setText("À©Õ¹MarkovÁ´³ö´í!Çë¼ì²éÄ£ĞÍ!");
 
 					ModelExchange.setEnabled(true);
 
@@ -331,7 +331,7 @@ public class TimeExpandOperation extends JPanel {
 				// TODO Auto-generated method stub
 				try {
 					expandlabel.removeAll();
-					expandlabel.setText("æ­£åœ¨è·å–æ‰©å±•çš„" + modelName + "æ¨¡å‹ä¿¡æ¯.....");
+					expandlabel.setText("ÕıÔÚ»ñÈ¡À©Õ¹µÄ" + modelName + "Ä£ĞÍĞÅÏ¢.....");
 					Thread.sleep(200);
 					IWorkspace workspace = new Workspace(graphFile);
 
@@ -371,7 +371,7 @@ public class TimeExpandOperation extends JPanel {
 						}
 					}
 
-					mainFrame.getStepTwoCenterRightPanel().getNodeTextMap().clear(); // é¦–å…ˆæ¸…é™¤map
+					mainFrame.getStepTwoCenterRightPanel().getNodeTextMap().clear(); 
 					nodeTextMap = new HashMap<Object, String>();
 					for (INode node : nodes) {
 						for (State state : timeStateList) {
@@ -406,7 +406,7 @@ public class TimeExpandOperation extends JPanel {
 					}
 
 					expandlabel.removeAll();
-					expandlabel.setText("æ­£åœ¨ç”Ÿæˆæ‰©å±•" + modelName + "Markovå›¾å½¢.....");
+					expandlabel.setText("ÕıÔÚÉú³ÉÀ©Õ¹" + modelName + "MarkovÍ¼ĞÎ.....");
 					mainFrame.addTabbedPane(workspace, "step3");
 					workspace.getAWTComponent().getScrollableSideBar().setVisible(false);
 					workspace.getAWTComponent().updateUI();
@@ -415,13 +415,13 @@ public class TimeExpandOperation extends JPanel {
 					mainFrame.getStepTwoCenterRightPanel().setEdgeTextMap(edgeTextMap);
 					
 					expandlabel.removeAll();
-					expandlabel.setText("æ­£åœ¨ç”Ÿæˆè½¬æ¢XMLä¿¡æ¯.....");
+					expandlabel.setText("ÕıÔÚÉú³É×ª»»XMLĞÅÏ¢.....");
 					Thread.sleep(200);
 					XMLPanel = XMLToTree.getTree(ExtendRoute + modelName + "_TimeExtendLayout.markov.violet.xml");
 					mainFrame.getTimeExpandTabbedPane().getExpandResport().removeAll();
 					mainFrame.getTimeExpandTabbedPane().getExpandResport().add(XMLPanel);
 
-					String quota = modelName + "æ¨¡å‹æ‰©å±•å®Œæˆï¼Œå¯ä»¥å¯¹æ‰©å±•ç”Ÿæˆçš„Markovæ¨¡å‹ç”Ÿæˆæµ‹è¯•ç”¨ä¾‹!";
+					String quota = modelName + "Ä£ĞÍÀ©Õ¹Íê³É£¬¿ÉÒÔ¶ÔÀ©Õ¹Éú³ÉµÄMarkovÄ£ĞÍÉú³É²âÊÔÓÃÀı!";
 					ExpandNode expandNode = new ExpandNode(modelName, mainFrame);
 					expandNode.setWorkspace(workspace);
 					expandNode.setNodeTextMap(nodeTextMap);
@@ -434,7 +434,7 @@ public class TimeExpandOperation extends JPanel {
 					// TODO: handle exception
 					e.printStackTrace();
 					expandlabel.removeAll();
-					expandlabel.setText("æ‰©å±•Markové“¾å‡ºé”™!è¯·æ£€æŸ¥æ¨¡å‹!");
+					expandlabel.setText("À©Õ¹MarkovÁ´³ö´í!Çë¼ì²éÄ£ĞÍ!");
 					ModelExchange.setEnabled(true);
 
 					mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
@@ -469,14 +469,14 @@ public class TimeExpandOperation extends JPanel {
 					}
 
 					expandlabel.removeAll();
-					expandlabel.setText(modelName + "æ¨¡å‹æ‰©å±•å®Œæˆï¼Œå¯ä»¥å¯¹æ‰©å±•ç”Ÿæˆçš„Markovæ¨¡å‹ç”Ÿæˆæµ‹è¯•ç”¨ä¾‹!");
+					expandlabel.setText(modelName + "Ä£ĞÍÀ©Õ¹Íê³É£¬¿ÉÒÔ¶ÔÀ©Õ¹Éú³ÉµÄMarkovÄ£ĞÍÉú³É²âÊÔÓÃÀı!");
 					ModelExchange.setEnabled(true);
 					restartExchange.setEnabled(false);
 					mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
 					mainFrame.getStepThreeLeftButton().getTimeSeq().setEnabled(true);
 					mainFrame.getTimeSeqOperation().setModelName(modelName);
 					mainFrame.getTimeSeqOperation1().setModelName(modelName);
-					restartExchange.setText("åœæ­¢æ‰©å±•");
+					restartExchange.setText("Í£Ö¹À©Õ¹");
 					mainFrame.renewPanel();
 
 				} catch (Exception e) {
@@ -484,7 +484,7 @@ public class TimeExpandOperation extends JPanel {
 					e.printStackTrace();
 
 					expandlabel.removeAll();
-					expandlabel.setText("æ‰©å±•Markové“¾å‡ºé”™!è¯·æ£€æŸ¥æ¨¡å‹!");
+					expandlabel.setText("À©Õ¹MarkovÁ´³ö´í!Çë¼ì²éÄ£ĞÍ!");
 
 					ModelExchange.setEnabled(true);
 
