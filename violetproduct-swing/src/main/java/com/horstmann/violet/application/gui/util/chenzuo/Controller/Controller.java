@@ -12,6 +12,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.FutureTask;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -40,14 +41,12 @@ public class Controller {
 	
     private static Logger logger = Logger.getLogger(Controller.class);
 
-    private static long MAX_FILE_SIZE = 5 * 1024 * 1024;
+    private static long MAX_FILE_SIZE = 60 * 1024 * 1024;
     // deploy
     private static IPDeploy IP_TYPE_DEPLOY = new IPDeploy();
     // thread pool
-    private static ExecutorService executorService = new ThreadPoolExecutor(0, Integer.MAX_VALUE,
-            60L, TimeUnit.SECONDS,
-            new SynchronousQueue<Runnable>());
-    
+    private static ExecutorService executorService = Executors.newCachedThreadPool();
+ 
     public static List<FutureTask<Integer>> handFutureList=new ArrayList<>();
     
     public static int executeNum=1;
@@ -96,6 +95,7 @@ public class Controller {
         String type = data.getFirst();
         File[] files = {data.getSecond()};
         //big testcase deply to 2 servers
+        System.out.println(files[0].length());
         System.out.println(files[0].length() > MAX_FILE_SIZE);
         if (files[0].length() > MAX_FILE_SIZE) {
         	Controller.SplitNum = 2;
@@ -170,6 +170,7 @@ public class Controller {
                 else if(i==2){
                 	offsetIP=node.getIp().split("\\.")[3];
                 }
+
             }
         }
     }

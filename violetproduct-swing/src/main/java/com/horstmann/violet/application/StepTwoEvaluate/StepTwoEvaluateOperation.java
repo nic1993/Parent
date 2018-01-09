@@ -192,7 +192,7 @@ public class StepTwoEvaluateOperation extends JPanel {
 
 				topLabel.removeAll();
 				topLabel.setText("开始验证归一性信息....");
-				Thread.sleep(200);
+				Thread.sleep(300);
 				// 首先添加归一性信息
 				worker = mainFrame.getStepTwoModelOperation().getWorker();
 //				System.out.println("evalute ccode: " + worker.hashCode());
@@ -207,7 +207,7 @@ public class StepTwoEvaluateOperation extends JPanel {
 
 				topLabel.removeAll();
 				topLabel.setText("正在验证用例中场景概率....");
-				Thread.sleep(200);
+				Thread.sleep(300);
 
 				// 添加用例中场景迁移信息
 				JPanel caseResultPanel = mainFrame.getStepTwoCaseOperation().getMatrixPanel(); // 用例场景概率
@@ -218,7 +218,7 @@ public class StepTwoEvaluateOperation extends JPanel {
 
 				topLabel.removeAll();
 				topLabel.setText("正在验证用例模型中后继用例迁移概率....");
-				Thread.sleep(200);
+				Thread.sleep(300);
 
 				JPanel relationResultPanel = mainFrame.getStepTwoModelOperation().getMatrixPanel(); // 用例迁移概率
 				StepTwoMatrixPanel relationMatrixPanel = new StepTwoMatrixPanel(mainFrame);
@@ -239,7 +239,7 @@ public class StepTwoEvaluateOperation extends JPanel {
 
 				topLabel.removeAll();
 				topLabel.setText("开始验证确定性信息....");
-				Thread.sleep(200);
+				Thread.sleep(300);
 
 				// 确定性信息
 				List<InterfaceIsogenySD> IISDList = mainFrame.getStepTwoModelOperation().getIISDList();
@@ -249,7 +249,7 @@ public class StepTwoEvaluateOperation extends JPanel {
 					for (InterfaceSD interfaceSD : ISDList) {
 						topLabel.removeAll();
 						topLabel.setText("正在验证 " + interfaceSD.getName() + "后置条件信息....");
-						Thread.sleep(200);
+						Thread.sleep(300);
 						sceneNameList.add(interfaceSD.getName());
 						constraintName.add("PostCondition");
 						constraintValue.add(interfaceSD.getpostCondition());
@@ -257,7 +257,7 @@ public class StepTwoEvaluateOperation extends JPanel {
 				}
 				topLabel.removeAll();
 				topLabel.setText("正在生成确定性信息.....");
-				Thread.sleep(200);
+				Thread.sleep(300);
 
 				StepTwoTabelPanel confirmPanel = new StepTwoTabelPanel(mainFrame);
 				confirmPanel.getTitleLabel().setText(Model_Name + "用例模型中所有场景后置条件唯一，确定性验证通过！");
@@ -287,11 +287,11 @@ public class StepTwoEvaluateOperation extends JPanel {
 
 				topLabel.removeAll();
 				topLabel.setText("开始验证可达性信息....");
-				Thread.sleep(200);
+				Thread.sleep(300);
 
 				topLabel.removeAll();
 				topLabel.setText("正在生成用例执行关系邻接矩阵....");
-				Thread.sleep(200);
+				Thread.sleep(300);
 
 				// 可达性信息
 				if ((boolean) list.get(0) == true) {
@@ -352,6 +352,7 @@ public class StepTwoEvaluateOperation extends JPanel {
 
 					topLabel.setText(Model_Name + "用例模型满足一致性要求！可以转换为Markov模型");
 					EvaluateNodeLabel evaluateNodeLabel = new EvaluateNodeLabel(Model_Name, mainFrame);
+					evaluateNodeLabel.setQuota(Model_Name + "用例模型满足一致性要求！可以转换为Markov模型");
 					evaluateNodePanel.insertNodeLabel(evaluateNodeLabel, HomogeneityPanel, CertaintyPanel,
 							AccessibilityPanel);
 					mainFrame.getStepTwoExpand().getEstimatepPanel().repaint();

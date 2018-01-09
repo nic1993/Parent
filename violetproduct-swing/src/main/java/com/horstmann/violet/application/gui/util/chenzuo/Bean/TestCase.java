@@ -19,19 +19,19 @@ public class TestCase implements Serializable{
 	//state of testcase
 	String  state;
 	//result of testcase
-	TestCaseResult  result;
+//	TestCaseResult  result;
 	//detail of testcase, String of socket received
-	String  detail;
-	//Ê±¼äÔ¼Êø²»µÈÊ½
-	List<String> limit;
+	String  result;
 	
+	String  detail;
+
 	String expectResult;
 	
 	String exeTime;
 	public TestCase() {
 	}
 
-	public TestCase(String testCaseID, String state, TestCaseResult result, String detail) {
+	public TestCase(String testCaseID, String state, String result, String detail) {
 		this.testCaseID = testCaseID;
 		this.state = state;
 		this.result = result;
@@ -64,11 +64,11 @@ public class TestCase implements Serializable{
 
 
 
-	public TestCaseResult getResult() {
+	public String getResult() {
 		return result;
 	}
 
-	public void setResult(TestCaseResult result) {
+	public void setResult(String result) {
 		this.result = result;
 	}
 
@@ -78,14 +78,6 @@ public class TestCase implements Serializable{
 
 	public void setProcessList(List<myProcess> list) {
 		this.processList = list;
-	}
-	
-	public List<String> getLimit() {
-		return limit;
-	}
-
-	public void setLimit(List<String> limit) {
-		this.limit = limit;
 	}
 
 	public String getExpectResult() {
@@ -128,7 +120,7 @@ public class TestCase implements Serializable{
 					+ " ¼¤Àø×´Ì¬ :" + ((m.processStatus == "NULL")?"¿Õ":m.getProcessStatus())
 					+")";
 		}
-		tmp = tmp + " ]\n  -->²âÊÔÖ´ĞĞ×´Ì¬: [ " + state + " ]\n  -->½á¹û×´Ì¬: [ "+ result.getResultDetail()+" ]";
+		tmp = tmp + " ]\n  -->²âÊÔÖ´ĞĞ×´Ì¬: [ " + state + " ]\n  -->½á¹û×´Ì¬: [ "+ result+" ]";
 		return tmp;
 	}
 }

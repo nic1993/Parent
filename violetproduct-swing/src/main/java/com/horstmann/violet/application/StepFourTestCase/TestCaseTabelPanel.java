@@ -144,6 +144,7 @@ public class TestCaseTabelPanel extends JPanel{
    		   renderer.setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
    		   table.getTableHeader().setDefaultRenderer(renderer);
            table.setGridColor(Color.gray);
+           table.setSelectionBackground(new Color(211, 211, 211));
            
            table.setShowGrid(false);
            table.setShowHorizontalLines(true);
@@ -161,6 +162,7 @@ public class TestCaseTabelPanel extends JPanel{
            table.getColumn("激励执行情况").setPreferredWidth(60);
            table.getColumn("激励执行情况").setMinWidth(60);
            table.getColumn("激励执行情况").setCellRenderer(columnRender);
+           
     	   jScrollPane = new JScrollPane();
     	   jScrollPane.setViewportView(table);
     	   table.setPreferredScrollableViewportSize(new Dimension(table.getWidth(),table.getRowHeight()* table.getRowCount()));
@@ -279,6 +281,7 @@ public class TestCaseTabelPanel extends JPanel{
     	   table.getTableHeader().getColumnModel().getColumn(0).setPreferredWidth(50);
     	   table.getTableHeader().getColumnModel().getColumn(0).setMinWidth(50);
    		   table.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(50);
+//   		   table.getTableHeader().setPreferredSize(new Dimension(table.getTableHeader().getWidth(), 35));
 
    		   table.getTableHeader().getColumnModel().getColumn(1).setPreferredWidth(100);
    		   table.getTableHeader().getColumnModel().getColumn(1).setMinWidth(100);
@@ -286,6 +289,7 @@ public class TestCaseTabelPanel extends JPanel{
    		   table.getTableHeader().getColumnModel().getColumn(2).setMinWidth(100);
    		   table.getTableHeader().getColumnModel().getColumn(3).setPreferredWidth(100);
 		   table.getTableHeader().getColumnModel().getColumn(3).setMinWidth(100);
+		   table.setRowHeight(45);
 
   		   DefaultTableCellRenderer render = new DefaultTableCellRenderer();
   		   

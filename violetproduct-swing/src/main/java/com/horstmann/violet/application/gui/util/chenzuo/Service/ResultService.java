@@ -91,7 +91,7 @@ public class ResultService {
                 
             	if(Constants.ISFINISH.get()){
 					logger.debug("scheduledService close");
-					if(ResultService.list.size() == Controller.mainFrame.getStepFourOperation().length || file.listFiles().length == 0)
+					if(ResultService.list.size() == Controller.mainFrame.getStepFourOperation().length)
 					{
 						scheduledService.shutdown();
 						Controller.isFinish = true;
@@ -112,7 +112,7 @@ public class ResultService {
     	
     	for(int i = 0;i < testcaselist.size();i++)
     	{
-    		if(testcaselist.get(i).getResult().getResultDetail().contains("成功"))
+    		if(testcaselist.get(i).getResult().contains("成功"))
     		{
     			success++;
     		}
@@ -139,10 +139,10 @@ public class ResultService {
     	int failtype = 0;
     	for(int i = 0;i < testcaselist.size();i++)
     	{
-    		if(!testcaselist.get(i).getResult().getResultDetail().contains("成功"))
+    		if(!testcaselist.get(i).getResult().contains("成功"))
     		{
     			fail++;
-    			if(testcaselist.get(i).getResult().getResultDetail().contains("程序执行过程中出现死循环或者抛出异常!"))
+    			if(testcaselist.get(i).getResult().contains("程序执行过程中出现死循环或者抛出异常!"))
     			{
     				failtype++;
     			}
@@ -160,7 +160,7 @@ public class ResultService {
     	
     	for(int i = 0;i < testcaselist.size();i++)
     	{
-    		if(testcaselist.get(i).getResult().getResultDetail().contains("成功"))
+    		if(testcaselist.get(i).getResult().contains("成功"))
     		{
     			
     		}

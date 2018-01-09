@@ -49,6 +49,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseWheelListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.geom.Point2D;
 import java.beans.BeanInfo;
 import java.io.ByteArrayOutputStream;
@@ -63,6 +65,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.jws.WebParam.Mode;
 import javax.swing.BorderFactory;
@@ -74,6 +78,7 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
@@ -146,6 +151,7 @@ import com.horstmann.violet.application.StepTwoModelExpand.StepTwoModelExpandTab
 import com.horstmann.violet.application.StepTwoModelExpand.StepTwoModelOperation;
 import com.horstmann.violet.application.consolepart.ConsolePart;
 import com.horstmann.violet.application.help.AboutDialog;
+import com.horstmann.violet.application.menu.FileMenu;
 import com.horstmann.violet.application.menu.MenuFactory;
 import com.horstmann.violet.framework.dialog.DialogFactory;
 import com.horstmann.violet.framework.file.GraphFile;
@@ -204,9 +210,19 @@ public class MainFrame extends JFrame
                 botoomJSplitPane.setDividerLocation(0.7);
         }
     });
-        
+        fresh();
     }
 
+    
+    public void fresh(){
+    	Timer timer = new Timer();
+        timer.schedule(new TimerTask(){
+          @Override
+          public void run() {
+              renewPanel();
+          }
+        }, 0, 1000);
+    }
     /**
      * Sets initial size on startup
      */
@@ -224,7 +240,9 @@ public class MainFrame extends JFrame
      */
     private void decorateFrame()
     {
-        setTitle(this.applicationName);
+//        setTitle(this.applicationName);
+//    	setTitle("实时软件可靠性测试系统");
+    	setTitle("嵌入式软件可靠性测试");
         setIconImage(this.applicationIcon);        
     }
 
@@ -241,10 +259,28 @@ public class MainFrame extends JFrame
         menuBar.add(menuFactory.getViewMenu(this));
         menuBar.add(menuFactory.getHelpMenu(this));
         
-        
-        //setJMenuBar(menuBar);
+//        menuBar.add(new JMenu("主页"));
+//        menuBar.add(new JMenu("模型构建"));
+//        menuBar.add(new JMenu("测试用例生成"));
+//        menuBar.add(new JMenu("执行测试用例"));
+//        menuBar.add(new JMenu("测试报告"));
+//        menuBar.setPreferredSize(new Dimension(15, 35));
+//      
+//        setJMenuBar(menuBar);
       
     }
+    
+    private void addWindowsClosingListener()
+    {
+        this.addWindowListener(new WindowAdapter()
+        {
+            public void windowClosing(WindowEvent event)
+            {
+                
+            }
+        });
+    }
+    
     private void createFile()
     {
     	File[] roots = File.listRoots();
@@ -597,7 +633,6 @@ public class MainFrame extends JFrame
             String packagePath = path + "/" +  modelPanel.getTitle().getText();
             this.getModelPanelMap().put(modelPanel, packagePath);
             
-            System.out.println("model: " + modelPanel.getTitle().getText());
             File packagefile =  new File(packagePath);
             if(!packagefile.exists())
             {
@@ -1871,6 +1906,7 @@ public HomePanel getHomePanel()
      * Menu factory instance
      */
     private MenuFactory menuFactory;
+    
 
     /**
      * GUI Theme manager

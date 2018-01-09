@@ -161,7 +161,7 @@ public class UMLEditorApplication
         
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int screenWidth = (int) (screenSize.getWidth()*0.75);
-        int screenHeight = (int) (screenSize.getHeight()*0.95);
+        int screenHeight = (int) (screenSize.getHeight()*0.92);
         mainFrame.setSize(screenWidth,screenHeight);//设置大小
         SplashScreen.displayOverEditor(mainFrame, 1000);//延时1000毫秒显示主窗体？？
         List<IFile> fullList = new ArrayList<IFile>();

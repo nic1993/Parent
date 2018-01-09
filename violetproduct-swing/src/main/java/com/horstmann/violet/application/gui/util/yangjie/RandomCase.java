@@ -7,7 +7,7 @@ import org.dom4j.Element;
 
 public class RandomCase {
 
-	private HibernateUtils hibernateUtils;
+	public static HibernateUtils hibernateUtils;
 	public RandomCase()
 	{
 		hibernateUtils = new HibernateUtils();

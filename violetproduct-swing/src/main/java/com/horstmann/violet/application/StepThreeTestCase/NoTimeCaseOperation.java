@@ -46,6 +46,7 @@ import com.horstmann.violet.application.gui.util.yangjie.Calculate;
 import com.horstmann.violet.application.gui.util.yangjie.CalculateDistribution;
 import com.horstmann.violet.application.gui.util.yangjie.CalculateSimilarity;
 import com.horstmann.violet.application.gui.util.yangjie.GenerateCases;
+import com.horstmann.violet.application.gui.util.yangjie.HibernateUtils;
 import com.horstmann.violet.application.gui.util.yangjie.Markov;
 import com.horstmann.violet.application.gui.util.yangjie.Parameter;
 import com.horstmann.violet.application.gui.util.yangjie.RandomCase;
@@ -53,6 +54,7 @@ import com.horstmann.violet.application.gui.util.yangjie.ReadMarkov2;
 import com.horstmann.violet.application.gui.util.yangjie.State;
 import com.horstmann.violet.application.gui.util.yangjie.Stimulate;
 import com.horstmann.violet.application.gui.util.yangjie.TCDetail;
+import com.horstmann.violet.application.gui.util.yangjie.Target;
 import com.horstmann.violet.application.gui.util.yangjie.Transition;
 import com.horstmann.violet.application.menu.util.zhangjian.Database.DataBaseUtil;
 import com.horstmann.violet.framework.util.GrabberUtils;
@@ -158,9 +160,15 @@ public class NoTimeCaseOperation extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				initThread();
-				mainthread.start();	
-				thread1.start();
+				if(ModelName == null)
+				{
+					topLabel.removeAll();
+					topLabel.setText("请进行抽象测试序列生成!");
+				}else {
+					initThread();
+					mainthread.start();	
+					thread1.start();
+				}
 			}
 		});
        }
@@ -208,6 +216,8 @@ public class NoTimeCaseOperation extends JPanel{
 	   				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(false);
 	   				mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(false);
 	   				mainFrame.getStepThreeLeftButton().getNoTimeSeq().setEnabled(false);
+	   				mainFrame.getStepThreeBottom().UnEnable();
+	   				mainFrame.getStepThreeNoTimeTabbedPane().getTestData().removeAll();
 					
 					markov = mainFrame.getNoTimeSeqOperation().getMarkov();
 					gc = mainFrame.getNoTimeSeqOperation().getGc();
@@ -252,6 +262,7 @@ public class NoTimeCaseOperation extends JPanel{
 	   	   				mainFrame.getStepThreeLeftButton().getNoTimeSeq().setEnabled(true);
 	   	   				
 	   	   			    mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
+	   	   			    mainFrame.getStepThreeBottom().Enable();
 	   	   			    mainFrame.renewPanel();
 	   	   				
 					}
@@ -294,7 +305,7 @@ public class NoTimeCaseOperation extends JPanel{
                     		casePagePanel.getCasePanel().repaint();
                     		mainFrame.getStepThreeNoTimeTabbedPane().getTestData().updateUI();
                     		
-                    		progressBar.setValue(60 + (int) (((double) (j+1) / 500) * 40));
+                    		progressBar.setValue(60 + (int) (((double) (j+1) / index) * 40));
                     		Thread.sleep(10);
                     		mainFrame.renewPanel();
                     	}
@@ -308,20 +319,31 @@ public class NoTimeCaseOperation extends JPanel{
    				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
    				mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(true);
    				mainFrame.getStepThreeLeftButton().getNoTimeSeq().setEnabled(true);
-				
+   				mainFrame.getStepThreeBottom().Enable();
+   				
 				bigDecimal = new BigDecimal(markov.getDeviation());
 				String ii = bigDecimal.toPlainString();
 				double d = Double.valueOf(ii);
 				topLabel.removeAll();
-				topLabel.setText("可靠性测试数据生成完成, 共生成"+lists.size() + "条可靠性测试数据。" + " 可靠性测试用例数据库覆盖率:"
+				topLabel.setText("可靠性测试数据生成完成, 共生成"+lists.size() + "条!" + " 可靠性测试用例数据库覆盖率:"
 						+ df.format(markov.getDbCoverage()) + "  可靠性测试用例生成比率与使用模型实际使用概率平均偏差:"+df.format(d));
 				
 				NoTimeTestCaseNode noTimeTestCaseLabel = new NoTimeTestCaseNode(ModelName+"_相似度", mainFrame);
-				quota = "可靠性测试数据生成完成, 共生成"+lists.size() + "条可靠性测试数据。"+ " 可靠性测试用例数据库覆盖率:"
+				quota = "可靠性测试数据生成完成, 共生成"+lists.size() + "条!"+ " 可靠性测试用例数据库覆盖率:"
 						+ df.format(markov.getDbCoverage()) + "  可靠性测试用例生成比率与使用模型实际使用概率平均偏差:"+df.format(d);
 				noTimeTestCaseLabel.setQuota(quota);
 				noTimeTestCaseLabel.setCasePagePanel(casePagePanel);
 				mainFrame.getStepThreeLeftButton().getNoTimeCaseNodePanel().insertNodeLabel(noTimeTestCaseLabel,casePagePanel,quota);
+				
+				//保存指标
+				Target target = new Target();
+				double Deviationalue = Double.valueOf(df.format(markov.getDbCoverage()));
+				double CoverageRate = Double.valueOf(df.format(d));
+				target.setCoverageRate(Deviationalue);
+				target.setDeviationalue(CoverageRate);
+				HibernateUtils hibernateUtils = RandomCase.hibernateUtils;
+				hibernateUtils.saveTCDetail(target);
+				
 				mainFrame.renewPanel();
 				}catch (Exception e) {
 					// TODO: handle exception
@@ -334,6 +356,7 @@ public class NoTimeCaseOperation extends JPanel{
    	   				mainFrame.getStepThreeLeftButton().getNoTimeSeq().setEnabled(true);
    	   				
    	   			    mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
+   	   			    mainFrame.getStepThreeBottom().Enable();
    	   			    mainFrame.renewPanel();
 				}
 				

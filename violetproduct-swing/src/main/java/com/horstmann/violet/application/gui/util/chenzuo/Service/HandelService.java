@@ -156,7 +156,7 @@ public class HandelService implements Callable {
                     fIndex++;
                     
                     receiveService.submit(new RecvTransService(node,index));
-                    
+                   
 //                  logger.debug(receiveService.take().get());
                 } 
                 if ("exit".equals(data)) {

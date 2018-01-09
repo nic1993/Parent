@@ -112,8 +112,6 @@ public class TimeExpandOperation extends JPanel {
 	private List<Arc> timeArcList;
 
 	private JScrollPane XMLPanel;
-	private TimeExpandNodePanel timeExpandNodePanel;
-	private ExpandNode expandNode;
 	private boolean isAlive = true;
 
 	private Map<Object, String> nodeTextMap;
@@ -135,7 +133,6 @@ public class TimeExpandOperation extends JPanel {
 	}
 
 	public void init() {
-		timeExpandNodePanel = new TimeExpandNodePanel(mainFrame);
 		df.applyPattern(pattern);
 		;
 		expandlabel = new JLabel("当前扩展的模型为:" + modelName);
@@ -416,13 +413,22 @@ public class TimeExpandOperation extends JPanel {
 
 					mainFrame.getStepTwoCenterRightPanel().setNodeTextMap(nodeTextMap);
 					mainFrame.getStepTwoCenterRightPanel().setEdgeTextMap(edgeTextMap);
+					
+					expandlabel.removeAll();
+					expandlabel.setText("正在生成转换XML信息.....");
+					Thread.sleep(200);
+					XMLPanel = XMLToTree.getTree(ExtendRoute + modelName + "_TimeExtendLayout.markov.violet.xml");
+					mainFrame.getTimeExpandTabbedPane().getExpandResport().removeAll();
+					mainFrame.getTimeExpandTabbedPane().getExpandResport().add(XMLPanel);
 
-					expandNode = new ExpandNode(modelName, mainFrame);
+					String quota = modelName + "模型扩展完成，可以对扩展生成的Markov模型生成测试用例!";
+					ExpandNode expandNode = new ExpandNode(modelName, mainFrame);
 					expandNode.setWorkspace(workspace);
 					expandNode.setNodeTextMap(nodeTextMap);
 					expandNode.setEdgeTextMap(edgeTextMap);
-
-					mainFrame.getStepThreeLeftButton().getTimeExpandNodePanel().insertNodeLabel(expandNode);
+					expandNode.setQuota(quota);
+					expandNode.setXMLPanel(XMLPanel);
+					mainFrame.getStepThreeLeftButton().getTimeExpandNodePanel().insertNodeLabel(expandNode,workspace,nodeTextMap,edgeTextMap,XMLPanel,quota);
 					mainFrame.renewPanel();
 				} catch (Exception e) {
 					// TODO: handle exception
@@ -453,13 +459,7 @@ public class TimeExpandOperation extends JPanel {
 			public Integer call() throws Exception {
 				// TODO Auto-generated method stub
 				try {
-
-					expandlabel.removeAll();
-					expandlabel.setText("正在生成转换XML信息.....");
-					Thread.sleep(200);
-					XMLPanel = XMLToTree.getTree(ExtendRoute + modelName + "_TimeExtendLayout.markov.violet.xml");
-					expandNode.setXMLPanel(XMLPanel);
-					mainFrame.getTimeExpandTabbedPane().getExpandResport().add(XMLPanel);
+					
 
 					// 清除布局XML
 					for (File file : new File(ExtendRoute).listFiles()) {
@@ -524,10 +524,6 @@ public class TimeExpandOperation extends JPanel {
 
 	public JLabel getExpandlabel() {
 		return expandlabel;
-	}
-
-	public TimeExpandNodePanel getExpandNodePanel() {
-		return timeExpandNodePanel;
 	}
 
 	public JButton getModelExchange() {

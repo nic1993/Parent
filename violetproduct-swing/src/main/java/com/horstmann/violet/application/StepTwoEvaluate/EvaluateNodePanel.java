@@ -15,7 +15,7 @@ public class EvaluateNodePanel {
 	   private MainFrame mainFrame;
        private JPanel evaluatePanel;
        private List<EvaluateNodeLabel> evaluateNodeLabels;
-       private boolean isExist = false;
+       private boolean isExist;
        public EvaluateNodePanel(MainFrame mainFrame)
        {
     	   this.mainFrame = mainFrame;
@@ -29,6 +29,7 @@ public class EvaluateNodePanel {
        }
        public void insertNodeLabel(EvaluateNodeLabel evaluateNodeLabel,JPanel HomogeneityPanel,JPanel CertaintyPanel,JPanel AccessibilityPanel)
        {
+    	   isExist = false;
     	   if(evaluateNodeLabels.size() != 0)
     	   {
     		   for(EvaluateNodeLabel NodeLabel :evaluateNodeLabels)
@@ -47,10 +48,10 @@ public class EvaluateNodePanel {
     		   evaluateNodeLabel.setHomogeneityPanel(HomogeneityPanel);
     		   evaluateNodeLabel.setCertaintyPanel(CertaintyPanel);
     		   evaluateNodeLabel.setAccessibilityPanel(AccessibilityPanel);
-    		   evaluateNodeLabels.add(evaluateNodeLabel);
-        	   int i = evaluateNodeLabels.size() - 1;
+        	   int i = evaluateNodeLabels.size();
         	   evaluatePanel.add(evaluateNodeLabel, new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0).setInsets(5, 25, 0, 0));
         	   evaluatePanel.repaint();
+        	   evaluateNodeLabels.add(evaluateNodeLabel);
     	   }
     	   mainFrame.renewPanel();
        }

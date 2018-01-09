@@ -40,7 +40,7 @@ import com.horstmann.violet.application.gui.util.yangjie.Calculate;
 import com.horstmann.violet.application.gui.util.yangjie.CalculateDistribution;
 import com.horstmann.violet.application.gui.util.yangjie.CalculateSimilarity;
 import com.horstmann.violet.application.gui.util.yangjie.CollectRoute;
-
+import com.horstmann.violet.application.gui.util.yangjie.Constant;
 import com.horstmann.violet.application.gui.util.yangjie.Markov;
 import com.horstmann.violet.application.gui.util.yangjie.Parameter;
 import com.horstmann.violet.application.gui.util.yangjie.ReadMarkov2;
@@ -162,40 +162,42 @@ public class TimeSeqOperation1 extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-
-				System.out.println("timeseq1");
-				
-				File files = new File(TimeMarkovRoute);
-				for (File selectFile : files.listFiles()) {
-					if (selectFile.getName().replace("_TimeExtend.xml", "").equals(ModelName))
-						route = selectFile.getAbsolutePath();
-				}
-				try {
-					rm = new ReadMarkov2();
-					System.out.println("route: " + route);
-					markov = rm.readMarkov(route);
-					min = mainFrame.getStepThreeLeftButton().getMin();
-					System.out.println("min: " + min);
-					if (isInt(textField.getText().toString())) {
-						minSeq = Integer.parseInt(textField.getText().toString());
-						if (minSeq < min) {
+				if(ModelName == null)
+				{
+					topLabel.removeAll();
+					topLabel.setText("请先进行模型扩展!");
+				}else {
+					File files = new File(TimeMarkovRoute);
+					for (File selectFile : files.listFiles()) {
+						if (selectFile.getName().replace("_TimeExtend.xml", "").equals(ModelName))
+							route = selectFile.getAbsolutePath();
+					}
+					try {
+						rm = new ReadMarkov2();
+						markov = rm.readMarkov(route);
+						min = mainFrame.getStepThreeLeftButton().getMin();
+						if (isInt(textField.getText().toString())) {
+							minSeq = Integer.parseInt(textField.getText().toString());
+							if (minSeq < min) {
+								topLabel.removeAll();
+								topLabel.setText("请输入正确的测试用例个数!");
+							} else {
+								initThread();
+								mainthread.start();
+								thread1.start();
+							}
+						} else {
 							topLabel.removeAll();
 							topLabel.setText("请输入正确的测试用例个数!");
-						} else {
-							initThread();
-							mainthread.start();
-							thread1.start();
 						}
-					} else {
+					} catch (Exception e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
 						topLabel.removeAll();
-						topLabel.setText("请输入正确的测试用例个数!");
+						topLabel.setText("生成抽象测试序列出错!");
 					}
-				} catch (Exception e2) {
-					// TODO Auto-generated catch block
-					e2.printStackTrace();
-					topLabel.removeAll();
-					topLabel.setText("生成抽象测试序列出错!");
 				}
+				
 				mainFrame.renewPanel();
 			}
 		});
@@ -226,6 +228,21 @@ public class TimeSeqOperation1 extends JPanel {
    	   					thread2.start();
    	   					break;
    	   				}
+					else {
+						if(topLabel.getText().toString().contains("正在读取生成的markov链信息"))
+						{
+							topLabel.removeAll();
+		   					topLabel.setText("生成抽象测试序列出错,请重新构建Markov链使用模型!");
+		   					
+		   					button.setEnabled(true);
+							mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
+							mainFrame.getStepThreeLeftButton().getModelExpand().setEnabled(true);
+							mainFrame.getStepThreeLeftButton().getTimeModelLabel().setEnabled(true);
+
+							mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
+							mainFrame.getStepThreeBottom().Enable();
+						}
+					}
 				} 
 				return 1;
 			}
@@ -244,8 +261,8 @@ public class TimeSeqOperation1 extends JPanel {
 					mainFrame.getStepThreeLeftButton().getTimeModelLabel().setEnabled(false);
 					mainFrame.getStepThreeLeftButton().getModelExpand().setEnabled(false);
 					mainFrame.getStepThreeLeftButton().getTimeCase().setEnabled(false);
-
-					mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(false);
+					mainFrame.getStepThreeBottom().UnEnable();
+					mainFrame.getStepThreeTimeSeqTabbedPane().getAbstractSequence().removeAll();
 
 					JPanel mainPanel = new JPanel();
 					mainPanel.setLayout(new GridBagLayout());
@@ -255,6 +272,9 @@ public class TimeSeqOperation1 extends JPanel {
 
 					markov.setTcNumber(minSeq);
 
+					topLabel.removeAll();
+					topLabel.setText("正在读取生成的markov链信息....");
+					Thread.sleep(100);
 					// 计算markov链的平稳分布
 					PI = CalculateDistribution.stationaryDistribution(markov);
 
@@ -264,14 +284,7 @@ public class TimeSeqOperation1 extends JPanel {
 						Thread.sleep(100);
 					}
 					
-					topLabel.removeAll();
-					topLabel.setText("正在读取生成的markov链信息........");
-					Thread.sleep(100);
-					System.out.println("final: " + markov.getFinalState().getStateName());
-					System.out.println("begin: " + markov.getInitialState().getStateName());
-					
-					System.out.println("next: " + markov.getInitialState().getOutTransitions().get(0).getNextStateName());
-					
+					Constant.maxCircle = 2;
 					new CollectRoute().collect(markov);
 
 					dom = DocumentHelper.createDocument();
@@ -288,6 +301,7 @@ public class TimeSeqOperation1 extends JPanel {
 					mainFrame.getStepThreeLeftButton().getTimeModelLabel().setEnabled(true);
 
 					mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
+					mainFrame.getStepThreeBottom().Enable();
 
 					mainthread.suspend();
 					thread1.suspend();
@@ -307,7 +321,7 @@ public class TimeSeqOperation1 extends JPanel {
 				// TODO Auto-generated method stub
 				try {
 					topLabel.removeAll();
-					topLabel.setText("正在生成第抽象测试序列(该过程需要较久时间,请耐心等待)....");
+					topLabel.setText("正在生成抽象测试序列(该过程需要较久时间,请耐心等待)....");
 					Thread.sleep(150);
 
 					// 获取抽象测试序列
@@ -373,14 +387,18 @@ public class TimeSeqOperation1 extends JPanel {
 					mainFrame.getStepThreeLeftButton().getTimeModelLabel().setEnabled(true);
 					mainFrame.getStepThreeLeftButton().getModelExpand().setEnabled(true);
 					mainFrame.getStepThreeLeftButton().getTimeCase().setEnabled(true);
+					
+					mainFrame.getStepThreeBottom().Enable();
 					mainFrame.getTimeCaseOperation1().setModelName(ModelName);
 
+					String quota = "抽象测试序列生成完成，共生成" + lists.size()+"条抽象测试序列";
 					TimeSeqNode timeSeqNode = new TimeSeqNode(ModelName + "_自定义", mainFrame);
 					timeSeqNode.setAbstractPagePanel(abstractPagePanel);
-					timeSeqNode.setQuota("抽象测试序列生成完成，共生成" + lists.size()+"条抽象测试序列");
+					timeSeqNode.setQuota(quota);
+					timeSeqNode.setType(0);
 
 					mainFrame.getStepThreeLeftButton().getTimeSeqNodePanel().insertNodeLabel(timeSeqNode,
-							abstractPagePanel);
+							abstractPagePanel,quota,0);
 					mainFrame.getStepThreeLeftButton().getTimeSeqNode().repaint();
 
 					topLabel.removeAll();
@@ -398,6 +416,7 @@ public class TimeSeqOperation1 extends JPanel {
 					mainFrame.getStepThreeLeftButton().getTimeModelLabel().setEnabled(true);
 
 					mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
+					mainFrame.getStepThreeBottom().Enable();
 
 					mainthread.suspend();
 					thread1.suspend();

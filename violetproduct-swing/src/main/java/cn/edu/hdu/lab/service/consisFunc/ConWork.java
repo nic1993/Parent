@@ -42,7 +42,7 @@ public class ConWork {
 		//软件必然执行结束
 		
 		ConGraph tempGraph=new ConGraph(conUseCases);
-		System.out.println("邻接矩阵节点数："+tempGraph.getNum());
+		
 		tempGraph.printGraph();
 		boolean isOver=false;
 		for(int i=0;i<tempGraph.getNum();i++)

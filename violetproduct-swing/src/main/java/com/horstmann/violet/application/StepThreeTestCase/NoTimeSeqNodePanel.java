@@ -24,7 +24,7 @@ public class NoTimeSeqNodePanel {
        {
     	   SeqNodeLabels = new ArrayList<NoTimeSeqNode>();
        }
-       public void insertNodeLabel(NoTimeSeqNode noTimeSeqNode,AbstractPagePanel abstractPagePanel)
+       public void insertNodeLabel(NoTimeSeqNode noTimeSeqNode,AbstractPagePanel abstractPagePanel,String quota,int type)
        {
     	   isExist = false;
     	   if(SeqNodeLabels.size() != 0)
@@ -33,21 +33,24 @@ public class NoTimeSeqNodePanel {
     		   {
     			if(NodeLabel.getTitle().equals(noTimeSeqNode.getTitle()))
     			{
-    				isExist = true;	
     				NodeLabel.setAbstractPagePanel(abstractPagePanel);
+    				NodeLabel.setQuota(quota);
+    				NodeLabel.setType(type);
+    				isExist = true;	
+    				
     			}
     		   }
     	   }
     	   
     	   if(isExist == false)
     	   {
-    		   SeqNodeLabels.add(noTimeSeqNode);
-        	   int i = SeqNodeLabels.size() - 1;
+        	   int i = SeqNodeLabels.size();
         	   mainFrame.getStepThreeLeftButton().getNoTimeSeqNode().add(noTimeSeqNode, new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0).setInsets(5, 10, 0, 0));
         	   mainFrame.getStepThreeLeftButton().getNoTimeSeqNode().repaint();
-        	   mainFrame.renewPanel();
+        	   SeqNodeLabels.add(noTimeSeqNode);
+        	  
     	   }
-    	   
+    	   mainFrame.renewPanel();
        }
 	public List<NoTimeSeqNode> getTestCaseNodeLabels() {
 		return SeqNodeLabels;

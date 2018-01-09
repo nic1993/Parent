@@ -49,11 +49,10 @@ public class TimeTestCaseNode extends JLabel{
 			mainFrame.getStepThreeTimeTabbedPane().getTestData().add(casePagePanel);
 			mainFrame.getStepThreeTimeTabbedPane().repaint();
 			
-//			if(quota.contains("可靠性测试用例数据库覆盖率:")){
+
 				mainFrame.getTimeCaseOperation1().getTopLabel().removeAll();
 				mainFrame.getTimeCaseOperation1().getTopLabel().setText(((TimeTestCaseNode)e.getSource()).getQuota());
-//			}
-//			else {
+
 				mainFrame.getTimeCaseOperation().getTopLabel().removeAll();
 				mainFrame.getTimeCaseOperation().getTopLabel().setText(((TimeTestCaseNode)e.getSource()).getQuota());
 			

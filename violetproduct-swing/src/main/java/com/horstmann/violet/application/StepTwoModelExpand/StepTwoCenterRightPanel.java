@@ -265,7 +265,7 @@ public class StepTwoCenterRightPanel extends JPanel{
 					setNodeTextMap(null);
 					setEdgeTextMap(null);
 				}
-				if(nodeTextMap != null && edgeTextMap != null){
+				if(nodeTextMap != null && edgeTextMap != null && mainFrame.getActiveWorkspace().getGraphFile()!= null){
 					boolean isShowInformation = false;
 					IGraphFile graphFile = mainFrame.getActiveWorkspace().getGraphFile();
 					Collection<INode> nodes = graphFile.getGraph().getAllNodes();

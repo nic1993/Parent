@@ -20,6 +20,7 @@ import com.horstmann.violet.workspace.Workspace;
 public class ExpandNode extends JLabel{
        private Icon icon;
        private String name;
+       private String quota;
        private Map<Object, String> nodeTextMap;
    	   private Map<Object, String> edgeTextMap;
        private IWorkspace workspace;
@@ -65,8 +66,11 @@ public class ExpandNode extends JLabel{
        			
        			mainFrame.getTimeExpandOperation().setNodeTextMap(nodeTextMap);
        			mainFrame.getTimeExpandOperation().setEdgeTextMap(edgeTextMap);
+       			
+       			mainFrame.getTimeExpandOperation().getExpandlabel().removeAll();
+       			mainFrame.getTimeExpandOperation().getExpandlabel().setText(quota);
 				
-   				for(ExpandNode expandNodeLabel : mainFrame.getTimeExpandOperation().getExpandNodePanel().getExpandNodeLabels())
+   				for(ExpandNode expandNodeLabel : mainFrame.getStepThreeLeftButton().getTimeExpandNodePanel().getExpandNodeLabels())
    				{
    					expandNodeLabel.setFont(new Font("ËÎÌו", Font.PLAIN, 16));
    				}
@@ -105,6 +109,12 @@ public class ExpandNode extends JLabel{
 	}
 	public void setEdgeTextMap(Map<Object, String> edgeTextMap) {
 		this.edgeTextMap = edgeTextMap;
+	}
+	public String getQuota() {
+		return quota;
+	}
+	public void setQuota(String quota) {
+		this.quota = quota;
 	} 
 	
 }

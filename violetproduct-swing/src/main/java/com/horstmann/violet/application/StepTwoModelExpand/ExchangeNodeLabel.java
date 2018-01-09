@@ -23,6 +23,7 @@ public class ExchangeNodeLabel extends JLabel{
    	   private Map<Object, String> edgeTextMap;
        private IWorkspace workspace;
        private JScrollPane XMLPanel;
+       private String quota;
        private MainFrame mainFrame;
        public ExchangeNodeLabel(String name,MainFrame mainFrame)
        {
@@ -40,33 +41,34 @@ public class ExchangeNodeLabel extends JLabel{
        }
        private void listen()
        {
+    	   
        	this.addMouseListener(new MouseAdapter() {
        		@Override
        		public void mousePressed(MouseEvent e) {
        			// TODO Auto-generated method stub
-//       			clearPanel();
-//       			mainFrame.getStepTwoExpand().getExpandModelLabel().setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 18));
-//       			mainFrame.getStepTwoExpand().getExpandCaseModel().setFont(new Font("Î¢ÈíÑÅºÚ", Font.BOLD, 18));
-//   				mainFrame.getStepTwoExpand().getEstimateLabel().setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 18));
-//   				mainFrame.getStepTwoExpand().getExchangeLabel().setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 18));
-//   				mainFrame.getStepTwoExpand().getExpandCasePanel().setVisible(true);
-       			
-       			mainFrame.getStepTwoExchangeTabbedPane().getExchangeResport().removeAll();
-   				mainFrame.getStepTwoExchangeTabbedPane().getExchangeResport().add(XMLPanel);
-   				mainFrame.getStepTwoExchangeTabbedPane().getExchangeResults().removeAll();
-   				mainFrame.addTabbedPane(workspace);
-   				
-   				mainFrame.getStepTwoExchangeOperation().setNodeTextMap(nodeTextMap);
-   				mainFrame.getStepTwoExchangeOperation().setEdgeTextMap(edgeTextMap);
-   				
-   				mainFrame.getStepTwoExchangeTabbedPane().setSelectedIndex(0);
-   				for(ExchangeNodeLabel exchangeNodeLabel : mainFrame.getStepTwoExchangeOperation().getExchangeNodePanel().getExchangeNodeLabels())
-   				{
-   					exchangeNodeLabel.setFont(new Font("ËÎÌå", Font.PLAIN, 16));
-   				}
-       			setFont(new Font("ËÎÌå", Font.BOLD, 16));
-       			
-       			mainFrame.renewPanel();
+       			if(((JLabel)e.getSource()).isEnabled())
+				{
+       				mainFrame.getStepTwoExchangeOperation().getToplabel().removeAll();
+           			mainFrame.getStepTwoExchangeOperation().getToplabel().setText(quota);
+       				
+       				mainFrame.getStepTwoExchangeTabbedPane().getExchangeResport().removeAll();
+       				mainFrame.getStepTwoExchangeTabbedPane().getExchangeResport().add(XMLPanel);
+       				mainFrame.getStepTwoExchangeTabbedPane().getExchangeResults().removeAll();
+       				mainFrame.addTabbedPane(workspace);
+       				
+       				mainFrame.getStepTwoExchangeOperation().setNodeTextMap(nodeTextMap);
+       				mainFrame.getStepTwoExchangeOperation().setEdgeTextMap(edgeTextMap);
+       				
+       				mainFrame.getStepTwoExchangeTabbedPane().setSelectedIndex(0);
+       				mainFrame.renewPanel();
+       				for(ExchangeNodeLabel exchangeNodeLabel : mainFrame.getStepTwoExchangeOperation().getExchangeNodePanel().getExchangeNodeLabels())
+       				{
+       					exchangeNodeLabel.setFont(new Font("ËÎÌå", Font.PLAIN, 16));
+       				}
+           			setFont(new Font("ËÎÌå", Font.BOLD, 16));
+           			
+           			mainFrame.renewPanel();
+				}
        		};
        		
        		@Override
@@ -104,5 +106,10 @@ public class ExchangeNodeLabel extends JLabel{
 	public void setEdgeTextMap(Map<Object, String> edgeTextMap) {
 		this.edgeTextMap = edgeTextMap;
 	} 
-	
+	public String getQuota() {
+		return quota;
+	}
+	public void setQuota(String quota) {
+		this.quota = quota;
+	}
 }

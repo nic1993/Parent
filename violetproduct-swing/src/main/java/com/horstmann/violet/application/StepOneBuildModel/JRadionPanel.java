@@ -23,7 +23,7 @@ public class JRadionPanel extends JPanel {
 	private String EABathRoute;
 	private String VioletBathRoute;
 	private List<String> list = new ArrayList<String>();
-	private List<Radio> radioList = new ArrayList<Radio>();
+//	private List<Radio> radioList = new ArrayList<Radio>();
 	private Map<String, Radio> radios = new HashMap<String,Radio>();
 	private boolean isSameName;
 	private String currentName;
@@ -81,21 +81,22 @@ public class JRadionPanel extends JPanel {
 			i++;
 		}
 		this.repaint();
-
+		mainFrame.renewPanel();
+		
 		initListen();
 	}
 
-	private void init(List<String> list) {
-		radioList = new ArrayList<Radio>();
-		buttonGroup = new ButtonGroup();
-		for (String s : list) {
-			Radio radioButton = new Radio();
-			radioButton.setFont(new Font("ËÎÌו", Font.PLAIN, 16));
-			radioButton.setText(s);
-//			buttonGroup.add(radioButton);
-			radioList.add(radioButton);
-		}
-	}
+//	private void init(List<String> list) {
+//		radioList = new ArrayList<Radio>();
+//		buttonGroup = new ButtonGroup();
+//		for (String s : list) {
+//			Radio radioButton = new Radio();
+//			radioButton.setFont(new Font("ËÎÌו", Font.PLAIN, 16));
+//			radioButton.setText(s);
+////			buttonGroup.add(radioButton);
+//			radioList.add(radioButton);
+//		}
+//	}
 
 	private void initListen() {
 //		for (Radio radio : radioList) {
@@ -120,6 +121,9 @@ public class JRadionPanel extends JPanel {
 //							}
 //							((Radio) e.getSource()).setFont(new Font("ËÎÌו", Font.BOLD, 16));
 
+							mainFrame.getStepTwoModelOperation().getLabel().removeAll();
+							mainFrame.getStepTwoModelOperation().getLabel().setText(((Radio) e.getSource()).getQuota());
+							
 							mainFrame.getStepTwoModelExpandTabbedPane().getValidationResults().removeAll();
 							mainFrame.getStepTwoModelExpandTabbedPane().getValidationResults()
 									.add(((Radio) e.getSource()).getScenceTabelPanel());
@@ -152,10 +156,6 @@ public class JRadionPanel extends JPanel {
 	}
 
 	public String getSelectName() {
-		for (Radio radio : radioList) {
-			if (radio.isSelected())
-				return radio.getText();
-		}
 		for(String str : radios.keySet())
 		{
 			if(radios.get(str).isSelected())
@@ -164,18 +164,18 @@ public class JRadionPanel extends JPanel {
 		return null;
 	}
 
-	public Radio getSelectRadion() {
-		for (Radio radio : radioList) {
-			if (radio.isSelected())
-				return radio;
-		}
-		return null;
-	}
+//	public Radio getSelectRadion() {
+//		for (Radio radio : radioList) {
+//			if (radio.isSelected())
+//				return radio;
+//		}
+//		return null;
+//	}
 
-	public List<Radio> getRadioList() {
-		return radioList;
-	}
-	
+//	public List<Radio> getRadioList() {
+//		return radioList;
+//	}
+//	
 	
 
 	public Map<String, Radio> getRadios() {

@@ -49,16 +49,12 @@ public class NoTimeSeqNode extends JLabel{
                 mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().setLayout(new GridLayout());
                 mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().add(abstractPagePanel);
                 mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().repaint();
-                
-                if(type == 1)
-                {
-                	mainFrame.getNoTimeSeqOperation().getTopLabel().removeAll();
-                	mainFrame.getNoTimeSeqOperation().getTopLabel().setText(quota);
-                }
-                else {
-                	mainFrame.getNoTimeSeqOperation1().getTopLabel().removeAll();
-                	mainFrame.getNoTimeSeqOperation1().getTopLabel().setText(quota);
-				}
+
+                mainFrame.getNoTimeSeqOperation().getTopLabel().removeAll();
+                mainFrame.getNoTimeSeqOperation().getTopLabel().setText(quota);
+            
+                mainFrame.getNoTimeSeqOperation1().getTopLabel().removeAll();
+            	mainFrame.getNoTimeSeqOperation1().getTopLabel().setText(quota);
                 
                 for(NoTimeSeqNode noTimeSeqNode : mainFrame.getStepThreeLeftButton().getNoTimeSeqNodePanel().getTestCaseNodeLabels())
                 {
@@ -91,6 +87,9 @@ public class NoTimeSeqNode extends JLabel{
 	}
 	public void setQuota(String quota) {
 		this.quota = quota;
+	}
+	public void setType(int type) {
+		this.type = type;
 	}
     
 }

@@ -54,6 +54,7 @@ public class HeadTitle extends JPanel{
 	private JLabel secondLabel;
 	private JLabel thirdLabel;
 	private JLabel fourthLabel;
+	private JLabel fiveLabel;
 	
 	public HeadTitle(MainFrame mainFrame){
 		this.mainFrame = mainFrame;
@@ -119,21 +120,30 @@ public class HeadTitle extends JPanel{
 		thirdLabel.setText("第三步:可靠性测试数据生成");
 		fourthLabel.setText("第四步:可靠性测试数据执行");
 		
+//		firstLabel.setText("第一步:导入TML文件");
+//		secondLabel.setText("第二步:Markov使用模型构建");
+//		thirdLabel.setText("第三步:测试用例生成");
+//		fourthLabel.setText("第四步:执行测试用例");
+//		fiveLabel = new JLabel("第五步:测试报告");
+		
 		firstLabel.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		secondLabel.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		thirdLabel.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		fourthLabel.setFont(new Font("微软雅黑", Font.PLAIN, 18));
+//		fiveLabel.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 
 		leftpicturePanel.setLayout(null);
 		leftpicturePanel.add(firstLabel);
 		leftpicturePanel.add(secondLabel);
 		leftpicturePanel.add(thirdLabel);
 		leftpicturePanel.add(fourthLabel);
+//		leftpicturePanel.add(fiveLabel);
 		
 		firstLabel.setBounds(30, 20, 350, 60);
 		secondLabel.setBounds(30, 90, 350, 60);
 		thirdLabel.setBounds(30, 160, 350, 60);
 		fourthLabel.setBounds(30, 230, 350, 60);
+//		fiveLabel.setBounds(30, 290, 350, 60);
 
 //		sequenceLabel = new JLabel("顺序图是将交互关系表示为一个二维图。纵向是时间轴，时间沿竖线向下延伸。横向轴代表了在协作中各独立对象的类元角色。");
 //		sequenceLabel = new JLabel("填写用例的迁移概率，即为当前用例执行完后后续满足条件用例的执行概率。");
@@ -187,7 +197,7 @@ public class HeadTitle extends JPanel{
 				mainFrame.getconsolepartPanel().removeAll();
 				mainFrame.getconsolepartPanel().setLayout(new GridLayout(1, 1));
 				mainFrame.getconsolepartPanel().add(mainFrame.getsteponebottmopanel());
-				firstLabel.setFont(new Font("微软雅黑", Font.BOLD, 16));
+				
 				
 				wakeupPanel();
 			    //调整边框

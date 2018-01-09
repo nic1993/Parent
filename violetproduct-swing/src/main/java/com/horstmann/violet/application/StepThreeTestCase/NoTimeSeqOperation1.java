@@ -42,7 +42,7 @@ import com.horstmann.violet.application.gui.util.yangjie.Calculate;
 import com.horstmann.violet.application.gui.util.yangjie.CalculateDistribution;
 import com.horstmann.violet.application.gui.util.yangjie.CalculateSimilarity;
 import com.horstmann.violet.application.gui.util.yangjie.CollectRoute;
-
+import com.horstmann.violet.application.gui.util.yangjie.Constant;
 import com.horstmann.violet.application.gui.util.yangjie.Markov;
 import com.horstmann.violet.application.gui.util.yangjie.Parameter;
 import com.horstmann.violet.application.gui.util.yangjie.ReadMarkov2;
@@ -196,7 +196,7 @@ public class NoTimeSeqOperation1 extends JPanel{
 				}
 				}catch (Exception e2) {
 					// TODO Auto-generated catch block
-					topLabel.setText("生成抽象测试用例出错!");
+					topLabel.setText("生成抽象测试序列出错!");
 				}		
 				}
 		});
@@ -228,7 +228,23 @@ public class NoTimeSeqOperation1 extends JPanel{
        	   				{
        	   					thread2.start();
        	   					break;
-       	   				}
+       	   				}else {
+       	   				if(topLabel.getText().toString().contains("正在读取生成的markov链信息"))
+						{
+							topLabel.removeAll();
+		   					topLabel.setText("生成抽象测试序列出错,请重新构建Markov链使用模型!");
+		   					
+		   					button.setEnabled(true);
+	         				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
+	         				mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(true);
+	         				
+	         				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
+	         				mainFrame.getStepThreeBottom().Enable();
+	         				mainFrame.renewPanel();
+	         				
+	         				break;
+						}
+       	   			}
        				}
     				return 1;
       			}
@@ -246,19 +262,20 @@ public class NoTimeSeqOperation1 extends JPanel{
        				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(false);
        				mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(false);
        				mainFrame.getStepThreeLeftButton().getNoTimeCase().setEnabled(false);
-       				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(false);
+       				mainFrame.getStepThreeBottom().UnEnable();
+       				mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().removeAll();
        				
       				JPanel mainPanel = new JPanel();
        				mainPanel.setLayout(new GridBagLayout());
       				
       				progressBarIndex = 0;
       				progressBar.setValue(0);
-      				mainFrame.getStepThreeNoTimeSeqTabbedPane().getAbstractSequence().removeAll();
+      				
     				
       				markov.setTcNumber(minSeq);
       				
       				topLabel.removeAll();
-    				topLabel.setText("正在读取生成的markov链信息........");
+    				topLabel.setText("正在读取生成的markov链信息.....");
     				Thread.sleep(200);
                     
 					dom = DocumentHelper.createDocument();
@@ -273,18 +290,20 @@ public class NoTimeSeqOperation1 extends JPanel{
 						Thread.sleep(200);
 					}
 					
+					Constant.maxCircle = 2;
 					new CollectRoute().collect(markov);
 					mainFrame.renewPanel();
 				    } catch (RuntimeException e) {
 						// TODO: handle exception
                   	topLabel.removeAll();
-                  	topLabel.setText("生成抽象测试用例出错!");
+                  	topLabel.setText("生成抽象测试序列出错!");
      					
-     				button.setEnabled(false);
+     				button.setEnabled(true);
          			mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
          			mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(true);
          			
          			mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
+         			mainFrame.getStepThreeBottom().Enable();
          			mainFrame.renewPanel();
 					}
 					return 1;
@@ -362,13 +381,17 @@ public class NoTimeSeqOperation1 extends JPanel{
 	       				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
 	       				mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(true);
 	       				mainFrame.getStepThreeLeftButton().getNoTimeCase().setEnabled(true);
+	       				mainFrame.getStepThreeBottom().Enable();
+	       				
 						mainFrame.getNoTimeCaseOperation1().setModelName(ModelName);
 						
+						String quota = "抽象测试序列生成完成，共生成" + lists.size()+"条抽象测试序列";
 						NoTimeSeqNode noTimeSeqNode = new NoTimeSeqNode(ModelName+"_自定义", mainFrame);
 						noTimeSeqNode.setAbstractPagePanel(abstractPagePanel);
 						noTimeSeqNode.setQuota("抽象测试序列生成完成，共生成" + lists.size()+"条抽象测试序列");
+						noTimeSeqNode.setType(0);
 						
-						mainFrame.getStepThreeLeftButton().getNoTimeSeqNodePanel().insertNodeLabel(noTimeSeqNode, abstractPagePanel);
+						mainFrame.getStepThreeLeftButton().getNoTimeSeqNodePanel().insertNodeLabel(noTimeSeqNode, abstractPagePanel,quota,0);
 						mainFrame.getStepThreeLeftButton().getNoTimeSeqNode().repaint();
 						
 						topLabel.removeAll();
@@ -378,13 +401,14 @@ public class NoTimeSeqOperation1 extends JPanel{
 				    } catch (RuntimeException e) {
 						// TODO: handle exception
                   	    topLabel.removeAll();
-     					topLabel.setText("生成抽象测试用例出错!");
+     					topLabel.setText("生成抽象测试序列出错!");
      					
      					button.setEnabled(true);
          				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
          				mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(true);
          				
          				mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
+         				mainFrame.getStepThreeBottom().Enable();
          				mainFrame.renewPanel();
 					}
 					return 1;

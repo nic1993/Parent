@@ -3,6 +3,8 @@ package com.horstmann.violet.application.menu.xiaole.SequenceTransfrom;
 public class ReturnEdgeInfo {
 	private String startReferenceId;
 	  private String endReferenceId;
+	  private String startEAReferenceId;
+	  private String endEAReferenceId;
 	  private String startLocationX;
 	  private String startLocationY;
 	  private String endLocationX;
@@ -24,6 +26,18 @@ public class ReturnEdgeInfo {
 	}
 	public String getEndReferenceId() {
 		return endReferenceId;
+	}
+	public String getStartEAReferenceId() {
+		return startEAReferenceId;
+	}
+	public void setStartEAReferenceId(String startEAReferenceId) {
+		this.startEAReferenceId = startEAReferenceId;
+	}
+	public String getEndEAReferenceId() {
+		return endEAReferenceId;
+	}
+	public void setEndEAReferenceId(String endEAReferenceId) {
+		this.endEAReferenceId = endEAReferenceId;
 	}
 	public void setEndReferenceId(String endReferenceId) {
 		this.endReferenceId = endReferenceId;

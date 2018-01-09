@@ -15,7 +15,7 @@ import com.horstmann.violet.application.gui.util.yangjie.TCDetail;
 
 public  class DataBaseUtil {
 	static ResultSet ret = null;  
- 	public static final String url ="jdbc:mysql://localhost:3306/mydb"; 
+ 	public static final String url ="jdbc:mysql://localhost:3306/Violet"; 
     public static final String name ="com.mysql.jdbc.Driver";  
     public static final String user ="root";  
     public static final String password ="root";  

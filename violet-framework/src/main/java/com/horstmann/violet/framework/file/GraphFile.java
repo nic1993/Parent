@@ -115,10 +115,18 @@ public class GraphFile implements IGraphFile
      * Indicates if this file is new
      * @return b
      */
-    private boolean isNewFile() {
+
+	private boolean isNewFile() {
     	if (this.currentFilename == null && this.currentDirectory == null) {
-    		return true;
+    			return true;
     	}
+    	else {
+    		File file = new File(this.currentDirectory + "/" + this.currentFilename);
+    		if(!file.exists())
+    		{
+    			return true;
+    		}
+		}
     	return false;
     }
     
@@ -126,7 +134,7 @@ public class GraphFile implements IGraphFile
     public void save()
     {
 //        if (this.isNewFile()) {
-        	saveToNewLocation();
+//        	saveToNewLocation();
 //        	return;
 //        }
 //    	try

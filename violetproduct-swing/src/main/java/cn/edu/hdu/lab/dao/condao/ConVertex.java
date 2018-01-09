@@ -15,6 +15,7 @@ public class ConVertex {
 		this.ID=ID;
 		this.name=name;
 		this.nickID=nickID;
+		rearNodeList.clear();
 	}
 	public String getID() {
 		return ID;

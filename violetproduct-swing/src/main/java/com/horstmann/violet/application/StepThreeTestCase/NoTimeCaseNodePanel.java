@@ -31,8 +31,7 @@ public class NoTimeCaseNodePanel {
     	   {
     		   for(NoTimeTestCaseNode NodeLabel :TestCaseNodeLabels)
     		   {
-    			   
-    			if(NodeLabel.getText().equals(noTimeTestCaseLabel.getText()))
+    			if(NodeLabel.getName().equals(noTimeTestCaseLabel.getName()))
     			{
     				isExist = true;	
     				NodeLabel.setCasePagePanel(casePagePanel);
@@ -42,10 +41,11 @@ public class NoTimeCaseNodePanel {
     	   }
     	   if(isExist == false)
     	   {
-    		   TestCaseNodeLabels.add(noTimeTestCaseLabel);
-        	   int i = TestCaseNodeLabels.size() - 1;
+    		   
+        	   int i = TestCaseNodeLabels.size();
         	   mainFrame.getStepThreeLeftButton().getNoTimeNode().add(noTimeTestCaseLabel, new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0).setInsets(5, 10, 0, 0));
         	   mainFrame.getStepThreeLeftButton().getNoTimeNode().repaint();
+        	   TestCaseNodeLabels.add(noTimeTestCaseLabel);
     	   }
     	   
        }
@@ -57,7 +57,6 @@ public class NoTimeCaseNodePanel {
     	   {
     		   for(NoTimeTestCaseNode NodeLabel :TestCaseNodeLabels)
     		   {
-    			   
     			if(NodeLabel.getText().equals(noTimeTestCaseLabel.getText()))
     			{
     				isExist = true;	
@@ -69,10 +68,11 @@ public class NoTimeCaseNodePanel {
     	   }
     	   if(isExist == false)
     	   {
-    		   TestCaseNodeLabels.add(noTimeTestCaseLabel);
-        	   int i = TestCaseNodeLabels.size() - 1;
+    		   
+        	   int i = TestCaseNodeLabels.size();
         	   mainFrame.getStepThreeLeftButton().getNoTimeNode().add(noTimeTestCaseLabel, new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0).setInsets(5, 10, 0, 0));
         	   mainFrame.getStepThreeLeftButton().getNoTimeNode().repaint();
+        	   TestCaseNodeLabels.add(noTimeTestCaseLabel);
     	   }
     	   
        }

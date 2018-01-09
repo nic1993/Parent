@@ -33,7 +33,7 @@ public class TestFileSpilt {
 		String filename=file.getName().replaceAll(".xml", "");
 		String name=filename.split("#")[0];
 		String type=filename.split("#")[1];
-		String baseUrl = "D:/ModelDriverProjectFile"+"/TestCase/";
+		String baseUrl = "D:/ModelDriverProjectFile"+"/ChooseTestCase/";
 		String filename1=name+"_1#"+type+".xml";
 		String filename2=name+"_2#"+type+".xml";
 		File[] files=new File[2];

@@ -48,7 +48,11 @@ public class UMLReader {
     
 	public UMLReader(String xmlFile) {		
 		// TODO Auto-generated constructor stub
+		idCount = 0;
 		umlAllDiagramData.clear();
+		FixFragmentTool.rectangleById.clear();
+		FixFragmentTool.xrefValueById.clear();
+		
 		this.xmlFile=xmlFile;
 		load();		
 	}

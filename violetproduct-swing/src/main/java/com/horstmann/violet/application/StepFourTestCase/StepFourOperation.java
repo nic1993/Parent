@@ -17,6 +17,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -66,6 +69,7 @@ import com.horstmann.violet.application.gui.util.tanchao.MarkovXML2GraphFile;
 import com.horstmann.violet.application.gui.util.tanchao.TianWriteToVioletMarkov;
 import com.horstmann.violet.application.gui.util.tanchao.markovlayout.LayoutMarkov;
 import com.horstmann.violet.application.gui.util.tanchao.markovlayout.PathProp;
+import com.horstmann.violet.application.gui.util.yangjie.HibernateUtils;
 import com.horstmann.violet.application.menu.FileMenu;
 import com.horstmann.violet.application.menu.util.UMLTransfrom.XMLUtils;
 import com.horstmann.violet.chart.BarChart;
@@ -150,7 +154,7 @@ public class StepFourOperation extends JPanel {
 		ExchangeProgressBar.setUI(new GradientProgressBarUI());
 		ExchangeProgressBar.setPreferredSize(new Dimension(600, 30));
 
-		startExchange = new JButton("开始验证");
+		startExchange = new JButton("开始执行");                 
 		gapPanel = new JPanel();
 
 		testCaseReportTableHeaderPanel = new TestCaseReportTableHeaderPanel();
@@ -279,7 +283,7 @@ public class StepFourOperation extends JPanel {
 				progressBarIndex = 0;
 				ExchangeProgressBar.setValue(0);
 				ExchangeProgressBar.setValue(progressBarIndex);
-				while (progressBarIndex < 70) {
+				while (progressBarIndex < 60) {
 					if (task.isDone()) {
 						progressBarIndex++;
 						ExchangeProgressBar.setValue(progressBarIndex);
@@ -454,6 +458,12 @@ public class StepFourOperation extends JPanel {
 									Exchangelabel.removeAll();
 									Exchangelabel.setText("正在生成可靠性测试数据执行结果....");
 									testcaselist = ResultService.list;
+									//进行编号
+									for (i = 0; i < testcaselist.size(); i++) {
+										TestCase testCase = testcaselist.get(i);
+										testCase.setTestCaseID(getCurrentTestCase().get(i).getTestCaseID());
+									}
+									
 									index = 500;
 									if (testcaselist.size() < 500) {
 										index = testcaselist.size();
@@ -469,7 +479,7 @@ public class StepFourOperation extends JPanel {
 									List<TestCaseMatrixPanel> testCaseMatrixPanels = new ArrayList<TestCaseMatrixPanel>();
 									for (i = 0; i < index; i++) {
 										TestCase testCase = testcaselist.get(i);
-										testCase.setTestCaseID(getCurrentTestCase().get(i).getTestCaseID());
+//										testCase.setTestCaseID(getCurrentTestCase().get(i).getTestCaseID());
 										TestCaseMatrixPanel testCaseMatrixPanel = new TestCaseMatrixPanel(mainFrame);
 	
 										String str1 = testCase.getState().split("ms")[0] + "ms";
@@ -477,11 +487,11 @@ public class StepFourOperation extends JPanel {
 										
 										String str2 = testCase.getState().split("ms")[1];
 										TestCaseTabelPanel titleCaseTabelPanel = new TestCaseTabelPanel(
-												testCase.getTestCaseID(), testCase.getResult().getResultDetail(),
+												testCase.getTestCaseID(), testCase.getResult(),
 												testCase.getExeTime(),0);
 										if(type .equals(type3))
 										{
-											if(testCase.getResult().getResultDetail().contains("有误"))
+											if(testCase.getResult().contains("有误"))
 												testCaseMatrixPanel.getPredict().setForeground(Color.red);
 											
 											testCaseMatrixPanel.getPredict().setText("被测程序执行结果:电梯停靠在" + str2 + "层");
@@ -531,9 +541,10 @@ public class StepFourOperation extends JPanel {
 									Exchangelabel.removeAll();
 									Exchangelabel.setText("正在生成可靠性测试数据执行报告....");
 									
-									System.out.println(1111);
+
 									List<Integer> totalList = ResultService.getResults(testcaselist);
-									System.out.println(2222);
+									
+									
 									// 统计成功失败
 									FailReportTableHeaderPanel failReportTableHeaderPanel = new FailReportTableHeaderPanel();
 									TestCaseTabelPanel testCaseTabelPanel = new TestCaseTabelPanel(totalList.get(0),
@@ -545,17 +556,17 @@ public class StepFourOperation extends JPanel {
 									mainFrame.renewPanel();
 
 									// 统计失败类型
-									List<Integer> failList = ResultService.getFailType(testcaselist);
-									TypeFailReportTableHeaderPanel typeFailReportTableHeaderPanel = new TypeFailReportTableHeaderPanel();
-									TestCaseTabelPanel failTypeTable = new TestCaseTabelPanel(failList.get(0),
-											failList.get(1));
-									CountMatrixPanel countFailMatrixPanel = new CountMatrixPanel(
-											typeFailReportTableHeaderPanel, failTypeTable);
-									mainFrame.getStepFourTabbedPane().getTestCaseResport().add(countFailMatrixPanel,
-											new GBC(0, 1, 2, 1).setFill(GBC.BOTH).setWeight(1, 0));
+//									List<Integer> failList = ResultService.getFailType(testcaselist);
+//									TypeFailReportTableHeaderPanel typeFailReportTableHeaderPanel = new TypeFailReportTableHeaderPanel();
+//									TestCaseTabelPanel failTypeTable = new TestCaseTabelPanel(failList.get(0),
+//											failList.get(1));
+//									CountMatrixPanel countFailMatrixPanel = new CountMatrixPanel(
+//											typeFailReportTableHeaderPanel, failTypeTable);
+//									mainFrame.getStepFourTabbedPane().getTestCaseResport().add(countFailMatrixPanel,
+//											new GBC(0, 1, 2, 1).setFill(GBC.BOTH).setWeight(1, 0));
 									//
-									System.out.println(3333);
-									
+							
+									  
 									Integer[] integers = { totalList.get(0), totalList.get(1) };
 									ChartPanel chartPanel = createPiePanel(integers);
 									ChartPanel barPanel = createLinePanel(integers);
@@ -568,12 +579,11 @@ public class StepFourOperation extends JPanel {
 									barPanel.setPreferredSize(new Dimension(200, 200));
 
 									mainFrame.getStepFourTabbedPane().getTestCaseResport().add(chartPanel,
-											new GBC(0, 2, 1, 1).setFill(GBC.BOTH).setWeight(1, 1));
+											new GBC(0, 1, 1, 1).setFill(GBC.BOTH).setWeight(1, 0.9));
 
 									mainFrame.getStepFourTabbedPane().getTestCaseResport().add(barPanel,
-											new GBC(1, 2, 1, 1).setFill(GBC.BOTH).setWeight(1, 1));
+											new GBC(1, 1, 1, 1).setFill(GBC.BOTH).setWeight(1, 0.9));
 
-									System.out.println(4444);
 									mainFrame.renewPanel();
 								}
 							}
@@ -586,7 +596,6 @@ public class StepFourOperation extends JPanel {
 					Exchangelabel.removeAll();
 					Exchangelabel.setText("可靠性测试数据执行失败!");
 
-					mainFrame.getStepFourTestCase().getjRadionPanel().setVisible(true);
 					mainFrame.getStepFourTestCase().getjRadionPanel().setVisible(true);
 					startExchange.setEnabled(true);
 					FileButton.setEnabled(true);
@@ -615,15 +624,35 @@ public class StepFourOperation extends JPanel {
 		
 		callable1 = new Callable<Integer>() {
 
+			@SuppressWarnings("unchecked")
 			@Override
 			public Integer call() throws Exception {
 				// TODO Auto-generated method stub
 				//  生成失败可靠性测试数据
+				
+				try {
 				Exchangelabel.removeAll();
 				Exchangelabel.setText("正在生成失效数据....");
 				List<TestCase> failtestcases = ResultService.getFail(testcaselist);
-				System.out.println("failtestcases： " + failtestcases.size());	
+                
+			
 				if (failtestcases.size() != 0) {
+				Collections.sort(failtestcases,new Comparator<TestCase>() {
+						@Override
+						public int compare(TestCase o1, TestCase o2) {
+							// TODO Auto-generated method stub
+							int id1 = Integer.valueOf(o1.getTestCaseID());
+							int id2 = Integer.valueOf(o2.getTestCaseID());
+							if(id1 > id2)
+							{
+								return 1;
+							}
+							else {
+								return 0;
+							}
+						}
+					});
+					
 					ValidatePagePanel wrongPage = new ValidatePagePanel(mainFrame);
 					mainFrame.getStepFourTabbedPane().getWrongtestCaseResults().add(wrongPage);
 					mainFrame.getStepFourTabbedPane().getWrongtestCaseResults().repaint();
@@ -632,7 +661,6 @@ public class StepFourOperation extends JPanel {
 					if (failtestcases.size() < 500) {
 						index = failtestcases.size();
 					}
-
 					
 					List<TestCaseMatrixPanel> testCaseMatrixPanels = new ArrayList<TestCaseMatrixPanel>();
 					wrongPage.getValidatePanel().add(new JPanel(),
@@ -645,7 +673,7 @@ public class StepFourOperation extends JPanel {
 								mainFrame);
 						
 						TestCaseTabelPanel titleCaseTabelPanel = new TestCaseTabelPanel(
-								testCase.getTestCaseID(), testCase.getResult().getResultDetail(),
+								testCase.getTestCaseID(), testCase.getResult(),
 								testCase.getExeTime(),0);
 
 						String str1 = testCase.getState().split("ms")[0] + "ms";
@@ -683,7 +711,7 @@ public class StepFourOperation extends JPanel {
 								new GBC(0, j).setFill(GBC.BOTH).setWeight(1, 0));
 						Exchangelabel.removeAll();
 						Exchangelabel.setText("正在生成失效的可靠性测试数据列表....");
-						ExchangeProgressBar.setValue(70 + (int)(((double)(j+1)/index)*30));
+						ExchangeProgressBar.setValue(50 + (int)(((double)(j+1)/index)*30));
 						Thread.sleep(50);
 						mainFrame.renewPanel();
 						testCaseMatrixPanels.add(testCaseMatrixPanel);
@@ -696,39 +724,71 @@ public class StepFourOperation extends JPanel {
 					String failCasePath = mainFrame.getBathRoute() + "/FailTestCase/" + modelName
 							+ "_Fail.xml";
 					FailTestCase.writeToXML(failCasePath, failtestcases);
+					
+//					Collections.sort(failtestcases, new Comparator(){  
+//				        @Override  
+//				        public int compare(Object o1, Object o2) {  
+//				            TestCase t1=(TestCase)o1;  
+//				            TestCase t2=(TestCase)o2;  
+//				            if(Integer.valueOf(t1.getTestCaseID()) > Integer.valueOf(t2.getTestCaseID())){  
+//				                return 1;  
+//				            }else if(Integer.valueOf(t1.getTestCaseID()) == Integer.valueOf(t2.getTestCaseID())){  
+//				                return 0;  
+//				            }else{  
+//				                return -1;  
+//				            }  
+//				        }             
+//				    }); 
+					Exchangelabel.removeAll();
+					Exchangelabel.setText("正在存储失效数据....");
+					saveFailTestCase(failtestcases); //存储失效数据
 				}else {
-					for(int i = 71; i <= 100;i++)
+					for(int i = 51; i <= 100;i++)
 					{
 						ExchangeProgressBar.setValue(i);
-						Thread.sleep(50);
+						Thread.sleep(20);
 					}
-					
 				}
 
 				// 清除分割的xml
-				String name = modelName.split("#")[0];
-				String type = modelName.split("#")[1];
+//				String name = modelName.split("#")[0];
+//				String type = modelName.split("#")[1];
+//
+//				String filename1 = name + "_1#" + type + ".xml";
+//				String filename2 = name + "_2#" + type + ".xml";
+//
+//				File file1 = new File(route + filename1);
+//				File file2 = new File(route + filename2);
+//				if (file1.exists()) {
+//					file1.delete();
+//					file2.delete();
+//				}
 
-				String filename1 = name + "_1#" + type + ".xml";
-				String filename2 = name + "_2#" + type + ".xml";
-
-				File file1 = new File(route + filename1);
-				File file2 = new File(route + filename2);
-				if (file1.exists()) {
-					file1.delete();
-					file2.delete();
+				for(int i = 81; i <= 100;i++)
+				{
+					ExchangeProgressBar.setValue(i);
+					Thread.sleep(20);
 				}
-
 				Exchangelabel.removeAll();
 				Exchangelabel.setText("可靠性测试数据执行报告生成完毕!");
 				mainFrame.getStepFourTabbedPane().setSelectedIndex(0);
-				
 				
 				mainFrame.getStepFourTestCase().getjRadionPanel().setVisible(true);
 				startExchange.setEnabled(true);
 				FileButton.setEnabled(true);
 				TestCaseButton.setEnabled(true);
 				mainFrame.renewPanel();
+				} catch (Exception e) {
+					// TODO: handle exception
+					e.printStackTrace();
+					Exchangelabel.removeAll();
+					Exchangelabel.setText("可靠性测试数据执行失败!");
+
+					mainFrame.getStepFourTestCase().getjRadionPanel().setVisible(true);
+					startExchange.setEnabled(true);
+					FileButton.setEnabled(true);
+					TestCaseButton.setEnabled(true);
+				}
 				return 1;
 			}
 		};
@@ -744,21 +804,20 @@ public class StepFourOperation extends JPanel {
 		mainFrame.getStepFourTabbedPane().getWrongtestCaseResults().removeAll();
 
 		// 清除分割的xml
-		// 清除分割的xml
-		if (modelName != null) {
-			String name = modelName.split("#")[0];
-			String type = modelName.split("#")[1];
-
-			String filename1 = name + "_1#" + type + ".xml";
-			String filename2 = name + "_2#" + type + ".xml";
-
-			File file1 = new File(route + filename1);
-			File file2 = new File(route + filename2);
-			if (file1.exists()) {
-				file1.delete();
-				file2.delete();
-			}
-		}
+//		if (modelName != null) {
+//			String name = modelName.split("#")[0];
+//			String type = modelName.split("#")[1];
+//
+//			String filename1 = name + "_1#" + type + ".xml";
+//			String filename2 = name + "_2#" + type + ".xml";
+//
+//			File file1 = new File(route + filename1);
+//			File file2 = new File(route + filename2);
+//			if (file1.exists()) {
+//				file1.delete();
+//				file2.delete();
+//			}
+//		}
 
 		mainFrame.getStepFourTestCase().getjRadionPanel().setVisible(true);
 		startExchange.setEnabled(true);
@@ -939,6 +998,37 @@ public class StepFourOperation extends JPanel {
 		return lists;
 	}
 
+	
+	private void saveFailTestCase(List<TestCase> testCases)
+	{
+		List<TestCase> newcases = delet(testCases);
+		HibernateUtils utils = new HibernateUtils(0);
+		for(int i = 0;i < newcases.size();i++)
+		{
+			
+			utils.saveTestCase(newcases.get(i));	
+		}
+	}
+	
+	//去除重复的ID
+	private List<TestCase> delet(List<TestCase> testCases)
+	{
+		List<TestCase> newcases = testCases;
+		List<TestCase> deletecases = new ArrayList<TestCase>();
+		for(int i = 0;i < newcases.size() - 1;i++)
+		{
+			if(newcases.get(i).getTestCaseID().equals(newcases.get(i+1).getTestCaseID()))
+			{
+				deletecases.add(newcases.get(i));
+			}
+		}
+		
+		for(int i = 0;i < deletecases.size();i++)
+		{
+			newcases.remove(deletecases.get(i));
+		}
+		return newcases;
+	}
 	public boolean isClose() {
 		return close;
 	}

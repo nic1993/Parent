@@ -55,7 +55,7 @@ public class TypeFailReportTableHeaderPanel extends JPanel{
 	private void initAttributePanel() {
 		// TODO Auto-generated method stub
 
-		String[] columnNames = { "","测试用例失效","程序出现死循环或抛出异常","失效测试用例总数"};
+		String[] columnNames = { "","可靠性测试数据失效","程序出现死循环或抛出异常","失效数据总数"};
 		String[][] tabelValues = {};
 
 		attributetablemodel = new DefaultTableModel(tabelValues, columnNames) {
@@ -90,14 +90,14 @@ public class TypeFailReportTableHeaderPanel extends JPanel{
 		attributetable.getColumn("").setMinWidth(50);
 		attributetable.getColumn("").setMaxWidth(50);
 
-		attributetable.getColumn("测试用例失效").setPreferredWidth(100);
-		attributetable.getColumn("测试用例失效").setMinWidth(100);
+		attributetable.getColumn("可靠性测试数据失效").setPreferredWidth(100);
+		attributetable.getColumn("可靠性测试数据失效").setMinWidth(100);
 		
 		attributetable.getColumn("程序出现死循环或抛出异常").setPreferredWidth(100);
 		attributetable.getColumn("程序出现死循环或抛出异常").setMinWidth(100);
 		
-		attributetable.getColumn("失效测试用例总数").setPreferredWidth(100);
-		attributetable.getColumn("失效测试用例总数").setMinWidth(100);
+		attributetable.getColumn("失效数据总数").setPreferredWidth(100);
+		attributetable.getColumn("失效数据总数").setMinWidth(100);
 
 		DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
 		renderer.setBackground(new Color(188, 188, 188));

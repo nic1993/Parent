@@ -56,7 +56,6 @@ public class StepTwoExpandBottom extends JPanel{
 		backButton = new JButton();
 		nextbutton = new JButton();
 		leftpanel = new JPanel();
-		backButton.setBackground(Color.red);
 		
 		backButton.setText("上一步");
 		nextbutton.setText("下一步");
@@ -206,7 +205,6 @@ public class StepTwoExpandBottom extends JPanel{
 						mainFrame.getStepThreeLeftButton().getTimeModelLabel().setEnabled(true);
 						mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(false);
 				    	mainFrame.getStepThreeLeftButton().getNoTimeModelPanel().setVisible(false);
-				    	mainFrame.getStepThreeLeftButton().getNoTimeModelPanel().setVisible(false);
 						
 						if(stepThree == 2 || stepThree == 3 ||stepThree == 4 ||stepThree == 5){
 							stepThree = 1;
@@ -215,8 +213,9 @@ public class StepTwoExpandBottom extends JPanel{
 					else if(!mainFrame.getStepTwoExchangeOperation().isTime()){
 						mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(true);
 						mainFrame.getStepThreeLeftButton().getTimeModelLabel().setEnabled(false);
+						mainFrame.getStepThreeLeftButton().getTimeModelPanel().setVisible(false);
 						
-						if(stepThree == 6 || stepThree == 7 ||stepThree == 8 ||stepThree == 9){
+						if(stepThree == 6 || stepThree == 7 ||stepThree == 8 ||stepThree == 9 || stepThree == 10){
 							stepThree = 1;
 						}
 					}
@@ -225,6 +224,9 @@ public class StepTwoExpandBottom extends JPanel{
 					mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(false);
 					mainFrame.getStepThreeLeftButton().getTimeModelLabel().setEnabled(false);
 				}
+			   
+			    initThreeStep();
+			    
 			    mainFrame.getStepThreeLeftButton().repaint();
 				JPanel mainPanel = mainFrame.getMainPanel();
 				
@@ -238,6 +240,7 @@ public class StepTwoExpandBottom extends JPanel{
 							mainPanel.add(mainFrame.getworkpanel(),new GBC(1,2,1,1).setFill(GBC.BOTH).setWeight(1, 0.98).setInsets(10, 15, 20, 15));
 						}
 					}
+					mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setFont(new Font("微软雅黑", Font.BOLD, 18));
 					
 					mainFrame.getCenterTabPanel().removeAll();
 					mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeChoosePattern());
@@ -247,6 +250,7 @@ public class StepTwoExpandBottom extends JPanel{
 					mainFrame.getpanel().setVisible(false);
 					
 					mainFrame.getinformationPanel().setVisible(false);
+					mainFrame.getbotoomJSplitPane().setDividerSize(0);
 					
 					mainFrame.getReduceOrEnlargePanel().setVisible(false);
             		
@@ -261,7 +265,7 @@ public class StepTwoExpandBottom extends JPanel{
     					if(mainPanel.getComponent(i).equals(mainFrame.getworkpanel()))
     					{
     						mainPanel.remove(mainPanel.getComponent(i));
-    						mainPanel.add(mainFrame.getworkpanel(),new GBC(1,2,1,1).setFill(GBC.BOTH).setWeight(1, 0.98).setInsets(10, 15, 20, 15));
+    						mainPanel.add(mainFrame.getworkpanel(),new GBC(1,2,1,1).setFill(GBC.BOTH).setWeight(1, 0.98).setInsets(10, 15, 20, 0));
     					}
     				}
     				mainFrame.getReduceOrEnlargePanel().setVisible(true);
@@ -270,8 +274,6 @@ public class StepTwoExpandBottom extends JPanel{
     				mainFrame.getCenterTabPanel().add(mainFrame.getStepThreeNoTimeSeqTabbedPane());
     				
     				mainFrame.renewPanel();
-    				
-    				
 					break;
                 case 3:
                 	mainFrame.getpanel().removeAll();
@@ -428,9 +430,50 @@ public class StepTwoExpandBottom extends JPanel{
 				mainFrame.getconsolepartPanel().removeAll();
 				mainFrame.getconsolepartPanel().setLayout(new GridLayout(1, 1));
 				mainFrame.getconsolepartPanel().add(mainFrame.getStepThreeBottom());
+				
+				mainFrame.getStepTwoCenterRightPanel().getGraphButton().setVisible(false);
+				mainFrame.getStepTwoCenterRightPanel().getZoominButton().setVisible(false);
+				mainFrame.getStepTwoCenterRightPanel().getZoomoutButton().setVisible(false);
+				if(stepThree == 6)
+				{
+					mainFrame.getStepTwoCenterRightPanel().getGraphButton().setVisible(true);
+					mainFrame.getStepTwoCenterRightPanel().getZoominButton().setVisible(true);
+					mainFrame.getStepTwoCenterRightPanel().getZoomoutButton().setVisible(true);
+				}
 				mainFrame.renewPanel();
 			}
 		});
+	}
+    private void initThreeStep()
+    {
+    	if(mainFrame.getStepTwoExchangeOperation().isNew())
+    	{
+    		if(mainFrame.getStepTwoExchangeOperation().isTime())
+    		{
+    			mainFrame.getStepThreeLeftButton().getTimeSeq().setEnabled(false); 
+    			mainFrame.getStepThreeLeftButton().getTimeCase().setEnabled(false);
+    			mainFrame.getStepThreeLeftButton().getTimeModelPanel().setVisible(false);
+    		}
+    		else {
+    			mainFrame.getStepThreeLeftButton().getNoTimeSeq().setEnabled(true);	
+    			mainFrame.getStepThreeLeftButton().getNoTimeCase().setEnabled(false);
+    			mainFrame.getStepThreeLeftButton().getNoTimeModelPanel().setVisible(false);
+			}
+    		stepThree = 1;
+    		mainFrame.getStepTwoExchangeOperation().setNew(false);
+    	}
+    }
+	
+    
+    public void unable()
+    {
+    	nextbutton.setEnabled(false);
+    	backButton.setEnabled(false);
+    }
+	public void enable()
+	{
+		nextbutton.setEnabled(true);
+    	backButton.setEnabled(true);
 	}
 	public JButton getNextbutton() {
 		return nextbutton;
@@ -441,5 +484,6 @@ public class StepTwoExpandBottom extends JPanel{
 	public void setStep(int step) {
 		this.step = step;
 	}
+	
 	
 }

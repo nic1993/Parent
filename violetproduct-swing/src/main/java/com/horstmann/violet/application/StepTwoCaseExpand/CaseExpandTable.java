@@ -16,6 +16,9 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -47,7 +50,7 @@ public class CaseExpandTable extends JPanel implements Cloneable{
        private CaseTableMode caseTableMode;
 	   private JScrollPane jScrollPane;
 	   private DecimalFormat  df = new DecimalFormat();
-	   private String pattern = "#0.000";
+	   private String pattern = "#0.000000";
 	   
 	   private MainFrame mainFrame;
 	   private int selectcolumn = 0; 
@@ -163,7 +166,7 @@ public class CaseExpandTable extends JPanel implements Cloneable{
     	   int rowCount = table.getRowCount();
     	   for(int i = 0;i < rowCount;i++)
     	   {
-    		   table.setValueAt("1.000", i, i+1);
+    		   table.setValueAt("1.000000", i, i+1);
     	   }  
     	   MyTableCell render = new MyTableCell();
     	   render.setHorizontalAlignment(SwingConstants.LEFT);  //文字居中
@@ -175,6 +178,18 @@ public class CaseExpandTable extends JPanel implements Cloneable{
 
            table.getTableHeader().setResizingAllowed(true);
            table.getTableHeader().setPreferredSize(new Dimension(60, 35));
+           DefaultTableCellRenderer renderer = new DefaultTableCellRenderer(){
+        	   public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)  
+               {
+                   JComponent comp = (JComponent) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                   comp.setBackground(new Color(233, 233, 233));
+                   comp.setBorder(BorderFactory.createMatteBorder(0, 1, 1, 0, Color.gray));               
+                   return comp;
+               }
+           };
+           renderer.setHorizontalAlignment(JLabel.LEFT); // 文字居中
+           table.getTableHeader().setDefaultRenderer(renderer);
+           table.getTableHeader().setBackground(new Color(233,233,233));
            
            table.setGridColor(Color.gray);
     	   jScrollPane = new JScrollPane();

@@ -46,7 +46,10 @@ public class Translation {
 	private static int seqCount=1;
 	private static int ucCount=1;
 	
-	public Translation(){}
+	public Translation(){
+		seqCount=1;
+		ucCount=1;
+	}
 	@SuppressWarnings("rawtypes")
 	public Tmc UMLTranslationToMarkovChain(List<UseCase> useCases,Map<String, List<InterfaceUCRelation>> UCRMap,List<String> seqNames,List<String> ucNames) throws Exception
 	{

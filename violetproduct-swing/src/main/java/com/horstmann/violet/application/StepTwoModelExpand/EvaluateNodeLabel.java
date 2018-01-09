@@ -17,6 +17,7 @@ public class EvaluateNodeLabel extends JLabel{
        private JPanel HomogeneityPanel;
        private JPanel CertaintyPanel;
        private JPanel AccessibilityPanel;
+       private String quota;
        private MainFrame mainFrame;
        public EvaluateNodeLabel(String nameString,MainFrame mainFrame)
        {
@@ -44,6 +45,8 @@ public class EvaluateNodeLabel extends JLabel{
 //   				mainFrame.getStepTwoExpand().getEstimateLabel().setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 18));
 //   				mainFrame.getStepTwoExpand().getExchangeLabel().setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 18));
 //   				mainFrame.getStepTwoExpand().getExpandCasePanel().setVisible(true);
+       			mainFrame.getStepTwoEvaluateOperation().getTopLabel().removeAll();
+       			mainFrame.getStepTwoEvaluateOperation().getTopLabel().setText(quota);
    				mainFrame.getStepTwoEvaluateTabbedPane().getHomogeneityResults().removeAll();
    				mainFrame.getStepTwoEvaluateTabbedPane().getHomogeneityResults().add(HomogeneityPanel);		
    				mainFrame.getStepTwoEvaluateTabbedPane().getCertaintyResults().removeAll();
@@ -91,6 +94,12 @@ public class EvaluateNodeLabel extends JLabel{
 	}
 	public String getName() {
 		return name;
+	}
+	public String getQuota() {
+		return quota;
+	}
+	public void setQuota(String quota) {
+		this.quota = quota;
 	}
    	
 }

@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
 
@@ -41,13 +42,16 @@ import com.horstmann.violet.application.gui.util.yangjie.Calculate;
 import com.horstmann.violet.application.gui.util.yangjie.CalculateDistribution;
 import com.horstmann.violet.application.gui.util.yangjie.CalculateSimilarity;
 import com.horstmann.violet.application.gui.util.yangjie.CollectRoute;
+import com.horstmann.violet.application.gui.util.yangjie.HibernateUtils;
 import com.horstmann.violet.application.gui.util.yangjie.Markov;
 import com.horstmann.violet.application.gui.util.yangjie.Parameter;
+import com.horstmann.violet.application.gui.util.yangjie.RandomCase;
 import com.horstmann.violet.application.gui.util.yangjie.ReadMarkov2;
 import com.horstmann.violet.application.gui.util.yangjie.Route;
 import com.horstmann.violet.application.gui.util.yangjie.State;
 import com.horstmann.violet.application.gui.util.yangjie.Stimulate;
 import com.horstmann.violet.application.gui.util.yangjie.TCDetail;
+import com.horstmann.violet.application.gui.util.yangjie.Target;
 import com.horstmann.violet.application.gui.util.yangjie.Transition;
 import com.horstmann.violet.application.menu.util.zhangjian.Database.DataBaseUtil;
 
@@ -144,7 +148,7 @@ public class TimeCaseOperation1 extends JPanel {
 		textField.setPreferredSize(new Dimension(30, 30));
 		textField.setMinimumSize(new Dimension(40, 30));
 		textField.setMaximumSize(new Dimension(40, 30));
-		textField.setText("230");
+	
 		topLabel.setFont(new Font("宋体", Font.PLAIN, 16));
 		label1.setFont(new Font("宋体", Font.PLAIN, 16));
 //		label2.setFont(new Font("宋体", Font.PLAIN, 16));
@@ -167,9 +171,15 @@ public class TimeCaseOperation1 extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				initThread();
-				mainthread.start();
-				thread1.start();
+				if(ModelName == null)
+				{
+					topLabel.removeAll();
+					topLabel.setText("请进行抽象测试序列生成!");
+				}else {
+					initThread();
+					mainthread.start();
+					thread1.start();
+				}
 			}
 		});
 	}
@@ -211,6 +221,7 @@ public class TimeCaseOperation1 extends JPanel {
 					mainFrame.getStepThreeLeftButton().getTimeSeq().setEnabled(true);
 
 					mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
+					mainFrame.getStepThreeBottom().Enable();
 
 					topLabel.removeAll();
 					topLabel.setText("生成可靠性测试数据出错!");
@@ -229,13 +240,13 @@ public class TimeCaseOperation1 extends JPanel {
 				try {
 					button.setEnabled(false);
 					
-					
 					mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(false);
 					mainFrame.getStepThreeLeftButton().getModelExpand().setEnabled(false);
 					
 					mainFrame.getStepThreeLeftButton().getTimeModelLabel().setEnabled(false);
 					mainFrame.getStepThreeLeftButton().getTimeExpandLabel().setEnabled(false);
 					mainFrame.getStepThreeLeftButton().getTimeSeq().setEnabled(false);
+					mainFrame.getStepThreeBottom().UnEnable();
 
 					mainFrame.getStepThreeTimeTabbedPane().getTestData().removeAll();
 					mainFrame.getStepThreeTimeTabbedPane().updateUI();
@@ -267,6 +278,7 @@ public class TimeCaseOperation1 extends JPanel {
 					mainFrame.renewPanel();
 				} catch (Exception e2) {
 					// TODO Auto-generated catch block
+					e2.printStackTrace();
 					button.setEnabled(true);
 					mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
 					mainFrame.getStepThreeLeftButton().getModelExpand().setEnabled(true);
@@ -278,6 +290,7 @@ public class TimeCaseOperation1 extends JPanel {
 					topLabel.setText("生成可靠性测试数据出错!");
 
 					mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
+					mainFrame.getStepThreeBottom().Enable();
 					
 					mainthread.stop();
 					thread2.stop();
@@ -296,6 +309,16 @@ public class TimeCaseOperation1 extends JPanel {
 				try {
 					// 生成测试数据
 					List<Route> routeList = markov.getRouteList();
+					
+					if(routeList.size() == 0)
+					{
+						for(int i = 44;i <= 100;i++)
+						{
+							progressBar.setValue(i);
+							Thread.sleep(10);
+						}
+						
+					}
 					constraintNameString.clear();
 					pros.clear();
 					numbers.clear();
@@ -317,9 +340,6 @@ public class TimeCaseOperation1 extends JPanel {
 					mainFrame.getStepThreeTimeTabbedPane().getTestData().removeAll();
 					CasePagePanel casePagePanel = new CasePagePanel(lists, mainFrame);
 					mainFrame.getStepThreeTimeTabbedPane().getTestData().add(casePagePanel);
-					
-
-					
 
 					JPanel TestDataPanel = new JPanel();
 					TestDataPanel.setLayout(new GridBagLayout());
@@ -341,9 +361,7 @@ public class TimeCaseOperation1 extends JPanel {
 						casePagePanel.getCasePanel().repaint();
 						mainFrame.getStepThreeTimeTabbedPane().getTestData().updateUI();
 						progressBar.setValue(40 + (int) (((double)(k+1) / index) * 60));
-						topLabel.removeAll();
-						topLabel.setText("正在生成第" + (k + 1) + "个可靠性测试数据....");
-						Thread.sleep(10);
+
 						mainFrame.renewPanel();
 					}
 
@@ -382,12 +400,23 @@ public class TimeCaseOperation1 extends JPanel {
 					mainFrame.getStepThreeLeftButton().getTimeCaseNodePanel().insertCustomNodeLabel(timeTestCaseLabel,
 							casePagePanel, testRoute, quota);
 
+					//保存指标
+					Target target = new Target();
+					double Deviationalue = Double.valueOf(df.format(markov.getDbCoverage()));
+					double CoverageRate = Double.valueOf(df.format(d));
+					target.setCoverageRate(Deviationalue);
+					target.setDeviationalue(CoverageRate);
+					HibernateUtils hibernateUtils = RandomCase.hibernateUtils;
+					hibernateUtils.saveTCDetail(target);
+					
 					button.setEnabled(true);
 					mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
 					mainFrame.getStepThreeLeftButton().getTimeModelLabel().setEnabled(true);
 					mainFrame.getStepThreeLeftButton().getModelExpand().setEnabled(true);
 					mainFrame.getStepThreeLeftButton().getTimeExpandLabel().setEnabled(true);
 					mainFrame.getStepThreeLeftButton().getTimeSeq().setEnabled(true);
+					
+					mainFrame.getStepThreeBottom().Enable();
 					mainFrame.renewPanel();
 
 				} catch (Exception e2) {
@@ -404,6 +433,7 @@ public class TimeCaseOperation1 extends JPanel {
 					topLabel.setText("生成可靠性测试数据出错!");
 
 					mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
+					mainFrame.getStepThreeBottom().Enable();
 					
 					mainthread.stop();
 					mainFrame.renewPanel();

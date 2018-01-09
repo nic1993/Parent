@@ -301,7 +301,6 @@ public class UsecaseTreePanel extends JPanel implements Cloneable{
 							}
 						}
 					});
-				
 				}
 				if(((DefaultMutableTreeNode)usecaseTree.getLastSelectedPathComponent()).getLevel() == 3)
 				{
@@ -322,7 +321,6 @@ public class UsecaseTreePanel extends JPanel implements Cloneable{
 				}
 				mainFrame.renewPanel();
 				}
-
 				if(e.getClickCount() == 2){
 					DefaultMutableTreeNode node = (DefaultMutableTreeNode) usecaseTree
 							.getLastSelectedPathComponent();

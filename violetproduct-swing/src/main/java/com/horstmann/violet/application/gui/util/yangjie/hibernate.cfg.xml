@@ -8,9 +8,9 @@
 	
 		<!-- 1. 数据库连接配置 -->
 		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-		<property name="hibernate.connection.url">jdbc:mysql:///mydb</property>
-		<!-- <property name="connectio.useUnicode">true</property>  
-        <property name="connection.characterEncoding">utf-8</property> -->  
+		<property name="hibernate.connection.url">jdbc:mysql:///Violet</property>
+	    <property name="connectio.useUnicode">true</property>  
+        <property name="connection.characterEncoding">utf-8</property> 
 		<property name="hibernate.connection.username">root</property>
 		<property name="hibernate.connection.password">root</property>
 		<!-- 
@@ -24,12 +24,15 @@
 		<!-- <property name="hibernate.show_sql">true</property> -->
 		<!-- 2.2 格式化sql -->
 		<!-- <property name="hibernate.format_sql">true</property> -->
+		
 		<!-- 2.3 自动建表  -->
 		<property name="hibernate.hbm2ddl.auto">create</property>
 		
 		
-		<!-- 3. 加载所有映射 -->
+		<!-- 3. 加载所有映射 
 		<mapping resource="com/horstmann/violet/application/gui/util/yangjie/TCDetail.hbm.xml"/>
+		-->
+		
 		
 	</session-factory>
 </hibernate-configuration>

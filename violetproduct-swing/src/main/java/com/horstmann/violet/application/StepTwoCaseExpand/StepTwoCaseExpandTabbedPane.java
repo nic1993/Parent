@@ -38,7 +38,7 @@ public class StepTwoCaseExpandTabbedPane extends JTabbedPane{
 		init();
 		this.mainFrame = mainFrame;
 		this.add("同源评分矩阵",jScrollPane);
-		this.add("场景概率",jScrollPane1);
+		this.add("场景执行概率",jScrollPane1);
 	}
 
 	private void init()

@@ -115,8 +115,10 @@ public class StepTwoModelOperation extends JPanel{
 	   
 	private List<FutureTask<Integer>> futuretasklist;
 	private List<Thread> threadlist;
+	
+	private boolean Alive;
     
-	private DecimalFormat df= new DecimalFormat("######0.00");
+	private DecimalFormat df= new DecimalFormat("######0.000000");
 	
 	private static String EABathRoute;
 	private static String VioletBathRoute;
@@ -132,6 +134,8 @@ public class StepTwoModelOperation extends JPanel{
 	
 	private Map<String, String> UcaseRoute;
 	private Map<String, String> SeqRoute;
+	
+	
 	
 	public StepTwoModelOperation(MainFrame mainFrame,FileMenu fileMenu)
 	{
@@ -230,6 +234,7 @@ public class StepTwoModelOperation extends JPanel{
 	}
 	private void initThread()
 	{
+		
 		progressBarIndex = 0;
 		verificationProgressBar.setValue(0);
 		step = 1;
@@ -240,6 +245,11 @@ public class StepTwoModelOperation extends JPanel{
   				startVerificationButton.setEnabled(false);
 				startExpandButton.setEnabled(false);
   				while (progressBarIndex < 100) {
+  					System.out.println(Alive);
+  					if(!Alive)
+  					{
+  						break;
+  					}
   					if(progressBarIndex == (int)((double)100/stepSum)*step)
   					{
   						if(futuretasklist.get(step - 1).isDone()){
@@ -261,12 +271,6 @@ public class StepTwoModelOperation extends JPanel{
 					}
   					Thread.sleep(10);
 				}
-  				
-  				mainFrame.getsteponeButton().getExpandCaseModel().setEnabled(true);
-				mainFrame.getStepTwoCaseOperation().getStartExpandButton().setEnabled(true);
-				startExpandButton.setEnabled(true);
-				startVerificationButton.setEnabled(false);
-				
   				return 1;
   			}
   		};
@@ -280,7 +284,7 @@ public class StepTwoModelOperation extends JPanel{
 		 try {
 			 label.removeAll();
 			    label.setText("正在初始化数据.....");
-			    Thread.sleep(100);
+			    Thread.sleep(300);
 				stepTwoModelExpandTabbedPane.getValidationResults().removeAll();
 				stepTwoModelExpandTabbedPane.getValidationResults().updateUI();
 				MatrixPanels.clear();
@@ -294,7 +298,7 @@ public class StepTwoModelOperation extends JPanel{
 				    relations.clear();
 					relationsData.clear();
 					
-				    Thread.sleep(100);
+//				    Thread.sleep(100);
 					List<InterfaceUCRelation> interfaceUCRelations = ucMap.get(key);
 
 					if(interfaceUCRelations.size() == 1)
@@ -342,13 +346,14 @@ public class StepTwoModelOperation extends JPanel{
 					   					{
 										    
 					   						label.removeAll();
-					   						label.setText("计算扩展矩阵出错,请检查填写的扩展矩阵!");
-										    startVerificationButton.setEnabled(true);
-										    startExpandButton.setEnabled(true);
+					   						label.setText("计算扩展矩阵出错，请检查填写的扩展矩阵!");
+					   						
+//					   						startExpandButton.setEnabled(true);
+					   						startVerificationButton.setEnabled(true);
 										    
 										    thread2.interrupt();
 					   					    thread1.interrupt();
-										    mainthread.interrupt();
+										    Alive = false;
 										    break;
 					   					}
 					   					else {
@@ -389,8 +394,9 @@ public class StepTwoModelOperation extends JPanel{
 				}
 		} catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
 			label.removeAll();
-			label.setText("用例扩展出错!");
+			label.setText("用例扩展出错，请重新扩展!");
 			
 			startExpandButton.setEnabled(true);
 			startVerificationButton.setEnabled(false);
@@ -432,15 +438,7 @@ public class StepTwoModelOperation extends JPanel{
 					stepTwoModelExpandTabbedPane.getValidationResults().updateUI();
 					stepTwoModelExpandTabbedPane.setSelectedIndex(1);
 					mainFrame.renewPanel();					
-					
-					for(String string : mainFrame.getjRadionPanel().getRadios().keySet())
-					{
-						if(string.equals(Model_Name))
-						{
-							mainFrame.getjRadionPanel().getRadios().get(string).setScenceTabelPanel(panel);
-						}
-					}
-					
+
 					isFinish = true;
 					for(String key : ucMap.keySet()) //求解 生成
 						{
@@ -456,29 +454,43 @@ public class StepTwoModelOperation extends JPanel{
 				                mainFrame.getOutputinformation().geTextArea().setCaretPosition(length);
 		    					}
 						}
+					if(isFinish == true)
+					{
+						for(String string : mainFrame.getjRadionPanel().getRadios().keySet())
+						{
+							if(string.equals(Model_Name))
+							{
+								mainFrame.getjRadionPanel().getRadios().get(string).setScenceTabelPanel(panel);
+								mainFrame.getjRadionPanel().getRadios().get(string).setQuota(Model_Name+"模型用例扩展验证通过，可以进行场景扩展！");
+							}
+						}
+					}
 				}	
 			    mainFrame.renewPanel();
 			    if(isFinish == false) 
 			    {
 			    	label.removeAll();
-					label.setText(Model_Name+"用例模型进行扩展验证不通过，请重新填写扩展矩阵!");
+					label.setText(Model_Name+"模型用例扩展验证不通过，请重新填写扩展矩阵!");
 					stepTwoModelExpandTabbedPane.setSelectedIndex(1);
 					stepTwoModelExpandTabbedPane.getValidationResults().updateUI();
-					mainFrame.getStepTwoExpand().getExpandCaseModel().setEnabled(false);
-					startExpandButton.setEnabled(true);
-					startVerificationButton.setEnabled(false);
+					mainFrame.getsteponeButton().getExpandCaseModel().setEnabled(false);
+					                                                                                                                               
 			    }
 			    else {
 			    	label.removeAll();
-				    label.setText(Model_Name+"用例模型进行扩展验证通过，可以进行场景扩展！");
+				    label.setText(Model_Name+"用例扩展验证通过，可以进行场景扩展！");
 					stepTwoModelExpandTabbedPane.getValidationResults().updateUI();
 					stepTwoModelExpandTabbedPane.setSelectedIndex(1);
+					mainFrame.getsteponeButton().getExpandCaseModel().setEnabled(true);
+					mainFrame.getStepTwoCaseOperation().getStartExpandButton().setEnabled(true);
 				}
+			    startExpandButton.setEnabled(true);
+				startVerificationButton.setEnabled(false);
 			    mainFrame.renewPanel();
 		} catch (Exception e) {
 			// TODO: handle exception
 			label.removeAll();
-			label.setText("用例扩展出错!");
+			label.setText("用例扩展出错，请重新扩展!");
 			
 			startExpandButton.setEnabled(true);
 			startVerificationButton.setEnabled(false);
@@ -527,7 +539,7 @@ public class StepTwoModelOperation extends JPanel{
 					
 					if(Model_Name == null){
 						label.removeAll();
-						label.setText("请在左侧用例列表中选择用例模型或在第一步中建立用例模型!");
+						label.setText("请在用例扩展中选择模型或在可靠性测试扩展中建立模型!");
 						mainFrame.getStepTwoModelOperation().updateUI();
 						mainFrame.renewPanel();
 					}
@@ -558,7 +570,6 @@ public class StepTwoModelOperation extends JPanel{
 	                        
 						    worker=new WorkImpl();
 						    
-						    System.out.println("worker ccode: " + worker.hashCode());
 						    if(currentUcase.contains(".ucase.violet.xml"))
 						    {
 						    	worker.transInitialHDU(currentUcase);
@@ -567,71 +578,68 @@ public class StepTwoModelOperation extends JPanel{
 						    	worker.transInitial(currentUcase);
 							}
 
-						}  
-						relations.clear();
-						//瑙ｆ瀽UML妯�?��?�鐨刋ML鏂囦�?
-		                ucMap=worker.provideUCRelation(); //鑾峰彇鐢ㄤ緥鎵ц椤哄簭鍏崇郴
-						IISDList=worker.provideIsogencySD();//鑾峰彇鐢ㄤ緥鍦烘櫙淇℃伅	
-						
-						stepTwoModelExpandTabbedPane.getmodelExpandPanel().removeAll();
-						number = Integer.parseInt(numberTextField.getText());
-	                    int j;
-						for(j = 0;j < number;++j){
-							int i = 0; //标记位置
-							StepTwoTabelPanel stepTwoTabelPanel = new StepTwoTabelPanel(mainFrame);
-							stepTwoTabelPanel.getTitleLabel().setText("用户"+(j+1));
-							stepTwoTabelPanel.getTabelPanel().setLayout(new GridBagLayout());
-							for(String key : ucMap.keySet())
-							{
-								List<InterfaceUCRelation> interfaceUCRelations = ucMap.get(key);
-								if(interfaceUCRelations.size() > 1)
-								{
-									isNeedExpand = true;
-									relations.add(key+"迁移关系");
-									for(InterfaceUCRelation interfaceUCRelation : interfaceUCRelations)
-									{
-										relations.add(interfaceUCRelation.getUCRelation());
-									}
-									ScenceTabelPanel scenceTabelPanel = new ScenceTabelPanel(relations); //矩阵
-									StepTwoMatrixPanel stepTwoMatrixPanel = new StepTwoMatrixPanel(mainFrame);
-									stepTwoMatrixPanel.getTitleLabel().setText("用例名称:"+key);
-									stepTwoMatrixPanel.getTitleLabel().setFont(new Font("微软雅黑", Font.BOLD, 16));
-									stepTwoMatrixPanel.getTabelPanel().add(scenceTabelPanel);
-									stepTwoTabelPanel.getTabelPanel().add(stepTwoMatrixPanel, new GBC(0,i).setFill(GBC.BOTH).setWeight(1, 0));
-									i++;
-									relations.clear();
-								}
-							}
-							stepTwoModelExpandTabbedPane.getmodelExpandPanel().add(stepTwoTabelPanel, new GBC(0, j).setFill(GBC.BOTH).setWeight(1, 0));
-						}
-						stepTwoModelExpandTabbedPane.getmodelExpandPanel().add(new JPanel(), new GBC(0, ++j).setFill(GBC.BOTH).setWeight(1, 1));
-						stepTwoModelExpandTabbedPane.getmodelExpandPanel().updateUI();
-						
-						label.setText(Model_Name+"用例模型进行扩展,填写矩阵即对后继用例进行两两对比打分,填写完成后进行验证!");	
-						if(isNeedExpand == false)
-						{
+						    relations.clear();
+							//瑙ｆ瀽UML妯�?��?�鐨刋ML鏂囦�?
+			                ucMap=worker.provideUCRelation(); //鑾峰彇鐢ㄤ緥鎵ц椤哄簭鍏崇郴
+							IISDList=worker.provideIsogencySD();//鑾峰彇鐢ㄤ緥鍦烘櫙淇℃伅	
+							
 							stepTwoModelExpandTabbedPane.getmodelExpandPanel().removeAll();
-							label.removeAll();
-							label.setText(Model_Name+"模型不需要进行模型扩展,可以直接进行验证!"); 
-						}
-						mainFrame.getStepTwoModelExpandTabbedPane().getValidationResults().removeAll();
-						mainFrame.getStepTwoModelExpandTabbedPane().setSelectedIndex(0);
-						mainFrame.getStepTwoCaseExpandTabbedPane().getCaseExpandPanel().removeAll();
-						mainFrame.getStepTwoCaseExpandTabbedPane().getValidationResults().removeAll();
-						mainFrame.getStepTwoEvaluateTabbedPane().getHomogeneityResults().removeAll();
-						mainFrame.getStepTwoExchangeTabbedPane().getExchangeResults().removeAll();
-						mainFrame.getStepTwoExchangeTabbedPane().getExchangeResport().removeAll();
+							number = Integer.parseInt(numberTextField.getText());
+		                    int j;
+							for(j = 0;j < number;++j){
+								int i = 0; //标记位置
+								StepTwoTabelPanel stepTwoTabelPanel = new StepTwoTabelPanel(mainFrame);
+								stepTwoTabelPanel.getTitleLabel().setText("用户"+(j+1));
+								stepTwoTabelPanel.getTabelPanel().setLayout(new GridBagLayout());
+								for(String key : ucMap.keySet())
+								{
+									List<InterfaceUCRelation> interfaceUCRelations = ucMap.get(key);
+									if(interfaceUCRelations.size() > 1)
+									{
+										isNeedExpand = true;
+										relations.add(key+"迁移关系");
+										for(InterfaceUCRelation interfaceUCRelation : interfaceUCRelations)
+										{
+											relations.add(interfaceUCRelation.getUCRelation());
+										}
+										ScenceTabelPanel scenceTabelPanel = new ScenceTabelPanel(relations); //矩阵
+										StepTwoMatrixPanel stepTwoMatrixPanel = new StepTwoMatrixPanel(mainFrame);
+										stepTwoMatrixPanel.getTitleLabel().setText("用例名称:"+key);
+										stepTwoMatrixPanel.getTitleLabel().setFont(new Font("微软雅黑", Font.BOLD, 16));
+										stepTwoMatrixPanel.getTabelPanel().add(scenceTabelPanel);
+										stepTwoTabelPanel.getTabelPanel().add(stepTwoMatrixPanel, new GBC(0,i).setFill(GBC.BOTH).setWeight(1, 0));
+										i++;
+										relations.clear();
+									}
+								}
+								stepTwoModelExpandTabbedPane.getmodelExpandPanel().add(stepTwoTabelPanel, new GBC(0, j).setFill(GBC.BOTH).setWeight(1, 0));
+							}
+							stepTwoModelExpandTabbedPane.getmodelExpandPanel().add(new JPanel(), new GBC(0, ++j).setFill(GBC.BOTH).setWeight(1, 1));
+							stepTwoModelExpandTabbedPane.getmodelExpandPanel().updateUI();
+							
+							label.setText(Model_Name+"用例模型进行扩展,填写矩阵即对后继用例进行两两对比打分,填写完成后进行验证!");	
+							if(isNeedExpand == false)
+							{
+								stepTwoModelExpandTabbedPane.getmodelExpandPanel().removeAll();
+								label.removeAll();
+								label.setText(Model_Name+"模型不需要进行模型扩展,可以直接进行验证!"); 
+							}
+							mainFrame.getStepTwoModelExpandTabbedPane().getValidationResults().removeAll();
+							mainFrame.getStepTwoModelExpandTabbedPane().setSelectedIndex(0);
+							mainFrame.getStepTwoCaseExpandTabbedPane().getCaseExpandPanel().removeAll();
+							mainFrame.getStepTwoCaseExpandTabbedPane().getValidationResults().removeAll();
+							mainFrame.getStepTwoEvaluateTabbedPane().getHomogeneityResults().removeAll();
+							mainFrame.getStepTwoExchangeTabbedPane().getExchangeResults().removeAll();
+							mainFrame.getStepTwoExchangeTabbedPane().getExchangeResport().removeAll();
+							
+							startExpandButton.setEnabled(false);
+							startVerificationButton.setEnabled(true);
+							
+							mainFrame.getStepTwoExpand().getEstimateLabel().setEnabled(false);
+							mainFrame.getStepTwoExpand().getExchangeLabel().setEnabled(false);
+							mainFrame.getsteponeButton().getExpandCaseModel().setEnabled(false);
+						}  
 						
-						mainFrame.getStepTwoCaseOperation().getToplabel().setText("当前模型为:"+Model_Name);
-						mainFrame.getStepTwoEvaluateOperation().getTopLabel().setText("当前模型为:"+Model_Name);
-						mainFrame.getStepTwoExchangeOperation().getToplabel().setText("当前模型为:"+Model_Name);
-						
-						startExpandButton.setEnabled(false);
-						startVerificationButton.setEnabled(true);
-						
-						mainFrame.getStepTwoExpand().getEstimateLabel().setEnabled(false);
-						mainFrame.getStepTwoExpand().getExchangeLabel().setEnabled(false);
-						mainFrame.getsteponeButton().getExpandCaseModel().setEnabled(false);
 					}catch (Throwable e1) {
 							// TODO Auto-generated catch block
 					    e1.printStackTrace();
@@ -662,12 +670,47 @@ public class StepTwoModelOperation extends JPanel{
 				// TODO Auto-generated method stub
 				if(((JButton)e.getSource()).isEnabled())
 				{
+					Alive = true;
+					
 					initThread();
 					mainthread.start();
 					thread1.start();
 				}
 			}
 		});	
+		
+		numberTextField.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				mainFrame.renewPanel();
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				mainFrame.renewPanel();
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				mainFrame.renewPanel();
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				mainFrame.renewPanel();
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				mainFrame.renewPanel();
+			}
+		});
 		}
 
 	private static boolean isNumeric(String str){  //判断输入的是否为数字函数

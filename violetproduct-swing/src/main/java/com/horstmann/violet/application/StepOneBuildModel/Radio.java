@@ -7,7 +7,7 @@ import com.horstmann.violet.application.StepTwoModelExpand.ScenceTabelPanel;
 
 public class Radio extends JRadioButton{
 
-	
+	private String quota;
 	private JPanel scenceTabelPanel = null;
 
 	public JPanel getScenceTabelPanel() {
@@ -17,6 +17,11 @@ public class Radio extends JRadioButton{
 	public void setScenceTabelPanel(JPanel scenceTabelPanel) {
 		this.scenceTabelPanel = scenceTabelPanel;
 	}
-
+	public String getQuota() {
+		return quota;
+	}
+	public void setQuota(String quota) {
+		this.quota = quota;
+	}
 
 }

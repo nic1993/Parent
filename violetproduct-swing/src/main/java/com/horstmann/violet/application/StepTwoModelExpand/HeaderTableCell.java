@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 
 import javax.swing.BorderFactory;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.border.LineBorder;
@@ -31,11 +32,16 @@ import javax.swing.table.TableCellRenderer;
 				this.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, Color.gray));
 				setText("<html><body>"+((String)value)+"</body></html>");
 			}
-			
-			
 			return this;
 		}
 
+//		@Override
+//		public void setHorizontalAlignment(int alignment) {
+//			// TODO Auto-generated method stub
+//			super.setHorizontalAlignment(LEFT);
+//		}
+		
+		
 
 	}
 

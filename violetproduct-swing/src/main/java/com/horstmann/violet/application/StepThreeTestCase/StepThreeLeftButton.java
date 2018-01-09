@@ -105,12 +105,12 @@ public class StepThreeLeftButton extends JPanel{
 		timeModelLabel.setEnabled(false);
 		
 		this.setLayout(new GridBagLayout());
-		this.add(choosePatternLabel,new GBC(0, 0).setFill(GBC.BOTH).setWeight(1, 0).setInsets(15, 10, 0, 80));	
+		this.add(choosePatternLabel,new GBC(0, 0).setFill(GBC.BOTH).setWeight(1, 0).setInsets(15, 10, 0, 0));	
 
-		this.add(noTimeModelLabel,new GBC(0, 1).setFill(GBC.BOTH).setWeight(1, 0).setInsets(15, 10, 0, 80));
+		this.add(noTimeModelLabel,new GBC(0, 1).setFill(GBC.BOTH).setWeight(1, 0).setInsets(15, 10, 0, 0));
 		this.add(noTimeModelPanel,new GBC(0, 2).setFill(GBC.BOTH).setWeight(1, 0).setInsets(10, 30, 0, 0));
 		
-		this.add(timeModelLabel,new GBC(0, 3).setFill(GBC.BOTH).setWeight(1, 0).setInsets(15, 10, 0, 80));
+		this.add(timeModelLabel,new GBC(0, 3).setFill(GBC.BOTH).setWeight(1, 0).setInsets(15, 10, 0, 0));
 		this.add(timeExpand,new GBC(0, 4).setFill(GBC.BOTH).setWeight(1, 0).setInsets(10, 30, 0, 0));
 		
 		this.add(panel,new GBC(0, 5).setFill(GBC.BOTH).setWeight(1, 1));	
@@ -236,8 +236,6 @@ public class StepThreeLeftButton extends JPanel{
 			public void mousePressed(MouseEvent e) {
 				if(((JLabel)e.getSource()).isEnabled())
 				{
-					mainFrame.getNoTimeSeqOperation().setModelName(ModelName);
-					mainFrame.getNoTimeSeqOperation1().setModelName(ModelName);
 						
 					noTimeSeq.setFont(new Font("微软雅黑", Font.BOLD, 16));
 					noTimeCase.setFont(new Font("微软雅黑", Font.PLAIN, 16));
@@ -597,8 +595,6 @@ public class StepThreeLeftButton extends JPanel{
 							mainPanel.add(mainFrame.getworkpanel(),new GBC(1,2,1,1).setFill(GBC.BOTH).setWeight(1, 0.98).setInsets(10, 15, 20, 0));
 						}
 					}		
-				
-				mainFrame.getTimeExpandOperation().setModelName(ModelName);
 				clearPanel();
 				if(isNew == true && ModelName != null){
 					mainFrame.getTimeExpandOperation().getExpandlabel().setText("当前选择的模型为:"+ModelName);
@@ -808,7 +804,6 @@ public class StepThreeLeftButton extends JPanel{
 					}
 					else if(mainFrame.getStepThreeChoosePattern().getselectString().equals("自定义可靠性测试数据个数生成"))
 					{
-						
 						stepThree = 10;
 						int minCase = mainFrame.getTimeSeqOperation1().getMinSeq();
 						mainFrame.getTimeCaseOperation1().getTextField().setText(String.valueOf(minCase));

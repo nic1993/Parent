@@ -24,7 +24,7 @@ public class TimeSeqNodePanel {
        {
     	   SeqNodeLabels = new ArrayList<TimeSeqNode>();
        }
-       public void insertNodeLabel(TimeSeqNode timeSeqNode,AbstractPagePanel abstractPagePanel)
+       public void insertNodeLabel(TimeSeqNode timeSeqNode,AbstractPagePanel abstractPagePanel,String quota,int type)
        {
     	   isExist = false;
     	   if(SeqNodeLabels.size() != 0)
@@ -35,21 +35,19 @@ public class TimeSeqNodePanel {
     			{
     				isExist = true;	
     				NodeLabel.setAbstractPagePanel(abstractPagePanel);
+    				NodeLabel.setQuota(quota);
+    				NodeLabel.setType(type);
     			}
     		   }
     	   }
     	   if(isExist == false)
     	   {
-    		   SeqNodeLabels.add(timeSeqNode);
-    		   int i = 0;
-    		   if(SeqNodeLabels.size() > 0){
-    			   i = SeqNodeLabels.size() - 1;
-    		   }
-        	   
+    		   int i = SeqNodeLabels.size();  
         	   mainFrame.getStepThreeLeftButton().getTimeSeqNode().add(timeSeqNode, new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0).setInsets(5, 10, 0, 0));
         	   mainFrame.getStepThreeLeftButton().getTimeSeqNode().repaint();
+        	   SeqNodeLabels.add(timeSeqNode);
     	   }
-    	   
+    	   mainFrame.renewPanel();
        }
 	public List<TimeSeqNode> getTestCaseNodeLabels() {
 		return SeqNodeLabels;

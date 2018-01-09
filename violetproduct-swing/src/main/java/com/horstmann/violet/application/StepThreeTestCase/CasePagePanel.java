@@ -219,34 +219,22 @@ public class CasePagePanel extends JPanel{
 				// TODO Auto-generated method stub
 				if(!pageTestField.getText().equals(""))
 				{
-					if(list.size() > 500){
+					int index = Integer.valueOf(pageTestField.getText());
+					if(list.size() > 500 && index != totalPage){
 						casePanel.removeAll();
-						int Remainder = list.size() % 500;
-						if(Remainder == 0){
+						casePanel.add(new JPanel(),
+								new GBC(0, list.size() - (totalPage - 1) *500).setFill(GBC.BOTH).setWeight(1, 1));
 							for(int i = (totalPage - 1) *500;i < list.size();i++)
 							{
 								StepThreeTabelPanel testTabelPanel = new StepThreeTabelPanel(list.get(i).getTestCase(), 2,
 		        						mainFrame);
 								casePanel.add(testTabelPanel,
-									new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
+									new GBC(0, i - (totalPage - 1) *500).setFill(GBC.BOTH).setWeight(1, 0));
 								mainFrame.renewPanel();
 							}
 							pageTestField.removeAll();
 							pageTestField.setText(String.valueOf(totalPage));
 						}
-						else {
-							for(int i = (totalPage -1)*500;i < list.size();i++)
-							{
-								StepThreeTabelPanel testTabelPanel = new StepThreeTabelPanel(list.get(i).getTestCase(), 2,
-		        						mainFrame);
-								casePanel.add(testTabelPanel,
-									new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
-								mainFrame.renewPanel();
-							}
-							pageTestField.removeAll();
-							pageTestField.setText(String.valueOf(totalPage));
-						}
-					}
 				}
 			}
 		});
@@ -259,16 +247,32 @@ public class CasePagePanel extends JPanel{
 					int index = Integer.valueOf(pageTestField.getText());
 					if(list.size() > 500 && index != totalPage){
 						casePanel.removeAll();
-							for(int i = 500 * index;i < 500 * (index + 1);i++)
-							{
-								StepThreeTabelPanel testTabelPanel = new StepThreeTabelPanel(list.get(i).getTestCase(), 2,
-			        					mainFrame);
-								casePanel.add(testTabelPanel,
-									new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
-								mainFrame.renewPanel();
-						    }
+						 if(index + 1 == totalPage)
+						 {
+							 casePanel.add(new JPanel(),
+										new GBC(0, list.size() - 500*index).setFill(GBC.BOTH).setWeight(1, 1));
+						    	for(int i = 500 * index;i < list.size();i++)
+								{
+									StepThreeTabelPanel testTabelPanel = new StepThreeTabelPanel(list.get(i).getTestCase(), 2,
+				        					mainFrame);
+									casePanel.add(testTabelPanel,
+										new GBC(0, i - 500*index).setFill(GBC.BOTH).setWeight(1, 0));
+					
+							    }
+						 }
+						 else {
+							 for(int i = 500 * index;i < 500 * (index + 1);i++)
+								{
+									StepThreeTabelPanel testTabelPanel = new StepThreeTabelPanel(list.get(i).getTestCase(), 2,
+				        					mainFrame);
+									casePanel.add(testTabelPanel,
+										new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
+									
+							    }
+						       }
 							pageTestField.removeAll();
 							pageTestField.setText(String.valueOf(index + 1));
+							mainFrame.renewPanel();
 					}
 				}
 				
@@ -284,14 +288,28 @@ public class CasePagePanel extends JPanel{
 					if(list.size() > 500 && index != 1)
 					{
 						casePanel.removeAll();
-						for(int i = 500 * index;i < 500 * (index - 1);i++)
+						if(index == totalPage)
 						{
-							StepThreeTabelPanel testTabelPanel = new StepThreeTabelPanel(list.get(i).getTestCase(), 2,
-		        					mainFrame);
-							casePanel.add(testTabelPanel,
-								new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0));
-							mainFrame.renewPanel();
-					    }
+							for(int i = list.size() - 1; i > 500 * (index - 1);i--)
+							{
+								StepThreeTabelPanel testTabelPanel = new StepThreeTabelPanel(list.get(i).getTestCase(), 2,
+			        					mainFrame);
+								casePanel.add(testTabelPanel,
+									new GBC(0, list.size() - 1 - i).setFill(GBC.BOTH).setWeight(1, 0));
+								mainFrame.renewPanel();
+						    }
+						}
+						else {
+							for(int i = 500*index;i > 500 * (index - 1);i--)
+							{
+								StepThreeTabelPanel testTabelPanel = new StepThreeTabelPanel(list.get(i).getTestCase(), 2,
+			        					mainFrame);
+								casePanel.add(testTabelPanel,
+									new GBC(0, 500*index - i).setFill(GBC.BOTH).setWeight(1, 0));
+								mainFrame.renewPanel();
+						    }
+						}
+						
 						pageTestField.removeAll();
 						pageTestField.setText(String.valueOf(index - 1));
 					}

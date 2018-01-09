@@ -8,7 +8,7 @@
 	
 		<!-- 1. 数据库连接配置 -->
 		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-		<property name="hibernate.connection.url">jdbc:mysql:///mydb</property>
+		<property name="hibernate.connection.url">jdbc:mysql:///Violet</property>
 	    <property name="connectio.useUnicode">true</property>  
         <property name="connection.characterEncoding">utf-8</property> 
 		<property name="hibernate.connection.username">root</property>
@@ -31,6 +31,6 @@
 		
 		<!-- 3. 加载所有映射 -->
 		<mapping resource="com/horstmann/violet/application/gui/util/yangjie/TCDetail.hbm.xml"/>
-		
+		<mapping resource="com/horstmann/violet/application/gui/util/yangjie/Target.hbm.xml"/>
 	</session-factory>
 </hibernate-configuration>

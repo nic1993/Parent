@@ -42,13 +42,16 @@ import com.horstmann.violet.application.gui.util.yangjie.CalculateDistribution;
 import com.horstmann.violet.application.gui.util.yangjie.CalculateSimilarity;
 import com.horstmann.violet.application.gui.util.yangjie.CollectRoute;
 import com.horstmann.violet.application.gui.util.yangjie.Constant;
+import com.horstmann.violet.application.gui.util.yangjie.HibernateUtils;
 import com.horstmann.violet.application.gui.util.yangjie.Markov;
 import com.horstmann.violet.application.gui.util.yangjie.Parameter;
+import com.horstmann.violet.application.gui.util.yangjie.RandomCase;
 import com.horstmann.violet.application.gui.util.yangjie.ReadMarkov2;
 import com.horstmann.violet.application.gui.util.yangjie.Route;
 import com.horstmann.violet.application.gui.util.yangjie.State;
 import com.horstmann.violet.application.gui.util.yangjie.Stimulate;
 import com.horstmann.violet.application.gui.util.yangjie.TCDetail;
+import com.horstmann.violet.application.gui.util.yangjie.Target;
 import com.horstmann.violet.application.gui.util.yangjie.Transition;
 import com.horstmann.violet.application.menu.util.zhangjian.Database.DataBaseUtil;
 
@@ -173,9 +176,16 @@ public class NoTimeCaseOperation1 extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub1
-				initThread();
-				mainthread.start();
-				thread1.start();
+				if(ModelName == null)
+				{
+					topLabel.removeAll();
+					topLabel.setText("请进行抽象测试序列生成!");
+				}
+				else {
+					initThread();
+					mainthread.start();
+					thread1.start();
+				}
 			}
 		});
 	}
@@ -210,7 +220,7 @@ public class NoTimeCaseOperation1 extends JPanel {
 				} catch (Exception e) {
 					// TODO: handle exception
 					topLabel.removeAll();
-					topLabel.setText(e.getLocalizedMessage());
+					topLabel.setText("生成可靠性测试数据出错!");
 
 					button.setEnabled(true);
 					mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
@@ -218,6 +228,7 @@ public class NoTimeCaseOperation1 extends JPanel {
 					mainFrame.getStepThreeLeftButton().getNoTimeSeq().setEnabled(true);
 
 					mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
+					mainFrame.getStepThreeBottom().Enable();
 					
 					mainFrame.renewPanel();
 				}
@@ -236,7 +247,9 @@ public class NoTimeCaseOperation1 extends JPanel {
 					mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(false);
 					mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(false);
 					mainFrame.getStepThreeLeftButton().getNoTimeSeq().setEnabled(false);
-
+					mainFrame.getStepThreeBottom().UnEnable();
+					mainFrame.getStepThreeNoTimeTabbedPane().getTestData().removeAll();
+					
 					markov = mainFrame.getNoTimeSeqOperation1().getMarkov();
 					dom = mainFrame.getNoTimeSeqOperation1().getDom();
 					root = mainFrame.getNoTimeSeqOperation1().getRoot();
@@ -244,7 +257,7 @@ public class NoTimeCaseOperation1 extends JPanel {
 					min = mainFrame.getStepThreeLeftButton().getMin();
 					minSeq = mainFrame.getNoTimeSeqOperation1().getMinSeq();
 
-					mainFrame.getStepThreeNoTimeTabbedPane().getTestData().removeAll();
+					
 					topLabel.removeAll();
 					topLabel.setText("正在生成可靠性测试数据(该过程需要较久时间,请耐心等待)....");
 					Thread.sleep(150);
@@ -267,7 +280,7 @@ public class NoTimeCaseOperation1 extends JPanel {
 				} catch (Exception e) {
 					// TODO: handle exception
 					topLabel.removeAll();
-					topLabel.setText(e.getLocalizedMessage());
+					topLabel.setText("生成可靠性测试数据出错!");
 
 					button.setEnabled(true);
 					mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
@@ -275,6 +288,7 @@ public class NoTimeCaseOperation1 extends JPanel {
 					mainFrame.getStepThreeLeftButton().getNoTimeSeq().setEnabled(true);
 
 					mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
+					mainFrame.getStepThreeBottom().Enable();
 					mainFrame.renewPanel();
 				}
 				return 1;
@@ -334,7 +348,7 @@ public class NoTimeCaseOperation1 extends JPanel {
 						casePagePanel.getCasePanel().repaint();
 						mainFrame.getStepThreeNoTimeTabbedPane().getTestData().repaint();
 						
-						progressBar.setValue(60 + (int) (((double) (j+1) / 500) * 40));
+						progressBar.setValue(60 + (int) (((double) (j+1) / index) * 40));
 
 						Thread.sleep(10);
 						mainFrame.renewPanel();
@@ -359,10 +373,11 @@ public class NoTimeCaseOperation1 extends JPanel {
 					bigDecimal = new BigDecimal(markov.getDeviation());
 					String ii = bigDecimal.toPlainString();
 					double d = Double.valueOf(ii);
+					
 					topLabel.removeAll();
 					topLabel.setText("可靠性测试数据生成完成, 实际共生成" + lists.size() + "条!" + "可靠性测试用例数据库覆盖率:"
 							+ df.format(markov.getDbCoverage()) + "  可靠性测试用例生成比率与使用模型实际使用概率平均偏差:" + df.format(markov.getDeviation()));
-
+//					topLabel.setText("可靠性测试数据生成完成,共生成8379条,耗时36s!" + "Discriminant值:3.44EE-3");
 					
 	                mainFrame.getOutputinformation().geTextArea().append("指标:可靠性可靠性测试数据数据库覆盖率 = 覆盖的马尔可夫链路径/总的马尔可夫链路径" + "\n");
 					int length = mainFrame.getOutputinformation().geTextArea().getText().length(); 
@@ -376,18 +391,28 @@ public class NoTimeCaseOperation1 extends JPanel {
 					noTimeTestCaseLabel.setCasePagePanel(casePagePanel);
 					mainFrame.getStepThreeLeftButton().getNoTimeCaseNodePanel()
 							.insertCustomNodeLabel(noTimeTestCaseLabel, casePagePanel, testRoute, quota);
+					
+					//保存指标
+					Target target = new Target();
+					double Deviationalue = Double.valueOf(df.format(markov.getDbCoverage()));
+					double CoverageRate = Double.valueOf(df.format(d));
+					target.setCoverageRate(Deviationalue);
+					target.setDeviationalue(CoverageRate);
+					HibernateUtils hibernateUtils = RandomCase.hibernateUtils;
+					hibernateUtils.saveTCDetail(target);
 
 					button.setEnabled(true);
 					mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
 					mainFrame.getStepThreeLeftButton().getNoTimeModelLabel().setEnabled(true);
 					mainFrame.getStepThreeLeftButton().getNoTimeSeq().setEnabled(true);
+					mainFrame.getStepThreeBottom().Enable();
 					
 					mainFrame.renewPanel();
 				} catch (Exception e) {
 					// TODO: handle exception
 					e.printStackTrace();
 					topLabel.removeAll();
-					topLabel.setText(e.getLocalizedMessage());
+					topLabel.setText("生成可靠性测试数据出错!");
 
 					button.setEnabled(true);
 					mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
@@ -395,6 +420,7 @@ public class NoTimeCaseOperation1 extends JPanel {
 					mainFrame.getStepThreeLeftButton().getNoTimeSeq().setEnabled(true);
 
 					mainFrame.getStepThreeLeftButton().getChoosePatternLabel().setEnabled(true);
+					mainFrame.getStepThreeBottom().Enable();
 					mainFrame.renewPanel();
 				}
 				return 1;

@@ -393,13 +393,19 @@ public class TransEAToViolet {
     			String lifelinename = element.attributeValue("name");
     			lifeLineNode.setId(lifelineId);
     			lifeLineNode.setName(lifelinename);
-    			Element links=element.element("links");
-    			List<Element> Sequence=links.elements("Sequence");
-    			lifeLineNode.setElements(Sequence);
-    			for(Element edgeElement : Sequence)
-	    		{
-	    			
-	    		}
+    			if(element.element("links") != null)
+    			{
+    				Element links=element.element("links");
+    				if(links.elements("Sequence") != null)
+    				{
+    					List<Element> Sequence=links.elements("Sequence");
+    	    			lifeLineNode.setElements(Sequence);
+    	    			for(Element edgeElement : Sequence)
+    		    		{
+    		    			
+    		    		}
+    				}
+    			}
     			LifeLines.add(lifeLineNode);
         	}
 		}
@@ -474,7 +480,7 @@ public class TransEAToViolet {
         						String newString = name.replaceAll("≥", " ");
         						newName = ReplaceString(name);
         					}
-        					System.out.println("newname: " + newName);
+        					
         					VLFragmentPartInfo fragmentpart=new VLFragmentPartInfo();
         					fragmentpart.setConditionText(newName);//设置condition	
                             String Splitsize=SplitValues[i+1];
@@ -544,6 +550,17 @@ public class TransEAToViolet {
             		    		}
             		    		
             		    	}
+            		    	
+            		    	for(ReturnEdgeInfo returnEdgeInfo : ReturnEdges)
+            		    	{
+            		    		if(returnEdgeInfo.getId().equals(sequence.attributeValue("id")))
+            		    		{
+            		    			returnEdgeInfo.setStartEAReferenceId(sequence.attributeValue("start"));
+            		    			returnEdgeInfo.setEndEAReferenceId(sequence.attributeValue("end"));
+            		    		}
+            		    		
+            		    	}
+            		    	
             			}
             		    boolean isfirstLifelineNode=false;
             			for(Element sequence : Sequence)
@@ -580,13 +597,6 @@ public class TransEAToViolet {
                 					//接收一个消息新建一个ActivationBar
                 					if(calledge.getId().equals(sequence.attributeValue("id")))
                 					{
-//                						for(CallEdgeInfo callEdgeInfo : selfCallEdgesID)
-//                						{
-//                							if(Integer.parseInt(callEdgeInfo.getStartLocationY()) > Integer.parseInt(calledge.getStartLocationY()))
-//                							{
-//                								
-//                							}
-//                						}
                 						if(selfCallEdgesID.contains(calledge))
                 						{
                 							
@@ -845,6 +855,32 @@ for(CallEdgeInfo calledge : CallEdges)
 		for(LifeLineNodeInfo lifeLine : LifeLines)
 		{
 			if(lifeLine.getId().equals(calledge.getStartEAReferenceId()))
+			{
+				lifeLine.getActivationBarNodes().add(activationBarNode);
+			}
+		}
+	}
+}
+
+for(ReturnEdgeInfo returnEdge : ReturnEdges)
+{
+	System.out.println("start: " + returnEdge.getStartReferenceId());
+	System.out.println("end: " + returnEdge.getEndReferenceId());
+	if(returnEdge.getEndReferenceId() == null)
+	{
+		ActivationBarNodeInfo activationBarNode=new ActivationBarNodeInfo(); //生成孩子节点
+		activationBarNode.setEdgeID(returnEdge.getId()); //设置生成ActivationBarID 自己加的
+		activationBarNode.setLifeID(returnEdge.getEndEAReferenceId()); //设置生成lifelineId 自己加的
+		activationBarNode.setId(GenerateID());//新建ID
+		activationBarNode.setParentId(returnEdge.getEndEAReferenceId());//新建父节点ID
+		activationBarNode.setLocationX("32");//默认离lifelineNode节点X轴的偏差
+		activationBarNode.setLocationY(returnEdge.getEndLocationY());
+		
+		returnEdge.setEndReferenceId(activationBarNode.getId());
+		
+		for(LifeLineNodeInfo lifeLine : LifeLines)
+		{
+			if(lifeLine.getId().equals(returnEdge.getEndEAReferenceId()))
 			{
 				lifeLine.getActivationBarNodes().add(activationBarNode);
 			}

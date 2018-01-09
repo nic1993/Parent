@@ -32,6 +32,7 @@ public class ApplicationStopper
      */
     public void exitProgram(MainFrame mainFrame)
     {
+    	
         boolean ok = isItReadyToExit(mainFrame);
         if (ok)
         {

@@ -387,7 +387,7 @@ public class StepOneOperationButton extends JPanel{
                     {
                     	if(modelPanel.getTitle().getText().toString().equals(name))
                     	{
-                    		JOptionPane.showMessageDialog(null, "模型已经存在!","标题",JOptionPane.WARNING_MESSAGE);
+                    		JOptionPane.showMessageDialog(null, "模型已经存在!","提示",JOptionPane.WARNING_MESSAGE);
                         	return;	
                     	}
                     }
@@ -397,7 +397,7 @@ public class StepOneOperationButton extends JPanel{
                     
                     if(!ucasefile.exists() || !seqfile.exists())
                     {
-                    	JOptionPane.showMessageDialog(null, "模型不存在!","标题",JOptionPane.WARNING_MESSAGE);
+                    	JOptionPane.showMessageDialog(null, "模型不存在!","错误",JOptionPane.WARNING_MESSAGE);
                     	return;
                     }
                     
@@ -439,11 +439,25 @@ public class StepOneOperationButton extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				if(!mainFrame.getActiveModelPanel().isSave()){
-					mainFrame.saveModelPanel(mainFrame.getActiveModelPanel());
-				}
-				else {
-					mainFrame.saveOldPlace(mainFrame.getActiveModelPanel());
+				if(mainFrame.getActiveModelPanel() != null)
+				{
+					if(!mainFrame.getActiveModelPanel().isSave()){
+						mainFrame.saveModelPanel(mainFrame.getActiveModelPanel());
+					}
+					else {
+						String ucasepath = mainFrame.getActiveModelPanel().getTemporaryUcaseFile();
+				    	String seqpath = mainFrame.getActiveModelPanel().getTemporarySeqFile();
+				    	File ucasefile = new File(ucasepath);
+				    	File seqfile = new File(seqpath);
+				    	if(ucasefile.exists() && seqfile.exists())
+				    	{
+				    		mainFrame.saveOldPlace(mainFrame.getActiveModelPanel());
+				    	}else {
+				    		mainFrame.saveModelPanel(mainFrame.getActiveModelPanel());
+						}
+				    	
+						
+					}
 				}
 				mainFrame.renewPanel();
 			}

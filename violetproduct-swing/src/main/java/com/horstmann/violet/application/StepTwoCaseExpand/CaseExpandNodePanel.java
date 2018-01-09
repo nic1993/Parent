@@ -29,6 +29,7 @@ public class CaseExpandNodePanel {
        }
        public void insertNodeLabel(ExpandNodeLabel expandNodeLabel,JPanel panel)
        {
+    	   isExist = false;
     	   if(expandNodeLabels.size() != 0)
     	   {
     		   for(ExpandNodeLabel NodeLabel :expandNodeLabels)
@@ -43,11 +44,10 @@ public class CaseExpandNodePanel {
     	   
     	   if(isExist == false)
     	   {
-    		   expandNodeLabel.setResultPanel(panel);
-    		   expandNodeLabels.add(expandNodeLabel);
-        	   int i = expandNodeLabels.size() - 1;
+        	   int i = expandNodeLabels.size(); 
         	   expandCasePanel.add(expandNodeLabel, new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0).setInsets(5, 25, 0, 0));
         	   expandCasePanel.repaint();
+        	   expandNodeLabels.add(expandNodeLabel);
     	   }
     	   mainFrame.renewPanel();
        }

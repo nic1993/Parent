@@ -15,8 +15,7 @@ public class ExpandNodeLabel extends JLabel{
        private Icon icon;
        private String name;
        private JPanel resultPanel;
-       private JPanel centerPanel;
-       
+       private String quota;
        private MainFrame mainFrame;
        public ExpandNodeLabel(String name,MainFrame mainFrame)
        {
@@ -46,6 +45,9 @@ public class ExpandNodeLabel extends JLabel{
 //				mainFrame.getStepTwoExpand().getExchangeLabel().setFont(new Font("Î¢ÈíÑÅºÚ", Font.PLAIN, 18));
 //				mainFrame.getStepTwoExpand().getExpandCasePanel().setVisible(true);
 
+    			mainFrame.getStepTwoCaseOperation().getToplabel().removeAll();
+       			mainFrame.getStepTwoCaseOperation().getToplabel().setText(quota);
+       			
 				mainFrame.getStepTwoCaseExpandTabbedPane().getValidationResults().removeAll();
 				mainFrame.getStepTwoCaseExpandTabbedPane().getValidationResults().add(resultPanel);		
 				mainFrame.getStepTwoCaseExpandTabbedPane().setSelectedIndex(1);
@@ -81,10 +83,10 @@ public class ExpandNodeLabel extends JLabel{
    	public void setResultPanel(JPanel resultPanel) {
    		this.resultPanel = resultPanel;
    	}
-   	public JPanel getCenterPanel() {
-   		return centerPanel;
-   	}
-   	public void setCenterPanel(JPanel centerPanel) {
-   		this.centerPanel = centerPanel;
-   	}
+   	public String getQuota() {
+		return quota;
+	}
+	public void setQuota(String quota) {
+		this.quota = quota;
+	}
 }

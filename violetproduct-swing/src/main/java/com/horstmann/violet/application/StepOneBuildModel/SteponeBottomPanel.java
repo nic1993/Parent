@@ -100,7 +100,7 @@ public class SteponeBottomPanel extends JPanel{
 				// TODO Auto-generated method stub
 				initStepTwoPanel();
 				mainFrame.getTitlePanel().getBigTitle().setText("第二步:Markov链使用模型构建");
-				mainFrame.getTitlePanel().getSmallTitle().setText("对第一步扩展模型进行评估、转换成Markov链模型");			
+				mainFrame.getTitlePanel().getSmallTitle().setText("对第一步扩展模型进行一致性检验、转换成Markov链模型");			
 				
 				mainFrame.getjRadionPanel().initFile();
 				mainFrame.getOpreationPart().add(mainFrame.getStepTwoExpand());
@@ -126,6 +126,7 @@ public class SteponeBottomPanel extends JPanel{
 				switch (stepTwo) {
                 case 1:
                 	mainFrame.getStepTwoExpand().getEstimateLabel().setFont(new Font("微软雅黑", Font.BOLD, 18));
+                	mainFrame.getStepTwoExpand().getExchangeLabel().setFont(new Font("微软雅黑", Font.PLAIN, 18));
                 	mainFrame.getpanel().add(mainFrame.getStepTwoEvaluateOperation());
 					mainFrame.getpanel().setVisible(true);
 					mainFrame.getpanel().updateUI();
@@ -162,22 +163,26 @@ public class SteponeBottomPanel extends JPanel{
 					mainFrame.getStepTwoCenterRightPanel().getZoominButton().setVisible(true);
 					mainFrame.getStepTwoCenterRightPanel().getZoomoutButton().setVisible(true);
 					mainFrame.renewPanel();
+					
+//					mainFrame.getStepTwoCenterRightPanel().setVisible(false);
+//					mainFrame.getpanel().setVisible(false);
+//					mainFrame.getOpreationPart().setVisible(false);
 	                break;
 				default:
 					break;
 				}
 				StepTwoModelName = mainFrame.getStepTwoModelOperation().getModel_name();
-				if(StepTwoModelName != null)
-				{
-					List<Radio> lists = mainFrame.getjRadionPanel().getRadioList();
-					for(Radio radio : lists)
-					{
-						if(radio.getText().equals(StepTwoModelName))
-						{
-							radio.setSelected(true);
-						}
-					}
-				}
+//				if(StepTwoModelName != null)
+//				{
+//					List<Radio> lists = mainFrame.getjRadionPanel().getRadioList();
+//					for(Radio radio : lists)
+//					{
+//						if(radio.getText().equals(StepTwoModelName))
+//						{
+//							radio.setSelected(true);
+//						}
+//					}
+//				}
 				mainFrame.renewPanel();             
 			}
 		});

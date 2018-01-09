@@ -58,56 +58,8 @@ public class TcConvertUtil {
 		List<Pair> hs = new ArrayList(), ts = new ArrayList();
 		Map<String, List<Pair>> hb = new TreeMap(comp), ht = new TreeMap(comp);
 		List<Pair> tmp, tmp2;
-		
-		for(int i=0;i<testCases.size();i++){
-			TestCase testCase=testCases.get(i);
-			String speed = testCase.getResult().getWind_speed(), high = testCase.getResult().getTakeoff_alt(), time = testCase.getResult().getTime();
-			if(i==testCases.size()-1){
-				hs.add(new Pair(speed, high));
-				ts.add(new Pair(speed, time));
-			}
-			else{
-				if(!speed.equals(testCases.get(i+1).getResult().getWind_speed())){
-					hs.add(new Pair(speed, high));
-					ts.add(new Pair(speed, time));
-				}
-			}
-		}
-		
-		for (TestCase testCase : testCases) {
-			String speed = testCase.getResult().getWind_speed(), high = testCase.getResult().getTakeoff_alt(),
-					battery = testCase.getResult().getBattery_remaining(), time = testCase.getResult().getTime();
-//			if ("0%".equals(battery)) {
-//				hs.add(new Pair(speed, high));
-//				ts.add(new Pair(speed, time));
-//			}
 
-			if (!hb.containsKey(speed) || !ht.containsKey(speed)) {
-				tmp = new ArrayList();
-				tmp.add(new Pair(high, battery));
-				hb.put(speed, tmp);
 
-				tmp2 = new ArrayList();
-				tmp2.add(new Pair(high, time));
-				ht.put(speed, tmp2);
-			} else {
-				tmp = hb.get(speed);
-				tmp.add(new Pair(high, battery));
-
-				tmp2 = ht.get(speed);
-				tmp2.add(new Pair(high, time));
-			}
-
-		}
-
-		// 1.高度、风速关系
-		finallStatisticsResult.put("high-speed", hs);
-		// 2.风速、时间关系
-		finallStatisticsResult.put("time-speed", ts);
-		// 3.电量、高度关系
-		finallStatisticsResult.put("high-battery", hb);
-		// 4.高度、时间关系
-		finallStatisticsResult.put("high-time", ht);
 
 		return finallStatisticsResult;
 
@@ -134,7 +86,7 @@ public class TcConvertUtil {
 		Map<String, List<Map<Integer, List<Integer>>>> failedStatistics = new HashMap();
 
 		for (TestCase testCase : testCases) {
-			String tmpStr = testCase.getResult().getResultDetail();
+			String tmpStr = testCase.getResult();
 			int id = Integer.parseInt(testCase.getTestCaseID());
 			String keyTmp = null;
 			// 出错用例 纪录并统计
@@ -214,7 +166,7 @@ public class TcConvertUtil {
 	 *            激励链表字符串
 	 * @return
 	 */
-	public static List<myProcess> string2ProcessList(String processList) {
+	public static List<myProcess> string2ProcessList(String processList,TestCase testCase) {
 		List<myProcess> list = new ArrayList<myProcess>();
 		// 1.划分各个激励链表字符串
 		String[] tmp = processList.split("\\)");
@@ -240,6 +192,7 @@ public class TcConvertUtil {
 			// 2.6.激励状态
 			my.setProcessStatus(stringRegEx(process, "ProcessStatus:([\\s|\\S]*?)\\)").get(0));
 			// System.out.println(my);
+			my.setTestCase(testCase);
 			list.add(my);
 		}
 		return list;
@@ -271,7 +224,8 @@ public class TcConvertUtil {
 			testCase.setTestCaseID(stringRegEx(s, "testcCaseID:([\\s|\\S]*?)-->processList:").get(0));
 			// 2.3.构造激励链表
 			String processList = stringRegEx(s, "processList:([\\s|\\S]*?)-->execStatus").get(0);
-			testCase.setProcessList(string2ProcessList(processList));
+			testCase.setProcessList(string2ProcessList(processList,testCase));
+			
 			// 2.4.测试用例执行状态
 			/*
 			 * 功能性能 : 类型 说明 : 1.测试用例有误,无法对应到执行程序，且测试耗时:[不准确] 2.测试耗时:
@@ -355,7 +309,7 @@ public class TcConvertUtil {
 //			}
 
 			testCaseResult.setResultDetail(result);
-			testCase.setResult(testCaseResult);
+			testCase.setResult(result);
 			// 2.6.测试用例表现格式
 			testCase.setDetail(testCase.showTestCase());
 			

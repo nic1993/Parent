@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -155,8 +156,22 @@ public class ModelPanel extends JPanel{
 							}
 							if(selectmodel != null)
 							{
-								mainFrame.saveModelPanel(selectmodel);
 								
+								if(!selectmodel.isSave()){
+									mainFrame.saveModelPanel(selectmodel);
+								}
+								else {
+									String ucasepath = selectmodel.getTemporaryUcaseFile();
+							    	String seqpath = selectmodel.getTemporarySeqFile();
+							    	File ucasefile = new File(ucasepath);
+							    	File seqfile = new File(seqpath);
+							    	if(ucasefile.exists() && seqfile.exists())
+							    	{
+							    		mainFrame.saveOldPlace(selectmodel);
+							    	}else {
+							    		mainFrame.saveModelPanel(selectmodel);
+									}
+								}
 							}
 							mainFrame.renewPanel();
 						}

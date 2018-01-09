@@ -97,6 +97,7 @@ public class StepTwoExchangeOperation extends JPanel {
 	private Map<Object, String> nodeTextMap;
 	private Map<Object, String> edgeTextMap;
 
+	private boolean isNew = false;
 	TestCaseXMLToStringList testCaseXMLToStringList = new TestCaseXMLToStringList();
 
 	public StepTwoExchangeOperation(MainFrame mainFrame, FileMenu fileMenu) {
@@ -135,6 +136,34 @@ public class StepTwoExchangeOperation extends JPanel {
 			@Override
 			public Integer call() throws Exception {
 				// TODO Auto-generated method stub
+				isAlive = true;
+				isTime = false;
+				restartExchange.setEnabled(true);
+				mainFrame.getStepTwoExpand().getEstimatepPanel().setVisible(false);
+				mainFrame.getStepTwoExpand().getExchangepPanel().setVisible(false);
+				mainFrame.getsteponeButton().getExpandCasePanel().setVisible(false);
+				mainFrame.getsteponeButton().getExpandCaseModel().setVisible(false);
+				mainFrame.renewPanel();
+
+				mainFrame.getStepTwoExpand().getEstimateLabel().setEnabled(false);
+				mainFrame.getsteponeButton().getExpandModelLabel().setEnabled(false);
+				mainFrame.getsteponeButton().getExpandCaseModel().setEnabled(false);
+				mainFrame.renewPanel();
+
+				mainFrame.getStepTwoModelOperation().getStartExpandButton().setEnabled(false);
+				mainFrame.getStepTwoCaseOperation().getStartExpandButton().setEnabled(false);
+				startExchange.setEnabled(false);
+				mainFrame.renewPanel();
+				mainFrame.getStepTwoExpandBottom().unable();
+				
+				mainFrame.getStepTwoCenterRightPanel().setVisible(false);
+				
+				for(ExchangeNodeLabel exchangeNodeLabel : exchangeNodePanel.getExchangeNodeLabels())
+				{
+					exchangeNodeLabel.setEnabled(false);
+					mainFrame.renewPanel();
+				}
+				
 				while (progressBarIndex <= 100) {
 					{
 						if (task1.isDone()) {
@@ -148,6 +177,34 @@ public class StepTwoExchangeOperation extends JPanel {
 						}
 					}
 				}
+				
+				startExchange.setEnabled(true);
+				mainFrame.getStepTwoCenterRightPanel().setVisible(true);
+				mainFrame.getStepTwoExpand().getEstimatepPanel().setVisible(true);
+				mainFrame.getStepTwoExpand().getExchangepPanel().setVisible(true);
+				mainFrame.getsteponeButton().getExpandCasePanel().setVisible(true);
+				mainFrame.getsteponeButton().getExpandCaseModel().setVisible(true);
+				mainFrame.renewPanel();
+				
+				mainFrame.getStepTwoExpand().getExchangeLabel().setEnabled(true);
+				mainFrame.getsteponeButton().getExpandModelLabel().setEnabled(true);
+				mainFrame.getStepTwoExpand().getEstimateLabel().setEnabled(true);
+				mainFrame.getsteponeButton().getExpandCaseModel().setEnabled(true);
+				mainFrame.renewPanel();
+
+				mainFrame.getStepTwoModelOperation().getStartExpandButton().setEnabled(true);
+				mainFrame.getStepTwoCaseOperation().getStartExpandButton().setEnabled(false);
+				mainFrame.getStepTwoEvaluateOperation().getEvaluateButton().setEnabled(false);
+				startExchange.setEnabled(false);
+				restartExchange.setEnabled(false);
+				mainFrame.renewPanel();
+				
+				for(ExchangeNodeLabel exchangeNodeLabel : exchangeNodePanel.getExchangeNodeLabels())
+				{
+					exchangeNodeLabel.setEnabled(true);
+					mainFrame.renewPanel();
+				}
+				
 				return 1;
 			}
 		};
@@ -160,26 +217,6 @@ public class StepTwoExchangeOperation extends JPanel {
 			public Integer call() throws Exception {
 				// TODO Auto-generated method stub
 				try {
-					isAlive = true;
-					isTime = false;
-					restartExchange.setEnabled(true);
-					mainFrame.getStepTwoExpand().getEstimatepPanel().setVisible(false);
-					mainFrame.getStepTwoExpand().getExchangepPanel().setVisible(false);
-					mainFrame.getsteponeButton().getExpandCasePanel().setVisible(false);
-					mainFrame.getsteponeButton().getExpandCaseModel().setVisible(false);
-					
-					mainFrame.getStepTwoExpand().getExchangeLabel().setEnabled(false);
-					mainFrame.getStepTwoExpand().getEstimateLabel().setEnabled(false);
-					mainFrame.getsteponeButton().getExpandModelLabel().setEnabled(false);
-					mainFrame.getsteponeButton().getExpandCaseModel().setEnabled(false);
-
-					mainFrame.getStepTwoModelOperation().getStartExpandButton().setEnabled(false);
-					mainFrame.getStepTwoCaseOperation().getStartExpandButton().setEnabled(false);
-					startExchange.setEnabled(false);
-					mainFrame.renewPanel();
-					
-					mainFrame.getStepTwoCenterRightPanel().setVisible(false);
-
 					mainFrame.getStepTwoExchangeTabbedPane().getExchangeResults().removeAll();
 					mainFrame.getStepTwoExchangeTabbedPane().getExchangeResport().removeAll();
 					mainFrame.getStepTwoExchangeTabbedPane().updateUI();
@@ -195,7 +232,7 @@ public class StepTwoExchangeOperation extends JPanel {
 
 					toplabel.removeAll();
 					toplabel.setText("正在获取用例迁移概率.....");
-					Thread.sleep(400);
+					Thread.sleep(1000);
 
 					worker.assignmentPro(IISDList);
 					
@@ -204,7 +241,7 @@ public class StepTwoExchangeOperation extends JPanel {
 
 					toplabel.removeAll();
 					toplabel.setText("正在获取场景概率.....");
-					Thread.sleep(400);
+					Thread.sleep(1000);
 
 					List<String> seqNames = new ArrayList<String>();
 					List<String> ucNames = new ArrayList<String>();
@@ -318,7 +355,7 @@ public class StepTwoExchangeOperation extends JPanel {
 
 					toplabel.removeAll();
 					toplabel.setText("正在获取Markov节点信息.....");
-					Thread.sleep(250);
+					Thread.sleep(1500);
 
 
 					// //添加节点信息
@@ -346,7 +383,7 @@ public class StepTwoExchangeOperation extends JPanel {
 
 					toplabel.removeAll();
 					toplabel.setText("正在获取Markov迁移信息.....");
-					Thread.sleep(400);
+					Thread.sleep(1500);
 
 					// 修改边的信息
 					mainFrame.getStepTwoCenterRightPanel().getEdgeTextMap().clear();
@@ -365,7 +402,7 @@ public class StepTwoExchangeOperation extends JPanel {
 					
 					toplabel.removeAll();
 					toplabel.setText("正在获取Markov链XML信息.....");
-					Thread.sleep(400);
+					Thread.sleep(1500);
 					mainFrame.getStepTwoExchangeTabbedPane().getExchangeResport().removeAll();
 					mainFrame.getStepTwoExchangeTabbedPane().getExchangeResport()
 							.add(XMLToTree.getTree(MarkovRoute + Model_Name + "layout.markov.violet.xml"));
@@ -399,35 +436,19 @@ public class StepTwoExchangeOperation extends JPanel {
 					nodeLabel.setXMLPanel(XMLPanel);
 					nodeLabel.setNodeTextMap(nodeTextMap);
 					nodeLabel.setEdgeTextMap(edgeTextMap);
+					nodeLabel.setQuota("Markov转换成功,可以生成可靠性测试数据!");
 
-					exchangeNodePanel.insertNodeLabel(nodeLabel);
+					exchangeNodePanel.insertNodeLabel(nodeLabel,workspace,XMLPanel,nodeTextMap,edgeTextMap);
 					mainFrame.getStepTwoExpand().getExchangepPanel().repaint();
 
-					startExchange.setEnabled(true);
-					mainFrame.getStepTwoCenterRightPanel().setVisible(true);
-					mainFrame.getStepTwoExpand().getEstimatepPanel().setVisible(true);
-					mainFrame.getStepTwoExpand().getExchangepPanel().setVisible(true);
-					mainFrame.getsteponeButton().getExpandCasePanel().setVisible(true);
-					mainFrame.getsteponeButton().getExpandCaseModel().setVisible(true);
-					
-					mainFrame.getStepTwoExpand().getExchangeLabel().setEnabled(true);
-					mainFrame.getsteponeButton().getExpandModelLabel().setEnabled(true);
-					mainFrame.getStepTwoExpand().getEstimateLabel().setEnabled(true);
-					mainFrame.getsteponeButton().getExpandCaseModel().setEnabled(true);
-					
 
-					mainFrame.getStepTwoModelOperation().getStartExpandButton().setEnabled(true);
-					mainFrame.getStepTwoCaseOperation().getStartExpandButton().setEnabled(false);
-					mainFrame.getStepTwoEvaluateOperation().getEvaluateButton().setEnabled(false);
-					startExchange.setEnabled(false);
-					restartExchange.setEnabled(false);
-
-					mainFrame.getStepThreeLeftButton().setModelName(Model_Name);
+					setModerlName(Model_Name);
 					mainFrame.getStepThreeLeftButton().setNew(true);
-					
+					isNew = true;
 					toplabel.removeAll();
-					toplabel.setText("Markov转换成功,可以生成测试用例!");
+					toplabel.setText("Markov转换成功,可以生成可靠性测试数据!");
 					
+					mainFrame.getStepTwoExpandBottom().enable();
 					mainFrame.renewPanel();
 					
 				} catch (Exception e2) {
@@ -454,6 +475,7 @@ public class StepTwoExchangeOperation extends JPanel {
 					startExchange.setEnabled(false);
 					restartExchange.setEnabled(false);
 					
+					mainFrame.getStepTwoExpandBottom().enable();
 					mainFrame.renewPanel();
 				}
 
@@ -464,6 +486,24 @@ public class StepTwoExchangeOperation extends JPanel {
 		thread1 = new Thread(task1);
 	}
 
+	private void setModerlName(String ModelName)
+	{
+		mainFrame.getStepThreeLeftButton().setModelName(ModelName);
+		if(!isTime)
+		{
+			mainFrame.getNoTimeSeqOperation().setModelName(ModelName);
+			mainFrame.getNoTimeSeqOperation1().setModelName(ModelName);
+			mainFrame.getNoTimeCaseOperation().setModelName(null);
+			mainFrame.getNoTimeCaseOperation1().setModelName(null);
+		}else {
+			mainFrame.getTimeExpandOperation().setModelName(ModelName);
+			mainFrame.getTimeSeqOperation().setModelName(null);
+			mainFrame.getTimeSeqOperation1().setModelName(null);
+			mainFrame.getTimeCaseOperation().setModelName(null);
+			mainFrame.getTimeCaseOperation1().setModelName(null);
+		}
+	}
+	
 	private void buttonListen() {
 		startExchange.addActionListener(new ActionListener() {
 
@@ -538,5 +578,11 @@ public class StepTwoExchangeOperation extends JPanel {
 	public void setNodeTextMap(Map<Object, String> nodeTextMap) {
 		this.nodeTextMap = nodeTextMap;
 	}
+	public boolean isNew() {
+		return isNew;
+	}
 
+	public void setNew(boolean isNew) {
+		this.isNew = isNew;
+	}
 }

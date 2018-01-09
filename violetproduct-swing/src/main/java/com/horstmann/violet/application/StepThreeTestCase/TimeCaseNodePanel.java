@@ -26,11 +26,12 @@ public class TimeCaseNodePanel {
        }
        public void insertNodeLabel(TimeTestCaseNode TimeTestCaseLabel,CasePagePanel casePagePanel,String quota)
        {
+    	   isExist = false;
     	   if(TestCaseNodeLabels.size() != 0)
     	   {
     		   for(TimeTestCaseNode NodeLabel :TestCaseNodeLabels)
     		   {
-    			if(NodeLabel.getText().equals(TimeTestCaseLabel.getText()))
+    			if(NodeLabel.getName().equals(TimeTestCaseLabel.getName()))
     			{
     				isExist = true;	
     				NodeLabel.setCasePagePanel(casePagePanel);
@@ -40,11 +41,13 @@ public class TimeCaseNodePanel {
     	   }
     	   if(isExist == false)
     	   {
-    		   TestCaseNodeLabels.add(TimeTestCaseLabel);
-        	   int i = TestCaseNodeLabels.size() - 1;
+    		  
+        	   int i = TestCaseNodeLabels.size();
         	   mainFrame.getStepThreeLeftButton().getTimeNode().add(TimeTestCaseLabel, new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0).setInsets(5, 10, 0, 0));
         	   mainFrame.getStepThreeLeftButton().getTimeNode().repaint();
+        	   TestCaseNodeLabels.add(TimeTestCaseLabel);
     	   }
+    	   mainFrame.renewPanel();
        }
        
        public void insertCustomNodeLabel(TimeTestCaseNode TimeTestCaseLabel,CasePagePanel casePagePanel,JPanel TestRoute,String quota)
@@ -65,10 +68,10 @@ public class TimeCaseNodePanel {
     	   }
     	   if(isExist == false)
     	   {
-    		   TestCaseNodeLabels.add(TimeTestCaseLabel);
-        	   int i = TestCaseNodeLabels.size() - 1;
+        	   int i = TestCaseNodeLabels.size();
         	   mainFrame.getStepThreeLeftButton().getTimeNode().add(TimeTestCaseLabel, new GBC(0, i).setFill(GBC.BOTH).setWeight(1, 0).setInsets(5, 10, 0, 0));
         	   mainFrame.getStepThreeLeftButton().getTimeNode().repaint();
+        	   TestCaseNodeLabels.add(TimeTestCaseLabel);
     	   }
     	   
        }

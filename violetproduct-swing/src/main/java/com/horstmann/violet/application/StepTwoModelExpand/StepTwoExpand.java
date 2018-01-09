@@ -76,8 +76,7 @@ public class StepTwoExpand extends JPanel{
 	{
 		this.setBackground(new Color(233,233,233));	
 		estimateLabel = new JLabel("模型检验");
-		exchangeLabel = new JLabel("Markov转换");
-		
+		exchangeLabel = new JLabel("Markov链转换");
 		estimateLabel.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 		exchangeLabel.setFont(new Font("微软雅黑", Font.PLAIN, 18));
 
@@ -172,7 +171,7 @@ public class StepTwoExpand extends JPanel{
 					mainFrame.getpanel().add(mainFrame.getStepTwoEvaluateOperation());
 //					if(!isSameName)
 //					{
-//						mainFrame.getStepTwoEvaluateOperation().getTopLabel().setText("当前模型为:"+model_Name);
+					mainFrame.getStepTwoEvaluateOperation().getTopLabel().setText("当前模型为:"+mainFrame.getStepTwoEvaluateOperation().getModel_Name());
 //					}
 					mainFrame.getCenterTabPanel().add(mainFrame.getStepTwoEvaluateTabbedPane());
 					mainFrame.renewPanel();
@@ -203,7 +202,7 @@ public class StepTwoExpand extends JPanel{
 	    	        mainFrame.getpanel().add(mainFrame.getStepTwoExchangeOperation());  
 //	    	        if(!isSameName)
 //					{
-//	    	        	mainFrame.getStepTwoExchangeOperation().getToplabel().setText("当前模型为:"+model_Name);
+	    	        mainFrame.getStepTwoExchangeOperation().getToplabel().setText("当前模型为:"+mainFrame.getStepTwoExchangeOperation().getModel_Name());
 //					}
 	    	        mainFrame.getCenterTabPanel().add(mainFrame.getStepTwoExchangeTabbedPane());
 	    	        mainFrame.renewPanel();

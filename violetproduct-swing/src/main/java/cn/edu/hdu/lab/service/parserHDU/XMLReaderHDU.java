@@ -61,7 +61,10 @@ public class XMLReaderHDU {
 	 */
 	public XMLReaderHDU(String xmlFile) throws Exception {
 		super();
+		FixFragmentTool.rectangleById.clear();
+		FixFragmentTool.xrefValueById.clear();
 		umlAllDiagramData.clear();
+		idCount=0;
 		this.xmlFile = xmlFile;
 		this.fileName=StaticConfig.umlPathPrefixHDU;
 		try

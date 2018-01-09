@@ -175,14 +175,40 @@ public class StepOneButton extends JPanel{
 					expandModelPanel.removeAll();
 					expandModelPanel.add(jRadionPanel, new GBC(0, 0).setFill(GBC.BOTH).setWeight(1, 0).setInsets(0, 25, 0, 0));
 					expandModelPanel.repaint();
+					mainFrame.renewPanel();
 					
 					clearPanel();
+					System.out.println(jRadionPanel.getRadios().size());
+					if(jRadionPanel.getRadios().size() == 0)
+					{
+						mainFrame.getStepTwoModelOperation().getLabel().removeAll();
+						mainFrame.getStepTwoModelOperation().getLabel().setText("当前无可选择的模型!");
+					}else {
+						mainFrame.getStepTwoModelOperation().getLabel().removeAll();
+						mainFrame.getStepTwoModelOperation().getLabel().setText("请选择需要用例扩展的模型!");
+					}
+					
 					mainFrame.getpanel().add(mainFrame.getStepTwoModelOperation());
 					mainFrame.getCenterTabPanel().add(mainFrame.getStepTwoModelExpandTabbedPane());
 					mainFrame.renewPanel();
 					
 					currentStep = 2;
 				}
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				mainFrame.renewPanel();
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				mainFrame.renewPanel();
+			}
+			@Override
+			public void mouseMoved(MouseEvent e) {
+				// TODO Auto-generated method stub
+				mainFrame.renewPanel();
 			}
 		});
 		expandCaseModel.addMouseListener(new MouseAdapter(){	
@@ -200,6 +226,8 @@ public class StepOneButton extends JPanel{
 					treePanel.setVisible(false);
 					
 					clearPanel();
+					mainFrame.getStepTwoCaseOperation().getToplabel().removeAll();
+					mainFrame.getStepTwoCaseOperation().getToplabel().setText("当前模型为: " + mainFrame.getStepTwoCaseOperation().getModel_Name());
 					mainFrame.getpanel().add(mainFrame.getStepTwoCaseOperation());
 					mainFrame.getCenterTabPanel().add(mainFrame.getStepTwoCaseExpandTabbedPane());
 					mainFrame.getpanel().updateUI();

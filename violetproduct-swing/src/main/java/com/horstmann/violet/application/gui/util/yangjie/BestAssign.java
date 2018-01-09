@@ -35,8 +35,10 @@ public class BestAssign {
 				randomCase.getCase(stimulateList, root);
 			}
 		}
-		markov.setActualNum(actualTcNumber);
 		System.out.println("\n实际生成的总测试用例个数为：" + actualTcNumber);
+		
+		System.out.println("DbCoverage: " + markov.getDbCoverage());
+		System.out.println("Deviation:" + markov.getDeviation());
 		
 		DisplayForm.mainFrame.getOutputinformation().geTextArea().append("\n实际生成的总测试用例个数为：" + actualTcNumber+  "\n");
 		int length = DisplayForm.mainFrame.getOutputinformation().geTextArea().getText().length(); 

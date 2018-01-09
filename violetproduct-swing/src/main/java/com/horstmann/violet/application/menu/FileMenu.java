@@ -1557,7 +1557,7 @@ public class FileMenu extends JMenu
     public IFileChooserService fileChooserService;
 
     /** Application stopper */
-    private ApplicationStopper stopper = new ApplicationStopper();
+    public ApplicationStopper stopper = new ApplicationStopper();
 
     /** Plugin registry */
     @InjectedBean

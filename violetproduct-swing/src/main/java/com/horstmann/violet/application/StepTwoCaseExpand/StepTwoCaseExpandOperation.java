@@ -110,6 +110,8 @@ public class StepTwoCaseExpandOperation extends JPanel{
 	   
 	private List<FutureTask<Integer>> futuretasklist;
 	private List<Thread> threadlist;
+	
+	private boolean Alive;
 	public StepTwoCaseExpandOperation(MainFrame mainFrame)
 	{
 		this.mainFrame = mainFrame;			
@@ -204,11 +206,17 @@ public class StepTwoCaseExpandOperation extends JPanel{
 		progressBarIndex = 0;
 		verificationProgressBar.setValue(0);
 		step = 1;
+		Alive = true;
 		maincallable = new Callable<Integer>() {
   			@Override
   			public Integer call() throws Exception {
   				// TODO Auto-generated method stub
   				while (progressBarIndex < 100) {
+  					
+  					if(mainthread.isInterrupted())
+  					{
+  	  						break;
+  					}
   					if(progressBarIndex == (int)((double)100/stepSum)*step)
   					{
   						if(futuretasklist.get(step-1).isDone()){
@@ -306,14 +314,13 @@ public class StepTwoCaseExpandOperation extends JPanel{
 						   					if(!isDouble(table.getValueAt(row, column).toString()))
 						   					{
 						   						toplabel.removeAll();
-						   						toplabel.setText("计算扩展矩阵出错,请检查填写的扩展矩阵!");
-											    startVerificationButton.setEnabled(true);
-											    startExpandButton.setEnabled(true);
+						   						toplabel.setText("计算扩展矩阵出错，请检查填写的扩展矩阵!");
+						   						
+						   						startVerificationButton.setEnabled(true);
 											    
-										    thread2.interrupt();
-					   					    thread1.interrupt();
+										        thread2.interrupt();
+					   					        thread1.interrupt();
 											    mainthread.interrupt();
-//											    verificationProgressBar.setValue(0);
 											    mainFrame.renewPanel();
 											    break;
 						   					}
@@ -359,7 +366,7 @@ public class StepTwoCaseExpandOperation extends JPanel{
 					// TODO: handle exception
 					e.printStackTrace();
 					toplabel.removeAll();
-				    toplabel.setText("场景扩展出错!");
+				    toplabel.setText("场景扩展出错，请重新扩展!");
 					
 					startExpandButton.setEnabled(true);
 					mainFrame.getsteponeButton().getExpandModelLabel().setEnabled(true);
@@ -424,14 +431,17 @@ public class StepTwoCaseExpandOperation extends JPanel{
 //							caseTabelMap.put(Model_Name, scenceTabelPanel);
 							
 							toplabel.removeAll();
-							toplabel.setText("对"+Model_Name+"场景扩展验证完成,可以对该模型进行一致性验证!");
+							toplabel.setText(Model_Name+"模型场景扩展验证通过,可以对该模型进行一致性验证!");
 							mainFrame.getStepTwoExpand().getEstimateLabel().setEnabled(true);
 							mainFrame.getStepTwoEvaluateOperation().getEvaluateButton().setEnabled(true);
 							
 							worker.assignmentPro(IISDList);
 							ExpandNodeLabel expandNodeLabel = new ExpandNodeLabel(Model_Name,mainFrame);
-
+							expandNodeLabel.setQuota(Model_Name+"模型场景扩展验证通过,可以对该模型进行一致性验证!");
+							expandNodeLabel.setResultPanel(panel);
+							
 							caseExpandNodePanel.insertNodeLabel(expandNodeLabel,panel);
+							
 							mainFrame.getsteponeButton().getExpandCasePanel().repaint();
 							
 							mainFrame.getStepTwoCaseExpandTabbedPane().setSelectedIndex(1);
@@ -454,7 +464,7 @@ public class StepTwoCaseExpandOperation extends JPanel{
 					// TODO: handle exception
 					e.printStackTrace();
 					toplabel.removeAll();
-				    toplabel.setText("场景扩展出错!");
+				    toplabel.setText("场景扩展出错，请重新扩展!");
 					
 					startExpandButton.setEnabled(true);
 					mainFrame.getsteponeButton().getExpandModelLabel().setEnabled(true);
@@ -545,7 +555,10 @@ public class StepTwoCaseExpandOperation extends JPanel{
 						mainFrame.getStepTwoEvaluateTabbedPane().getHomogeneityResults().removeAll();
 						mainFrame.getStepTwoExchangeTabbedPane().getExchangeResults().removeAll();
 						mainFrame.getStepTwoExchangeTabbedPane().getExchangeResport().removeAll();
+						mainFrame.getStepTwoEvaluateOperation().getTopLabel().removeAll();
 						mainFrame.getStepTwoEvaluateOperation().getTopLabel().setText("当前模型为:"+Model_Name);
+						mainFrame.getStepTwoEvaluateOperation().repaint();
+						mainFrame.getStepTwoExchangeOperation().getToplabel().removeAll();
 						mainFrame.getStepTwoExchangeOperation().getToplabel().setText("当前模型为:"+Model_Name);
 						
 						startExpandButton.setEnabled(false);

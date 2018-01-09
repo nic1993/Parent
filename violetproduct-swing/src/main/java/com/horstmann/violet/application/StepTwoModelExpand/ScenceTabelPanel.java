@@ -45,7 +45,7 @@ public class ScenceTabelPanel extends JPanel implements Cloneable {
 	private ScenceTableMode scenceTabelModel;
 	private JScrollPane jScrollPane;
 	private DecimalFormat df = new DecimalFormat();
-	private String pattern = "#0.000";
+	private String pattern = "#0.000000";
 
 	private MainFrame mainFrame;
 	private int selectcolumn = 0;
@@ -169,7 +169,7 @@ public class ScenceTabelPanel extends JPanel implements Cloneable {
 		table.setFont(new Font("ËÎÌå", Font.PLAIN, 15));
 		int rowCount = table.getRowCount();
 		for (int i = 0; i < rowCount; i++) {
-			table.setValueAt("1.000", i, i + 1);
+			table.setValueAt("1.000000", i, i + 1);
 		}
 		MyTableCell render = new MyTableCell();
 		render.setHorizontalAlignment(SwingConstants.LEFT); // ÎÄ×Ö¾ÓÖÐ
